@@ -1,4 +1,6 @@
-package com.wecanteven.AreaView;
+package com.wecanteven;
+
+import com.wecanteven.AreaView.Position;
 
 /**
  * Created by alexs on 3/29/2016.

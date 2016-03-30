@@ -1,5 +1,7 @@
 package com.wecanteven.AreaView;
 
+import com.wecanteven.Location;
+
 /**
  * Created by alexs on 3/29/2016.
  */
