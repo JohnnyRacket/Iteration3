@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+  <x>39</x>
+  <y>100</y>
+  <rootPath>Entities/Sneak/Standing/</rootPath>
+  <fileName>southwest_standing.png</fileName>
+</single_frame_animation>

@@ -1,7 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects;
 
 
-import com.wecanteven.Location;
+import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.AreaView.Position;
 
 import java.awt.*;
