@@ -8,10 +8,10 @@ import java.awt.event.KeyListener;
  */
 public class KeyActionBinding implements KeyListener{
 
-    private KeyEvent key;
+    private Integer key;
     private KeyInteractionCommand action;
 
-    public KeyActionBinding(KeyEvent key, KeyInteractionCommand action){
+    public KeyActionBinding(Integer key, KeyInteractionCommand action){
         this.key = key;
         this.action = action;
     }
@@ -23,7 +23,7 @@ public class KeyActionBinding implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e == key){
+        if(e.getKeyCode() == key){
             action.execute();
         }
     }

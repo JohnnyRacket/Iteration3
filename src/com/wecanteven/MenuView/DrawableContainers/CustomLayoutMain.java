@@ -4,10 +4,13 @@ import com.wecanteven.MenuView.DrawableContainers.Decorators.HorizontalCenterCon
 import com.wecanteven.MenuView.DrawableContainers.Decorators.VerticalCenterContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.RowedCompositeContainer;
-import com.wecanteven.MenuView.ProgressBars.AnimatedChangeProgressBar;
-import com.wecanteven.MenuView.ScrollableMenus.ScrollableMenu;
-import com.wecanteven.MenuView.ScrollableMenus.ScrollableMenuItem;
-import com.wecanteven.MenuView.ScrollableMenus.NavigatableList;
+import com.wecanteven.MenuView.DrawableLeafs.ProgressBars.AnimatedChangeProgressBar;
+import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenu;
+import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenuItem;
+import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
+import com.wecanteven.MenuView.SwappableView;
+import com.wecanteven.MenuView.SwingToDrawableAdapter;
+import com.wecanteven.MenuView.ViewManager;
 
 import javax.swing.*;
 

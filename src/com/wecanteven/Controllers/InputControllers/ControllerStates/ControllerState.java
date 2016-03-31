@@ -12,17 +12,17 @@ import java.util.Map;
  * Created by John on 3/31/2016.
  */
 public abstract class ControllerState {
-    private Map<ActionEnum, KeyEvent> mappings = new HashMap<>();
+    private Map<ActionEnum, Integer> mappings = new HashMap<>();
     private ArrayList<KeyActionBinding> keyBindings = new ArrayList<>();
 
     public abstract void createKeybindings();
     public abstract void destroyKeyBindings();
 
-    public Map<ActionEnum, KeyEvent> getMappings() {
+    public Map<ActionEnum, Integer> getMappings() {
         return mappings;
     }
 
-    public void setMappings(Map<ActionEnum, KeyEvent> mappings) {
+    public void setMappings(Map<ActionEnum, Integer> mappings) {
         this.mappings = mappings;
     }
 

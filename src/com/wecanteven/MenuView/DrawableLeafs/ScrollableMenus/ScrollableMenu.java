@@ -1,4 +1,4 @@
-package com.wecanteven.MenuView.ScrollableMenus;
+package com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus;
 
 import com.wecanteven.MenuView.Drawable;
 import com.wecanteven.MenuView.Navigatable;

@@ -1,6 +1,7 @@
-package com.wecanteven.MenuView.DrawableContainers;
+package com.wecanteven.MenuView;
 
 import com.wecanteven.MenuView.Drawable;
+import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Iterator;
  */
 public class SwappableView {
     private ArrayList<Drawable> drawables = new ArrayList<>();
+    private MenuViewContainer menus = new MenuViewContainer();
 
     public void addDrawable(Drawable drawable){
         drawables.add(drawable);
@@ -20,12 +22,20 @@ public class SwappableView {
         drawables.remove(drawable);
     }
 
+    public void addNavigatable(Navigatable navigatable){menus.add(navigatable);}
+
+    public void removeNavigatable(Navigatable navigatable){menus.remove(navigatable);}
+
     public void draw(Graphics2D g2d, int windowWidth, int windowHeight){
         Iterator<Drawable> iter = drawables.iterator();
         while(iter.hasNext()){
             Drawable current = iter.next();
             current.draw(g2d, current.getX(), current.getY(), windowWidth, windowHeight);
         }
+    }
+
+    public MenuViewContainer geMenuViewContainer(){
+        return this.menus;
     }
 
 }

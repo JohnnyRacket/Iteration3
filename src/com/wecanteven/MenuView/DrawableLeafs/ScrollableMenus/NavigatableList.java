@@ -1,6 +1,4 @@
-package com.wecanteven.MenuView.ScrollableMenus;
-
-import com.wecanteven.MenuView.Navigatable;
+package com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus;
 
 import java.util.Iterator;
 import java.util.LinkedList;
