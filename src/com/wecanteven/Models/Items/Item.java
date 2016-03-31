@@ -1,6 +1,5 @@
 package com.wecanteven.Models.Items;
 
-import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Positionable;
 import com.wecanteven.UtilityClasses.Location;
@@ -46,10 +45,4 @@ public abstract class Item implements Moveable, Positionable {
     public int getMovingTicks() {
         return 0;
     }
-
-    /**
-     * Class methods
-     * */
-
-    public abstract void interact(Entity entity);
 }

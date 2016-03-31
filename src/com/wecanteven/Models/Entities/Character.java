@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.Models.Items.TakeableItem;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.UtilityClasses.Direction;
 
@@ -27,5 +28,5 @@ public class Character extends Entity{
         return false;
     }
     private void drop(){}
-    private void pickup(){}
+    public void pickup(TakeableItem item){}
 }
