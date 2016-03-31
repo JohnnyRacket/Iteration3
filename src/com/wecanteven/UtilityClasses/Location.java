@@ -1,4 +1,4 @@
-package com.wecanteven;
+package com.wecanteven.UtilityClasses;
 
 import com.wecanteven.AreaView.Position;
 

@@ -1,13 +1,15 @@
 package com.wecanteven.AreaView;
 
 
-import com.wecanteven.AreaView.DynamicImages.ConstantDynamicImage;
+import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.DynamicImageDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
+import com.wecanteven.AreaView.ViewObjects.Factories.PlainsViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.TileViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
-import com.wecanteven.Location;
+import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Location;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,20 +29,23 @@ public class AreaView extends JPanel {
 
         for (int i = 0; i< 6; i++) {
             for (int j = 0; j<6; j++) {
-                backingArray.add(new SimpleViewObject(new Position(i,j,0), new ConstantDynamicImage(0,0, (new ImageIcon("resources/Terrain/Grass.png").getImage())), dStrat));
+                backingArray.add(new SimpleViewObject(new Position(i,j,0), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
             }
         }
 
         for (int i = 2; i< 4; i++) {
             for (int j = 1; j<4; j++) {
-                backingArray.add(new SimpleViewObject(new Position(i,j,1), new ConstantDynamicImage(0,0, (new ImageIcon("resources/Terrain/Grass.png").getImage())), dStrat));
+                backingArray.add(new SimpleViewObject(new Position(i,j,1), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
             }
         }
         for (int i = 3; i< 4; i++) {
             for (int j = 1; j<3; j++) {
-                backingArray.add(new SimpleViewObject(new Position(i,j,2), new ConstantDynamicImage(0,0, (new ImageIcon("resources/Terrain/Grass.png").getImage())), dStrat));
+                backingArray.add(new SimpleViewObject(new Position(i,j,2), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
             }
         }
+        PlainsViewObjectFactory factory = new PlainsViewObjectFactory();
+
+        backingArray.add(factory.createSneak(new Position(3,2, 2), Direction.NORTH));
 
     }
 
