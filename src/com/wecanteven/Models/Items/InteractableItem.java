@@ -16,13 +16,4 @@ public class InteractableItem extends Item {
         this.action = quest;
     }
 
-    @Override
-    public void interact(Entity entity) {
-
-    }
-
-    @Override
-    public void interact(Character character) {
-
-    }
 }

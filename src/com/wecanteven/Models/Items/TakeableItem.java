@@ -10,10 +10,5 @@ public abstract class TakeableItem extends Item
     public TakeableItem(String name) {
         super(name);
     }
-
-    @Override
-    public void interact(Character character)
-    {
-        character.pickup(this);
-    }
+    
 }
