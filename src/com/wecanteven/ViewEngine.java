@@ -28,7 +28,7 @@ public class ViewEngine extends JFrame implements Runnable{
         this.target = target;
         add(target);
         setTitle("We Cant Even");
-        setResizable(false);
+        setResizable(true);
         setPreferredSize(new Dimension(500,500));
         pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
