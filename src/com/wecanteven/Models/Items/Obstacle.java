@@ -14,6 +14,6 @@ public class Obstacle extends Item {
     }
 
     public void accept(ItemVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitObstacle(this);
     }
 }
