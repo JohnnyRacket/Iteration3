@@ -5,9 +5,11 @@ import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.DynamicImageDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Factories.PlainsViewObjectFactory;
+import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.TileViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Observers.Directional;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
@@ -45,9 +47,56 @@ public class AreaView extends JPanel {
         }
         PlainsViewObjectFactory factory = new PlainsViewObjectFactory();
 
-        backingArray.add(factory.createSneak(new Position(3,2, 2), Direction.NORTH));
 
+        Directional entity = new Directional() {
+            @Override
+            public Direction getDirection() {
+                return TEST_DIRECTION;
+            }
+        };
+
+        HominidViewObject testAvatar = factory.createSneak(new Position(3,2, 2), Direction.NORTH, entity);
+
+        backingArray.add(testAvatar);
+
+
+        int half = 300;
+        int full = half*6;
+        for (int i = 0; i < 20; i++) {
+
+            ViewTime.getInstance().register(() -> {
+                TEST_DIRECTION = Direction.NORTHEAST;
+                testAvatar.update();
+            }, half + full*i);
+
+            ViewTime.getInstance().register(() -> {
+                TEST_DIRECTION = Direction.SOUTHEAST;
+                testAvatar.update();
+            }, 2*half + full*i);
+
+            ViewTime.getInstance().register(() -> {
+                TEST_DIRECTION = Direction.SOUTH;
+                testAvatar.update();
+            }, 3*half + full*i);
+
+            ViewTime.getInstance().register(() -> {
+                TEST_DIRECTION = Direction.SOUTHWEST;
+                testAvatar.update();
+            }, 4*half + full*i);
+
+            ViewTime.getInstance().register(() -> {
+                TEST_DIRECTION = Direction.NORTHWEST;
+                testAvatar.update();
+            }, 5*half + full*i);
+
+            ViewTime.getInstance().register(() -> {
+                TEST_DIRECTION = Direction.NORTH;
+                testAvatar.update();
+            }, 6*half + full*i);
+        }
     }
+
+    public static Direction TEST_DIRECTION = Direction.NORTH;
 
 
     @Override

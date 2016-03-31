@@ -6,6 +6,7 @@ import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
+import com.wecanteven.Observers.Directional;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
@@ -14,9 +15,9 @@ import com.wecanteven.UtilityClasses.Direction;
 public abstract class ViewObjectFactory {
     private HexDrawingStrategy hexDrawingStrategy = new HexDrawingStrategy();
 
-    public HominidViewObject createSneak(Position p, Direction d) {
+    public HominidViewObject createSneak(Position p, Direction d, Directional entity) {
         DirectionalViewObject body = createBody(p, d, "Sneak");
-        return new HominidViewObject(p, d, body);
+        return new HominidViewObject(p, d, entity, body);
     }
 
     private DirectionalViewObject createBody(Position p, Direction d, String entityName) {
