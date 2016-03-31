@@ -33,6 +33,9 @@ public class ViewTime {
         executables.add(new Tuple<>(action, time + currentTime ));
     }
 
+    public long getCurrentTime() {
+        return currentTime;
+    }
 
     interface vCommand {
         void execute();
