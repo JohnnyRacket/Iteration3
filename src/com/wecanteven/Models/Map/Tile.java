@@ -1,6 +1,6 @@
 package com.wecanteven.Models.Map;
 
-import com.wecanteven.Models.Items.InteractableItem;
+import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.TakeableItem;
 import com.wecanteven.Visitors.MapVisitor;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Tile implements MapVisitable {
 
     private Obstacle obstacle;
-    private InteractableItem item;
+    private InteractiveItem item;
     private ArrayList<TakeableItem> takeableItems;
 
 
