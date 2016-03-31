@@ -1,4 +1,6 @@
 package com.wecanteven;
+import com.wecanteven.AreaView.ViewTime;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,6 +10,7 @@ import java.awt.*;
 public class ViewEngine extends JFrame implements Runnable{
     private JPanel target;
     private Thread thread;
+    private ViewTime viewTime = ViewTime.getInstance();
 
 
     public void clear() {
@@ -43,6 +46,7 @@ public class ViewEngine extends JFrame implements Runnable{
         TimeKeeper timeKeeper = new TimeKeeper(30);
         while(true) {
             timeKeeper.startTick();
+            viewTime.tick();
             this.repaint();
             timeKeeper.endTick();
         }
