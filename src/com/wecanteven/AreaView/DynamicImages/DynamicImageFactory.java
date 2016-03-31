@@ -60,8 +60,8 @@ public class DynamicImageFactory {
 
 
         return new ConstantDynamicImage(
-                Integer.parseInt(element.getElementsByTagName("x").item(0).getTextContent()),
-                Integer.parseInt(element.getElementsByTagName("y").item(0).getTextContent()),
+                -Integer.parseInt(element.getElementsByTagName("x").item(0).getTextContent()),
+                -Integer.parseInt(element.getElementsByTagName("y").item(0).getTextContent()),
                 image);
     }
 

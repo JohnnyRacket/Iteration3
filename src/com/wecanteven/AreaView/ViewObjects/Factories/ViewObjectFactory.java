@@ -12,7 +12,7 @@ import com.wecanteven.UtilityClasses.Direction;
  * Created by Alex on 3/31/2016.
  */
 public abstract class ViewObjectFactory {
-    private HexDrawingStrategy hexDrawingStrategy;
+    private HexDrawingStrategy hexDrawingStrategy = new HexDrawingStrategy();
 
     public HominidViewObject createSneak(Position p, Direction d) {
         DirectionalViewObject body = createBody(p, d, "Sneak");

@@ -45,7 +45,7 @@ public class AreaView extends JPanel {
         }
         PlainsViewObjectFactory factory = new PlainsViewObjectFactory();
 
-        backingArray.add(factory.createSneak(new Position(2,2, 0), Direction.NORTH));
+        backingArray.add(factory.createSneak(new Position(3,2, 2), Direction.NORTH));
 
     }
 
