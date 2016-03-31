@@ -22,6 +22,8 @@ public class MovingViewObject extends DecoratorViewObject {
     public MovingViewObject(ViewObject child, AreaView areaView) {
         super(child);
         this.areaView = areaView;
+        this.source = child.getPosition();
+        this.destination = child.getPosition();
     }
 
 
