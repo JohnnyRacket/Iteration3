@@ -12,6 +12,7 @@ public class ViewEngine extends JFrame implements Runnable{
     private Thread thread;
     private ViewTime viewTime = ViewTime.getInstance();
 
+
     public void clear() {
         if (target != null) {
             remove(this.target);

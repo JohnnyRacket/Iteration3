@@ -27,6 +27,7 @@ public class SwappableView {
     public void removeNavigatable(Navigatable navigatable){menus.remove(navigatable);}
 
     public void draw(Graphics2D g2d, int windowWidth, int windowHeight){
+        //System.out.println("drawing drawables");
         Iterator<Drawable> iter = drawables.iterator();
         while(iter.hasNext()){
             Drawable current = iter.next();
@@ -34,7 +35,7 @@ public class SwappableView {
         }
     }
 
-    public MenuViewContainer geMenuViewContainer(){
+    public MenuViewContainer getMenuViewContainer(){
         return this.menus;
     }
 
