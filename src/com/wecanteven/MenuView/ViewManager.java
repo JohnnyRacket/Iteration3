@@ -12,6 +12,7 @@ public class ViewManager {
     Stack<SwappableView> viewStack = new Stack<>();
 
     public void draw(Graphics2D g2d, int windowWidth, int windowHeight){
+        //System.out.println("in view manager drawing");
         Iterator<SwappableView> iter = viewStack.iterator();
         while(iter.hasNext()){
             iter.next().draw(g2d, windowWidth, windowHeight);

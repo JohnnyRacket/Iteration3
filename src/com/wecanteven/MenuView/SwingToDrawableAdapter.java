@@ -7,12 +7,18 @@ import java.awt.*;
 /**
  * Created by John on 3/31/2016.
  */
-public class SwingToDrawableAdapter extends JComponent{
+public class SwingToDrawableAdapter extends JPanel{
 
     private ViewManager adaptee;
 
+    public SwingToDrawableAdapter(){
+        this.setPreferredSize(new Dimension(800,600));
+        this.setVisible(true);
+    }
+
     @Override
     public void paintComponent(Graphics g){
+        //System.out.println("adapting paint component");
         //redraw all the things
         int windowHeight = this.getRootPane().getHeight();
         int windowWidth = this.getRootPane().getWidth();

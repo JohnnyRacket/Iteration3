@@ -15,6 +15,7 @@ public class MenuViewContainer implements Navigatable {
 
     @Override
     public void up() {
+        System.out.println("doing up");
         menus.get(current).up();
     }
 

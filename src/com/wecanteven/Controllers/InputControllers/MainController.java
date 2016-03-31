@@ -6,6 +6,8 @@ import com.wecanteven.Controllers.InputControllers.ControllerStates.MenuState;
 import com.wecanteven.Controllers.InputControllers.ControllerStates.PlayState;
 import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 
+import javax.swing.*;
+
 /**
  * Created by John on 3/31/2016.
  */
@@ -13,12 +15,14 @@ public class MainController {
 
     private ControllerState state;
 
-    private MenuState menuState = new MenuState();
-    private PlayState playState = new PlayState();
-    private DialogState dialogState = new DialogState();
+    private MenuState menuState;
+    private PlayState playState;
+    private DialogState dialogState;
 
-    public MainController(){
-
+    public MainController(JFrame window){
+        menuState = new MenuState(window);
+        playState = new PlayState(window);
+        dialogState = new DialogState(window);
     }
 
     private void removeState(){

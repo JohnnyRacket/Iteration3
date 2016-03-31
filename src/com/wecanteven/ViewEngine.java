@@ -9,6 +9,7 @@ public class ViewEngine extends JFrame implements Runnable{
     private JPanel target;
     private Thread thread;
 
+
     public void clear() {
         if (target != null) {
             remove(this.target);
