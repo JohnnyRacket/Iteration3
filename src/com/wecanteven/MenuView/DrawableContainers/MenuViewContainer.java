@@ -40,11 +40,13 @@ public class MenuViewContainer implements Navigatable {
     }
 
     public void swap() {
+        System.out.println("swapping, size is: " + menus.size());
         if (current < menus.size() - 1) {
             ++current;
         } else {
             current = 0;
         }
+        System.out.println("current is:" + current);
     }
 
     public void add(Navigatable navigatable){

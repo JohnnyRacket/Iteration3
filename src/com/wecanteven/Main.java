@@ -2,6 +2,7 @@ package com.wecanteven;
 
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.HorizontalCenterContainer;
+import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.RowedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenu;
@@ -21,11 +22,17 @@ public class Main {
         System.out.println("hello world");
 
         ScrollableMenu menu = new ScrollableMenu(300,300);
+        ScrollableMenu menu2 = new ScrollableMenu(300,300);
 
         NavigatableList list = new NavigatableList();
-        list.addItem(new ScrollableMenuItem("test 1", null));
-        list.addItem(new ScrollableMenuItem("test 2", null));
+        list.addItem(new ScrollableMenuItem("test 1", () -> {System.out.println("test 1 selected");}));
+        list.addItem(new ScrollableMenuItem("test 2", () -> {System.out.println("test 2 selected");}));
         menu.setList(list);
+
+        NavigatableList list2 = new NavigatableList();
+        list2.addItem(new ScrollableMenuItem("test2 1", () -> {System.out.println("test2 1 selected");}));
+        list2.addItem(new ScrollableMenuItem("test2 2", () -> {System.out.println("test2 2 selected");}));
+        menu2.setList(list2);
 
 
         ViewEngine engine = new ViewEngine();
@@ -34,9 +41,16 @@ public class Main {
         MainController controller = new MainController(engine);
         SwappableView view1 = new SwappableView();
 
-        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(menu);
+        RowedCompositeContainer rows = new RowedCompositeContainer();
+        rows.setHeight(400);
+        rows.setWidth(400);
+        rows.addDrawable(menu);
+        rows.addDrawable(menu2);
+
+        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(rows);
         view1.addDrawable(horizCenter);
         view1.addNavigatable(menu);
+        view1.addNavigatable(menu2);
         controller.setMenuState(view1.getMenuViewContainer());
 
 
