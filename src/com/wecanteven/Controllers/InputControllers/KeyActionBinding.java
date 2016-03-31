@@ -11,6 +11,11 @@ public class KeyActionBinding implements KeyListener{
     private KeyEvent key;
     private KeyInteractionCommand action;
 
+    public KeyActionBinding(KeyEvent key, KeyInteractionCommand action){
+        this.key = key;
+        this.action = action;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
         //do nothing
