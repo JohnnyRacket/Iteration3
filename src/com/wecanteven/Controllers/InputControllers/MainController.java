@@ -5,6 +5,7 @@ import com.wecanteven.Controllers.InputControllers.ControllerStates.DialogState;
 import com.wecanteven.Controllers.InputControllers.ControllerStates.MenuState;
 import com.wecanteven.Controllers.InputControllers.ControllerStates.PlayState;
 import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
+import com.wecanteven.Models.Entities.Avatar;
 
 import javax.swing.*;
 
@@ -14,6 +15,7 @@ import javax.swing.*;
 public class MainController {
 
     private ControllerState state;
+    private Avatar avatar;
 
     private MenuState menuState;
     private PlayState playState;
@@ -37,5 +39,19 @@ public class MainController {
         menuState.createKeybindings();
         this.state = menuState;
 
+    }
+
+    public void setPlayState(){
+        removeState();
+        playState.setAvatar(avatar);
+        playState.createKeybindings();
+        this.state = playState;
+    }
+
+    public void setDialogState(){
+        removeState();
+        //maybe add more here
+        dialogState.createKeybindings();
+        this.state = dialogState;
     }
 }

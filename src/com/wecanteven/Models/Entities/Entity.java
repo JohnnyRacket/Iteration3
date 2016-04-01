@@ -7,13 +7,21 @@ import com.wecanteven.UtilityClasses.Location;
  * Created by Brandon on 3/31/2016.
  */
 public class Entity {
-    protected Location location;
+    private Location location;
     public Entity(){}
-    private boolean move(Direction d){
+    public boolean move(Direction d){
         return false;
     }
-    private void die(){}
-    private boolean isActive(){
+    public void die(){}
+    public boolean isActive(){
         return false;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

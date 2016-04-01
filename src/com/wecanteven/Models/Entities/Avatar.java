@@ -1,34 +1,35 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.Models.Entities.CharacterStates.CharacterState;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Avatar {
+public class Avatar extends Entity{
     Character avatar,pet;
-    AvatarState state;
+    CharacterState state;
     public Avatar(){}
-    private void attack(Direction d){}
-    private void useAbility(int index){}
-    private boolean equipItem(String id){
+    public void attack(Direction d){}
+    public void useAbility(int index){}
+    public boolean equipItem(String id){
         return false;
     }
-    private boolean unequipItem(String id){
+    public boolean unequipItem(String id){
         return false;
     }
-    private boolean equipAbility(String id){
+    public boolean equipAbility(String id){
         return false;
     }
-    private boolean unequipAbility(String id){
+    public boolean unequipAbility(String id){
         return false;
     }
-    private boolean consume(String id){
+    public boolean consume(String id){
         return false;
     }
-    private void drop(){}
-    private void pickup(){}
-    private void interactWith(){}
-    private void mount(){}
-    private void dismount(){}
+    public void drop(){}
+    public void pickup(){}
+    public void interactWith(){}
+    public void mount(){}
+    public void dismount(){}
 }

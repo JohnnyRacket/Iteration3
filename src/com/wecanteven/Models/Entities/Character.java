@@ -17,8 +17,8 @@ public class Character extends Entity implements Moveable,Positionable{
     Storage itemStorage, abilityStorage;
     Stats stats;
     public Character(){}
-    private void attack(Direction d){}
-    private void useAbility(int index){}
+    public void attack(Direction d){}
+    public void useAbility(int index){}
 
     /**
      * Equipment
@@ -58,15 +58,15 @@ public class Character extends Entity implements Moveable,Positionable{
     /**
      * Consumption
      * */
-    private boolean consume(String id){
+    public boolean consume(String id){
         return false;
     }
-    private void drop(){}
+    public void drop(){}
     public void pickup(TakeableItem item){}
     public int getMovingTicks(){
         return 0;
     }
     public Location getLocation(){
-        return location;
+        return this.getLocation();
     }
 }

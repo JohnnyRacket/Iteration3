@@ -1,4 +1,4 @@
-package com.wecanteven.Models.Entities;
+package com.wecanteven.Models.Entities.CharacterStates;
 
 import com.wecanteven.UtilityClasses.Direction;
 
