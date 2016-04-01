@@ -2,6 +2,7 @@ package com.wecanteven.Controllers.InputControllers.ControllerStates;
 
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
+import com.wecanteven.Controllers.InputControllers.KeyInteractionCommand;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -16,6 +17,8 @@ public abstract class ControllerState {
     private Map<ActionEnum, Integer> mappings = new HashMap<>();
     private ArrayList<KeyActionBinding> keyBindings = new ArrayList<>();
     private JFrame jFrame;
+
+    private KeyInteractionCommand commandToExecute;
 
     public ControllerState(JFrame jFrame){
         this.jFrame = jFrame;
@@ -46,5 +49,13 @@ public abstract class ControllerState {
 
     public void setjFrame(JFrame jFrame) {
         this.jFrame = jFrame;
+    }
+
+    public KeyInteractionCommand getCommandToExecute() {
+        return commandToExecute;
+    }
+
+    public void setCommandToExecute(KeyInteractionCommand commandToExecute) {
+        this.commandToExecute = commandToExecute;
     }
 }

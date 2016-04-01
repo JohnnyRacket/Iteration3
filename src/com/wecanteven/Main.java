@@ -11,6 +11,7 @@ import com.wecanteven.MenuView.SwappableView;
 import com.wecanteven.MenuView.SwingToDrawableAdapter;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.MenuView.ViewManager;
+import com.wecanteven.Models.ModelTime.ModelTime;
 
 import javax.swing.*;
 import javax.swing.text.View;
@@ -37,7 +38,10 @@ public class Main {
         adapter.setAdaptee(manager);
         engine.registerView(adapter);
 
+        ModelTime.getInstance().registerTickable(controller);
         //engine.setVisible(true);
+        ModelEngine mEngine = new ModelEngine();
         engine.start();
+        mEngine.start();
     }
 }

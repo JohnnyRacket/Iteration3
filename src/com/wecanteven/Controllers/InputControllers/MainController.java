@@ -6,13 +6,14 @@ import com.wecanteven.Controllers.InputControllers.ControllerStates.MenuState;
 import com.wecanteven.Controllers.InputControllers.ControllerStates.PlayState;
 import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 import com.wecanteven.Models.Entities.Avatar;
+import com.wecanteven.Models.ModelTime.Tickable;
 
 import javax.swing.*;
 
 /**
  * Created by John on 3/31/2016.
  */
-public class MainController {
+public class MainController implements Tickable{
 
     private ControllerState state;
     private Avatar avatar;
@@ -53,5 +54,15 @@ public class MainController {
         //maybe add more here
         dialogState.createKeybindings();
         this.state = dialogState;
+    }
+
+    @Override
+    public void tick() {
+
+        if(state.getCommandToExecute() != null) {
+            System.out.println("executing controller command");
+            state.getCommandToExecute().execute();
+            state.setCommandToExecute(null);
+        }
     }
 }

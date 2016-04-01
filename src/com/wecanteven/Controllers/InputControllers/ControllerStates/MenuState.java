@@ -32,34 +32,28 @@ public class MenuState extends ControllerState {
         //example keybinding
         System.out.println("creating keybindings");
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.UP), ()->{
-            //add what we want the up key to do here
             System.out.println("up hit");
-            menus.up();
+            this.setCommandToExecute(()->menus.up());
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.DOWN), ()->{
-            //add what we want the up key to do here
             System.out.println("down hit");
-            menus.down();
+            this.setCommandToExecute(()->menus.down());
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SELECT), ()->{
-            //add what we want the up key to do here
             System.out.println("select hit");
-            menus.select();
+            this.setCommandToExecute(()->menus.select());
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.LEFT), ()->{
-            //add what we want the up key to do here
             System.out.println("left hit");
-            menus.left();
+            this.setCommandToExecute(()->menus.left());
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.RIGHT), ()->{
-            //add what we want the up key to do here
             System.out.println("right hit");
-            menus.right();
+            this.setCommandToExecute(()->menus.right());
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SWAPVIEW), ()->{
-            //add what we want the up key to do here
             System.out.println("swap hit");
-            menus.swap();
+            this.setCommandToExecute(()->menus.swap());
         }, this.getjFrame()));
 
     }

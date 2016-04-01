@@ -1,6 +1,6 @@
 package com.wecanteven;
 
-import com.wecanteven.Models.ModelTime;
+import com.wecanteven.Models.ModelTime.ModelTime;
 
 /**
  * Created by John on 3/31/2016.
@@ -8,6 +8,7 @@ import com.wecanteven.Models.ModelTime;
 public class ModelEngine implements Runnable{
 
     private ModelTime modelTime = ModelTime.getInstance();
+    private Thread modelEngineThread;
 
     @Override
     public void run() {
@@ -35,8 +36,15 @@ public class ModelEngine implements Runnable{
                     Thread.sleep((tickTimeMilli - delta));
                 } catch (Exception e) {}
             } else {
-                System.out.println("View tick took too long");
+                System.out.println("Model tick took too long");
             }
+        }
+    }
+
+    public void start() {
+        if(modelEngineThread == null) {
+            modelEngineThread = new Thread(this);
+            modelEngineThread.start();
         }
     }
 }

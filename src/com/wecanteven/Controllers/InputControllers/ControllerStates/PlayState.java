@@ -31,34 +31,28 @@ public class PlayState extends ControllerState {
     public void createKeybindings() {
         System.out.println("creating keybindings");
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.NORTH), ()->{
-            //add what we want the up key to do here
             System.out.println("move north hit");
-            avatar.move(Direction.NORTH);
+            this.setCommandToExecute(()->avatar.move(Direction.NORTH));
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.NORTHEAST), ()->{
-            //add what we want the up key to do here
             System.out.println("move northeast hit");
-            avatar.move(Direction.NORTHEAST);
+            this.setCommandToExecute(()->avatar.move(Direction.NORTHEAST));
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.NORTHWEST), ()->{
-            //add what we want the up key to do here
             System.out.println("move northwest hit");
-            avatar.move(Direction.NORTHWEST);
+            this.setCommandToExecute(()->avatar.move(Direction.NORTHWEST));
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SOUTH), ()->{
-            //add what we want the up key to do here
             System.out.println("move south hit");
-            avatar.move(Direction.SOUTH);
+            this.setCommandToExecute(()->avatar.move(Direction.SOUTH));
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SOUTHEAST), ()->{
-            //add what we want the up key to do here
             System.out.println("move southeast hit");
-            avatar.move(Direction.SOUTHEAST);
+            this.setCommandToExecute(()->avatar.move(Direction.SOUTHEAST));
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SOUTHWEST), ()->{
-            //add what we want the up key to do here
             System.out.println("move southwest hit");
-            avatar.move(Direction.SOUTHWEST);
+            this.setCommandToExecute(()->avatar.move(Direction.SOUTHWEST));
         }, this.getjFrame()));
     }
 

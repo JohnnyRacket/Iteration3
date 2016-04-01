@@ -1,4 +1,4 @@
-package com.wecanteven.Models;
+package com.wecanteven.Models.ModelTime;
 
 /**
  * Created by John on 4/1/2016.

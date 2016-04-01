@@ -10,6 +10,7 @@ import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenuItem;
 import com.wecanteven.ViewEngine;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by John on 3/31/2016.
@@ -33,6 +34,7 @@ public class UIViewFactory {
     public SwappableView mainMenuView(){
         //make menu
         ScrollableMenu menu = new ScrollableMenu(400, 400);
+        menu.setSelectedColor(Color.cyan);
         //make menu list
         NavigatableList list = new NavigatableList();
         list.addItem(new ScrollableMenuItem("New Game", () -> {System.out.println("test 1 selected");}));
