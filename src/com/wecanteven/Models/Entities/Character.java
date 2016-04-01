@@ -2,13 +2,20 @@ package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.Items.TakeableItem;
 import com.wecanteven.Models.Occupation.Occupation;
+import com.wecanteven.Models.Stats.Stats;
+import com.wecanteven.Models.Storage.Storage;
+import com.wecanteven.Observers.Moveable;
+import com.wecanteven.Observers.Positionable;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Location;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Character extends Entity{
+public class Character extends Entity implements Moveable,Positionable{
     Occupation occupation;
+    Storage itemStorage, abilityStorage;
+    Stats stats;
     public Character(){}
     private void attack(Direction d){}
     private void useAbility(int index){}
@@ -29,4 +36,10 @@ public class Character extends Entity{
     }
     private void drop(){}
     public void pickup(TakeableItem item){}
+    public int getMovingTicks(){
+        return 0;
+    }
+    public Location getLocation(){
+        return location;
+    }
 }
