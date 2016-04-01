@@ -39,4 +39,21 @@ public class Column implements MapVisitable {
     public boolean add(InteractiveItem interactiveItem, int z){
         return tiles.get(z).add(interactiveItem);
     }
+
+    public boolean remove(Entity entity, int z){
+        return tiles.get(z).remove(entity);
+    }
+    public boolean remove(TakeableItem takeableItem, int z){
+        return tiles.get(z).remove(takeableItem);
+    }
+    public boolean remove(OneShot oneShot, int z){
+        return tiles.get(z).remove(oneShot);
+    }
+    public boolean remove(Obstacle obstacle, int z){
+        return tiles.get(z).remove(obstacle);
+    }
+    public boolean remove(InteractiveItem interactiveItem, int z){
+        return tiles.get(z).remove(interactiveItem);
+    }
+
 }

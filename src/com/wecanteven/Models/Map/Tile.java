@@ -39,10 +39,25 @@ public class Tile implements MapVisitable {
     public boolean add(InteractiveItem interactiveItem){
         return this.interactiveItem.add(interactiveItem);
     }
-
-
     public boolean add(TakeableItem takeableItem){
         this.takeableItems.add(takeableItem);
+        return true;
+    }
+
+    public boolean remove(Entity entity){
+        return this.entity.remove(entity);
+    }
+    public boolean remove(OneShot oneShot){
+        return this.oneShot.remove(oneShot);
+    }
+    public boolean remove(Obstacle obstacle) {
+        return this.obstacle.remove(obstacle);
+    }
+    public boolean remove(InteractiveItem interactiveItem){
+        return this.interactiveItem.remove(interactiveItem);
+    }
+    public boolean remove(TakeableItem takeableItem){
+        this.takeableItems.remove(takeableItem);
         return true;
     }
 }

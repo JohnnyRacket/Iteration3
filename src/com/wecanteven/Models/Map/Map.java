@@ -41,4 +41,20 @@ public class Map implements MapVisitable {
     public boolean add(InteractiveItem interactiveItem, Location loc){
         return columns[loc.getR()][loc.getS()].add(interactiveItem, loc.getZ());
     }
+
+    public boolean remove(Entity entity, Location loc){
+        return columns[loc.getR()][loc.getS()].remove(entity, loc.getZ());
+    }
+    public boolean remove(OneShot oneShot, Location loc){
+        return columns[loc.getR()][loc.getS()].remove(oneShot, loc.getZ());
+    }
+    public boolean remove(TakeableItem takeableItem, Location loc){
+        return columns[loc.getR()][loc.getS()].remove(takeableItem, loc.getZ());
+    }
+    public boolean remove(Obstacle obstacle, Location loc){
+        return columns[loc.getR()][loc.getS()].remove(obstacle, loc.getZ());
+    }
+    public boolean remove(InteractiveItem interactiveItem, Location loc){
+        return columns[loc.getR()][loc.getS()].remove(interactiveItem, loc.getZ());
+    }
 }

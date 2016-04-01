@@ -15,9 +15,13 @@ public class TileSlot<T> {
         }
     }
 
-    public T remove(){
-        T tmp = this.t;
-        this.t = null;
-        return tmp;
+    public boolean remove(T t){
+        if(this.t == t){
+            this.t = null;
+            return true;
+        }else{
+            return false;
+        }
+
     }
 }
