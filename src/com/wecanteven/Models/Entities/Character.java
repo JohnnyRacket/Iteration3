@@ -1,6 +1,6 @@
 package com.wecanteven.Models.Entities;
 
-import com.wecanteven.Models.Items.TakeableItem;
+import com.wecanteven.Models.Items.*;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Storage.Storage;
@@ -19,11 +19,34 @@ public class Character extends Entity implements Moveable,Positionable{
     public Character(){}
     private void attack(Direction d){}
     private void useAbility(int index){}
-    private boolean equipItem(String id){
-        return false;
+
+    /**
+     * Equipment
+     * */
+
+    // TODO update this to pass storage to the item, so the only the specific item and the storage interact
+    public void equipItem(EquipableItem item){
+        item.equip(this);
     }
-    private boolean unequipItem(String id){
-        return false;
+
+    /** Equip Head*/
+
+    public void equipHead(HeadEquipableItem headItem) {}
+
+    /** Equip Chest*/
+
+    public void equipChest(ChestEquipableItem chestItem) {}
+
+    /** Equip Boots*/
+
+    public void equipBoots(BootsEquipableItem bootsItem) {}
+
+    /** Equip Weapon*/
+
+    public void equipWeapon(WeaponEquipableItem weaponItem) {}
+
+    public void unequipItem(EquipableItem item){
+        // Other stuff
     }
     private boolean equipAbility(String id){
         return false;
@@ -31,6 +54,10 @@ public class Character extends Entity implements Moveable,Positionable{
     private boolean unequipAbility(String id){
         return false;
     }
+
+    /**
+     * Consumption
+     * */
     private boolean consume(String id){
         return false;
     }

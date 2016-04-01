@@ -15,15 +15,14 @@ public class InteractiveItem extends Item {
      * */
 
     public void accept(ItemVisitor visitor) {
-        visitor.visitInteractableItem(this);
+        visitor.visitInteractiveItem(this);
     }
 
     /**
      * Class methods
      * */
 
-    public void trigger()
-    {
+    public void trigger() {
         /*?????????*/
     }
 }
