@@ -4,11 +4,9 @@ import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
-import com.wecanteven.Models.Items.TakeableItem;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.MapVisitor;
-
-import java.util.ArrayList;
 
 /**
  * Created by John on 3/31/2016.

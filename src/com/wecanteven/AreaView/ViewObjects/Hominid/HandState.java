@@ -7,6 +7,15 @@ import com.wecanteven.UtilityClasses.Location;
 import java.awt.*;
 
 public abstract class HandState {
+    HandViewObject leftHand;
+    HandViewObject rightHand;
+
+
+    protected HandState(HandViewObject leftHand, HandViewObject rightHand) {
+        this.leftHand = leftHand;
+        this.rightHand = rightHand;
+    }
+
     public void drawForeground(Graphics2D graphic) {
         //TODO
     }
@@ -16,7 +25,8 @@ public abstract class HandState {
     }
 
     public void draw(Graphics2D graphic) {
-        //TODO
+        leftHand.draw(graphic);
+        rightHand.draw(graphic);
     }
 
     public void move(Graphics2D graphic) {

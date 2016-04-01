@@ -4,6 +4,8 @@ import com.wecanteven.AreaView.DynamicImages.DynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
+import com.wecanteven.AreaView.ViewObjects.Hominid.HandViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.Observers.Directional;
@@ -17,7 +19,8 @@ public abstract class ViewObjectFactory {
 
     public HominidViewObject createSneak(Position p, Direction d, Directional entity) {
         DirectionalViewObject body = createBody(p, d, "Sneak");
-        return new HominidViewObject(p, d, entity, body);
+        HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 1, 1, 1, Math.PI/3, hexDrawingStrategy), new HandViewObject(p,  0.5, 0.5, 0.5, 0.5, hexDrawingStrategy), p);
+        return new HominidViewObject(p, d, entity, body, hands);
     }
 
     private DirectionalViewObject createBody(Position p, Direction d, String entityName) {

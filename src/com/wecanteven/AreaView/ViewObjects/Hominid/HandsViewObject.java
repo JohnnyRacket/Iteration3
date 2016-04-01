@@ -1,19 +1,22 @@
 package com.wecanteven.AreaView.ViewObjects.Hominid;
 
+import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
 import java.awt.*;
 
-public class HandsViewObject {
-    HandState handState;
+public class HandsViewObject implements ViewObject, Observer{
+    private HandState handState;
+    private Position position;
+   // private Equipment --dont have it yet..
 
-    public HandsViewObject() {
-        this.handState = new BrawlingState();
-    }
 
-    public HandsViewObject(HandState handState) {
-        this.handState = handState;
+    public HandsViewObject(HandViewObject leftHand, HandViewObject rightHand, Position position) {
+        this.position = position;
+        handState = new BrawlingState(leftHand, rightHand);
     }
 
     public void drawForeground(Graphics2D graphic) {
@@ -22,6 +25,16 @@ public class HandsViewObject {
 
     public void drawBackground(Graphics2D graphic) {
         handState.drawBackground(graphic);
+    }
+
+    @Override
+    public Position getPosition() {
+        return null;
+    }
+
+    @Override
+    public void setPosition(Position p) {
+        position = p;
     }
 
     public void draw(Graphics2D graphic) {
@@ -34,14 +47,6 @@ public class HandsViewObject {
 
     public void changeDirection(Direction direction) {
         handState.changeDirection(direction);
-    }
-
-    public void setLocation(Location location) {
-        handState.setLocation(location);
-    }
-
-    public Location getLocation() {
-        return handState.getLocation();
     }
 
     public void update() {

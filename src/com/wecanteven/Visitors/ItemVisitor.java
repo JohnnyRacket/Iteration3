@@ -1,6 +1,8 @@
 package com.wecanteven.Visitors;
 
 import com.wecanteven.Models.Items.*;
+import com.wecanteven.Models.Items.Takeable.*;
+import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 
 /**
  * Created by simonnea on 3/31/16.
