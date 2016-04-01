@@ -17,12 +17,14 @@ public class HominidViewObject implements ViewObject, Observer{
     private Direction direction;
     private DirectionalViewObject body;
     private Directional directionSubject;
+    private HandsViewObject hands;
 
-    public HominidViewObject(Position position, Direction direction, Directional directionSubject, DirectionalViewObject body) {
+    public HominidViewObject(Position position, Direction direction, Directional directionSubject, DirectionalViewObject body, HandsViewObject hands) {
         this.position = position;
         this.direction = direction;
         this.directionSubject = directionSubject;
         this.body = body;
+        this.hands = hands;
 
         direction.setDirectionOf(body);
     }
@@ -40,6 +42,7 @@ public class HominidViewObject implements ViewObject, Observer{
     @Override
     public void draw(Graphics2D g) {
         body.draw(g);
+        hands.draw(g);
     }
 
     @Override

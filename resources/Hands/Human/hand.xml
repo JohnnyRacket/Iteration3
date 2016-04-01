@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <single_frame_animation>
-  <width>18</width>
-  <height>18</height>
-  <rootPath>resources/entities/hand/</rootPath>
+  <x>8</x>
+  <y>8</y>
+  <rootPath>Hands/Human/</rootPath>
   <fileName>hand.png</fileName>
-  <positioning>center</positioning>
 </single_frame_animation>
