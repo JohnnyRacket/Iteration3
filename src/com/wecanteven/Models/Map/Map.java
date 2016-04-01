@@ -22,6 +22,8 @@ public class Map implements MapVisitable {
     }
 
     public boolean move(Entity entity, Direction dir){//idk about this
+
+        //need to check can move visitor
         remove(entity,entity.getLocation());
         entity.setLocation(entity.getLocation().add(dir.getCoords));
         if(add(entity, entity.getLocation())){
