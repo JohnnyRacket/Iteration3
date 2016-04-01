@@ -5,10 +5,12 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
-import com.wecanteven.Observers.Moveable;
+import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.MapVisitor;
+
+import java.util.ArrayList;
 
 /**
  * Created by John on 3/31/2016.
@@ -16,9 +18,33 @@ import com.wecanteven.Visitors.MapVisitor;
 public class Map implements MapVisitable {
 
     private Column[][] columns;
+    private int rSize;
+    private int sSize;
+    private int zSize;
 
-    public Map(int rSize, int sSize){
+    public int getrSize() {
+        return rSize;
+    }
+
+    public int getsSize() {
+        return sSize;
+    }
+
+    public int getzSize() {
+        return zSize;
+    }
+
+    public Map(int rSize, int sSize, int zSize){
+        this.rSize = rSize;
+        this.sSize = sSize;
+        this.zSize = zSize;
+
         columns = new Column[rSize][sSize];
+        for (int i = 0; i < rSize; i++) {
+            for (int j = 0; j < sSize; j++) {
+                columns[i][j] = new Column();
+            }
+        }
     }
 
     public boolean move(Entity entity, Direction dir){//idk about this
@@ -33,6 +59,10 @@ public class Map implements MapVisitable {
             add(entity, entity.getLocation());
             return false;
         }
+    }
+
+    public Tile getTile(int r, int s, int z) {
+        return columns[r][s].getTile(z);
     }
 
     @Override
@@ -70,5 +100,57 @@ public class Map implements MapVisitable {
     }
     public boolean remove(InteractiveItem interactiveItem, Location loc){
         return columns[loc.getR()][loc.getS()].remove(interactiveItem, loc.getZ());
+    }
+
+    /**
+     * Created by John on 3/31/2016.
+     */
+    public static class Column  {
+        private ArrayList<Tile> tiles;
+
+        public Column(){
+            tiles = new ArrayList<>();
+            for (int i = 0; i <10; i++) {
+                tiles.add(new Tile(new Air()));
+            }
+        }
+
+        public Tile getTile(int zLevel) {
+            return tiles.get(zLevel);
+        }
+
+
+        public boolean add(Entity entity, int z){
+            return tiles.get(z).add(entity);
+        }
+        public boolean add(TakeableItem takeableItem, int z){
+            return tiles.get(z).add(takeableItem);
+        }
+        public boolean add(OneShot oneShot, int z){
+            return tiles.get(z).add(oneShot);
+        }
+        public boolean add(Obstacle obstacle, int z){
+            return tiles.get(z).add(obstacle);
+        }
+        public boolean add(InteractiveItem interactiveItem, int z){
+            return tiles.get(z).add(interactiveItem);
+        }
+
+        public boolean remove(Entity entity, int z){
+            return tiles.get(z).remove(entity);
+        }
+        public boolean remove(TakeableItem takeableItem, int z){
+            return tiles.get(z).remove(takeableItem);
+        }
+        public boolean remove(OneShot oneShot, int z){
+            return tiles.get(z).remove(oneShot);
+        }
+        public boolean remove(Obstacle obstacle, int z){
+            return tiles.get(z).remove(obstacle);
+        }
+        public boolean remove(InteractiveItem interactiveItem, int z){
+            return tiles.get(z).remove(interactiveItem);
+        }
+
     }
 }

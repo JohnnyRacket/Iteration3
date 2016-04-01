@@ -15,11 +15,11 @@ import java.util.ArrayList;
  */
 public class Tile implements MapVisitable {
 
-    private TileSlot<Obstacle> obstacle;
-    private TileSlot<InteractiveItem> interactiveItem;
-    private TileSlot<OneShot> oneShot;
+    private TileSlot<Obstacle> obstacle = new TileSlot<>();
+    private TileSlot<InteractiveItem> interactiveItem = new TileSlot<>();
+    private TileSlot<OneShot> oneShot = new TileSlot<>();
     private ArrayList<TakeableItem> takeableItems = new ArrayList<>();
-    private TileSlot<Entity> entity;
+    private TileSlot<Entity> entity = new TileSlot<>();
 
     private Terrain terrain;
 
@@ -67,24 +67,29 @@ public class Tile implements MapVisitable {
         return true;
     }
 
-    public TileSlot<Obstacle> getObstacle() {
-        return obstacle;
+    public boolean hasEntity() {return !this.entity.isEmpty();}
+    public boolean hasObstacle() { return !this.obstacle.isEmpty(); }
+    public boolean hasInteractiveItem() {return !this.interactiveItem.isEmpty();}
+    public boolean hasOneShot() { return !this.oneShot.isEmpty(); }
+
+    public Obstacle getObstacle() {
+        return obstacle.getToken();
     }
 
-    public TileSlot<InteractiveItem> getInteractiveItem() {
-        return interactiveItem;
+    public InteractiveItem getInteractiveItem() {
+        return interactiveItem.getToken();
     }
 
-    public TileSlot<OneShot> getOneShot() {
-        return oneShot;
+    public OneShot getOneShot() {
+        return oneShot.getToken();
     }
 
     public ArrayList<TakeableItem> getTakeableItems() {
         return takeableItems;
     }
 
-    public TileSlot<Entity> getEntity() {
-        return entity;
+    public Entity getEntity() {
+        return entity.getToken();
     }
 
     public Terrain getTerrain() {
@@ -93,5 +98,39 @@ public class Tile implements MapVisitable {
 
     public void setTerrain(Terrain terrain) {
         this.terrain = terrain;
+    }
+
+    /**
+     * Created by John on 3/31/2016.
+     */
+    public static class TileSlot<T> {
+        private T t;
+
+        public T getToken() {
+            return t;
+        }
+
+        public boolean add(T t){
+            if(this.isEmpty()){
+                this.t = t;
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public boolean remove(T t){
+            if(this.t == t){
+                this.t = null;
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+
+        public boolean isEmpty(){
+            return (this.t == null);
+        }
     }
 }

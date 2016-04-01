@@ -10,7 +10,10 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.TileViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
+import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
@@ -30,24 +33,29 @@ public class AreaView extends JPanel {
 
     public AreaView() {
         DynamicImageDrawingStrategy dStrat = new HexDrawingStrategy();
-
-        for (int i = 0; i< 6; i++) {
-            for (int j = 0; j<6; j++) {
-                backingArray.add(new SimpleViewObject(new Position(i,j,0), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
-            }
-        }
-
-        for (int i = 2; i< 4; i++) {
-            for (int j = 1; j<4; j++) {
-                backingArray.add(new SimpleViewObject(new Position(i,j,1), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
-            }
-        }
-        for (int i = 3; i< 4; i++) {
-            for (int j = 1; j<3; j++) {
-                backingArray.add(new SimpleViewObject(new Position(i,j,2), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
-            }
-        }
         PlainsViewObjectFactory factory = new PlainsViewObjectFactory(this);
+        LevelFactory levelFactory = new DopeAssLevelFactory();
+        Map map = levelFactory.createMap();
+        VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory);
+        map.accept(voCreationVisitor);
+
+//        for (int i = 0; i< 6; i++) {
+//            for (int j = 0; j<6; j++) {
+//                backingArray.add(new SimpleViewObject(new Position(i,j,0), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
+//            }
+//        }
+//
+//        for (int i = 2; i< 4; i++) {
+//            for (int j = 1; j<4; j++) {
+//                backingArray.add(new SimpleViewObject(new Position(i,j,1), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
+//            }
+//        }
+//        for (int i = 3; i< 4; i++) {
+//            for (int j = 1; j<3; j++) {
+//                backingArray.add(new SimpleViewObject(new Position(i,j,2), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
+//            }
+//        }
+
 
 
         Entity entity = new Entity();
@@ -103,7 +111,9 @@ public class AreaView extends JPanel {
         }
     }
 
-
+    public void addViewObject(ViewObject vo) {
+        backingArray.add(vo);
+    }
 
     @Override
     public void paintComponent(Graphics g) {

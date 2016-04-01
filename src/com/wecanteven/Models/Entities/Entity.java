@@ -9,6 +9,7 @@ import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanMoveVisitor;
+import com.wecanteven.Visitors.EntityVisitor;
 
 import java.util.ArrayList;
 
@@ -78,5 +79,9 @@ public class Entity implements Moveable, Directional, Observable{
 
     private void levelUp(){
         stats.levelUp(new StatsAddable(1,1,1,1,1,1,1,1,1));
+    }
+
+    public void accept(EntityVisitor v) {
+        v.visitEntity(this);
     }
 }

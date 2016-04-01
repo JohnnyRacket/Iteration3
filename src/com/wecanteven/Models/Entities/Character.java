@@ -10,6 +10,7 @@ import com.wecanteven.Observers.Positionable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanMoveVisitor;
+import com.wecanteven.Visitors.EntityVisitor;
 
 /**
  * Created by Brandon on 3/31/2016.
@@ -76,5 +77,10 @@ public class Character extends Entity {
     }
     private void levelUp(){
         stats.levelUp(occupation.getStatsAddable());
+    }
+
+    @Override
+    public void accept(EntityVisitor v) {
+        v.visitCharacter(this);
     }
 }
