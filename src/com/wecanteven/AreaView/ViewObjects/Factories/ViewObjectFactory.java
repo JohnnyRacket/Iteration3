@@ -10,6 +10,7 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.HandViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
+import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Observers.Directional;
@@ -21,10 +22,14 @@ import com.wecanteven.UtilityClasses.Direction;
 public abstract class ViewObjectFactory {
     private HexDrawingStrategy hexDrawingStrategy = new HexDrawingStrategy();
     private AreaView areaView;
+    private DynamicImageFactory factory = DynamicImageFactory.getInstance();
 
     public ViewObjectFactory(AreaView areaView) {
         this.areaView = areaView;
     }
+
+    public abstract ViewObject createGround(Position p);
+    public abstract ViewObject createWater(Position p);
 
     public ViewObject createSneak(Position p, Direction d, Entity subject) {
         DirectionalViewObject body = createBody(p, d, "Sneak");
@@ -51,5 +56,17 @@ public abstract class ViewObjectFactory {
         MovingViewObject mvo = new  MovingViewObject(child, subject, areaView);
         subject.attach(mvo);
         return mvo;
+    }
+
+    public HexDrawingStrategy getDrawingStrategy() {
+        return hexDrawingStrategy;
+    }
+
+    public DynamicImageFactory getDynamicImageFactory() {
+        return factory;
+    }
+
+    protected SimpleViewObject createSimpleViewObject(Position p, String path) {
+        return new SimpleViewObject(p, factory.loadDynamicImage(path), hexDrawingStrategy);
     }
 }
