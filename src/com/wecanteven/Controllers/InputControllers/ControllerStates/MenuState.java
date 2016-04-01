@@ -30,7 +30,7 @@ public class MenuState extends ControllerState {
     @Override
     public void createKeybindings() {
         //example keybinding
-        System.out.println("creating a keybinding");
+        System.out.println("creating keybindings");
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.UP), ()->{
             //add what we want the up key to do here
             System.out.println("up hit");

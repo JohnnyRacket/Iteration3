@@ -8,16 +8,19 @@ import com.wecanteven.UtilityClasses.Location;
 /**
  * Created by Brandon on 3/31/2016.
  */
+
 public class Entity implements Moveable, Directional{
-    protected Location location;
+    private Location location;
+
     public Entity(){}
-    private boolean move(Direction d){
+    public boolean move(Direction d){
         return false;
     }
-    private void die(){}
-    private boolean isActive(){
+    public void die(){}
+    public boolean isActive(){
         return false;
     }
+
 
 
     private int movingTicks = 0;
@@ -25,9 +28,11 @@ public class Entity implements Moveable, Directional{
 
     //TODO: someone write the below shit
     @Override
+
     public Location getLocation() {
         return location;
     }
+
 
     @Override
     public int getMovingTicks() {
@@ -39,10 +44,6 @@ public class Entity implements Moveable, Directional{
         this.movingTicks = ticks;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
@@ -51,4 +52,9 @@ public class Entity implements Moveable, Directional{
     public Direction getDirection() {
         return direction;
     }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
 }

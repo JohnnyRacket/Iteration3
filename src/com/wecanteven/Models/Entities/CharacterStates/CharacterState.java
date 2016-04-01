@@ -1,11 +1,11 @@
-package com.wecanteven.Models.Entities;
+package com.wecanteven.Models.Entities.CharacterStates;
 
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
-public abstract class AvatarState {
+public abstract class CharacterState {
     abstract void attack(Direction d);
     abstract void useAbility(int index);
     abstract boolean equipItem(String id);
