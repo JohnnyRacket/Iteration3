@@ -5,6 +5,8 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Observers.Moveable;
+import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.MapVisitor;
 
@@ -17,6 +19,18 @@ public class Map implements MapVisitable {
 
     public Map(int rSize, int sSize){
         columns = new Column[rSize][sSize];
+    }
+
+    public boolean move(Entity entity, Direction dir){//idk about this
+        remove(entity,entity.getLocation());
+        entity.setLocation(entity.getLocation().add(dir.getCoords));
+        if(add(entity, entity.getLocation())){
+            return true;
+        }else{
+            entity.setLocation(entity.getLocation().subtract(dir.getCoords));
+            add(entity, entity.getLocation());
+            return false;
+        }
     }
 
     @Override

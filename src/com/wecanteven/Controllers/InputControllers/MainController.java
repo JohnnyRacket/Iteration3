@@ -48,7 +48,7 @@ public class MainController {
         this.state = playState;
     }
 
-    public void setDialogState(){
+    public void setDialogState(){//needs to take in a Dialog obkect once its made
         removeState();
         //maybe add more here
         dialogState.createKeybindings();

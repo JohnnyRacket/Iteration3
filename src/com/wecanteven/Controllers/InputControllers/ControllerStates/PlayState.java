@@ -52,12 +52,12 @@ public class PlayState extends ControllerState {
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SOUTHEAST), ()->{
             //add what we want the up key to do here
-            System.out.println("right hit");
+            System.out.println("move southeast hit");
             avatar.move(Direction.SOUTHEAST);
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SOUTHWEST), ()->{
             //add what we want the up key to do here
-            System.out.println("swap hit");
+            System.out.println("move southwest hit");
             avatar.move(Direction.SOUTHWEST);
         }, this.getjFrame()));
     }

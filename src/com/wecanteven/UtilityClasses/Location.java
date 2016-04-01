@@ -44,4 +44,11 @@ public class Location {
     public Position toPosition() {
         return new Position(r,s,z);
     }
+
+    public Location add(Location loc){
+        return new Location(this.r += loc.getR(), this.s += loc.getS(), this.z += loc.getZ());
+    }
+    public Location subtract(Location loc){
+        return new Location(this.r -= loc.getR(), this.s -= loc.getS(), this.z -= loc.getZ());
+    }
 }
