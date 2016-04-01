@@ -6,18 +6,14 @@ import com.wecanteven.Models.Entities.Entity;
 /**
  * Created by simonnea on 3/31/16.
  */
-public class TakeableItem extends InteractiveItem {
+public class TakeableItem extends Item
+{
     public TakeableItem(String name) {
         super(name);
     }
 
-    @Override
-    public void interact(Entity entity) {
-
-    }
-
-    @Override
-    public void interact(Character character) {
-
+    public void interact(Character character)
+    {
+        character.pickup(this);
     }
 }
