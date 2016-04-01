@@ -5,10 +5,13 @@ import com.wecanteven.UtilityClasses.Location;
 
 import java.awt.*;
 
-/**
- * Created by harrison on 3/31/16.
- */
+
 public class BrawlingState extends HandState {
+
+    public BrawlingState(HandViewObject leftHand, HandViewObject rightHand) {
+        super(leftHand, rightHand);
+    }
+
     public void drawForeground(Graphics2D graphic) {
         //TODO
     }
@@ -18,7 +21,7 @@ public class BrawlingState extends HandState {
     }
 
     public void draw(Graphics2D graphic) {
-        //TODO
+        super.draw(graphic);
     }
 
     public void move(Graphics2D graphic) {
@@ -44,4 +47,6 @@ public class BrawlingState extends HandState {
     public void equip(/*add weapon param model doesnt exist*/) {
 
     }
+
+    //swapping states could be here
 }
