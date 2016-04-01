@@ -1,6 +1,7 @@
-package com.wecanteven.Models.Items;
+package com.wecanteven.Models.Items.Takeable.Equipable;
 
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Visitors.ItemVisitor;
 

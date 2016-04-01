@@ -1,4 +1,4 @@
-package com.wecanteven.Models.Items;
+package com.wecanteven.Models.Items.Takeable.Equipable;
 
 import com.wecanteven.Models.Stats.StatsAddable;
 

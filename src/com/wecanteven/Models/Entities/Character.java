@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Entities;
 
-import com.wecanteven.Models.Items.*;
+import com.wecanteven.Models.Items.Takeable.*;
+import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Storage.Storage;
