@@ -4,13 +4,16 @@ import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.Observers.Moveable;
+import com.wecanteven.Observers.Observer;
+import com.wecanteven.UtilityClasses.Config;
 
 import java.awt.*;
 
 /**
  * Created by Alex on 3/31/2016.
  */
-public class MovingViewObject extends DecoratorViewObject {
+public class MovingViewObject extends DecoratorViewObject implements Observer {
     private AreaView areaView;
 
     private Position source;
@@ -19,8 +22,11 @@ public class MovingViewObject extends DecoratorViewObject {
     private long startTime = 0;
     private long endTime = 0;
 
-    public MovingViewObject(ViewObject child, AreaView areaView) {
+    private Moveable subject;
+
+    public MovingViewObject(ViewObject child, Moveable subject, AreaView areaView) {
         super(child);
+        this.subject = subject;
         this.areaView = areaView;
         this.source = child.getPosition();
         this.destination = child.getPosition();
@@ -31,22 +37,38 @@ public class MovingViewObject extends DecoratorViewObject {
         long t = ViewTime.getInstance().getCurrentTime();
         if (t >= endTime) return destination;
 
-        double percentage = (t - startTime)/(endTime - startTime);
+        double percentage = (double)(t - startTime)/(double)(endTime - startTime);
+        System.out.println("t - startTime: " + (t - startTime));
+        System.out.println("% : " +  (double)(t - startTime)/(double)(endTime - startTime));
+        System.out.println("r: " + inBetween(source.getR(), source.getR(), percentage));
+
 
         return new Position(
-                inBetween(source.getR(), source.getR(), percentage),
-                inBetween(source.getS(), source.getS(), percentage),
-                inBetween(source.getZ(), source.getZ(), percentage)
+                inBetween(source.getR(), destination.getR(), percentage),
+                inBetween(source.getS(), destination.getS(), percentage),
+                inBetween(source.getZ(), destination.getZ(), percentage)
         );
     }
 
     private double inBetween(double start, double end, double percentage) {
-        return percentage*end + (1 - percentage)*start;
+        System.out.println("end: " + percentage*end );
+        System.out.println("start: " + (1d - percentage)*start );
+        return start + percentage*(end - start);
     }
 
     @Override
     public void draw(Graphics2D g) {
         getChild().setPosition(calculateCurrentPosition());
         super.draw(g);
+    }
+
+    @Override
+    public void update() {
+        System.out.println(subject.getMovingTicks()* Config.MODEL_TICK);
+        System.out.println(subject.getLocation());
+        source = destination;
+        destination = subject.getLocation().toPosition();
+        startTime = ViewTime.getInstance().getCurrentTime();
+        endTime = startTime + subject.getMovingTicks()* Config.MODEL_TICK;
     }
 }

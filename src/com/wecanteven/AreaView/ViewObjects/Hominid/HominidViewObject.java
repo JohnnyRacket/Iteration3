@@ -34,6 +34,7 @@ public class HominidViewObject implements ViewObject, Observer{
 
     @Override
     public void setPosition(Position p) {
+        this.body.setPosition(p);
         this.position = p;
     }
 

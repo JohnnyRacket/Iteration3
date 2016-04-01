@@ -12,7 +12,7 @@ import com.wecanteven.UtilityClasses.Location;
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Character extends Entity implements Moveable,Positionable{
+public class Character extends Entity {
     Occupation occupation;
     Storage itemStorage, abilityStorage;
     Stats stats;
