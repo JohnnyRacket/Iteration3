@@ -67,10 +67,10 @@ public class ScrollableMenu extends Drawable implements Navigatable {
                 ScrollableMenuItem current = (ScrollableMenuItem) iter.next();
                 g2d.setColor(selectedColor);
                 g2d.fillRect(offsetX + calculatedPadding / 2, offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
-                current.paintComponent(g2d, offsetX + calculatedPadding / 2 , offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
+                current.draw(g2d, offsetX + calculatedPadding / 2 , offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
             } else {
                 ScrollableMenuItem current = (ScrollableMenuItem) iter.next();
-                current.paintComponent(g2d, offsetX + calculatedPadding / 2, offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
+                current.draw(g2d, offsetX + calculatedPadding / 2, offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
             }
             offsetY += itemHeight;
             index++;
