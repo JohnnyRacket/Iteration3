@@ -7,9 +7,8 @@ import java.awt.*;
 /**
  * Created by John on 3/31/2016.
  */
-public class ScrollableMenuItem extends Drawable implements SelectableItem{
+public class ScrollableMenuItem extends SelectableItem{
 
-    private SelectableMenuItemCommand command;
     private String name;
     private Color textColor;
 
@@ -21,15 +20,6 @@ public class ScrollableMenuItem extends Drawable implements SelectableItem{
     public ScrollableMenuItem(String name, SelectableMenuItemCommand command, Color textColor){
         this(name, command);
         this.setTextColor(textColor);
-    }
-
-    @Override
-    public void select() {
-        try {
-            command.execute();
-        }catch (NullPointerException e){
-            System.out.println(e);
-        }
     }
 
 
@@ -49,13 +39,6 @@ public class ScrollableMenuItem extends Drawable implements SelectableItem{
         this.textColor = textColor;
     }
 
-    public SelectableMenuItemCommand getCommand() {
-        return command;
-    }
-
-    public void setCommand(SelectableMenuItemCommand command) {
-        this.command = command;
-    }
 
     @Override
     public void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight) {
