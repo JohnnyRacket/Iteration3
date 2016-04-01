@@ -1,13 +1,13 @@
 package com.wecanteven.Models.Items;
 
-import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Positionable;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.ItemVisitor;
 
 /**
  * Created by simonnea on 3/31/16.
  */
-public abstract class Item implements Moveable, Positionable {
+public abstract class Item implements Positionable {
     private String name;
     private Location location;
 
@@ -41,8 +41,11 @@ public abstract class Item implements Moveable, Positionable {
         return this.location;
     }
 
-    @Override
-    public int getMovingTicks() {
-        return 0;
+    /**
+     * Visitation rights
+     * */
+
+    public void accept(ItemVisitor visitor) {
+        visitor.visitItem(this);
     }
 }
