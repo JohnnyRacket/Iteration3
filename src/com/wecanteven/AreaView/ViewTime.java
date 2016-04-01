@@ -37,7 +37,7 @@ public class ViewTime {
         return currentTime;
     }
 
-    interface vCommand {
+    public interface vCommand {
         void execute();
     }
 

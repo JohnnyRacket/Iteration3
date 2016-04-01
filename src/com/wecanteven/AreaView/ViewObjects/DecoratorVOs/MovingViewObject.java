@@ -62,13 +62,18 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
         super.draw(g);
     }
 
-    @Override
-    public void update() {
-        System.out.println(subject.getMovingTicks()* Config.MODEL_TICK);
-        System.out.println(subject.getLocation());
-        source = destination;
+    public boolean hasStateChange() {
+        return !subject.getLocation().toPosition().equals(destination);
+    }
+    public void updateState() {
+        source = calculateCurrentPosition();
         destination = subject.getLocation().toPosition();
         startTime = ViewTime.getInstance().getCurrentTime();
         endTime = startTime + subject.getMovingTicks()* Config.MODEL_TICK;
+    }
+
+    @Override
+    public void update() {
+        if (hasStateChange()) updateState();
     }
 }

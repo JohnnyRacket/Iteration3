@@ -64,47 +64,41 @@ public class AreaView extends JPanel {
         for (int i = 0; i < 20; i++) {
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.NORTHEAST);
+                entity.setDirection(Direction.NORTH);
                 entity.setLocation(new Location(3,1,2));
                 entity.setMovingTicks(20);
-                ((MovingViewObject) testAvatar).update();
             }, half + full*i);
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(2,1,2));
+                entity.setDirection(Direction.NORTHWEST);
+                entity.setLocation(new Location(2,1,1));
                 entity.setMovingTicks(20);
                 System.out.println("TEST");
-                ((MovingViewObject) testAvatar).update();
             }, 2*half + full*i);
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTH);
-                entity.setLocation(new Location(1,0,2));
+                entity.setDirection(Direction.NORTHWEST);
+                entity.setLocation(new Location(1,1,0));
                 entity.setMovingTicks(20);
-                ((MovingViewObject) testAvatar).update();
             }, 3*half + full*i);
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTHWEST);
-                entity.setLocation(new Location(0,1,2));
+                entity.setDirection(Direction.SOUTH);
+                entity.setLocation(new Location(1,2,0));
                 entity.setMovingTicks(20);
                 System.out.println("TEST2");
-                ((MovingViewObject) testAvatar).update();
             }, 4*half + full*i);
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.NORTHWEST);
-                entity.setLocation(new Location(1,1,2));
+                entity.setDirection(Direction.SOUTHEAST);
+                entity.setLocation(new Location(2,2,1));
                 entity.setMovingTicks(20);
-                ((MovingViewObject) testAvatar).update();
             }, 5*half + full*i);
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.NORTH);
-                entity.setLocation(new Location(1,2,2));
+                entity.setDirection(Direction.SOUTHEAST);
+                entity.setLocation(new Location(3,2,2));
                 entity.setMovingTicks(20);
-                ((MovingViewObject) testAvatar).update();
             }, 6*half + full*i);
         }
     }

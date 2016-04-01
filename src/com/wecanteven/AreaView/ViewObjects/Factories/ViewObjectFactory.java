@@ -26,13 +26,14 @@ public abstract class ViewObjectFactory {
         this.areaView = areaView;
     }
 
-    public ViewObject createSneak(Position p, Direction d, Entity entity) {
+    public ViewObject createSneak(Position p, Direction d, Entity subject) {
         DirectionalViewObject body = createBody(p, d, "Sneak");
 
 
         HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 1, 1, 1, Math.PI/3, hexDrawingStrategy), new HandViewObject(p,  0.5, 0.5, 0.5, 0.5, hexDrawingStrategy), p);
-        HominidViewObject stationarySneak = new  HominidViewObject(p, d, entity, body, hands);
-        return createMovingViewObject(entity, stationarySneak);
+        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands);
+        subject.attach(stationarySneak);
+        return createMovingViewObject(subject, stationarySneak);
 
     }
 
@@ -47,6 +48,8 @@ public abstract class ViewObjectFactory {
     }
 
     private MovingViewObject createMovingViewObject(Entity subject, ViewObject child) {
-        return new MovingViewObject(child, subject, areaView);
+        MovingViewObject mvo = new  MovingViewObject(child, subject, areaView);
+        subject.attach(mvo);
+        return mvo;
     }
 }

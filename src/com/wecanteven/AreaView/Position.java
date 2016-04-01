@@ -44,4 +44,16 @@ public class Position {
     public Location getLocation() {
         return new Location((int)r,(int)s,(int)z);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Position) {
+            Position p = (Position) o;
+            return  p.getR() == getR() &&
+                    p.getS() == getS() &&
+                    p.getZ() == getZ();
+
+        }
+        return false;
+    }
 }
