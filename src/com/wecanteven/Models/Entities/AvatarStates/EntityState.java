@@ -1,12 +1,11 @@
-package com.wecanteven.Models.Entities.CharacterStates;
+package com.wecanteven.Models.Entities.AvatarStates;
 
-import com.wecanteven.Models.Entities.CharacterStates.CharacterState;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class MountState extends CharacterState {
+public class EntityState {
     public void attack(Direction d){}
     public void useAbility(int index){}
     public boolean equipItem(String id){

@@ -9,15 +9,20 @@ import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Positionable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.CanMoveVisitor;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
 public class Character extends Entity {
-    Occupation occupation;
-    Storage itemStorage, abilityStorage;
-    Stats stats;
+    private Occupation occupation;
+    private Storage itemStorage, abilityStorage;
+    private Stats stats;
+
+
     public Character(){}
+
+
     public void attack(Direction d){}
     public void useAbility(int index){}
 

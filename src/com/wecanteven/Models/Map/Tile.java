@@ -5,6 +5,7 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Map.Terrain.Terrain;
 import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
@@ -19,6 +20,12 @@ public class Tile implements MapVisitable {
     private TileSlot<OneShot> oneShot;
     private ArrayList<TakeableItem> takeableItems = new ArrayList<>();
     private TileSlot<Entity> entity;
+
+    private Terrain terrain;
+
+    public Tile(Terrain terrain){
+        this.terrain = terrain;
+    }
 
 
     @Override
@@ -58,5 +65,33 @@ public class Tile implements MapVisitable {
     public boolean remove(TakeableItem takeableItem){
         this.takeableItems.remove(takeableItem);
         return true;
+    }
+
+    public TileSlot<Obstacle> getObstacle() {
+        return obstacle;
+    }
+
+    public TileSlot<InteractiveItem> getInteractiveItem() {
+        return interactiveItem;
+    }
+
+    public TileSlot<OneShot> getOneShot() {
+        return oneShot;
+    }
+
+    public ArrayList<TakeableItem> getTakeableItems() {
+        return takeableItems;
+    }
+
+    public TileSlot<Entity> getEntity() {
+        return entity;
+    }
+
+    public Terrain getTerrain() {
+        return terrain;
+    }
+
+    public void setTerrain(Terrain terrain) {
+        this.terrain = terrain;
     }
 }

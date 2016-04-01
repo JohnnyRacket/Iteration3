@@ -1,13 +1,15 @@
 package com.wecanteven.Models.Map;
 
+import com.wecanteven.Visitors.MapVisitor;
+
 /**
  * Created by John on 3/31/2016.
  */
-public class TileSlot<T> {
+public class TileSlot<T> implements MapVisitable{
     private T t;
 
     public boolean add(T t){
-        if(this.t == null){
+        if(this.isEmpty()){
             this.t = t;
             return true;
         }else{
@@ -23,5 +25,14 @@ public class TileSlot<T> {
             return false;
         }
 
+    }
+
+    @Override
+    public void accept(MapVisitor visitor) {
+        visitor.visitTileSlot(this);
+    }
+
+    public boolean isEmpty(){
+        return (this.t == null) ? true : false;
     }
 }

@@ -1,6 +1,6 @@
 package com.wecanteven.Models.Entities;
 
-import com.wecanteven.Models.Entities.CharacterStates.CharacterState;
+import com.wecanteven.Models.Entities.AvatarStates.AvatarState;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
@@ -8,7 +8,7 @@ import com.wecanteven.UtilityClasses.Direction;
  */
 public class Avatar extends Entity{
     Character avatar,pet;
-    CharacterState state;
+    AvatarState state;
     public Avatar(){}
     public void attack(Direction d){}
     public void useAbility(int index){}

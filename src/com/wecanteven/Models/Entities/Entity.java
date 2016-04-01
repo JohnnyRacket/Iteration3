@@ -4,6 +4,7 @@ import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.CanMoveVisitor;
 
 /**
  * Created by Brandon on 3/31/2016.
@@ -11,6 +12,7 @@ import com.wecanteven.UtilityClasses.Location;
 
 public class Entity implements Moveable, Directional{
     private Location location;
+    private CanMoveVisitor canMoveVisitor;
 
     public Entity(){}
     public boolean move(Direction d){
