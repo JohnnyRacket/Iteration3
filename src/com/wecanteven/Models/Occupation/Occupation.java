@@ -25,4 +25,5 @@ public abstract class Occupation {
     public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor) {
         this.canMoveVisitor = canMoveVisitor;
     }
+
 }

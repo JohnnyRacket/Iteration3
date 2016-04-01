@@ -1,5 +1,7 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.Models.Stats.Stats;
+import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.UtilityClasses.Direction;
@@ -13,6 +15,7 @@ import com.wecanteven.Visitors.CanMoveVisitor;
 public class Entity implements Moveable, Directional{
     private Location location;
     private CanMoveVisitor canMoveVisitor;
+    protected Stats stats;
 
     public Entity(){}
     public boolean move(Direction d){
@@ -59,4 +62,7 @@ public class Entity implements Moveable, Directional{
         this.location = location;
     }
 
+    private void levelUp(){
+        stats.levelUp(new StatsAddable(1,1,1,1,1,1,1,1,1));
+    }
 }

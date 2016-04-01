@@ -19,7 +19,6 @@ public class Character extends Entity {
     private Storage itemStorage, abilityStorage;
     private Stats stats;
 
-
     public Character(){}
 
 
@@ -74,5 +73,8 @@ public class Character extends Entity {
     }
     public Location getLocation(){
         return this.getLocation();
+    }
+    private void levelUp(){
+        stats.levelUp(occupation.getStatsAddable());
     }
 }
