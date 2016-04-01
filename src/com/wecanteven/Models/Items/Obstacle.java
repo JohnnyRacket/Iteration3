@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Items;
 
-import com.wecanteven.Models.Entities.Entity;
+
+import com.wecanteven.Visitors.ItemVisitor;
 
 /**
  * Created by simonnea on 3/31/16.
@@ -12,8 +13,7 @@ public class Obstacle extends Item {
         super(name);
     }
 
-    @Override
-    public void interact(Entity entity) {
-
+    public void accept(ItemVisitor visitor) {
+        visitor.visitObstacle(this);
     }
 }
