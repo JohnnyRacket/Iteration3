@@ -3,6 +3,7 @@ package com.wecanteven.Models.Map;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
+import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.TakeableItem;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.MapVisitor;
@@ -14,10 +15,11 @@ import java.util.ArrayList;
  */
 public class Tile implements MapVisitable {
 
-    private Obstacle obstacle;
-    private InteractiveItem item;
-    private ArrayList<TakeableItem> takeableItems;
-    private Entity entity;
+    private TileSlot<Obstacle> obstacle;
+    private TileSlot<InteractiveItem> interactiveItem;
+    private TileSlot<OneShot> oneShot;
+    private ArrayList<TakeableItem> takeableItems = new ArrayList<>();
+    private TileSlot<Entity> entity;
 
 
     @Override
@@ -26,11 +28,21 @@ public class Tile implements MapVisitable {
     }
 
     public boolean add(Entity entity){
-        if(this.entity == null){
-            this.entity = entity;
-            return true;
-        }else{
-            return false;
-        }
+        return this.entity.add(entity);
+    }
+    public boolean add(OneShot oneShot){
+        return this.oneShot.add(oneShot);
+    }
+    public boolean add(Obstacle obstacle) {
+        return this.obstacle.add(obstacle);
+    }
+    public boolean add(InteractiveItem interactiveItem){
+        return this.interactiveItem.add(interactiveItem);
+    }
+
+
+    public boolean add(TakeableItem takeableItem){
+        this.takeableItems.add(takeableItem);
+        return true;
     }
 }
