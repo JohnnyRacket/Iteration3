@@ -8,10 +8,13 @@ import com.wecanteven.Visitors.ItemVisitor;
  */
 public class Obstacle extends Item {
 
-    public Obstacle(String name)
-    {
+    public Obstacle(String name) {
         super(name);
     }
+
+    /**
+     * Visitation Rights
+     * */
 
     public void accept(ItemVisitor visitor) {
         visitor.visitObstacle(this);
