@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by Brandon on 3/31/2016.
  */
 
-public class Entity implements Moveable, Directional, Observable{
+public class Entity implements Moveable, Directional, Observable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
 
     @Override
@@ -32,7 +32,9 @@ public class Entity implements Moveable, Directional, Observable{
     public boolean move(Direction d){
         return false;
     }
-    public void die(){}
+    public void die(){
+        stats.refreshStats();
+    }
     public boolean isActive(){
         return false;
     }
@@ -82,5 +84,10 @@ public class Entity implements Moveable, Directional, Observable{
 
     public Stats getStats(){
         return stats;
+    }
+
+    @Override
+    public void update(){
+        die();
     }
 }
