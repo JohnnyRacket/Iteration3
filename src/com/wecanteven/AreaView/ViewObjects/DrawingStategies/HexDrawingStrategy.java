@@ -3,6 +3,7 @@ package com.wecanteven.AreaView.ViewObjects.DrawingStategies;
 
 import com.wecanteven.AreaView.DynamicImages.DynamicImage;
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.ViewObject;
 
 import java.awt.*;
 
@@ -13,7 +14,13 @@ public class HexDrawingStrategy implements DynamicImageDrawingStrategy, StringDr
     private final int HEX_WIDTH = 56;
     private final int HEX_LENGTH = 48;
     private final int HEX_HEIGHT = 15;
+    private ViewObject centerTarget;
 
+    public HexDrawingStrategy() {}
+
+    public void setCenterTarget(ViewObject centerTarget) {
+        this.centerTarget = centerTarget;
+    }
 
     private int findX(Position position) {
         return (int)(position.getR()*HEX_WIDTH);
@@ -25,6 +32,10 @@ public class HexDrawingStrategy implements DynamicImageDrawingStrategy, StringDr
 
     @Override
     public void draw(Graphics2D g, DynamicImage dImage, Position position) {
+//        g.drawImage(dImage.getImage(),
+//                findX(position) + dImage.getxOffset() - findX(centerTarget.getPosition()),
+//                findY(position) + dImage.getyOffset() - findY(centerTarget.getPosition()),
+//                null);
         g.drawImage(dImage.getImage(),
                 findX(position) + dImage.getxOffset(),
                 findY(position) + dImage.getyOffset(),

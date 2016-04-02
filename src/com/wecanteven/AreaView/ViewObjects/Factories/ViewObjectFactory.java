@@ -20,11 +20,18 @@ import com.wecanteven.UtilityClasses.Direction;
  * Created by Alex on 3/31/2016.
  */
 public abstract class ViewObjectFactory {
-    private HexDrawingStrategy hexDrawingStrategy = new HexDrawingStrategy();
+    private HexDrawingStrategy hexDrawingStrategy;
     private AreaView areaView;
     private DynamicImageFactory factory = DynamicImageFactory.getInstance();
 
     public ViewObjectFactory(AreaView areaView) {
+        this.hexDrawingStrategy = new HexDrawingStrategy();
+        this.hexDrawingStrategy.setCenterTarget(
+                createSimpleViewObject(
+                        new Position(0,0,0),
+                        "null.xml"
+                )
+        );
         this.areaView = areaView;
     }
 
