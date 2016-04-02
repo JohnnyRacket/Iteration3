@@ -18,13 +18,16 @@ import java.util.ArrayList;
  * Created by Brandon on 3/31/2016.
  */
 
-public class Entity implements Moveable, Directional, Observable{
+public class Entity implements Moveable, Directional, Observable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
     ActionHandler actionHandler;
 
     @Override
     public ArrayList<Observer> getObservers() {
         return observers;
+    }
+    public void update(){
+        die();
     }
 
     private Location location;
@@ -35,7 +38,9 @@ public class Entity implements Moveable, Directional, Observable{
     public boolean move(Direction d){
         return actionHandler.move(this, d);
     }
-    public void die(){}
+    public void die(){
+        stats.refreshStats();
+    }
     public boolean isActive(){
         return false;
     }
