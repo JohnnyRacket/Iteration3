@@ -30,6 +30,7 @@ public class ViewTime {
     }
 
     public void register(vCommand action, long time) {
+        if (time <= 0) time = 1;
         executables.add(new Tuple<>(action, time + currentTime ));
     }
 

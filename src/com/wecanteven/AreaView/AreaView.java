@@ -10,7 +10,11 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.TileViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
+import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Items.InteractiveItem;
+import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
@@ -29,34 +33,29 @@ public class AreaView extends JPanel {
     private xySorted3DArray backingArray = new xySorted3DArray();
 
     public AreaView() {
-        DynamicImageDrawingStrategy dStrat = new HexDrawingStrategy();
 
-        for (int i = 0; i< 6; i++) {
-            for (int j = 0; j<6; j++) {
-                backingArray.add(new SimpleViewObject(new Position(i,j,0), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
-            }
-        }
 
-        for (int i = 2; i< 4; i++) {
-            for (int j = 1; j<4; j++) {
-                backingArray.add(new SimpleViewObject(new Position(i,j,1), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
-            }
-        }
-        for (int i = 3; i< 4; i++) {
-            for (int j = 1; j<3; j++) {
-                backingArray.add(new SimpleViewObject(new Position(i,j,2), DynamicImageFactory.getInstance().loadDynamicImage("Terrain/Grass.xml"), dStrat));
-            }
-        }
         PlainsViewObjectFactory factory = new PlainsViewObjectFactory(this);
+        LevelFactory levelFactory = new DopeAssLevelFactory();
+        Map map = levelFactory.createMap();
+        VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory);
+        map.accept(voCreationVisitor);
+
+
+
 
 
         Entity entity = new Entity();
+        ViewObject testAvatar = factory.createSneak(new Position(3,2, 1), Direction.NORTH, entity);
+        addViewObject(testAvatar);
 
-        ViewObject testAvatar = factory.createSneak(new Position(3,2, 2), Direction.NORTH, entity);
+        InteractiveItem iItem = new InteractiveItem("Button");
+        ViewObject button = factory.createInteractableItem(new Position(3,2,1), iItem);
+        addViewObject(button);
 
 
-
-        backingArray.add(testAvatar);
+        ViewTime.getInstance().register(iItem::trigger, 1500);
+        ViewTime.getInstance().register(iItem::release, 3000);
 
 
         int half = 1000;
@@ -65,44 +64,53 @@ public class AreaView extends JPanel {
 
             ViewTime.getInstance().register(() -> {
                 entity.setDirection(Direction.NORTH);
-                entity.setLocation(new Location(3,1,2));
+                entity.setLocation(new Location(3,1,1));
                 entity.setMovingTicks(20);
             }, half + full*i);
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.NORTHWEST);
-                entity.setLocation(new Location(2,1,1));
+                entity.setDirection(Direction.NORTHEAST);
+                entity.setLocation(new Location(4,0,1));
                 entity.setMovingTicks(20);
                 System.out.println("TEST");
             }, 2*half + full*i);
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.NORTHWEST);
-                entity.setLocation(new Location(1,1,0));
+                entity.setDirection(Direction.SOUTHEAST);
+                entity.setLocation(new Location(5,0,2));
                 entity.setMovingTicks(20);
             }, 3*half + full*i);
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTH);
-                entity.setLocation(new Location(1,2,0));
+                entity.setDirection(Direction.SOUTHEAST);
+                entity.setLocation(new Location(6,0,2));
                 entity.setMovingTicks(20);
                 System.out.println("TEST2");
             }, 4*half + full*i);
 
             ViewTime.getInstance().register(() -> {
                 entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(2,2,1));
+                entity.setLocation(new Location(7,0,4));
                 entity.setMovingTicks(20);
             }, 5*half + full*i);
 
             ViewTime.getInstance().register(() -> {
                 entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(3,2,2));
+                entity.setLocation(new Location(8,0,4));
                 entity.setMovingTicks(20);
             }, 6*half + full*i);
         }
     }
 
+    public void addViewObject(ViewObject vo) {
+        backingArray.add(vo, vo.getPosition());
+    }
+    public void addViewObject(ViewObject vo, Position p) {
+        backingArray.add(vo, p);
+    }
+    public void removeViewObject(ViewObject vo, Position p) {
+        backingArray.remove(vo, p);
+    }
 
 
     @Override
@@ -128,12 +136,19 @@ public class AreaView extends JPanel {
 
         }
 
-        public void add(ViewObject vo) {
-            int x = convertToX(vo.getPosition());
-            int y = convertToY(vo.getPosition());
-            int z = convertToZ(vo.getPosition());
-            fit(x,y,z);
-            cube.get(y).get(z).get(x).add(vo);
+        public void add(ViewObject vo, Position p) {
+            int x = convertToX(p);
+            int y = convertToY(p);
+            int z = convertToZ(p);
+            fit(x, y, z);
+            get(x, y, z).add(vo);
+        }
+
+        public void remove(ViewObject vo, Position p) {
+            int x = convertToX(p);
+            int y = convertToY(p);
+            int z = convertToZ(p);
+            get(x, y, z).remove(vo);
         }
 
         public void draw(Graphics2D g) {
@@ -144,6 +159,9 @@ public class AreaView extends JPanel {
                     }
                 }
             }
+        }
+        private TileViewObject get(int x, int y, int z) {
+            return cube.get(y).get(z).get(x);
         }
 
         private void fit(int x, int y, int z) {
