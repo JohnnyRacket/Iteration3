@@ -10,8 +10,10 @@ import java.util.ArrayList;
  */
 public class PrimaryStat extends Stat implements Observable {
     private ArrayList<Observer> observers;
-    public PrimaryStat(int stat){
-        observers = new ArrayList<Observer>();
+
+    public PrimaryStat(String name,int stat){
+        this.name = name;
+        observers = new ArrayList<>();
         this.stat = stat;
     }
     @Override
@@ -22,5 +24,12 @@ public class PrimaryStat extends Stat implements Observable {
     public void add(int addable){
         stat += addable;
         notifyObservers();
+    }
+
+    @Override
+    public void notifyObservers(){
+        for(Observer stat: observers){
+            stat.update();
+        }
     }
 }

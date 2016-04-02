@@ -8,15 +8,15 @@ public class StatsAddable {
     private PrimaryStat lives,health,mana;
 
     public StatsAddable(int lives, int strength, int agility, int intellect, int hardiness, int experience, int movement, int health, int mana){
-        this.lives = new PrimaryStat(lives);
-        this.strength = new PrimaryStat(strength);
-        this.agility = new PrimaryStat(agility);
-        this.intellect = new PrimaryStat(intellect);
-        this.hardiness = new PrimaryStat(hardiness);
-        this.experience = new PrimaryStat(experience);
-        this.movement = new PrimaryStat(movement);
-        this.health = new PrimaryStat(health);
-        this.mana = new PrimaryStat(mana);
+        this.lives = new PrimaryStat("Lives",lives);
+        this.strength = new PrimaryStat("Strength",strength);
+        this.agility = new PrimaryStat("Agility",agility);
+        this.intellect = new PrimaryStat("Intellect",intellect);
+        this.hardiness = new PrimaryStat("Hardiness",hardiness);
+        this.experience = new PrimaryStat("Experience",experience);
+        this.movement = new PrimaryStat("Movement",movement);
+        this.health = new PrimaryStat("Health",health);
+        this.mana = new PrimaryStat("Mana",mana);
     }
 
     //getters

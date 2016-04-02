@@ -9,6 +9,6 @@ import com.wecanteven.Visitors.TerranianCanMoveVisitor;
 public class Smasher extends Occupation{
     public Smasher(){
         this.setCanMoveVisitor(new TerranianCanMoveVisitor());
-        //TODO: add stats addable stuff when brandon pushes it
+        statsAddable = new StatsAddable(0,5,1,1,1,0,0,0,0);
     }
 }
