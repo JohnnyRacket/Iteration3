@@ -86,6 +86,7 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     }
 
     private boolean shouldSwapNow() {
+        //TODO: account for z shit
         return (destination.getR() - source.getR()) + 2*(destination.getS() - source.getS()) > 0;
     }
 
@@ -93,7 +94,6 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     public void update() {
         if (hasStateChange()) {
             updateState();
-            //TODO: make sure multiple threads of this cant start
             adjustPosition(endTime);
             reposition();
         }
