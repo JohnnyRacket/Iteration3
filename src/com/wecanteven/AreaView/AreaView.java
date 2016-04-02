@@ -72,26 +72,26 @@ public class AreaView extends JPanel {
 
             ViewTime.getInstance().register(() -> {
                 entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(5,0,0));
+                entity.setLocation(new Location(5,0,1));
                 entity.setMovingTicks(20);
             }, 3*half + full*i);
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTH);
-                entity.setLocation(new Location(5,1,0));
+                entity.setDirection(Direction.SOUTHEAST);
+                entity.setLocation(new Location(6,0,1));
                 entity.setMovingTicks(20);
                 System.out.println("TEST2");
             }, 4*half + full*i);
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTHWEST);
-                entity.setLocation(new Location(4,2,0));
+                entity.setDirection(Direction.SOUTHEAST);
+                entity.setLocation(new Location(7,0,3));
                 entity.setMovingTicks(20);
             }, 5*half + full*i);
 
             ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.NORTHWEST);
-                entity.setLocation(new Location(3,2,0));
+                entity.setDirection(Direction.SOUTHEAST);
+                entity.setLocation(new Location(8,0,3));
                 entity.setMovingTicks(20);
             }, 6*half + full*i);
         }

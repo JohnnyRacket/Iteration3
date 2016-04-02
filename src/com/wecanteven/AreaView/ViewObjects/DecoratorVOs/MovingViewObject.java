@@ -27,6 +27,8 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
 
     private Moveable subject;
 
+    private final double jumpConstant = 0.8;
+
     public MovingViewObject(ViewObject child, Moveable subject, AreaView areaView) {
         super(child);
         this.subject = subject;
@@ -46,12 +48,20 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
         return new Position(
                 inBetween(source.getR(), destination.getR(), percentage),
                 inBetween(source.getS(), destination.getS(), percentage),
-                inBetween(source.getZ(), destination.getZ(), percentage)
+                parabola(source.getZ(), destination.getZ(), percentage)
         );
     }
 
     private double inBetween(double start, double end, double percentage) {
         return start + percentage*(end - start);
+    }
+
+    private double parabola(double start, double end, double percentage) {
+        double jumpConstant = end > start ? this.jumpConstant : 0;
+        double deltaY = end - start;
+        double a = -2*deltaY-4*jumpConstant;
+        double v = 3*deltaY+4*jumpConstant;
+        return a*Math.pow(percentage, 2) + v*percentage + start;
     }
 
     private boolean hasStateChange() {
