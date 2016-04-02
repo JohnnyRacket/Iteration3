@@ -4,65 +4,47 @@ package com.wecanteven.Models.Stats;
  * Created by Brandon on 3/31/2016.
  */
 public class StatsAddable {
-    private int lives;
-    private int strength,agility,intellect,hardiness,experience,movement;
-    private int health,mana;
+    private PrimaryStat strength,agility,intellect, hardiness, experience, movement;
+    private PrimaryStat lives,health,mana;
 
     public StatsAddable(int lives, int strength, int agility, int intellect, int hardiness, int experience, int movement, int health, int mana){
-        this.lives = lives;
-        this.strength = strength;
-        this.agility = agility;
-        this.intellect = intellect;
-        this.hardiness = hardiness;
-        this.experience = experience;
-        this.movement = movement;
-        this.health = health;
-        this.mana = mana;
-    }
-
-    public void sum(StatsAddable other){
-        lives += other.getLives();
-        strength += other.getStrength();
-        agility += other.getAgility();
-        intellect += other.getIntellect();
-        hardiness += other.getHardiness();
-        experience += other.getExperience();
-        movement += other.getMovement();
-        health += other.getHealth();
-        mana += other.getMana();
-    }
-    public void subtract(StatsAddable other){
-        lives -= other.getLives();
-        strength -= other.getStrength();
-        agility -= other.getAgility();
-        intellect -= other.getIntellect();
-        hardiness -= other.getHardiness();
-        experience -= other.getExperience();
-        movement -= other.getMovement();
-        health -= other.getHealth();
-        mana -= other.getMana();
+        this.lives = new PrimaryStat(lives);
+        this.strength = new PrimaryStat(strength);
+        this.agility = new PrimaryStat(agility);
+        this.intellect = new PrimaryStat(intellect);
+        this.hardiness = new PrimaryStat(hardiness);
+        this.experience = new PrimaryStat(experience);
+        this.movement = new PrimaryStat(movement);
+        this.health = new PrimaryStat(health);
+        this.mana = new PrimaryStat(mana);
     }
 
     //getters
     public int getLives(){
-        return lives;
+        return lives.getStat();
     }
     public int getStrength(){
-        return strength;
+        return strength.getStat();
     }
-    public int getAgility() { return agility; }
+    public int getAgility(){
+        return agility.getStat();
+    }
     public int getIntellect(){
-        return intellect;
+        return intellect.getStat();
     }
     public int getHardiness(){
-        return hardiness;
+        return hardiness.getStat();
     }
     public int getExperience(){
-        return experience;
+        return experience.getStat();
     }
     public int getMovement(){
-        return movement;
+        return movement.getStat();
     }
-    public int getHealth() { return health; }
-    public int getMana() { return mana; }
+    public int getHealth(){
+        return health.getStat();
+    }
+    public int getMana(){
+        return mana.getStat();
+    }
 }

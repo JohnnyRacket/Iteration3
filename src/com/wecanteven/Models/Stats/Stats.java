@@ -8,84 +8,87 @@ import java.util.ArrayList;
  * Created by Brandon on 3/31/2016.
  */
 public class Stats {
-    private StatsAddable baseStats, modifiedStats;
-    private int level,maxHealth,maxMana,offensiveRating,defensiveRating,armorRating;
-    private int maxExperience,currentHealth,currentMana;
-    private ArrayList buffedStats;
-    private Entity entity;
+    private PrimaryStat strength,agility,intellect, hardiness, experience, movement;
+    private PrimaryStat lives,currentHealth,currentMana;
+    private Stat maxHealth,maxMana,offensiveRating,defensiveRating,armorRating;
+    private LevelStat level;
 
-    //constructor sets the reference to the entity that holds it
-    public Stats(Entity entity){
-        buffedStats  = new ArrayList<StatsAddable>();
-        this.entity = entity;
+    public Stats(int strength,int agility,int intellect,int hardiness,int movement){
+        this.strength = new PrimaryStat(strength);
+        this.agility = new PrimaryStat(agility);
+        this.intellect = new PrimaryStat(intellect);
+        this.hardiness = new PrimaryStat(hardiness);
+        experience = new PrimaryStat(0);
+        this.movement = new PrimaryStat(movement);
+
+        level = new LevelStat(experience);
+        maxHealth = new HealthStat(this.hardiness,level);
+        maxMana = new ManaStat(this.intellect,level);
+        offensiveRating = new OffensiveRatingStat(this.strength,level);
+        defensiveRating = new DefensiveRatingStat(this.agility,level);
+        armorRating = new ArmorRating(this.hardiness);
+
+        lives = new PrimaryStat(3);
+        currentHealth = new PrimaryStat(maxHealth.getStat());
+        currentMana = new PrimaryStat(maxMana.getStat());
     }
 
-    public void modifyStats(StatsAddable addable){
-        modifiedStats.sum(addable);
-    }
-
-    public void addBuff(StatsAddable addable){
-        buffedStats.add(addable);
-        modifiedStats.sum(addable);
-    }
-    public void removeBuff(StatsAddable addable){
-        buffedStats.remove(addable);
-        modifiedStats.subtract(addable);
-    }
-
-    //permanately adds to the baseStats object
-    public void levelUp(StatsAddable levelStats){
-        baseStats.sum(levelStats);
-        modifiedStats.sum(levelStats);
+    public void modifyStats(StatsAddable statsAddable){
+        lives.add(statsAddable.getLives());
+        strength.add(statsAddable.getStrength());
+        agility.add(statsAddable.getAgility());
+        intellect.add(statsAddable.getIntellect());
+        hardiness.add(statsAddable.getHardiness());
+        experience.add(statsAddable.getExperience());
+        movement.add(statsAddable.getMovement());
+        currentHealth.add(statsAddable.getHealth());
+        currentMana.add(statsAddable.getMana());
     }
 
     //getters
-    public StatsAddable getBaseStats(){
-        return baseStats;
-    }
     public int getLives(){
-        return modifiedStats.getLives();
+        return lives.getStat();
     }
     public int getStrength(){
-        return modifiedStats.getStrength();
+        return strength.getStat();
+    }
+    public int getAgility(){
+        return agility.getStat();
     }
     public int getIntellect(){
-        return modifiedStats.getIntellect();
+        return intellect.getStat();
     }
     public int getHardiness(){
-        return modifiedStats.getHardiness();
+        return hardiness.getStat();
     }
     public int getExperience(){
-        return modifiedStats.getExperience();
+        return experience.getStat();
     }
     public int getMovement(){
-        return modifiedStats.getMovement();
+        return movement.getStat();
     }
     public int getLevel(){
-        return level;
+        return level.getStat();
     }
     public int getHealth(){
-        return currentHealth;
+        return currentHealth.getStat();
     }
     public int getMana(){
-        return currentMana;
+        return currentMana.getStat();
     }
     public int getOffensiveRating(){
-        return offensiveRating;
+        return offensiveRating.getStat();
     }
     public int getDefensiveRating(){
-        return defensiveRating;
+        return defensiveRating.getStat();
     }
     public int getArmorRating(){
-        return armorRating;
-    }
-    public int getMaxExperience(){
-        return maxExperience;
+        return armorRating.getStat();
     }
     public int getMaxHealth(){
-        return maxHealth;
+        return maxHealth.getStat();
     }
     public int getMaxMana(){
-        return maxMana;
+        return maxMana.getStat();
     }
 }
