@@ -35,6 +35,7 @@ public class HandsViewObject implements ViewObject, Observer{
     @Override
     public void setPosition(Position p) {
         position = p;
+        handState.setHandsPosition(p);
     }
 
     public void draw(Graphics2D graphic) {

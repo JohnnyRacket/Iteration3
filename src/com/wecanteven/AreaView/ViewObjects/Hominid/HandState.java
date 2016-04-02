@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 
+import com.wecanteven.AreaView.Position;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
@@ -47,6 +48,11 @@ public abstract class HandState {
 
     public void attack(long durationOfAttack) {
         //TODO
+    }
+
+    public void setHandsPosition(Position position) {
+        this.leftHand.setPosition(position);
+        this.rightHand.setPosition(position);
     }
 
     public void equip(/*add weapon param model doesnt exist*/) {

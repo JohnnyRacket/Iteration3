@@ -161,6 +161,7 @@ public class AreaView extends JPanel {
             }
         }
         private TileViewObject get(int x, int y, int z) {
+            System.out.println("" + x + ", " + y + ", " + z);
             return cube.get(y).get(z).get(x);
         }
 

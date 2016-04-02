@@ -38,6 +38,16 @@ public class HominidViewObject implements ViewObject, Observer{
     public void setPosition(Position p) {
         this.body.setPosition(p);
         this.position = p;
+        updateComponentsPosition();
+    }
+
+    private void updateComponentsPosition() {
+        updateHandsPosition();
+    }
+
+    private void updateHandsPosition() {
+        Position tempPosition = new Position(position.getR(), position.getS(), position.getZ());
+        hands.setPosition(tempPosition);
     }
 
     @Override
@@ -52,3 +62,10 @@ public class HominidViewObject implements ViewObject, Observer{
         this.direction.setDirectionOf(body);
     }
 }
+
+/*
+    On direction change.. send to hands which needs to get angle and add pi/2 for one hand and -pi/2 for the other (do this in the hand state)
+    init the hands in the state instead of the factory as well.
+
+
+ */
