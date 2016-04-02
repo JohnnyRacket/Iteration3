@@ -98,4 +98,12 @@ public class Entity implements Moveable, Directional, Observable{
     public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor) {
         this.canMoveVisitor = canMoveVisitor;
     }
+
+    public ActionHandler getActionHandler() {
+        return actionHandler;
+    }
+
+    public void setActionHandler(ActionHandler actionHandler) {
+        this.actionHandler = actionHandler;
+    }
 }

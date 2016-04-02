@@ -1,6 +1,7 @@
 package com.wecanteven.MenuView;
 
 import com.wecanteven.Controllers.InputControllers.MainController;
+import com.wecanteven.GameLaunching.GameLaunchTemplate;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.HorizontalCenterContainer;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.VerticalCenterContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.RowedCompositeContainer;
@@ -19,6 +20,7 @@ import java.awt.*;
  */
 public class UIViewFactory {
     private JFrame jframe;
+    MainController controller;
 
     public UIViewFactory(JFrame jFrame){
         this.jframe = jFrame;
@@ -55,13 +57,15 @@ public class UIViewFactory {
     public SwappableView createAbilityView(){
         return null; //TODO: implement
     }
-    public SwappableView mainMenuView(){
+    public SwappableView createMainMenuView(){
         //make menu
         ScrollableMenu menu = new ScrollableMenu(400, 400);
         menu.setSelectedColor(Color.cyan);
         //make menu list
         NavigatableList list = new NavigatableList();
-        list.addItem(new ScrollableMenuItem("New Game", () -> {System.out.println("test 1 selected");}));
+        list.addItem(new ScrollableMenuItem("New Game", () -> {
+            GameLaunchTemplate template = new GameLaunchTemplate(controller);
+            template.launch();}));
         list.addItem(new ScrollableMenuItem("Load Game", () -> {System.out.println("test 2 selected");}));
         list.addItem(new ScrollableMenuItem("Exit", () -> {System.out.println("test 2 selected");}));
         menu.setList(list);
@@ -74,5 +78,13 @@ public class UIViewFactory {
         view.addNavigatable(menu);
         //return created swappable view
         return view;
+    }
+
+    public MainController getController() {
+        return controller;
+    }
+
+    public void setController(MainController controller) {
+        this.controller = controller;
     }
 }
