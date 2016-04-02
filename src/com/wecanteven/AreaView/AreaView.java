@@ -46,11 +46,11 @@ public class AreaView extends JPanel {
 
 
         Entity entity = new Entity();
-        ViewObject testAvatar = factory.createSneak(new Position(3,2, 2), Direction.NORTH, entity);
+        ViewObject testAvatar = factory.createSneak(new Position(3,2, 1), Direction.NORTH, entity);
         addViewObject(testAvatar);
 
         InteractiveItem iItem = new InteractiveItem("Button");
-        ViewObject button = factory.createInteractableItem(new Position(3,2,2), iItem);
+        ViewObject button = factory.createInteractableItem(new Position(3,2,1), iItem);
         addViewObject(button);
 
 
@@ -64,39 +64,39 @@ public class AreaView extends JPanel {
 
             ViewTime.getInstance().register(() -> {
                 entity.setDirection(Direction.NORTH);
-                entity.setLocation(new Location(3,1,0));
+                entity.setLocation(new Location(3,1,1));
                 entity.setMovingTicks(20);
             }, half + full*i);
 
             ViewTime.getInstance().register(() -> {
                 entity.setDirection(Direction.NORTHEAST);
-                entity.setLocation(new Location(4,0,0));
+                entity.setLocation(new Location(4,0,1));
                 entity.setMovingTicks(20);
                 System.out.println("TEST");
             }, 2*half + full*i);
 
             ViewTime.getInstance().register(() -> {
                 entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(5,0,1));
+                entity.setLocation(new Location(5,0,2));
                 entity.setMovingTicks(20);
             }, 3*half + full*i);
 
             ViewTime.getInstance().register(() -> {
                 entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(6,0,1));
+                entity.setLocation(new Location(6,0,2));
                 entity.setMovingTicks(20);
                 System.out.println("TEST2");
             }, 4*half + full*i);
 
             ViewTime.getInstance().register(() -> {
                 entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(7,0,3));
+                entity.setLocation(new Location(7,0,4));
                 entity.setMovingTicks(20);
             }, 5*half + full*i);
 
             ViewTime.getInstance().register(() -> {
                 entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(8,0,3));
+                entity.setLocation(new Location(8,0,4));
                 entity.setMovingTicks(20);
             }, 6*half + full*i);
         }

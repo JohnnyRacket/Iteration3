@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <single_frame_animation>
   <x>39</x>
-  <y>26</y>
+  <y>41</y>
   <rootPath>Terrain/</rootPath>
   <fileName>Grass.png</fileName>
 </single_frame_animation>
