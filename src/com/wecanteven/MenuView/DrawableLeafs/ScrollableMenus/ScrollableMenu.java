@@ -60,17 +60,17 @@ public class ScrollableMenu extends Drawable implements Navigatable {
         }
 
         //paint list items
-        Iterator iter = list.getIterator();
+        Iterator<SelectableItem> iter = list.getIterator();
         while (iter.hasNext()) {
             if (index == list.getCurrentIndex()) {
                 //System.out.println(list.getCurrentIndex());
-                ScrollableMenuItem current = (ScrollableMenuItem) iter.next();
+                SelectableItem current = iter.next();
                 g2d.setColor(selectedColor);
                 g2d.fillRect(offsetX + calculatedPadding / 2, offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
-                current.paintComponent(g2d, offsetX + calculatedPadding / 2 , offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
+                current.draw(g2d, offsetX + calculatedPadding / 2 , offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
             } else {
-                ScrollableMenuItem current = (ScrollableMenuItem) iter.next();
-                current.paintComponent(g2d, offsetX + calculatedPadding / 2, offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
+                SelectableItem current = iter.next();
+                current.draw(g2d, offsetX + calculatedPadding / 2, offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
             }
             offsetY += itemHeight;
             index++;
@@ -160,7 +160,7 @@ public class ScrollableMenu extends Drawable implements Navigatable {
     public void removeItem (ScrollableMenuItem item){
         this.list.removeItem(item);
     }
-    public ScrollableMenuItem removeItem (int index){
+    public SelectableItem removeItem (int index){
         return this.list.removeItemFromIndex(index);
     }
 

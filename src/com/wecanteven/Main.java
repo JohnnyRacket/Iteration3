@@ -25,7 +25,7 @@ public class Main {
         ViewEngine engine = new ViewEngine();
 
         UIViewFactory factory = new UIViewFactory(engine);
-        SwappableView view = factory.mainMenuView();
+        SwappableView view = factory.createInventoryView();
 
         MainController controller = new MainController(engine);
         controller.setMenuState(view.getMenuViewContainer());

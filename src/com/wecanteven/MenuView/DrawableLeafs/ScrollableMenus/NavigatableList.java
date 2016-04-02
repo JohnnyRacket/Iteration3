@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class NavigatableList{
 
-    private List<ScrollableMenuItem> list;
+    private List<SelectableItem> list;
     private int currentIndex = 0;
 
     public NavigatableList(){
@@ -22,23 +22,23 @@ public class NavigatableList{
         list.get(currentIndex).select();
     }
 
-    public void addItem(ScrollableMenuItem item){
+    public void addItem(SelectableItem item){
         list.add(item);
     }
 
-    public void removeItem(ScrollableMenuItem item){
+    public void removeItem(SelectableItem item){
         list.remove(item);
     }
 
-    public void addItemToIndex(ScrollableMenuItem item, int index){
+    public void addItemToIndex(SelectableItem item, int index){
         list.add(index, item);
     }
 
-    public ScrollableMenuItem removeItemFromIndex(int index){
+    public SelectableItem removeItemFromIndex(int index){
         return list.remove(index);
     }
 
-    public Iterator<ScrollableMenuItem> getIterator(){
+    public Iterator<SelectableItem> getIterator(){
         return list.iterator(); //idk about this
     }
     public int getCurrentIndex(){
@@ -52,7 +52,7 @@ public class NavigatableList{
         this.currentIndex = currentIndex;
     }
 
-    public ScrollableMenuItem getCurrentMenuItem(){
+    public SelectableItem getCurrentMenuItem(){
         return list.get(currentIndex);
     }
 }
