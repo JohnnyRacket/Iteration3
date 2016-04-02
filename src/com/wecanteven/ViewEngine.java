@@ -66,7 +66,6 @@ public class ViewEngine extends JFrame implements Runnable{
             long delta = System.currentTimeMillis() - start;
             if (delta < tickTimeMilli) {
                 try {
-                    //System.out.println("Sleeping for: " + (tickTimeMilli - delta));
                     Thread.sleep((tickTimeMilli - delta));
                 } catch (Exception e) {}
             } else {

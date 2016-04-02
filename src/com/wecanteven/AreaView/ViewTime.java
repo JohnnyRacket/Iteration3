@@ -17,14 +17,11 @@ public class ViewTime {
 
 
     public void tick() {
-        System.out.println("tick start");
         this.currentTime = System.currentTimeMillis();
 
         while (readyToExecute()) {
             executables.poll().x.execute();
         }
-
-        System.out.println("tick end");
     }
 
     public boolean readyToExecute() {

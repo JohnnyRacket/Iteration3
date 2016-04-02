@@ -7,6 +7,7 @@ import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Config;
+import com.wecanteven.UtilityClasses.Direction;
 
 import java.awt.*;
 
@@ -53,15 +54,16 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
         return start + percentage*(end - start);
     }
 
-    public boolean hasStateChange() {
+    private boolean hasStateChange() {
         return !subject.getLocation().toPosition().equals(destination);
     }
-    public void updateState() {
+    private void updateState() {
         source = calculateCurrentPosition();
         destination = subject.getLocation().toPosition();
         startTime = ViewTime.getInstance().getCurrentTime();
         endTime = startTime + subject.getMovingTicks()* Config.MODEL_TICK;
     }
+
 
     private void adjustPosition(long endTime) {
         getChild().setPosition(calculateCurrentPosition());
@@ -70,12 +72,30 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
         }
     }
 
+    private void reposition() {
+        if (shouldSwapNow())  {
+            swap();
+        } else {
+            viewTime.register( this::swap, endTime-startTime);
+        }
+    }
+
+    private void swap() {
+        areaView.removeViewObject(this, source);
+        areaView.addViewObject(this, destination);
+    }
+
+    private boolean shouldSwapNow() {
+        return (destination.getR() - source.getR()) + 2*(destination.getS() - source.getS()) > 0;
+    }
+
     @Override
     public void update() {
         if (hasStateChange()) {
             updateState();
             //TODO: make sure multiple threads of this cant start
             adjustPosition(endTime);
+            reposition();
         }
 
     }
