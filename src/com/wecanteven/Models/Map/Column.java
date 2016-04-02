@@ -19,6 +19,10 @@ public class Column implements MapVisitable {
         tiles = new ArrayList<Tile>();
     }
 
+    public Tile getTile(int z){
+        return tiles.get(z);
+    }
+
     @Override
     public void accept(MapVisitor visitor) {
         visitor.visitColumn(this);
