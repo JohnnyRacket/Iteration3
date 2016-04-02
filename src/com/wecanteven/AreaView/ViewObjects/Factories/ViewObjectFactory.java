@@ -9,22 +9,33 @@ import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
+import com.wecanteven.AreaView.ViewObjects.LeafVOs.ActivatableViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.UtilityClasses.Direction;
+
+import java.rmi.activation.Activatable;
 
 /**
  * Created by Alex on 3/31/2016.
  */
 public abstract class ViewObjectFactory {
-    private HexDrawingStrategy hexDrawingStrategy = new HexDrawingStrategy();
+    private HexDrawingStrategy hexDrawingStrategy;
     private AreaView areaView;
     private DynamicImageFactory factory = DynamicImageFactory.getInstance();
 
     public ViewObjectFactory(AreaView areaView) {
+        this.hexDrawingStrategy = new HexDrawingStrategy();
+        this.hexDrawingStrategy.setCenterTarget(
+                createSimpleViewObject(
+                        new Position(0,0,0),
+                        "null.xml"
+                )
+        );
         this.areaView = areaView;
     }
 
@@ -38,8 +49,24 @@ public abstract class ViewObjectFactory {
         HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 1, 1, 1, Math.PI/3, hexDrawingStrategy), new HandViewObject(p,  0.5, 0.5, 0.5, 0.5, hexDrawingStrategy), p);
         HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands);
         subject.attach(stationarySneak);
+
+        //TEMPORARY TESTING WORKAROUND
+        //TODO: make better
+        hexDrawingStrategy.setCenterTarget(stationarySneak);
+
+
         return createMovingViewObject(subject, stationarySneak);
 
+    }
+
+    public ViewObject createInteractableItem(Position p, InteractiveItem interactiveItem) {
+        ActivatableViewObject vo = new ActivatableViewObject(p,
+                interactiveItem,
+                factory.loadDynamicImage("Items/" + interactiveItem.getName() + "/Active.xml"),
+                factory.loadDynamicImage("Items/" + interactiveItem.getName() + "/Inactive.xml"),
+                hexDrawingStrategy);
+        interactiveItem.attach(vo);
+        return vo;
     }
 
     private DirectionalViewObject createBody(Position p, Direction d, String entityName) {

@@ -1,5 +1,6 @@
 package com.wecanteven.AreaView;
 
+import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
 /**

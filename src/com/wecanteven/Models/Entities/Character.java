@@ -3,13 +3,16 @@ package com.wecanteven.Models.Entities;
 import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Occupation.Occupation;
+import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
+import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Models.Storage.Storage;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Positionable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanMoveVisitor;
+import com.wecanteven.Visitors.EntityVisitor;
 
 /**
  * Created by Brandon on 3/31/2016.
@@ -17,9 +20,11 @@ import com.wecanteven.Visitors.CanMoveVisitor;
 public class Character extends Entity {
     private Occupation occupation;
     private Storage itemStorage, abilityStorage;
-    private Stats stats;
 
-    public Character(){}
+    public Character(){
+        occupation = new Smasher();
+        stats = new Stats(this,3,1,1,1,5);
+    }
 
 
     public void attack(Direction d){}
@@ -74,7 +79,12 @@ public class Character extends Entity {
     public Location getLocation(){
         return this.getLocation();
     }
-    private void levelUp(){
-        stats.levelUp(occupation.getStatsAddable());
+    public void levelUp(){
+        stats.modifyStats(occupation.getStatsAddable());
+    }
+
+    @Override
+    public void accept(EntityVisitor v) {
+        v.visitCharacter(this);
     }
 }

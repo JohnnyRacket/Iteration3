@@ -7,7 +7,7 @@ import com.wecanteven.Visitors.CanMoveVisitor;
  * Created by Brandon on 3/31/2016.
  */
 public abstract class Occupation {
-    private StatsAddable statsAddable;
+    protected StatsAddable statsAddable;
     private CanMoveVisitor canMoveVisitor;
 
     public StatsAddable getStatsAddable() {

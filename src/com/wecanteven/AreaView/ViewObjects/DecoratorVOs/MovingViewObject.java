@@ -7,6 +7,7 @@ import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Config;
+import com.wecanteven.UtilityClasses.Direction;
 
 import java.awt.*;
 
@@ -22,7 +23,10 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     private long startTime = 0;
     private long endTime = 0;
 
+    private ViewTime viewTime = ViewTime.getInstance();
+
     private Moveable subject;
+
 
     public MovingViewObject(ViewObject child, Moveable subject, AreaView areaView) {
         super(child);
@@ -34,46 +38,74 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
 
 
     public Position calculateCurrentPosition() {
-        long t = ViewTime.getInstance().getCurrentTime();
+        long t = viewTime.getCurrentTime();
         if (t >= endTime) return destination;
 
         double percentage = (double)(t - startTime)/(double)(endTime - startTime);
-        System.out.println("t - startTime: " + (t - startTime));
-        System.out.println("% : " +  (double)(t - startTime)/(double)(endTime - startTime));
-        System.out.println("r: " + inBetween(source.getR(), source.getR(), percentage));
 
 
         return new Position(
                 inBetween(source.getR(), destination.getR(), percentage),
                 inBetween(source.getS(), destination.getS(), percentage),
-                inBetween(source.getZ(), destination.getZ(), percentage)
+                parabola(source.getZ(), destination.getZ(), percentage)
         );
     }
 
     private double inBetween(double start, double end, double percentage) {
-        System.out.println("end: " + percentage*end );
-        System.out.println("start: " + (1d - percentage)*start );
         return start + percentage*(end - start);
     }
 
-    @Override
-    public void draw(Graphics2D g) {
-        getChild().setPosition(calculateCurrentPosition());
-        super.draw(g);
+    private double parabola(double start, double end, double percentage) {
+        double jumpConstant = end > start ? 0.8 : 0;
+        double deltaY = end - start;
+        double a = -2*deltaY-4*jumpConstant;
+        double v = 3*deltaY+4*jumpConstant;
+        return a*Math.pow(percentage, 2) + v*percentage + start;
     }
 
-    public boolean hasStateChange() {
+    private boolean hasStateChange() {
         return !subject.getLocation().toPosition().equals(destination);
     }
-    public void updateState() {
+    private void updateState() {
         source = calculateCurrentPosition();
         destination = subject.getLocation().toPosition();
         startTime = ViewTime.getInstance().getCurrentTime();
         endTime = startTime + subject.getMovingTicks()* Config.MODEL_TICK;
     }
 
+
+    private void adjustPosition(long endTime) {
+        getChild().setPosition(calculateCurrentPosition());
+        if (viewTime.getCurrentTime() < endTime) {
+            viewTime.register(() -> adjustPosition(endTime), 1);
+        }
+    }
+
+    private void reposition() {
+        if (shouldSwapNow())  {
+            swap();
+        } else {
+            viewTime.register( this::swap, endTime-startTime);
+        }
+    }
+
+    private void swap() {
+        areaView.removeViewObject(this, source);
+        areaView.addViewObject(this, destination);
+    }
+
+    private boolean shouldSwapNow() {
+        //TODO: account for z shit
+        return (destination.getR() - source.getR()) + 2*(destination.getS() - source.getS()) > 0;
+    }
+
     @Override
     public void update() {
-        if (hasStateChange()) updateState();
+        if (hasStateChange()) {
+            updateState();
+            adjustPosition(endTime);
+            reposition();
+        }
+
     }
 }

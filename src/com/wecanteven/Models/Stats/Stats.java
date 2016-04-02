@@ -1,91 +1,120 @@
 package com.wecanteven.Models.Stats;
 
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Observers.Observer;
 
 import java.util.ArrayList;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Stats {
-    private StatsAddable baseStats, modifiedStats;
-    private int level,maxHealth,maxMana,offensiveRating,defensiveRating,armorRating;
-    private int maxExperience,currentHealth,currentMana;
-    private ArrayList buffedStats;
+public class Stats implements Observer{
+    private PrimaryStat strength,agility,intellect, hardiness, experience, movement;
+    private PrimaryStat lives,currentHealth,currentMana;
+    private Stat maxHealth,maxMana,offensiveRating,defensiveRating,armorRating;
+    private LevelStat level;
     private Entity entity;
 
-    //constructor sets the reference to the entity that holds it
-    public Stats(Entity entity){
-        buffedStats  = new ArrayList<StatsAddable>();
+    public Stats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement){
         this.entity = entity;
+        this.strength = new PrimaryStat("Strength",strength);
+        this.agility = new PrimaryStat("Agility",agility);
+        this.intellect = new PrimaryStat("Intellect",intellect);
+        this.hardiness = new PrimaryStat("Hardiness",hardiness);
+        experience = new PrimaryStat("Experience",0);
+        this.movement = new PrimaryStat("Movement",movement);
+
+        level = new LevelStat(experience);
+        level.attach(this);
+
+        maxHealth = new HealthStat(this.hardiness,level);
+        maxMana = new ManaStat(this.intellect,level);
+        offensiveRating = new OffensiveRatingStat(this.strength,level);
+        defensiveRating = new DefensiveRatingStat(this.agility,level);
+        armorRating = new ArmorRating(this.hardiness);
+
+        lives = new PrimaryStat("Lives",3);
+        currentHealth = new PrimaryStat("Health",maxHealth.getStat());
+        currentMana = new PrimaryStat("Mana",maxMana.getStat());
+    }
+    public void update(){
+        entity.levelUp();
     }
 
-    public void modifyStats(StatsAddable addable){
-        modifiedStats.sum(addable);
-    }
-
-    public void addBuff(StatsAddable addable){
-        buffedStats.add(addable);
-        modifiedStats.sum(addable);
-    }
-    public void removeBuff(StatsAddable addable){
-        buffedStats.remove(addable);
-        modifiedStats.subtract(addable);
-    }
-
-    //permanately adds to the baseStats object
-    public void levelUp(StatsAddable levelStats){
-        baseStats.sum(levelStats);
-        modifiedStats.sum(levelStats);
+    public void modifyStats(StatsAddable statsAddable){
+        lives.add(statsAddable.getLives());
+        strength.add(statsAddable.getStrength());
+        agility.add(statsAddable.getAgility());
+        intellect.add(statsAddable.getIntellect());
+        hardiness.add(statsAddable.getHardiness());
+        experience.add(statsAddable.getExperience());
+        movement.add(statsAddable.getMovement());
+        currentHealth.add(statsAddable.getHealth());
+        currentMana.add(statsAddable.getMana());
     }
 
     //getters
-    public StatsAddable getBaseStats(){
-        return baseStats;
-    }
     public int getLives(){
-        return modifiedStats.getLives();
+        return lives.getStat();
     }
     public int getStrength(){
-        return modifiedStats.getStrength();
+        return strength.getStat();
+    }
+    public int getAgility(){
+        return agility.getStat();
     }
     public int getIntellect(){
-        return modifiedStats.getIntellect();
+        return intellect.getStat();
     }
     public int getHardiness(){
-        return modifiedStats.getHardiness();
+        return hardiness.getStat();
     }
     public int getExperience(){
-        return modifiedStats.getExperience();
+        return experience.getStat();
     }
     public int getMovement(){
-        return modifiedStats.getMovement();
+        return movement.getStat();
     }
     public int getLevel(){
-        return level;
+        return level.getStat();
     }
     public int getHealth(){
-        return currentHealth;
+        return currentHealth.getStat();
     }
     public int getMana(){
-        return currentMana;
+        return currentMana.getStat();
     }
     public int getOffensiveRating(){
-        return offensiveRating;
+        return offensiveRating.getStat();
     }
     public int getDefensiveRating(){
-        return defensiveRating;
+        return defensiveRating.getStat();
     }
     public int getArmorRating(){
-        return armorRating;
-    }
-    public int getMaxExperience(){
-        return maxExperience;
+        return armorRating.getStat();
     }
     public int getMaxHealth(){
-        return maxHealth;
+        return maxHealth.getStat();
     }
     public int getMaxMana(){
-        return maxMana;
+        return maxMana.getStat();
+    }
+
+    public String toString(){
+        String s = "";
+        s += lives.getName() + ": " + getLives() + "\n";
+        s += strength.getName() + ": " + getStrength() + "\n";
+        s += agility.getName() + ": " + getAgility() + "\n";
+        s += intellect.getName() + ": " + getIntellect() + "\n";
+        s += hardiness.getName() + ": " + getHardiness() + "\n";
+        s += experience.getName() + ": " + getExperience() + "\n";
+        s += movement.getName() + ": " + getMovement() + "\n";
+        s += level.getName() + ": " + getLevel() + "\n";
+        s += currentHealth.getName() + ": " + getHealth() + "/" + getMaxHealth() + "\n";
+        s += currentMana.getName() + ": " + getMana() + "/" + getMaxMana() + "\n";
+        s += offensiveRating.getName() + ": " + getOffensiveRating() + "\n";
+        s += defensiveRating.getName() + ": " + getDefensiveRating() + "\n";
+        s += armorRating.getName() + ": " + getArmorRating() + "\n";
+        return s;
     }
 }

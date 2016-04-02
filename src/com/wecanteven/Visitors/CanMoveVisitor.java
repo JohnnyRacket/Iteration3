@@ -1,18 +1,16 @@
 package com.wecanteven.Visitors;
 
-import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.Map.Tile;
-import com.wecanteven.Models.Map.TileSlot;
 
 /**
  * Created by John on 4/1/2016.
  */
-public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor{
+public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor {
 
     private boolean canMove = true;
 
@@ -21,24 +19,15 @@ public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor{
 
     }
 
-    @Override
-    public void visitColumn(Column column) {
-
-    }
 
     @Override
     public void visitTile(Tile tile) {
-        setCanMove(true);//set true at beginning, aka can move until proven it cannot
-
-        tile.getEntity().accept(this);
-        tile.getObstacle().accept(this);
-        tile.getTerrain().accept(this);
+        if (tile.hasEntity() || tile.hasObstacle() ) setCanMove(false);
+        else {
+            tile.getTerrain().accept(this);
+        }
     }
 
-    @Override
-    public void visitTileSlot(TileSlot tileSlot) {
-        if(!tileSlot.isEmpty()){setCanMove(false);}
-    }
 
     @Override
     public void visitWater(Water water) {
@@ -47,17 +36,17 @@ public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor{
 
     @Override
     public void visitGround(Ground ground) {
-
+        setCanMove(false);
     }
 
     @Override
     public void visitAir(Air air) {
-        setCanMove(false);
+        setCanMove(true);
     }
 
     @Override
     public void visitCurrent(Current current) {
-        setCanMove(false);
+        setCanMove(true);
     }
 
     public boolean canMove() {

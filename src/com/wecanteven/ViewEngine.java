@@ -34,6 +34,7 @@ public class ViewEngine extends JFrame implements Runnable{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
+
     }
 
     public void start() {
