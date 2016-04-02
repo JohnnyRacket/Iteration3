@@ -32,6 +32,8 @@ public class AreaView extends JPanel {
     private xySorted3DArray backingArray = new xySorted3DArray();
 
     public AreaView() {
+
+
         PlainsViewObjectFactory factory = new PlainsViewObjectFactory(this);
         LevelFactory levelFactory = new DopeAssLevelFactory();
         Map map = levelFactory.createMap();

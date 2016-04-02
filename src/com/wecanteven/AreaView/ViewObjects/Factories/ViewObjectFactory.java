@@ -45,6 +45,12 @@ public abstract class ViewObjectFactory {
         HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 1, 1, 1, Math.PI/3, hexDrawingStrategy), new HandViewObject(p,  0.5, 0.5, 0.5, 0.5, hexDrawingStrategy), p);
         HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands);
         subject.attach(stationarySneak);
+
+        //TEMPORARY TESTING WORKAROUND
+        //TODO: make better
+        hexDrawingStrategy.setCenterTarget(stationarySneak);
+
+
         return createMovingViewObject(subject, stationarySneak);
 
     }

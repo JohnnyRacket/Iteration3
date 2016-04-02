@@ -4,6 +4,7 @@ package com.wecanteven.AreaView.ViewObjects.DrawingStategies;
 import com.wecanteven.AreaView.DynamicImages.DynamicImage;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.UtilityClasses.Config;
 
 import java.awt.*;
 
@@ -32,14 +33,11 @@ public class HexDrawingStrategy implements DynamicImageDrawingStrategy, StringDr
 
     @Override
     public void draw(Graphics2D g, DynamicImage dImage, Position position) {
-//        g.drawImage(dImage.getImage(),
-//                findX(position) + dImage.getxOffset() - findX(centerTarget.getPosition()),
-//                findY(position) + dImage.getyOffset() - findY(centerTarget.getPosition()),
-//                null);
         g.drawImage(dImage.getImage(),
-                findX(position) + dImage.getxOffset(),
-                findY(position) + dImage.getyOffset(),
+                findX(position) + dImage.getxOffset() - findX(centerTarget.getPosition()) + Config.SCREEN_WIDTH/2,
+                findY(position) + dImage.getyOffset() - findY(centerTarget.getPosition()) + Config.SCREEN_HEIGHT/2,
                 null);
+
     }
 
     @Override

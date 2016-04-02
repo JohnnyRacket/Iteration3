@@ -17,11 +17,14 @@ public class ViewTime {
 
 
     public void tick() {
+        System.out.println("tick start");
         this.currentTime = System.currentTimeMillis();
 
         while (readyToExecute()) {
             executables.poll().x.execute();
         }
+
+        System.out.println("tick end");
     }
 
     public boolean readyToExecute() {
@@ -30,6 +33,7 @@ public class ViewTime {
     }
 
     public void register(vCommand action, long time) {
+        if (time <= 0) time = 1;
         executables.add(new Tuple<>(action, time + currentTime ));
     }
 

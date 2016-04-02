@@ -22,6 +22,8 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     private long startTime = 0;
     private long endTime = 0;
 
+    private ViewTime viewTime = ViewTime.getInstance();
+
     private Moveable subject;
 
     public MovingViewObject(ViewObject child, Moveable subject, AreaView areaView) {
@@ -34,13 +36,10 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
 
 
     public Position calculateCurrentPosition() {
-        long t = ViewTime.getInstance().getCurrentTime();
+        long t = viewTime.getCurrentTime();
         if (t >= endTime) return destination;
 
         double percentage = (double)(t - startTime)/(double)(endTime - startTime);
-        System.out.println("t - startTime: " + (t - startTime));
-        System.out.println("% : " +  (double)(t - startTime)/(double)(endTime - startTime));
-        System.out.println("r: " + inBetween(source.getR(), source.getR(), percentage));
 
 
         return new Position(
@@ -51,15 +50,7 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     }
 
     private double inBetween(double start, double end, double percentage) {
-        System.out.println("end: " + percentage*end );
-        System.out.println("start: " + (1d - percentage)*start );
         return start + percentage*(end - start);
-    }
-
-    @Override
-    public void draw(Graphics2D g) {
-        getChild().setPosition(calculateCurrentPosition());
-        super.draw(g);
     }
 
     public boolean hasStateChange() {
@@ -72,8 +63,20 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
         endTime = startTime + subject.getMovingTicks()* Config.MODEL_TICK;
     }
 
+    private void adjustPosition(long endTime) {
+        getChild().setPosition(calculateCurrentPosition());
+        if (viewTime.getCurrentTime() < endTime) {
+            viewTime.register(() -> adjustPosition(endTime), 1);
+        }
+    }
+
     @Override
     public void update() {
-        if (hasStateChange()) updateState();
+        if (hasStateChange()) {
+            updateState();
+            //TODO: make sure multiple threads of this cant start
+            adjustPosition(endTime);
+        }
+
     }
 }
