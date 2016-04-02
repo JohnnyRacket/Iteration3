@@ -9,12 +9,16 @@ import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
+import com.wecanteven.AreaView.ViewObjects.LeafVOs.ActivatableViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.UtilityClasses.Direction;
+
+import java.rmi.activation.Activatable;
 
 /**
  * Created by Alex on 3/31/2016.
@@ -53,6 +57,16 @@ public abstract class ViewObjectFactory {
 
         return createMovingViewObject(subject, stationarySneak);
 
+    }
+
+    public ViewObject createInteractableItem(Position p, InteractiveItem interactiveItem) {
+        ActivatableViewObject vo = new ActivatableViewObject(p,
+                interactiveItem,
+                factory.loadDynamicImage("Items/" + interactiveItem.getName() + "/Active.xml"),
+                factory.loadDynamicImage("Items/" + interactiveItem.getName() + "/Inactive.xml"),
+                hexDrawingStrategy);
+        interactiveItem.attach(vo);
+        return vo;
     }
 
     private DirectionalViewObject createBody(Position p, Direction d, String entityName) {

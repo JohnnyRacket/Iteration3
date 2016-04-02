@@ -13,6 +13,7 @@ import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.UtilityClasses.Direction;
@@ -45,12 +46,16 @@ public class AreaView extends JPanel {
 
 
         Entity entity = new Entity();
-
         ViewObject testAvatar = factory.createSneak(new Position(3,2, 2), Direction.NORTH, entity);
-
-
-
         addViewObject(testAvatar);
+
+        InteractiveItem iItem = new InteractiveItem("Button");
+        ViewObject button = factory.createInteractableItem(new Position(3,2,2), iItem);
+        addViewObject(button);
+
+
+        ViewTime.getInstance().register(iItem::trigger, 1500);
+        ViewTime.getInstance().register(iItem::release, 3000);
 
 
         int half = 1000;

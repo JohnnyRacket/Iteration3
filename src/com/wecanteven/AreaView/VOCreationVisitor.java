@@ -59,7 +59,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitInteractiveItem(InteractiveItem interactable) {
-
+        areaView.addViewObject(factory.createInteractableItem(currentPosition, interactable));
     }
 
     @Override

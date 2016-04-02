@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+  <x>32</x>
+  <y>32</y>
+  <rootPath>Items/Button/</rootPath>
+  <fileName>active.png</fileName>
+</single_frame_animation>

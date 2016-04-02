@@ -27,7 +27,6 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
 
     private Moveable subject;
 
-    private final double jumpConstant = 0.8;
 
     public MovingViewObject(ViewObject child, Moveable subject, AreaView areaView) {
         super(child);
@@ -57,7 +56,7 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     }
 
     private double parabola(double start, double end, double percentage) {
-        double jumpConstant = end > start ? this.jumpConstant : 0;
+        double jumpConstant = end > start ? 0.8 : 0;
         double deltaY = end - start;
         double a = -2*deltaY-4*jumpConstant;
         double v = 3*deltaY+4*jumpConstant;
