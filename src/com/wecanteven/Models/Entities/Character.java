@@ -35,27 +35,11 @@ public class Character extends Entity {
 
     // TODO update this to pass storage to the item, so the only the specific item and the storage interact
     public void equipItem(EquipableItem item){
-        item.equip(this);
+        itemStorage.equip(item);
     }
 
-    /** Equip Head*/
-
-    public void equipHead(HeadEquipableItem headItem) {}
-
-    /** Equip Chest*/
-
-    public void equipChest(ChestEquipableItem chestItem) {}
-
-    /** Equip Boots*/
-
-    public void equipBoots(BootsEquipableItem bootsItem) {}
-
-    /** Equip Weapon*/
-
-    public void equipWeapon(WeaponEquipableItem weaponItem) {}
-
     public void unequipItem(EquipableItem item){
-        // Other stuff
+        itemStorage.unequip(item);
     }
     private boolean equipAbility(String id){
         return false;
