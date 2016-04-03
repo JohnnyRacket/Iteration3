@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Observers.Directional;
@@ -17,12 +18,16 @@ import java.util.ArrayList;
  * Created by Brandon on 3/31/2016.
  */
 
-public class Entity implements Moveable, Directional, Observable{
+public class Entity implements Moveable, Directional, Observable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
+    ActionHandler actionHandler;
 
     @Override
     public ArrayList<Observer> getObservers() {
         return observers;
+    }
+    public void update(){
+        die();
     }
 
     private Location location;
@@ -31,9 +36,11 @@ public class Entity implements Moveable, Directional, Observable{
 
     public Entity(){}
     public boolean move(Direction d){
-        return false;
+        return actionHandler.move(this, d);
     }
-    public void die(){}
+    public void die(){
+        stats.refreshStats();
+    }
     public boolean isActive(){
         return false;
     }
@@ -87,5 +94,21 @@ public class Entity implements Moveable, Directional, Observable{
 
     public void accept(EntityVisitor v) {
         v.visitEntity(this);
+    }
+
+    public CanMoveVisitor getCanMoveVisitor() {
+        return canMoveVisitor;
+    }
+
+    public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor) {
+        this.canMoveVisitor = canMoveVisitor;
+    }
+
+    public ActionHandler getActionHandler() {
+        return actionHandler;
+    }
+
+    public void setActionHandler(ActionHandler actionHandler) {
+        this.actionHandler = actionHandler;
     }
 }

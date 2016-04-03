@@ -10,9 +10,9 @@ import java.util.ArrayList;
  */
 public class Stats implements Observer{
     private PrimaryStat strength,agility,intellect, hardiness, experience, movement;
-    private PrimaryStat lives,currentHealth,currentMana;
+    private PrimaryStat lives, level;
+    private PrimaryStat currentHealth,currentMana;
     private Stat maxHealth,maxMana,offensiveRating,defensiveRating,armorRating;
-    private LevelStat level;
     private Entity entity;
 
     public Stats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement){
@@ -33,12 +33,18 @@ public class Stats implements Observer{
         defensiveRating = new DefensiveRatingStat(this.agility,level);
         armorRating = new ArmorRating(this.hardiness);
 
-        lives = new PrimaryStat("Lives",3);
         currentHealth = new PrimaryStat("Health",maxHealth.getStat());
         currentMana = new PrimaryStat("Mana",maxMana.getStat());
+        lives = new LivesStat(currentHealth,entity);
     }
     public void update(){
         entity.levelUp();
+        refreshStats();
+    }
+
+    public void refreshStats(){
+        currentHealth.setStat(maxHealth.getStat());
+        currentMana.setStat(maxMana.getStat());
     }
 
     public void modifyStats(StatsAddable statsAddable){

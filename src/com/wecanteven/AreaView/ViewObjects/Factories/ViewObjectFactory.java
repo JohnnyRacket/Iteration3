@@ -49,9 +49,11 @@ public abstract class ViewObjectFactory {
         DirectionalViewObject body = createBody(p, d, "Sneak");
 
 
-        HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 1, 1, 1, Math.PI/3, hexDrawingStrategy), new HandViewObject(p,  0.5, 0.5, 0.5, 0.5, hexDrawingStrategy), p);
+
+        HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 0.4, 2, -Math.PI/4, 0, hexDrawingStrategy), new HandViewObject(p, 0.4, 2, Math.PI/1.7, 0, hexDrawingStrategy), p);
         FeetViewObject feet = createFeet(p, d, "Brown");
         HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands, feet);
+
         subject.attach(stationarySneak);
 
         //TEMPORARY TESTING WORKAROUND

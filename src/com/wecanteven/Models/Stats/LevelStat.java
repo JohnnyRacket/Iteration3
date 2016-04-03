@@ -8,14 +8,13 @@ import java.util.ArrayList;
 /**
  * Created by Brandon on 4/1/2016.
  */
-public class LevelStat extends Stat implements Observer,Observable {
+public class LevelStat extends PrimaryStat implements Observer,Observable {
     private int level;
     private PrimaryStat experience;
     private ArrayList<Observer> observers;
 
     public LevelStat(PrimaryStat experience){
-        name = "Level";
-        level = 1;
+        super("Level",1);
         observers = new ArrayList<>();
         this.experience = experience;
         this.experience.attach(this);
