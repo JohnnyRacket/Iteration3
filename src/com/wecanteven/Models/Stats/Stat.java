@@ -13,4 +13,7 @@ public class Stat {
     public int getStat(){
         return stat;
     }
+    public void setStat(int stat){
+        this.stat = stat;
+    }
 }

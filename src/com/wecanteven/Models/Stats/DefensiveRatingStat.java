@@ -6,10 +6,9 @@ import com.wecanteven.Observers.Observer;
  * Created by Brandon on 4/1/2016.
  */
 public class DefensiveRatingStat extends Stat implements Observer {
-    private PrimaryStat agility;
-    private LevelStat level;
+    private PrimaryStat agility, level;
 
-    public DefensiveRatingStat(PrimaryStat agility, LevelStat level){
+    public DefensiveRatingStat(PrimaryStat agility, PrimaryStat level){
         name = "Defensive Rating";
         this.agility = agility;
         this.agility.attach(this);

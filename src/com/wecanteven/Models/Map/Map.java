@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Map;
 
+import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by John on 3/31/2016.
  */
-public class Map implements MapVisitable {
+public class Map implements MapVisitable, ActionHandler {
 
     private Column[][] columns;
     private int rSize;
@@ -47,22 +48,54 @@ public class Map implements MapVisitable {
         }
     }
 
-    public boolean move(Entity entity, Direction dir){//idk about this
 
-        //need to check can move visitor
-        remove(entity,entity.getLocation());
-        entity.setLocation(entity.getLocation().add(dir.getCoords));
-        if(add(entity, entity.getLocation())){
-            return true;
+    @Override
+    public boolean move(Entity entity, Direction dir) {
+        Tile tile = this.getTile(dir.getCoords);
+        tile.accept(entity.getCanMoveVisitor());
+
+        if(entity.getCanMoveVisitor().canMove()) {
+            remove(entity, entity.getLocation());
+            entity.setLocation(entity.getLocation().add(dir.getCoords));
+            if (add(entity, entity.getLocation())) {
+                return true;
+            } else {
+                entity.setLocation(entity.getLocation().subtract(dir.getCoords));
+                add(entity, entity.getLocation());
+                return false;
+            }
         }else{
-            entity.setLocation(entity.getLocation().subtract(dir.getCoords));
-            add(entity, entity.getLocation());
+            //can move visitor determined you cant move there
             return false;
         }
     }
 
     public Tile getTile(int r, int s, int z) {
         return columns[r][s].getTile(z);
+    }
+
+    @Override
+    public boolean fall(Entity entity) {
+        return false;
+    }
+
+    @Override
+    public boolean move(TakeableItem item, Direction dir) {
+        return false;
+    }
+
+    @Override
+    public boolean fall(TakeableItem item) {
+        return false;
+    }
+
+    @Override
+    public boolean drop(TakeableItem item) {
+        return false;
+    }
+
+    public Tile getTile(Location loc){
+        return columns[loc.getR()][loc.getS()].getTile(loc.getZ());
     }
 
     @Override
@@ -118,7 +151,6 @@ public class Map implements MapVisitable {
         public Tile getTile(int zLevel) {
             return tiles.get(zLevel);
         }
-
 
         public boolean add(Entity entity, int z){
             return tiles.get(z).add(entity);
