@@ -27,6 +27,13 @@ public class MainController implements Tickable{
         playState = new PlayState(window);
         dialogState = new DialogState(window);
     }
+//testing avatar movement
+    public MainController(JFrame window,Avatar avatar){
+        this.avatar = avatar;
+        menuState = new MenuState(window);
+        playState = new PlayState(window);
+        dialogState = new DialogState(window);
+    }
 
     private void removeState(){
         if (state != null) {

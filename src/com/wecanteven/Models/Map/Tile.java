@@ -126,7 +126,6 @@ public class Tile implements MapVisitable {
             }else{
                 return false;
             }
-
         }
 
         public boolean isEmpty(){

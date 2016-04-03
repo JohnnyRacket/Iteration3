@@ -48,23 +48,36 @@ public class Map implements MapVisitable, ActionHandler {
         }
     }
 
+    private boolean isOutOfBounds(Location location){
+        if( location.getR() < 0 ||
+            location.getS() < 0 ||
+            location.getZ() < 0 ||
+            location.getR() > getrSize() ||
+            location.getZ() > getzSize() ||
+            location.getS() > getsSize()){
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public boolean move(Entity entity, Direction dir) {
-        Tile tile = this.getTile(dir.getCoords);
+        Location source = entity.getLocation();
+        Location destination = source.add(dir.getCoords);
+        if(isOutOfBounds(destination)){
+            System.out.println("Out of Bounds");
+            return false;
+        }
+        Tile tile = this.getTile(destination);
         tile.accept(entity.getCanMoveVisitor());
 
         if(entity.getCanMoveVisitor().canMove()) {
-            remove(entity, entity.getLocation());
-            entity.setLocation(entity.getLocation().add(dir.getCoords));
-            if (add(entity, entity.getLocation())) {
-                return true;
-            } else {
-                entity.setLocation(entity.getLocation().subtract(dir.getCoords));
-                add(entity, entity.getLocation());
-                return false;
-            }
+            System.out.println("Moving from "+ source + " to " + destination);
+            remove(entity, source);
+            add(entity,destination);
+            return  true;
         }else{
+            System.out.println("Couldn't Move");
             //can move visitor determined you cant move there
             return false;
         }
@@ -104,6 +117,7 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     public boolean add(Entity entity, Location loc){
+        entity.setLocation(loc);
         return columns[loc.getR()][loc.getS()].add(entity, loc.getZ());
     }
     public boolean add(OneShot oneShot, Location loc){

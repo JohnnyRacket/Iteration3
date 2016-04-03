@@ -1,6 +1,6 @@
 package com.wecanteven.Models.Stats;
 
-import com.wecanteven.Observers.Observable;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.Observers.Observer;
 
 import java.util.ArrayList;
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 /**
  * Created by Brandon on 4/1/2016.
  */
-public class PrimaryStat extends Stat implements Observable {
-    private ArrayList<Observer> observers;
+public class PrimaryStat extends Stat implements ViewObservable {
+    protected ArrayList<Observer> observers;
 
     public PrimaryStat(String name,int stat){
         this.name = name;

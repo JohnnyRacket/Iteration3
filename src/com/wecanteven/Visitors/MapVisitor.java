@@ -1,6 +1,5 @@
 package com.wecanteven.Visitors;
 
-import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
 

@@ -15,7 +15,11 @@ public class Stats implements Observer{
     private Stat maxHealth,maxMana,offensiveRating,defensiveRating,armorRating;
     private Entity entity;
 
-    public Stats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement){
+    public Stats(Entity entity){
+        initStats(entity,1,1,1,1,5);
+    }
+
+    public void initStats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement){
         this.entity = entity;
         this.strength = new PrimaryStat("Strength",strength);
         this.agility = new PrimaryStat("Agility",agility);
@@ -108,16 +112,19 @@ public class Stats implements Observer{
 
     public String toString(){
         String s = "";
+        s += level.getName() + ": " + getLevel() + "\n";
+
+        s += currentHealth.getName() + ": " + getHealth() + "/" + getMaxHealth() + "\n";
+        s += currentMana.getName() + ": " + getMana() + "/" + getMaxMana() + "\n";
+        s += experience.getName() + ": " + getExperience() + "\n";
+
         s += lives.getName() + ": " + getLives() + "\n";
         s += strength.getName() + ": " + getStrength() + "\n";
         s += agility.getName() + ": " + getAgility() + "\n";
         s += intellect.getName() + ": " + getIntellect() + "\n";
         s += hardiness.getName() + ": " + getHardiness() + "\n";
-        s += experience.getName() + ": " + getExperience() + "\n";
         s += movement.getName() + ": " + getMovement() + "\n";
-        s += level.getName() + ": " + getLevel() + "\n";
-        s += currentHealth.getName() + ": " + getHealth() + "/" + getMaxHealth() + "\n";
-        s += currentMana.getName() + ": " + getMana() + "/" + getMaxMana() + "\n";
+
         s += offensiveRating.getName() + ": " + getOffensiveRating() + "\n";
         s += defensiveRating.getName() + ": " + getDefensiveRating() + "\n";
         s += armorRating.getName() + ": " + getArmorRating() + "\n";

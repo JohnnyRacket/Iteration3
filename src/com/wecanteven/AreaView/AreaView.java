@@ -60,46 +60,46 @@ public class AreaView extends JPanel {
 
         int half = 1000;
         int full = half*6;
-        for (int i = 0; i < 20; i++) {
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.NORTH);
-                entity.setLocation(new Location(3,1,1));
-                entity.setMovingTicks(20);
-            }, half + full*i);
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.NORTHEAST);
-                entity.setLocation(new Location(4,0,1));
-                entity.setMovingTicks(20);
-                System.out.println("TEST");
-            }, 2*half + full*i);
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(5,0,2));
-                entity.setMovingTicks(20);
-            }, 3*half + full*i);
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(6,0,2));
-                entity.setMovingTicks(20);
-                System.out.println("TEST2");
-            }, 4*half + full*i);
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(7,0,4));
-                entity.setMovingTicks(20);
-            }, 5*half + full*i);
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(8,0,4));
-                entity.setMovingTicks(20);
-            }, 6*half + full*i);
-        }
+//        for (int i = 0; i < 20; i++) {
+//
+//            ViewTime.getInstance().register(() -> {
+//                entity.setDirection(Direction.NORTH);
+//                entity.setLocation(new Location(3,1,1));
+//                entity.setMovingTicks(20);
+//            }, half + full*i);
+//
+//            ViewTime.getInstance().register(() -> {
+//                entity.setDirection(Direction.NORTHEAST);
+//                entity.setLocation(new Location(4,0,1));
+//                entity.setMovingTicks(20);
+//                System.out.println("TEST");
+//            }, 2*half + full*i);
+//
+//            ViewTime.getInstance().register(() -> {
+//                entity.setDirection(Direction.SOUTHEAST);
+//                entity.setLocation(new Location(5,0,2));
+//                entity.setMovingTicks(20);
+//            }, 3*half + full*i);
+//
+//            ViewTime.getInstance().register(() -> {
+//                entity.setDirection(Direction.SOUTHEAST);
+//                entity.setLocation(new Location(6,0,2));
+//                entity.setMovingTicks(20);
+//                System.out.println("TEST2");
+//            }, 4*half + full*i);
+//
+//            ViewTime.getInstance().register(() -> {
+//                entity.setDirection(Direction.SOUTHEAST);
+//                entity.setLocation(new Location(7,0,4));
+//                entity.setMovingTicks(20);
+//            }, 5*half + full*i);
+//
+//            ViewTime.getInstance().register(() -> {
+//                entity.setDirection(Direction.SOUTHEAST);
+//                entity.setLocation(new Location(8,0,4));
+//                entity.setMovingTicks(20);
+//            }, 6*half + full*i);
+//        }
     }
 
     public void addViewObject(ViewObject vo) {

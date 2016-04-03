@@ -46,9 +46,13 @@ public class Location {
     }
 
     public Location add(Location loc){
-        return new Location(this.r += loc.getR(), this.s += loc.getS(), this.z += loc.getZ());
+        return new Location(this.r + loc.getR(), this.s + loc.getS(), this.z + loc.getZ());
     }
     public Location subtract(Location loc){
-        return new Location(this.r -= loc.getR(), this.s -= loc.getS(), this.z -= loc.getZ());
+        return new Location(this.r - loc.getR(), this.s - loc.getS(), this.z - loc.getZ());
+    }
+
+    public String toString(){
+        return ""+getR()+","+getS()+","+getZ();
     }
 }

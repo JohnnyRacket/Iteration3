@@ -28,27 +28,6 @@ public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor {
         }
     }
 
-
-    @Override
-    public void visitWater(Water water) {
-        setCanMove(false);
-    }
-
-    @Override
-    public void visitGround(Ground ground) {
-        setCanMove(false);
-    }
-
-    @Override
-    public void visitAir(Air air) {
-        setCanMove(true);
-    }
-
-    @Override
-    public void visitCurrent(Current current) {
-        setCanMove(true);
-    }
-
     public boolean canMove() {
         return canMove;
     }

@@ -6,6 +6,7 @@ import com.wecanteven.UtilityClasses.Direction;
  * Created by Brandon on 3/31/2016.
  */
 public abstract class AvatarState {
+    public abstract boolean move(Direction d);
     abstract void attack(Direction d);
     abstract void useAbility(int index);
     abstract boolean equipItem(String id);

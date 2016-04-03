@@ -5,12 +5,13 @@ import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Moveable;
-import com.wecanteven.Observers.Observable;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanMoveVisitor;
 import com.wecanteven.Visitors.EntityVisitor;
+import com.wecanteven.Visitors.TerranianCanMoveVisitor;
 
 import java.util.ArrayList;
 
@@ -18,9 +19,9 @@ import java.util.ArrayList;
  * Created by Brandon on 3/31/2016.
  */
 
-public class Entity implements Moveable, Directional, Observable, Observer{
+public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
-    ActionHandler actionHandler;
+    public ActionHandler actionHandler;
 
     @Override
     public ArrayList<Observer> getObservers() {
@@ -30,13 +31,16 @@ public class Entity implements Moveable, Directional, Observable, Observer{
         die();
     }
 
-    private Location location;
+    protected Location location;
     private CanMoveVisitor canMoveVisitor;
     protected Stats stats;
 
-    public Entity(){}
+    public Entity(){
+        canMoveVisitor = new TerranianCanMoveVisitor();
+    }
     public boolean move(Direction d){
-        return actionHandler.move(this, d);
+        boolean test = actionHandler.move(this, d);
+        return test;
     }
     public void die(){
         stats.refreshStats();
@@ -80,6 +84,7 @@ public class Entity implements Moveable, Directional, Observable, Observer{
     }
 
     public void setLocation(Location location) {
+        System.out.println("Location was changed");
         this.location = location;
         notifyObservers();
     }

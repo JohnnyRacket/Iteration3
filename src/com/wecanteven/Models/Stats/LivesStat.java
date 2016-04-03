@@ -1,7 +1,6 @@
 package com.wecanteven.Models.Stats;
 
 import com.wecanteven.Models.Entities.Entity;
-import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
  */
 public class LivesStat extends PrimaryStat implements Observer {
     private PrimaryStat health;
-    private ArrayList<Observer> observers;
 
     public LivesStat(PrimaryStat health,Entity entity){
         super("Lives",3);
@@ -23,6 +21,7 @@ public class LivesStat extends PrimaryStat implements Observer {
     }
     public void update(){
         if(health.getStat() <= 0){
+            stat--;
             notifyObservers();
         }
     }

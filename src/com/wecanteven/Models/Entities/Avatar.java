@@ -1,21 +1,29 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.Entities.AvatarStates.AvatarState;
+import com.wecanteven.Models.Entities.AvatarStates.EntityState;
+import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
 public class Avatar extends Entity{
-    Character avatar,pet;
+    Character avatar;
     AvatarState state;
-    public Avatar(){}
+    public Avatar(Character avatar){
+        this.avatar = avatar;
+        state = new EntityState(avatar, this);
+    }
+    public boolean move(Direction d){
+        return state.move(d);
+    }
     public void attack(Direction d){}
     public void useAbility(int index){}
-    public boolean equipItem(String id){
+    public boolean equipItem(EquipableItem item){
         return false;
     }
-    public boolean unequipItem(String id){
+    public boolean unequipItem(EquipableItem item){
         return false;
     }
     public boolean equipAbility(String id){
@@ -30,6 +38,8 @@ public class Avatar extends Entity{
     public void drop(){}
     public void pickup(){}
     public void interactWith(){}
-    public void mount(){}
-    public void dismount(){}
+    public void mount(){
+    }
+    public void dismount(){
+    }
 }

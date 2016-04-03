@@ -20,10 +20,9 @@ import com.wecanteven.Visitors.EntityVisitor;
 public class Character extends Entity {
     private Occupation occupation;
     private Storage itemStorage, abilityStorage;
-
     public Character(){
         occupation = new Smasher();
-        stats = new Stats(this,3,1,1,1,5);
+        stats = new Stats(this);
     }
 
 
@@ -77,7 +76,7 @@ public class Character extends Entity {
         return 0;
     }
     public Location getLocation(){
-        return this.getLocation();
+        return location;
     }
     public void levelUp(){
         stats.modifyStats(occupation.getStatsAddable());
