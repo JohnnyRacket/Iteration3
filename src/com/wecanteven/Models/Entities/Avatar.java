@@ -1,9 +1,11 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.AvatarStates.AvatarState;
 import com.wecanteven.Models.Entities.AvatarStates.EntityState;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Location;
 
 /**
  * Created by Brandon on 3/31/2016.
@@ -11,7 +13,8 @@ import com.wecanteven.UtilityClasses.Direction;
 public class Avatar extends Entity{
     Character avatar;
     AvatarState state;
-    public Avatar(Character avatar){
+    public Avatar(Character avatar, ActionHandler actionHandler){
+        super(actionHandler);
         this.avatar = avatar;
         state = new EntityState(avatar, this);
     }
@@ -41,5 +44,17 @@ public class Avatar extends Entity{
     public void mount(){
     }
     public void dismount(){
+    }
+
+    @Override
+    public void setLocation(Location location) {
+        super.setLocation(location);
+        avatar.setLocation(location);
+    }
+
+    @Override
+    public void setDirection(Direction direction) {
+        super.setDirection(direction);
+        avatar.setDirection(direction);
     }
 }

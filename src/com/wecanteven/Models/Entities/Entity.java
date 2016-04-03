@@ -23,6 +23,11 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
     public ActionHandler actionHandler;
 
+    public Entity(ActionHandler actionHandler){
+        this.actionHandler = actionHandler;
+        canMoveVisitor = new TerranianCanMoveVisitor();
+    }
+
     @Override
     public ArrayList<Observer> getObservers() {
         return observers;
@@ -35,9 +40,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     private CanMoveVisitor canMoveVisitor;
     protected Stats stats;
 
-    public Entity(){
-        canMoveVisitor = new TerranianCanMoveVisitor();
-    }
     public boolean move(Direction d){
         boolean test = actionHandler.move(this, d);
         return test;

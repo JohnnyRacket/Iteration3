@@ -10,6 +10,7 @@ import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenu;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenuItem;
+import com.wecanteven.ModelEngine;
 import com.wecanteven.ViewEngine;
 
 import javax.swing.*;
@@ -21,6 +22,8 @@ import java.awt.*;
 public class UIViewFactory {
     private JFrame jframe;
     MainController controller;
+    ViewEngine vEngine;
+    ModelEngine mEngine;
 
     public UIViewFactory(JFrame jFrame){
         this.jframe = jFrame;
@@ -64,7 +67,7 @@ public class UIViewFactory {
         //make menu list
         NavigatableList list = new NavigatableList();
         list.addItem(new ScrollableMenuItem("New Game", () -> {
-            GameLaunchTemplate template = new GameLaunchTemplate(controller);
+            GameLaunchTemplate template = new GameLaunchTemplate(controller, mEngine, vEngine);
             template.launch();}));
         list.addItem(new ScrollableMenuItem("Load Game", () -> {System.out.println("test 2 selected");}));
         list.addItem(new ScrollableMenuItem("Exit", () -> {System.out.println("test 2 selected");}));
@@ -86,5 +89,29 @@ public class UIViewFactory {
 
     public void setController(MainController controller) {
         this.controller = controller;
+    }
+
+    public JFrame getJframe() {
+        return jframe;
+    }
+
+    public void setJframe(JFrame jframe) {
+        this.jframe = jframe;
+    }
+
+    public ViewEngine getvEngine() {
+        return vEngine;
+    }
+
+    public void setvEngine(ViewEngine vEngine) {
+        this.vEngine = vEngine;
+    }
+
+    public ModelEngine getmEngine() {
+        return mEngine;
+    }
+
+    public void setmEngine(ModelEngine mEngine) {
+        this.mEngine = mEngine;
     }
 }

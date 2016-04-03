@@ -15,7 +15,7 @@ public abstract class SelectableItem extends Drawable {
         try {
             command.execute();
         }catch (NullPointerException e){
-            System.out.println(e);
+            System.out.println("Error in selectable Item: " + e);
         }
     }
 

@@ -8,7 +8,7 @@ import com.wecanteven.ViewEngine;
 public class AVDriver {
     public static void main(String ... args) {
         ViewEngine viewEngine = new ViewEngine();
-        viewEngine.registerView(new AreaView());
+       // viewEngine.registerView(new AreaView());
         viewEngine.start();
     }
 }

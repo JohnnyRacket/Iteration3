@@ -29,11 +29,11 @@ public class Main {
         SwappableView view = factory.createMainMenuView();
 
         MainController controller = new MainController(engine);
-        factory.setController(controller);
+
         controller.setMenuState(view.getMenuViewContainer());
 
 
-        //adpater
+        //adapter
         SwingToDrawableAdapter adapter = new SwingToDrawableAdapter();
         ViewManager manager = new ViewManager();
         manager.addView(view);
@@ -43,6 +43,12 @@ public class Main {
         ModelTime.getInstance().registerTickable(controller);
         //engine.setVisible(true);
         ModelEngine mEngine = new ModelEngine();
+
+        //gives the things to factory so it can inject them
+        factory.setController(controller);
+        factory.setmEngine(mEngine);
+        factory.setvEngine(engine);
+
         engine.start();
         mEngine.start();
     }

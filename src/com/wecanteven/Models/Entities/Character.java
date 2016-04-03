@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Occupation.Occupation;
@@ -20,7 +21,9 @@ import com.wecanteven.Visitors.EntityVisitor;
 public class Character extends Entity {
     private Occupation occupation;
     private Storage itemStorage, abilityStorage;
-    public Character(){
+
+    public Character(ActionHandler actionHandler){
+        super(actionHandler);
         occupation = new Smasher();
         stats = new Stats(this);
     }
