@@ -72,4 +72,12 @@ public class MainController implements Tickable{
             state.setCommandToExecute(null);
         }
     }
+
+    public Avatar getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+    }
 }

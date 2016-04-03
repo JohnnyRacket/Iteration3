@@ -6,6 +6,8 @@ import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Feet.FeetViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Feet.FootViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
@@ -17,6 +19,7 @@ import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.UtilityClasses.Direction;
+import javafx.geometry.Pos;
 
 import java.rmi.activation.Activatable;
 
@@ -46,8 +49,11 @@ public abstract class ViewObjectFactory {
         DirectionalViewObject body = createBody(p, d, "Sneak");
 
 
-        HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 1, 1, 1, Math.PI/3, hexDrawingStrategy), new HandViewObject(p,  0.5, 0.5, 0.5, 0.5, hexDrawingStrategy), p);
-        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands);
+
+        HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 0.4, 2, -Math.PI/4, 0, hexDrawingStrategy), new HandViewObject(p, 0.4, 2, Math.PI/1.7, 0, hexDrawingStrategy), p);
+        FeetViewObject feet = createFeet(p, d, "Brown");
+        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands, feet);
+
         subject.attach(stationarySneak);
 
         //TEMPORARY TESTING WORKAROUND
@@ -57,6 +63,12 @@ public abstract class ViewObjectFactory {
 
         return createMovingViewObject(subject, stationarySneak);
 
+    }
+
+    private FeetViewObject createFeet(Position p, Direction d, String name) {
+        FootViewObject leftFoot = createFoot(p, d, name + "/Left");
+        FootViewObject rightFoot = createFoot(p, d, name + "/Right");
+        return new FeetViewObject(leftFoot, rightFoot, p, d);
     }
 
     public ViewObject createInteractableItem(Position p, InteractiveItem interactiveItem) {
@@ -70,12 +82,27 @@ public abstract class ViewObjectFactory {
     }
 
     private DirectionalViewObject createBody(Position p, Direction d, String entityName) {
-        DynamicImage bodyNorth = DynamicImageFactory.getInstance().loadDynamicImage("Entities/" + entityName + "/north.xml");
-        DynamicImage bodySouth = DynamicImageFactory.getInstance().loadDynamicImage("Entities/" + entityName + "/south.xml");
-        DynamicImage bodyNorthEast = DynamicImageFactory.getInstance().loadDynamicImage("Entities/" + entityName + "/northeast.xml");
-        DynamicImage bodyNorthWest = DynamicImageFactory.getInstance().loadDynamicImage("Entities/" + entityName + "/northwest.xml");
-        DynamicImage bodySoutheast = DynamicImageFactory.getInstance().loadDynamicImage("Entities/" + entityName + "/southeast.xml");
-        DynamicImage bodySouthWest = DynamicImageFactory.getInstance().loadDynamicImage("Entities/" + entityName + "/southwest.xml");
+        return createDirectional(p, d, "Entities/" +  entityName + "/");
+    }
+
+    private FootViewObject createFoot(Position p, Direction d, String name) {
+        String path = "Feet/" + name + "/";
+        DynamicImage bodyNorth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "north.xml");
+        DynamicImage bodySouth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "south.xml");
+        DynamicImage bodyNorthEast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northeast.xml");
+        DynamicImage bodyNorthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northwest.xml");
+        DynamicImage bodySoutheast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southeast.xml");
+        DynamicImage bodySouthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southwest.xml");
+        return new FootViewObject(p, d, hexDrawingStrategy, bodyNorth, bodySouth, bodyNorthEast, bodyNorthWest, bodySoutheast, bodySouthWest);
+    }
+
+    private DirectionalViewObject createDirectional(Position p, Direction d, String path) {
+        DynamicImage bodyNorth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "north.xml");
+        DynamicImage bodySouth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "south.xml");
+        DynamicImage bodyNorthEast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northeast.xml");
+        DynamicImage bodyNorthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northwest.xml");
+        DynamicImage bodySoutheast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southeast.xml");
+        DynamicImage bodySouthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southwest.xml");
         return new DirectionalViewObject(p, d, hexDrawingStrategy, bodyNorth, bodySouth, bodyNorthEast, bodyNorthWest, bodySoutheast, bodySouthWest);
     }
 
