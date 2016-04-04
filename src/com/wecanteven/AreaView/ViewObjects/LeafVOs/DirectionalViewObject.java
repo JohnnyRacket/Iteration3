@@ -21,6 +21,8 @@ public class DirectionalViewObject extends LeafViewObject implements Directional
 
     private DynamicImage currentImage;
 
+    private Direction direction;
+
     private DynamicImageDrawingStrategy drawingStrategy;
 
     public DirectionalViewObject(Position position, Direction direction, DynamicImageDrawingStrategy drawingStrategy, DynamicImage north, DynamicImage south, DynamicImage northeast, DynamicImage northwest, DynamicImage southeast, DynamicImage southwest) {
@@ -35,6 +37,14 @@ public class DirectionalViewObject extends LeafViewObject implements Directional
         direction.setDirectionOf(this);
     }
 
+    public DynamicImage getDynamicImage() {
+        return currentImage;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
     @Override
     public void draw(Graphics2D g) {
         drawingStrategy.draw(g, currentImage, getPosition());
@@ -43,31 +53,37 @@ public class DirectionalViewObject extends LeafViewObject implements Directional
 
     @Override
     public void setNorth() {
+        direction = Direction.NORTH;
         currentImage = north;
     }
 
     @Override
     public void setSouth() {
+        direction = Direction.SOUTH;
         currentImage = south;
     }
 
     @Override
     public void setNorthEast() {
+        direction = Direction.NORTHEAST;
         currentImage = northeast;
     }
 
     @Override
     public void setSouthEast() {
+        direction = Direction.SOUTHEAST;
         currentImage = southeast;
     }
 
     @Override
     public void setNorthWest() {
+        direction = Direction.NORTHWEST;
         currentImage = northwest;
     }
 
     @Override
     public void setSouthWest() {
+        direction = Direction.SOUTHWEST;
         currentImage = southwest;
     }
 }
