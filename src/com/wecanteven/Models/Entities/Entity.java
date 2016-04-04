@@ -39,8 +39,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         canMoveVisitor = new TerranianCanMoveVisitor();
     }
     public boolean move(Direction d){
-        boolean test = actionHandler.move(this, d);
-        return test;
+        return actionHandler.move(this, d);
     }
     public void die(){
         stats.refreshStats();

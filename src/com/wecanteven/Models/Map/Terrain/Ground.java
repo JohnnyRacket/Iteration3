@@ -10,4 +10,8 @@ public class Ground extends Terrain {
     public void accept(TerrainVisitor visitor) {
         visitor.visitGround(this);
     }
+
+    public String getTerrain() {
+        return "Ground";
+    }
 }

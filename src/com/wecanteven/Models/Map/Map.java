@@ -36,9 +36,9 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     public Map(int rSize, int sSize, int zSize){
-        this.rSize = rSize;
-        this.sSize = sSize;
-        this.zSize = zSize;
+        this.rSize = rSize-1;
+        this.sSize = sSize-1;
+        this.zSize = zSize-1;
 
         columns = new Column[rSize][sSize];
         for (int i = 0; i < rSize; i++) {
@@ -70,6 +70,7 @@ public class Map implements MapVisitable, ActionHandler {
         }
         Tile tile = this.getTile(destination);
         tile.accept(entity.getCanMoveVisitor());
+        System.out.println(tile.getTerrain().getTerrain());
 
         if(entity.getCanMoveVisitor().canMove()) {
             System.out.println("Moving from "+ source + " to " + destination);

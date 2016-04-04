@@ -10,4 +10,8 @@ public class Air extends Terrain {
     public void accept(TerrainVisitor visitor) {
         visitor.visitAir(this);
     }
+
+    public String getTerrain() {
+        return "Air";
+    }
 }

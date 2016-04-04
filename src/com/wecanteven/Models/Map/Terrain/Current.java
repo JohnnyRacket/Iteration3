@@ -10,4 +10,8 @@ public class Current extends Terrain {
     public void accept(TerrainVisitor visitor) {
         visitor.visitCurrent(this);
     }
+
+    public String getTerrain() {
+        return "Current";
+    }
 }
