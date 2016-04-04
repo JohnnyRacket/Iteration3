@@ -45,8 +45,8 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     protected Stats stats;
 
     public boolean move(Direction d){
-        boolean test = actionHandler.move(this, d);
-        return test;
+        setDirection(d);
+        return actionHandler.move(this, d.getCoords);
     }
     public void die(){
         stats.refreshStats();

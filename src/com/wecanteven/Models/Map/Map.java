@@ -37,9 +37,9 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     public Map(int rSize, int sSize, int zSize){
-        this.rSize = rSize;
-        this.sSize = sSize;
-        this.zSize = zSize;
+        this.rSize = rSize-1;
+        this.sSize = sSize-1;
+        this.zSize = zSize-1;
 
         columns = new Column[rSize][sSize];
         for (int i = 0; i < rSize; i++) {
@@ -62,16 +62,17 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
-    public boolean move(Entity entity, Direction dir) {
+    public boolean move(Entity entity, Location location) {
         Location source = entity.getLocation();
-        Location destination = source.add(dir.getCoords);
+        Location destination = source.add(location);
         CanMoveVisitor visitor = entity.getCanMoveVisitor();
         if(isOutOfBounds(destination)){
             System.out.println("Out of Bounds");
             return false;
         }
+
         boolean canMove = true;
-        for(int i = 0; i < entity.getHeight(); ++i){
+        for(int i = 0; i < entity.getHeight() && canMove; ++i){
             Tile tile = this.getTile(destination);
             tile.accept(visitor);
             canMove = canMove && visitor.canMove();
@@ -86,9 +87,13 @@ public class Map implements MapVisitable, ActionHandler {
             System.out.println("Moving from "+ source + " to " + destination);
             remove(entity, source);
             add(entity,destination);
-            return  true;
-        }else{
-            System.out.println("Couldn't Move");
+            return true;
+        }else if(source.getZ()+2 != destination.getZ()){ //checks to see if the entity has tried to step up
+            System.out.println("Checks if it could step up");
+            return move(entity,location.add(new Location(0,0,1)));
+        }
+        else{
+            System.out.println("Couldn't move");
             //can move visitor determined you cant move there
             return false;
         }
@@ -104,7 +109,7 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
-    public boolean move(TakeableItem item, Direction dir) {
+    public boolean move(TakeableItem item, Location location) {
         return false;
     }
 

@@ -10,4 +10,8 @@ public class Water extends Terrain {
     public void accept(TerrainVisitor visitor) {
         visitor.visitWater(this);
     }
+
+    public String getTerrain() {
+        return "Water";
+    }
 }
