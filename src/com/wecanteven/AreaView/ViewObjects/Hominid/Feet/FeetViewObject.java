@@ -20,6 +20,9 @@ public class FeetViewObject implements ViewObject {
         this.leftFoot = leftFoot;
         this.rightFoot = rightFoot;
         this.position = position;
+
+        leftFoot.setRadius(1);
+        rightFoot.setRadius(-1);
         direction.setDirectionOf(leftFoot);
         direction.setDirectionOf(rightFoot);
     }
