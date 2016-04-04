@@ -2,17 +2,18 @@ package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
 import java.awt.*;
 
 public abstract class HandState {
-    HandViewObject leftHand;
-    HandViewObject rightHand;
+    MicroPositionableViewObject leftHand;
+    MicroPositionableViewObject rightHand;
 
 
-    protected HandState(HandViewObject leftHand, HandViewObject rightHand) {
+    protected HandState(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
         this.leftHand = leftHand;
         this.rightHand = rightHand;
     }

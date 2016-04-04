@@ -1,5 +1,6 @@
 package com.wecanteven.AreaView.ViewObjects.Hominid;
 
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
@@ -8,7 +9,7 @@ import java.awt.*;
 
 public class BrawlingState extends HandState {
 
-    public BrawlingState(HandViewObject leftHand, HandViewObject rightHand) {
+    public BrawlingState(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
         super(leftHand, rightHand);
     }
 

@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
@@ -14,7 +15,7 @@ public class HandsViewObject implements ViewObject, Observer{
    // private Equipment --dont have it yet..
 
 
-    public HandsViewObject(HandViewObject leftHand, HandViewObject rightHand, Position position) {
+    public HandsViewObject(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand, Position position) {
         this.position = position;
         handState = new BrawlingState(leftHand, rightHand);
     }
