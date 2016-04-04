@@ -63,6 +63,7 @@ public class HominidViewObject implements ViewObject, Observer{
 
     @Override
     public void update() {
+        System.out.println("HOMING GO AN UPDATE");
         this.direction = directionSubject.getDirection();
         this.direction.setDirectionOf(body);
         feet.setDirection(direction);

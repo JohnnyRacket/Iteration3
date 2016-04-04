@@ -22,6 +22,14 @@ import java.util.ArrayList;
 public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
     public ActionHandler actionHandler;
+    private int movingTicks = 0;
+    private Direction direction;
+
+    public Entity(ActionHandler actionHandler, Direction direction){
+        this.actionHandler = actionHandler;
+        this.direction = direction;
+        canMoveVisitor = new TerranianCanMoveVisitor();
+    }
 
     @Override
     public ArrayList<Observer> getObservers() {
@@ -35,9 +43,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     private CanMoveVisitor canMoveVisitor;
     protected Stats stats;
 
-    public Entity(){
-        canMoveVisitor = new TerranianCanMoveVisitor();
-    }
     public boolean move(Direction d){
         return actionHandler.move(this, d);
     }
@@ -50,8 +55,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
 
 
-    private int movingTicks = 0;
-    private Direction direction;
+
 
     //TODO: someone write the below shit
     @Override

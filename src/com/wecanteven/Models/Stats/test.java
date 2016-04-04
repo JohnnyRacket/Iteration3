@@ -25,15 +25,15 @@ public class test {
         LevelFactory levelFactory = new DopeAssLevelFactory();
         Map map = levelFactory.createMap();
 
-        Character character = new Character();
-        character.actionHandler = map;
-        map.add(character,new Location(5,0,1));
-        Avatar avatar = new Avatar(character);
+//        Character character = new Character();
+//        character.actionHandler = map;
+//        map.add(character,new Location(5,0,1));
+//        Avatar avatar = new Avatar(character);
 
-        MainController controller = new MainController(viewEngine,avatar);
-        controller.setPlayState();
-        modelTime.registerTickable(controller);
-        viewEngine.registerView(new AreaView());
+       // MainController controller = new MainController(viewEngine,avatar);
+        //controller.setPlayState();
+       // modelTime.registerTickable(controller);
+        //viewEngine.registerView(new AreaView());
         viewEngine.start();
     }
 }

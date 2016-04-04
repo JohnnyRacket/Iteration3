@@ -12,11 +12,9 @@ public abstract class SelectableItem extends Drawable {
     private SelectableMenuItemCommand command;
 
     public void select(){
-        try {
-            command.execute();
-        }catch (NullPointerException e){
-            System.out.println(e);
-        }
+
+        command.execute();
+
     }
 
     @Override

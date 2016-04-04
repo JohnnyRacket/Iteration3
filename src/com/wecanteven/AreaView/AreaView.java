@@ -12,6 +12,7 @@ import com.wecanteven.AreaView.ViewObjects.TileViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
+import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Map.Map;
@@ -31,13 +32,12 @@ public class AreaView extends JPanel {
 
     //FOR TESTING ONLY
     private xySorted3DArray backingArray = new xySorted3DArray();
+    private Avatar avatar;
 
-    public AreaView() {
-
+    public AreaView(Avatar avatar, Map map) {
+        this.avatar = avatar;
 
         PlainsViewObjectFactory factory = new PlainsViewObjectFactory(this);
-        LevelFactory levelFactory = new DopeAssLevelFactory();
-        Map map = levelFactory.createMap();
         VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory);
         map.accept(voCreationVisitor);
 
@@ -45,66 +45,67 @@ public class AreaView extends JPanel {
 
 
 
-        Entity entity = new Entity();
-        ViewObject testAvatar = factory.createSneak(new Position(3,2, 1), Direction.NORTH, entity);
-        addViewObject(testAvatar);
-
-        InteractiveItem iItem = new InteractiveItem("Button");
-        ViewObject button = factory.createInteractableItem(new Position(3,2,1), iItem);
-        addViewObject(button);
-
-
-        ViewTime.getInstance().register(iItem::trigger, 1500);
-        ViewTime.getInstance().register(iItem::release, 3000);
+        //Entity entity = new Entity();
+//        ViewObject testAvatar = factory.createSneak(new Position(avatar.getLocation().getR(),avatar.getLocation().getS(), avatar.getLocation().getZ()), Direction.NORTH, avatar);
+//
+//        addViewObject(testAvatar);
+//
+//        InteractiveItem iItem = new InteractiveItem("Button");
+//        ViewObject button = factory.createInteractableItem(new Position(3,2,1), iItem);
+//        addViewObject(button);
+//
+//
+//        ViewTime.getInstance().register(iItem::trigger, 1500);
+//        ViewTime.getInstance().register(iItem::release, 3000);
 
 
         int half = 1000;
         int full = half*7;
-        for (int i = 0; i < 20; i++) {
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.NORTH);
-                entity.setLocation(new Location(3,1,1));
-                entity.setMovingTicks(20);
-            }, half + full*i);
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.NORTHEAST);
-                entity.setLocation(new Location(4,0,1));
-                entity.setMovingTicks(20);
-                System.out.println("TEST");
-            }, 2*half + full*i);
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTHEAST);
-                entity.setLocation(new Location(5,0,2));
-                entity.setMovingTicks(20);
-            }, 3*half + full*i);
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTH);
-                entity.setLocation(new Location(5,1,1));
-                entity.setMovingTicks(20);
-                System.out.println("TEST2");
-            }, 4*half + full*i);
-
+//        for (int i = 0; i < 20; i++) {
+//
 //            ViewTime.getInstance().register(() -> {
-//                entity.setLocation(new Location(5,0,1));
-//                entity.setMovingTicks(20);
-//            }, 5*half + full*i);
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.SOUTHWEST);
-                entity.setLocation(new Location(4,2,1));
-                entity.setMovingTicks(20);
-            }, 6*half + full*i);
-
-            ViewTime.getInstance().register(() -> {
-                entity.setDirection(Direction.NORTHWEST);
-                entity.setLocation(new Location(3,2,1));
-                entity.setMovingTicks(20);
-            }, 7*half + full*i);
-        }
+//                avatar.setDirection(Direction.NORTH);
+//                avatar.setLocation(new Location(3,1,1));
+//                avatar.setMovingTicks(20);
+//            }, half + full*i);
+//
+//            ViewTime.getInstance().register(() -> {
+//                avatar.setDirection(Direction.NORTHEAST);
+//                avatar.setLocation(new Location(4,0,1));
+//                avatar.setMovingTicks(20);
+//                System.out.println("TEST");
+//            }, 2*half + full*i);
+//
+//            ViewTime.getInstance().register(() -> {
+//                avatar.setDirection(Direction.SOUTHEAST);
+//                avatar.setLocation(new Location(5,0,2));
+//                avatar.setMovingTicks(20);
+//            }, 3*half + full*i);
+//
+//            ViewTime.getInstance().register(() -> {
+//                avatar.setDirection(Direction.SOUTH);
+//                avatar.setLocation(new Location(5,1,1));
+//                avatar.setMovingTicks(20);
+//                System.out.println("TEST2");
+//            }, 4*half + full*i);
+//
+////            ViewTime.getInstance().register(() -> {
+////                avatar.setLocation(new Location(5,0,1));
+////                avatar.setMovingTicks(20);
+////            }, 5*half + full*i);
+//
+//            ViewTime.getInstance().register(() -> {
+//                avatar.setDirection(Direction.SOUTHWEST);
+//                avatar.setLocation(new Location(4,2,1));
+//                avatar.setMovingTicks(20);
+//            }, 6*half + full*i);
+//
+//            ViewTime.getInstance().register(() -> {
+//                avatar.setDirection(Direction.NORTHWEST);
+//                avatar.setLocation(new Location(3,2,1));
+//                avatar.setMovingTicks(20);
+//            }, 7*half + full*i);
+//        }
     }
 
     public void addViewObject(ViewObject vo) {
