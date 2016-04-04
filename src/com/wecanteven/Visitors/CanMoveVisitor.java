@@ -13,6 +13,7 @@ import com.wecanteven.Models.Map.Tile;
 public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor {
 
     private boolean canMove = true;
+    private boolean canMoveBelow = true;
 
     @Override
     public void visitMap(Map map) {
@@ -22,6 +23,8 @@ public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor {
 
     @Override
     public void visitTile(Tile tile) {
+        setCanMove(true);
+        setCanMoveBelow(true);
         if (tile.hasEntity() || tile.hasObstacle() ) setCanMove(false);
         else {
             tile.getTerrain().accept(this);
@@ -34,5 +37,13 @@ public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor {
 
     public void setCanMove(boolean canMove) {
         this.canMove = canMove;
+    }
+
+    public boolean CanMoveBelow() {
+        return canMoveBelow;
+    }
+
+    public void setCanMoveBelow(boolean canMoveBelow) {
+        this.canMoveBelow = canMoveBelow;
     }
 }

@@ -9,6 +9,7 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.CanMoveVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
@@ -64,14 +65,23 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean move(Entity entity, Direction dir) {
         Location source = entity.getLocation();
         Location destination = source.add(dir.getCoords);
+        CanMoveVisitor visitor = entity.getCanMoveVisitor();
         if(isOutOfBounds(destination)){
             System.out.println("Out of Bounds");
             return false;
         }
+        boolean canMove = true;
         Tile tile = this.getTile(destination);
-        tile.accept(entity.getCanMoveVisitor());
+        tile.accept(visitor);
+        canMove = canMove && visitor.canMove();
+        //now check the one below it.
+        System.out.println("//////////////////////// " + destination + "/////////////////////////////");
+        System.out.println("//////////////////////// " + destination.subtract(new Location(0,0,1)) + "/////////////////////////////");
+        Tile tileBelow = this.getTile(destination.subtract(new Location(0,0,1)));
+        tileBelow.accept(visitor);
+        canMove = canMove && visitor.CanMoveBelow();
 
-        if(entity.getCanMoveVisitor().canMove()) {
+        if(canMove) {
             System.out.println("Moving from "+ source + " to " + destination);
             remove(entity, source);
             add(entity,destination);
