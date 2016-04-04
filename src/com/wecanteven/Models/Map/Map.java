@@ -9,6 +9,7 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.CanFallVisitor;
 import com.wecanteven.Visitors.CanMoveVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 
@@ -62,6 +63,17 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
+    public boolean fall(Entity entity, Location destination){
+        CanFallVisitor visitor = entity.getCanFallVisitor();
+        getTile(destination).accept(visitor);
+        if(visitor.isCanMove()){
+            return move(entity,destination);
+        }else{
+            return false;
+        }
+    }
+
+    @Override
     public boolean move(Entity entity, Location destination) {
         Location source = entity.getLocation();
         CanMoveVisitor visitor = entity.getCanMoveVisitor();
@@ -99,10 +111,6 @@ public class Map implements MapVisitable, ActionHandler {
         return columns[r][s].getTile(z);
     }
 
-    @Override
-    public boolean fall(Entity entity) {
-        return false;
-    }
 
     @Override
     public boolean move(TakeableItem item, Location location) {
@@ -110,12 +118,12 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
-    public boolean fall(TakeableItem item) {
+    public boolean fall(TakeableItem item, Location location) {
         return false;
     }
 
     @Override
-    public boolean drop(TakeableItem item) {
+    public boolean drop(TakeableItem item, Location location) {
         return false;
     }
 

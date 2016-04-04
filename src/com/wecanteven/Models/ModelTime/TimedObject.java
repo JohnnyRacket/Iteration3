@@ -16,7 +16,8 @@ public class TimedObject {
     public boolean decrement(){
         --ticks;
         if(ticks <= 0){
-            this.alertable.execute();
+            System.out.println("executing");
+            this.alertable.alert();
             return true;
         }else{
             return false;

@@ -67,7 +67,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             return false;
         }
         System.out.println("Falling");
-        return moveHelper(location.add(Direction.DOWN.getCoords));
+        return actionHandler.fall(this, this.getLocation().subtract(new Location(0,0,1)));
     }
     public void die(){
         stats.refreshStats();

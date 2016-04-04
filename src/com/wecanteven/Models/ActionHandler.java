@@ -11,8 +11,8 @@ import com.wecanteven.UtilityClasses.Location;
 public interface ActionHandler {
 
     boolean move(Entity entity, Location location);
-    boolean fall(Entity entity);
+    boolean fall(Entity entity, Location location);
     boolean move(TakeableItem item, Location location);
-    boolean fall(TakeableItem item);
-    boolean drop(TakeableItem item);
+    boolean fall(TakeableItem item, Location location);
+    boolean drop(TakeableItem item, Location location);
 }
