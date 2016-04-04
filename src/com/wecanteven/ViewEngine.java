@@ -1,8 +1,11 @@
 package com.wecanteven;
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.UtilityClasses.Config;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * Created by alexs on 3/29/2016.
@@ -11,6 +14,16 @@ public class ViewEngine extends JFrame implements Runnable{
     private JPanel target;
     private Thread thread;
     private ViewTime viewTime = ViewTime.getInstance();
+
+    public ViewEngine(){
+        this.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                // This is only called when the user releases the mouse button.
+                Config.SCREEN_HEIGHT = getHeight();
+                Config.SCREEN_WIDTH = getWidth();
+            }
+        });
+    }
 
 
     public void clear() {
@@ -36,6 +49,7 @@ public class ViewEngine extends JFrame implements Runnable{
 
 
     }
+
 
     public void start() {
         thread = new Thread(this);
