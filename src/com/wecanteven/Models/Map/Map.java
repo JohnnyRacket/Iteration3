@@ -62,9 +62,8 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
-    public boolean move(Entity entity, Location location) {
+    public boolean move(Entity entity, Location destination) {
         Location source = entity.getLocation();
-        Location destination = source.add(location);
         CanMoveVisitor visitor = entity.getCanMoveVisitor();
         if(isOutOfBounds(destination)){
             System.out.println("Out of Bounds");
@@ -88,9 +87,6 @@ public class Map implements MapVisitable, ActionHandler {
             remove(entity, source);
             add(entity,destination);
             return true;
-        }else if(source.getZ()+2 != destination.getZ()){ //checks to see if the entity has tried to step up
-            System.out.println("Checks if it could step up");
-            return move(entity,location.add(new Location(0,0,1)));
         }
         else{
             System.out.println("Couldn't move");
