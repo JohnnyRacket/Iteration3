@@ -39,11 +39,14 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitEntity(Entity e) {
-
+        System.out.println("adding entity to areaview");
+        areaView.addViewObject(factory.createSneak(currentPosition, e.getDirection(), e));
     }
 
     @Override
     public void visitCharacter(Character c) {
+        System.out.println("adding character to areaview");
+        areaView.addViewObject(factory.createSneak(currentPosition, c.getDirection(), c));
 
     }
 
@@ -108,7 +111,9 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitTile(Tile tile) {
-        if (tile.hasEntity() ) tile.getEntity().accept(this);
+        if (tile.hasEntity() ) {
+            tile.getEntity().accept(this);
+        }
         if (tile.hasInteractiveItem() ) tile.getInteractiveItem().accept(this);
         if (tile.hasObstacle() ) tile.getObstacle().accept(this);
         if (tile.hasOneShot() ) tile.getOneShot().accept(this);

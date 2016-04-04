@@ -14,7 +14,7 @@ public class Avatar extends Entity{
     Character avatar;
     AvatarState state;
     public Avatar(Character avatar, ActionHandler actionHandler){
-        super(actionHandler);
+        super(actionHandler, avatar.getDirection());
         this.avatar = avatar;
         state = new EntityState(avatar, this);
     }

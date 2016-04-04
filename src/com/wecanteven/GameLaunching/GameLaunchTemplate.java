@@ -8,6 +8,7 @@ import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Map.Map;
+import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.ViewEngine;
 
@@ -45,11 +46,13 @@ public class GameLaunchTemplate {
     }
 
     protected void createAvatar(String occupation){
-        Character player = new Character(map);
+        Character player = new Character(map, Direction.SOUTH);
         avatar = new Avatar(player, map);
-        avatar.setLocation(new Location(3,2,1));
+        map.add(player, new Location(3,2,1));
 
         controller.setAvatar(avatar);
+
+
     }
 
 

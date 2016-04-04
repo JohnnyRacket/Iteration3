@@ -38,8 +38,6 @@ public class AreaView extends JPanel {
         this.avatar = avatar;
 
         PlainsViewObjectFactory factory = new PlainsViewObjectFactory(this);
-        //LevelFactory levelFactory = new DopeAssLevelFactory();
-        //Map map = levelFactory.createMap();
         VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory);
         map.accept(voCreationVisitor);
 
@@ -48,17 +46,17 @@ public class AreaView extends JPanel {
 
 
         //Entity entity = new Entity();
-        ViewObject testAvatar = factory.createSneak(new Position(avatar.getLocation().getR(),avatar.getLocation().getS(), avatar.getLocation().getZ()), Direction.NORTH, avatar);
-
-        addViewObject(testAvatar);
-
-        InteractiveItem iItem = new InteractiveItem("Button");
-        ViewObject button = factory.createInteractableItem(new Position(3,2,1), iItem);
-        addViewObject(button);
-
-
-        ViewTime.getInstance().register(iItem::trigger, 1500);
-        ViewTime.getInstance().register(iItem::release, 3000);
+//        ViewObject testAvatar = factory.createSneak(new Position(avatar.getLocation().getR(),avatar.getLocation().getS(), avatar.getLocation().getZ()), Direction.NORTH, avatar);
+//
+//        addViewObject(testAvatar);
+//
+//        InteractiveItem iItem = new InteractiveItem("Button");
+//        ViewObject button = factory.createInteractableItem(new Position(3,2,1), iItem);
+//        addViewObject(button);
+//
+//
+//        ViewTime.getInstance().register(iItem::trigger, 1500);
+//        ViewTime.getInstance().register(iItem::release, 3000);
 
 
         int half = 1000;

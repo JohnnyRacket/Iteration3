@@ -22,8 +22,8 @@ public class Character extends Entity {
     private Occupation occupation;
     private Storage itemStorage, abilityStorage;
 
-    public Character(ActionHandler actionHandler){
-        super(actionHandler);
+    public Character(ActionHandler actionHandler, Direction direction){
+        super(actionHandler, direction);
         occupation = new Smasher();
         stats = new Stats(this);
     }
