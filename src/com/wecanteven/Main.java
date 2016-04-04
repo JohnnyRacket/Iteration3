@@ -24,7 +24,7 @@ public class Main {
         System.out.println("hello world");
         ViewEngine engine = new ViewEngine();
 
-        UIViewFactory factory = new UIViewFactory(engine);
+        UIViewFactory factory = UIViewFactory.getInstance();
 
         SwappableView view = factory.createMainMenuView();
 

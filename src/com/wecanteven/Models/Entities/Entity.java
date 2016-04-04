@@ -9,9 +9,7 @@ import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
-import com.wecanteven.Visitors.CanMoveVisitor;
-import com.wecanteven.Visitors.EntityVisitor;
-import com.wecanteven.Visitors.TerranianCanMoveVisitor;
+import com.wecanteven.Visitors.*;
 
 import java.util.ArrayList;
 
@@ -21,15 +19,22 @@ import java.util.ArrayList;
 
 public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
-    public ActionHandler actionHandler;
+    private ActionHandler actionHandler;
     private int movingTicks = 20;
     private int height = 3;
     private Direction direction;
+    private int jumpHeight;
+    protected Location location;
+    private CanMoveVisitor canMoveVisitor;
+    private CanFallVisitor canFallVisitor;
+    protected Stats stats;
 
     public Entity(ActionHandler actionHandler, Direction direction){
         this.actionHandler = actionHandler;
         this.direction = direction;
         canMoveVisitor = new TerranianCanMoveVisitor();
+        canFallVisitor = new TerranianCanFallVisitor();
+        jumpHeight = 15;
     }
 
     @Override
@@ -40,13 +45,29 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         die();
     }
 
-    protected Location location;
-    private CanMoveVisitor canMoveVisitor;
-    protected Stats stats;
+
 
     public boolean move(Direction d){
         setDirection(d);
-        return actionHandler.move(this, d.getCoords);
+        Location destination = location.add(d.getCoords);
+        return moveHelper(destination);
+    }
+    private boolean moveHelper(Location destination){
+        if(actionHandler.move(this,destination)){
+            return true;
+        }
+        else if(location.getZ()+jumpHeight != destination.getZ()) { //checks to see if the entity has tried to step up
+            System.out.println("Checks if it could step up");
+            return moveHelper(destination.add(Direction.UP.getCoords));
+        }
+        return false;
+    }
+    public boolean fall(){
+        if(location.getZ() == 1){
+            return false;
+        }
+        System.out.println("Falling");
+        return actionHandler.fall(this, this.getLocation().subtract(new Location(0,0,1)));
     }
     public void die(){
         stats.refreshStats();
@@ -128,5 +149,21 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public int getJumpHeight() {
+        return jumpHeight;
+    }
+
+    public void setJumpHeight(int jumpHeight) {
+        this.jumpHeight = jumpHeight;
+    }
+
+    public CanFallVisitor getCanFallVisitor() {
+        return canFallVisitor;
+    }
+
+    public void setCanFallVisitor(CanFallVisitor canFallVisitor) {
+        this.canFallVisitor = canFallVisitor;
     }
 }

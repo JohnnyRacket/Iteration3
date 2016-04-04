@@ -9,6 +9,7 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.CanFallVisitor;
 import com.wecanteven.Visitors.CanMoveVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 
@@ -62,9 +63,19 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
-    public boolean move(Entity entity, Location location) {
+    public boolean fall(Entity entity, Location destination){
+        CanFallVisitor visitor = entity.getCanFallVisitor();
+        getTile(destination).accept(visitor);
+        if(visitor.isCanMove()){
+            return move(entity,destination);
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean move(Entity entity, Location destination) {
         Location source = entity.getLocation();
-        Location destination = source.add(location);
         CanMoveVisitor visitor = entity.getCanMoveVisitor();
         if(isOutOfBounds(destination)){
             System.out.println("Out of Bounds");
@@ -88,9 +99,6 @@ public class Map implements MapVisitable, ActionHandler {
             remove(entity, source);
             add(entity,destination);
             return true;
-        }else if(source.getZ()+2 != destination.getZ()){ //checks to see if the entity has tried to step up
-            System.out.println("Checks if it could step up");
-            return move(entity,location.add(new Location(0,0,1)));
         }
         else{
             System.out.println("Couldn't move");
@@ -103,10 +111,6 @@ public class Map implements MapVisitable, ActionHandler {
         return columns[r][s].getTile(z);
     }
 
-    @Override
-    public boolean fall(Entity entity) {
-        return false;
-    }
 
     @Override
     public boolean move(TakeableItem item, Location location) {
@@ -114,12 +118,12 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
-    public boolean fall(TakeableItem item) {
+    public boolean fall(TakeableItem item, Location location) {
         return false;
     }
 
     @Override
-    public boolean drop(TakeableItem item) {
+    public boolean drop(TakeableItem item, Location location) {
         return false;
     }
 
