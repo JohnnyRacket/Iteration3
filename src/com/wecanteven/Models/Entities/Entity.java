@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
     public ActionHandler actionHandler;
-    private int movingTicks = 0;
+    private int movingTicks = 20;
     private Direction direction;
 
     public Entity(ActionHandler actionHandler, Direction direction){

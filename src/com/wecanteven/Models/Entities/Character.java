@@ -59,9 +59,6 @@ public class Character extends Entity {
     }
     public void drop(){}
     public void pickup(TakeableItem item){}
-    public int getMovingTicks(){
-        return 0;
-    }
     public Location getLocation(){
         return location;
     }
