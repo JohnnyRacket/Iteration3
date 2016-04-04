@@ -9,7 +9,9 @@ public enum Direction {
     NORTHEAST(Config.TILT_ANGLE, (Directionalizable d) -> d.setNorthEast()),
     NORTHWEST(Math.PI - Config.TILT_ANGLE, (Directionalizable d) -> d.setNorthWest()),
     SOUTHWEST(Math.PI + Config.TILT_ANGLE, (Directionalizable d) -> d.setSouthWest()),
-    SOUTHEAST(2 * Math.PI - Config.TILT_ANGLE, (Directionalizable d) -> d.setSouthEast());
+    SOUTHEAST(2 * Math.PI - Config.TILT_ANGLE, (Directionalizable d) -> d.setSouthEast()),
+    UP(0,(Directionalizable d) -> {}),
+    DOWN(0,(Directionalizable d) -> {});
 
     private final double angle;
     private final Command action;
@@ -36,6 +38,8 @@ public enum Direction {
         SOUTH.getCoords = new Location(0, 1, 0);
         SOUTHEAST.getCoords = new Location(1, 0, 0);
         SOUTHWEST.getCoords = new Location(-1, 1, 0);
+        UP.getCoords = new Location(0,0,1);
+        DOWN.getCoords = new Location(0,0,-1);
     }
 
     private interface Command {
