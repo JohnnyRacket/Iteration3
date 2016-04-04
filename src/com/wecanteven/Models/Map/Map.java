@@ -71,12 +71,13 @@ public class Map implements MapVisitable, ActionHandler {
             return false;
         }
         boolean canMove = true;
-        Tile tile = this.getTile(destination);
-        tile.accept(visitor);
-        canMove = canMove && visitor.canMove();
+        for(int i = 0; i < entity.getHeight(); ++i){
+            Tile tile = this.getTile(destination);
+            tile.accept(visitor);
+            canMove = canMove && visitor.canMove();
+        }
         //now check the one below it.
-        System.out.println("//////////////////////// " + destination + "/////////////////////////////");
-        System.out.println("//////////////////////// " + destination.subtract(new Location(0,0,1)) + "/////////////////////////////");
+
         Tile tileBelow = this.getTile(destination.subtract(new Location(0,0,1)));
         tileBelow.accept(visitor);
         canMove = canMove && visitor.CanMoveBelow();
