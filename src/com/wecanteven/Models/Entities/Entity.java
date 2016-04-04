@@ -56,10 +56,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         if(actionHandler.move(this,destination)){
             return true;
         }
-        else if(location.getZ()+jumpHeight != destination.getZ()) { //checks to see if the entity has tried to step up
-            System.out.println("Checks if it could step up");
-            return moveHelper(destination.add(Direction.UP.getCoords));
-        }
         return false;
     }
     public boolean fall(){

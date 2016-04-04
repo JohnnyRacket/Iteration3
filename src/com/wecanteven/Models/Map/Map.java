@@ -93,16 +93,25 @@ public class Map implements MapVisitable, ActionHandler {
         Tile tileBelow = this.getTile(destination.subtract(new Location(0,0,1)));
         tileBelow.accept(visitor);
         canMove = canMove && visitor.CanMoveBelow();
+        if(visitor.CanMoveBelow()) {
+            if (canMove) {
+                System.out.println("Moving from " + source + " to " + destination);
+                remove(entity, source);
+                add(entity, destination);
+                return true;
+            } else {
+                for(int i = 0; i < entity.getJumpHeight(); ++i) {
+                    if(move(entity, destination.add(Direction.UP.getCoords))){
+                        System.out.println("jumped");
+                        return true;
+                    }
+                }
 
-        if(canMove) {
-            System.out.println("Moving from "+ source + " to " + destination);
-            remove(entity, source);
-            add(entity,destination);
-            return true;
-        }
-        else{
-            System.out.println("Couldn't move");
-            //can move visitor determined you cant move there
+                System.out.println("Couldn't move");
+                //can move visitor determined you cant move there
+                return false;
+            }
+        }else{
             return false;
         }
     }
