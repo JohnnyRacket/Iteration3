@@ -9,9 +9,7 @@ import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
-import com.wecanteven.Visitors.CanMoveVisitor;
-import com.wecanteven.Visitors.EntityVisitor;
-import com.wecanteven.Visitors.TerranianCanMoveVisitor;
+import com.wecanteven.Visitors.*;
 
 import java.util.ArrayList;
 
@@ -26,11 +24,16 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     private int height = 3;
     private Direction direction;
     private int jumpHeight;
+    protected Location location;
+    private CanMoveVisitor canMoveVisitor;
+    private CanFallVisitor canFallVisitor;
+    protected Stats stats;
 
     public Entity(ActionHandler actionHandler, Direction direction){
         this.actionHandler = actionHandler;
         this.direction = direction;
         canMoveVisitor = new TerranianCanMoveVisitor();
+        canFallVisitor = new TerranianCanFallVisitor();
         jumpHeight = 15;
     }
 
@@ -42,9 +45,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         die();
     }
 
-    protected Location location;
-    private CanMoveVisitor canMoveVisitor;
-    protected Stats stats;
+
 
     public boolean move(Direction d){
         setDirection(d);
@@ -148,5 +149,21 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public int getJumpHeight() {
+        return jumpHeight;
+    }
+
+    public void setJumpHeight(int jumpHeight) {
+        this.jumpHeight = jumpHeight;
+    }
+
+    public CanFallVisitor getCanFallVisitor() {
+        return canFallVisitor;
+    }
+
+    public void setCanFallVisitor(CanFallVisitor canFallVisitor) {
+        this.canFallVisitor = canFallVisitor;
     }
 }
