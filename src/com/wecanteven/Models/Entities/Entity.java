@@ -22,7 +22,8 @@ import java.util.ArrayList;
 public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
     public ActionHandler actionHandler;
-    private int movingTicks = 0;
+    private int movingTicks = 20;
+    private int height = 3;
     private Direction direction;
 
     public Entity(ActionHandler actionHandler, Direction direction){
@@ -44,7 +45,8 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     protected Stats stats;
 
     public boolean move(Direction d){
-        return actionHandler.move(this, d);
+        setDirection(d);
+        return actionHandler.move(this, d.getCoords);
     }
     public void die(){
         stats.refreshStats();
@@ -118,5 +120,13 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public void setActionHandler(ActionHandler actionHandler) {
         this.actionHandler = actionHandler;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

@@ -36,7 +36,6 @@ public class AreaView extends JPanel {
 
     public AreaView(Avatar avatar, Map map) {
         this.avatar = avatar;
-
         PlainsViewObjectFactory factory = new PlainsViewObjectFactory(this);
         VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory);
         map.accept(voCreationVisitor);
@@ -123,7 +122,6 @@ public class AreaView extends JPanel {
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         backingArray.draw(g2d);
-        g2d.drawString("WOOT WOOT", 50, 50);
     }
 
     class xySorted3DArray {

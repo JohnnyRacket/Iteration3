@@ -15,20 +15,24 @@ public class TerranianCanMoveVisitor extends CanMoveVisitor {
     @Override
     public void visitWater(Water water) {
         setCanMove(false);
+        setCanMoveBelow(false);
     }
 
     @Override
     public void visitGround(Ground ground) {
         setCanMove(false);
+        setCanMoveBelow(true);
     }
 
     @Override
     public void visitAir(Air air) {
         setCanMove(true);
+        setCanMoveBelow(true);
     }
 
     @Override
     public void visitCurrent(Current current) {
         setCanMove(true);
+        setCanMoveBelow(true);
     }
 }

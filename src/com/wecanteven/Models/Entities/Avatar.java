@@ -6,6 +6,7 @@ import com.wecanteven.Models.Entities.AvatarStates.EntityState;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.CanMoveVisitor;
 
 /**
  * Created by Brandon on 3/31/2016.
@@ -17,6 +18,7 @@ public class Avatar extends Entity{
         super(actionHandler, avatar.getDirection());
         this.avatar = avatar;
         state = new EntityState(avatar, this);
+        this.setMovingTicks(10);
     }
     public boolean move(Direction d){
         return state.move(d);
@@ -56,5 +58,23 @@ public class Avatar extends Entity{
     public void setDirection(Direction direction) {
         super.setDirection(direction);
         avatar.setDirection(direction);
+    }
+
+    @Override
+    public void setMovingTicks(int ticks) {
+        super.setMovingTicks(ticks);
+        avatar.setMovingTicks(ticks);
+    }
+
+    @Override
+    public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor) {
+        super.setCanMoveVisitor(canMoveVisitor);
+        avatar.setCanMoveVisitor(canMoveVisitor);
+    }
+
+    @Override
+    public void setActionHandler(ActionHandler actionHandler) {
+        super.setActionHandler(actionHandler);
+        avatar.setActionHandler(actionHandler);
     }
 }
