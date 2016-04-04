@@ -21,15 +21,17 @@ import java.util.ArrayList;
 
 public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
-    public ActionHandler actionHandler;
+    private ActionHandler actionHandler;
     private int movingTicks = 20;
     private int height = 3;
     private Direction direction;
+    private int jumpHeight;
 
     public Entity(ActionHandler actionHandler, Direction direction){
         this.actionHandler = actionHandler;
         this.direction = direction;
         canMoveVisitor = new TerranianCanMoveVisitor();
+        jumpHeight = 15;
     }
 
     @Override
@@ -46,7 +48,25 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public boolean move(Direction d){
         setDirection(d);
-        return actionHandler.move(this, d.getCoords);
+        Location destination = location.add(d.getCoords);
+        return moveHelper(destination);
+    }
+    private boolean moveHelper(Location destination){
+        if(actionHandler.move(this,destination)){
+            return true;
+        }
+        else if(location.getZ()+jumpHeight != destination.getZ()) { //checks to see if the entity has tried to step up
+            System.out.println("Checks if it could step up");
+            return move(Direction.DOWN);
+        }
+        return false;
+    }
+    public boolean fall(){
+        if(location.getZ() == 1){
+            return false;
+        }
+        System.out.println("Falling");
+        return moveHelper(location.add(Direction.DOWN.getCoords));
     }
     public void die(){
         stats.refreshStats();
