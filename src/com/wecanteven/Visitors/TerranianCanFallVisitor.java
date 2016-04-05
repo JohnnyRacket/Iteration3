@@ -26,6 +26,6 @@ public class TerranianCanFallVisitor extends CanFallVisitor {
 
     @Override
     public void visitCurrent(Current current) {
-        this.setCanMove(false);
+        this.setCanMove(true);
     }
 }
