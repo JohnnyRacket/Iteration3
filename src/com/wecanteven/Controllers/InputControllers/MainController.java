@@ -86,7 +86,18 @@ public class MainController implements Tickable{
             //System.out.println("executing controller command");
             state.getCommandToExecute().execute();
             state.setCommandToExecute(null);
+
         }
+        if(state.getContinuousCommandToExecute() != null) {
+            //System.out.println("executing controller command");
+            state.getContinuousCommandToExecute().execute();
+            //state.setContinuousCommandToExecute(null);
+
+        }
+    }
+
+    public void removeKeyActive(){
+        state.setContinuousCommandToExecute(null);
     }
 
     public Avatar getAvatar() {

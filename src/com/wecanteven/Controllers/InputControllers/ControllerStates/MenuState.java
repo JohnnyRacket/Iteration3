@@ -36,32 +36,32 @@ public class MenuState extends ControllerState {
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.UP), ()->{
             System.out.println("up hit");
             this.setCommandToExecute(()->menus.up());
-        }, this.getjFrame()));
+        }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.DOWN), ()->{
             System.out.println("down hit");
             this.setCommandToExecute(()->menus.down());
-        }, this.getjFrame()));
+        }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SELECT), ()->{
             System.out.println("select hit");
             this.setCommandToExecute(()->menus.select());
-        }, this.getjFrame()));
+        }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.LEFT), ()->{
             System.out.println("left hit");
             this.setCommandToExecute(()->menus.left());
-        }, this.getjFrame()));
+        }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.RIGHT), ()->{
             System.out.println("right hit");
             this.setCommandToExecute(()->menus.right());
-        }, this.getjFrame()));
+        }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SWAPVIEW), ()->{
             System.out.println("swap hit");
             this.setCommandToExecute(()->menus.swap());
-        }, this.getjFrame()));
+        }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ESCAPE), ()->{
             System.out.println("esc hit");
-            controller.setPlayState();
-            controller.clearViews();
-        }, this.getjFrame()));
+            this.getController().setPlayState();
+            this.getController().clearViews();
+        }, this.getjFrame(), this.getController()));
 
     }
 

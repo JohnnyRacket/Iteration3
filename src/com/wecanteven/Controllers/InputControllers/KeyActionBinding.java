@@ -1,5 +1,7 @@
 package com.wecanteven.Controllers.InputControllers;
 
+import com.wecanteven.Main;
+
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -11,10 +13,12 @@ public class KeyActionBinding implements KeyListener{
 
     private Integer key;
     private KeyInteractionCommand action;
+    private MainController controller;
 
-    public KeyActionBinding(Integer key, KeyInteractionCommand action, JFrame jFrame){
+    public KeyActionBinding(Integer key, KeyInteractionCommand action, JFrame jFrame, MainController controller){
         this.key = key;
         this.action = action;
+        this.controller = controller;
         jFrame.addKeyListener(this);
     }
 
@@ -32,5 +36,6 @@ public class KeyActionBinding implements KeyListener{
 
     @Override
     public void keyReleased(KeyEvent e) {
+        controller.removeKeyActive();
     }
 }

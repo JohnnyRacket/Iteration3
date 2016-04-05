@@ -18,9 +18,10 @@ public abstract class ControllerState {
     private Map<ActionEnum, Integer> mappings = new HashMap<>();
     private ArrayList<KeyActionBinding> keyBindings = new ArrayList<>();
     private JFrame jFrame;
-    MainController controller;
+    private MainController controller;
 
     private KeyInteractionCommand commandToExecute;
+    private KeyInteractionCommand continuousCommandToExecute;
 
     public ControllerState(JFrame jFrame, MainController controller){
         this.controller = controller;
@@ -66,5 +67,21 @@ public abstract class ControllerState {
 
     public void setCommandToExecute(KeyInteractionCommand commandToExecute) {
         this.commandToExecute = commandToExecute;
+    }
+
+    public MainController getController() {
+        return controller;
+    }
+
+    public void setController(MainController controller) {
+        this.controller = controller;
+    }
+
+    public KeyInteractionCommand getContinuousCommandToExecute() {
+        return continuousCommandToExecute;
+    }
+
+    public void setContinuousCommandToExecute(KeyInteractionCommand continuousCommandToExecute) {
+        this.continuousCommandToExecute = continuousCommandToExecute;
     }
 }
