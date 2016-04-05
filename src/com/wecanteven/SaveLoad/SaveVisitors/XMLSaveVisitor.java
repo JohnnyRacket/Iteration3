@@ -81,7 +81,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitAvatar(Avatar e) {
-        avatarsCharacter = e.getClass().get.toString();
+        //avatarsCharacter = e.getClass().get.toString();
     }
 
     @Override
