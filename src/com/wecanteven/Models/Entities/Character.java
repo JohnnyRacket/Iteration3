@@ -46,12 +46,16 @@ public class Character extends Entity {
     /**
      * Inventory
      * */
+    public void removeFromInventory(TakeableItem item) {
+        itemStorage.removeItem(item);
+        drop(item);
+    }
 
     public void drop(TakeableItem item){
         // TODO notify map that item was dropped
     }
-    public void pickup(TakeableItem item){
-
+    public void pickup(TakeableItem item) {
+        itemStorage.addItem(item);
     }
 
     private boolean equipAbility(String id){
