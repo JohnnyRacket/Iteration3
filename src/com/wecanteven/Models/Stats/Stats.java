@@ -2,6 +2,7 @@ package com.wecanteven.Models.Stats;
 
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Observers.Observer;
+import com.wecanteven.Visitors.StatsVisitor;
 
 import java.util.ArrayList;
 
@@ -16,9 +17,13 @@ public class Stats implements Observer{
     private Entity entity;
 
     public Stats(Entity entity){
-        initStats(entity,1,1,1,1,10);
+        initStats(entity,1,1,1,1,30);
     }
-
+    public Stats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement, int lives, int level) {
+        initStats(entity, strength, agility, intellect, hardiness, movement);
+        this.lives.setStat(lives);
+        this.level.setStat(level);
+    }
     public void initStats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement){
         this.entity = entity;
         this.strength = new PrimaryStat("Strength",strength);
@@ -76,9 +81,7 @@ public class Stats implements Observer{
     }
 
     //getters
-    public int getLives(){
-        return lives.getStat();
-    }
+    public int getLives(){ return lives.getStat();}
     public int getStrength(){
         return strength.getStat();
     }
@@ -141,5 +144,9 @@ public class Stats implements Observer{
         s += defensiveRating.getName() + ": " + getDefensiveRating() + "\n";
         s += armorRating.getName() + ": " + getArmorRating() + "\n";
         return s;
+    }
+
+    public void accept(StatsVisitor visitor) {
+
     }
 }
