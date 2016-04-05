@@ -28,7 +28,6 @@ public class ModelTime implements Tickable {
     public void tick() {
         for (Iterator<TimedObject> iterator = alertables.iterator(); iterator.hasNext();){
             TimedObject object = iterator.next();
-            System.out.println("alertable ticks");
             if(object.decrement()){// if its time to execute the object
                 alertables.remove(object);
             }

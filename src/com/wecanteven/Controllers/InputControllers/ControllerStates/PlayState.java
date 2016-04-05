@@ -29,29 +29,22 @@ public class PlayState extends ControllerState {
     }
     @Override
     public void createKeybindings() {
-        System.out.println("creating keybindings");
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.NORTH), ()->{
-            System.out.println("move north hit");
             this.setCommandToExecute(()->avatar.move(Direction.NORTH));
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.NORTHEAST), ()->{
-            System.out.println("move northeast hit");
             this.setCommandToExecute(()->avatar.move(Direction.NORTHEAST));
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.NORTHWEST), ()->{
-            System.out.println("move northwest hit");
             this.setCommandToExecute(()->avatar.move(Direction.NORTHWEST));
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SOUTH), ()->{
-            System.out.println("move south hit");
             this.setCommandToExecute(()->avatar.move(Direction.SOUTH));
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SOUTHEAST), ()->{
-            System.out.println("move southeast hit");
             this.setCommandToExecute(()->avatar.move(Direction.SOUTHEAST));
         }, this.getjFrame()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SOUTHWEST), ()->{
-            System.out.println("move southwest hit");
             this.setCommandToExecute(()->avatar.move(Direction.SOUTHWEST));
         }, this.getjFrame()));
     }

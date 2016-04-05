@@ -45,14 +45,14 @@ public abstract class ViewObjectFactory {
     public ViewObject createSneak(Position p, Direction d, Entity subject) {
         DirectionalViewObject body = createBody(p, subject, "Sneak");
 
+        MicroPositionableViewObject leftHand = new MicroPositionableViewObject(createLeftHand(p));
+        MicroPositionableViewObject rightHand = new MicroPositionableViewObject(createRightHand(p));
 
-        HandsViewObject hands = new HandsViewObject(new MicroPositionableViewObject(d, p, new Position(0,0,0), createLeftHand(p), -Math.PI/4, 2, 0, 0.4), new MicroPositionableViewObject(d, p, new Position(0,0,0), createRightHand(p), Math.PI/1.7, 2, 0, 0.4), p);
-        //HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 0.4, 2, -Math.PI/4, 0, hexDrawingStrategy), new HandViewObject(p, 0.4, 2, Math.PI/1.7, 0, hexDrawingStrategy), p);
-        //FeetViewObject feet = createFeet(p, d, "Brown");
+        HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p);
         HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands);
 
         subject.attach(stationarySneak);
-
+        subject.attach(body);
         //TEMPORARY TESTING WORKAROUND
         //TODO: make better
         hexDrawingStrategy.setCenterTarget(stationarySneak);

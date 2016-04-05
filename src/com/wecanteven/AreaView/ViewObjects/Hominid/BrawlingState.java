@@ -9,8 +9,23 @@ import java.awt.*;
 
 public class BrawlingState extends HandState {
 
-    public BrawlingState(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
+    private final double tangent = 0d;
+    private final double radius = 0.5d;
+    private final double leftAngle = Math.PI/2;
+    private final double rightAngle = -leftAngle;
+    private final double height = 2;
+
+    public BrawlingState(Direction direction, MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
         super(leftHand, rightHand);
+        changeDirection(direction);
+        leftHand.setRadius(radius);
+        leftHand.setOffsetAngle(leftAngle);
+        leftHand.setTangent(tangent);
+        leftHand.setHeight(height);
+        rightHand.setRadius(radius);
+        rightHand.setOffsetAngle(rightAngle);
+        rightHand.setTangent(tangent);
+        rightHand.setHeight(height);
     }
 
     public void drawForeground(Graphics2D graphic) {
@@ -30,7 +45,8 @@ public class BrawlingState extends HandState {
     }
 
     public void changeDirection(Direction direction) {
-        //TODO
+        leftHand.setDirection(direction);
+        rightHand.setDirection(direction);
     }
 
     public void setLocation(Location location) {

@@ -69,4 +69,9 @@ public class Position {
                 getS() + other.getS(),
                 getZ() + other.getZ());
     }
+
+    @Override
+    public String toString() {
+        return r + ", " + s + ", " + z;
+    }
 }

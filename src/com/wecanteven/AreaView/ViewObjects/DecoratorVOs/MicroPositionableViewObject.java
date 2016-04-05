@@ -5,8 +5,6 @@ import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.UtilityClasses.Direction;
 
-import java.awt.*;
-
 /**
  * Created by adamfortier on 4/4/16.
  */
@@ -20,7 +18,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
 
     private double height;
 
-    private double tagent;
+    private double tangent;
 
     private double radius;
 
@@ -33,7 +31,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         this.offsetPosition = new Position(0,0,0);
         this.offsetAngle = 0D;
         this.height = 0D;
-        this.tagent = 0D;
+        this.tangent = 0D;
         this.radius = 0D;
     }
 
@@ -44,7 +42,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         this.offsetPosition = offsetPosition;
         this.offsetAngle = offsetAngle;
         this.height = height;
-        this.tagent = tangent;
+        this.tangent = tangent;
         this.radius = radius;
     }
 
@@ -53,8 +51,8 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         updatePositionOffset();
     }
 
-    public void setTagent(double tagent) {
-        this.tagent = tagent;
+    public void setTangent(double tangent) {
+        this.tangent = tangent;
         updatePositionOffset();
     }
 
@@ -74,14 +72,13 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     }
 
     @Override
-
     public Position getPosition() {
         return position;
     }
 
     @Override
     public void setPosition(Position p) {
-        position = p;
+        position = p.copy();
         updateChildPosition();
     }
 
@@ -89,6 +86,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         setROffset();
         setSOffset();
         setZOffset();
+        System.out.println(offsetPosition + "\n");
         updateChildPosition();
     }
 
@@ -102,11 +100,14 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     }
 
     private void setSOffset() {
-        offsetPosition.setS(radius*Math.sin(offsetAngle) + tagent*Math.sin(offsetAngle + Math.PI/2));
+        System.out.println("radius: " + radius);
+        System.out.println("offsetAngle: " + offsetAngle);
+        System.out.println("tangent: " + tangent);
+        offsetPosition.setS(1/Math.cos(Config.TILT_ANGLE)*(radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle - direction.getAngle())));
     }
 
     private void setROffset() {
-        offsetPosition.setR(1/Math.cos(Config.TILT_ANGLE)*(radius*Math.cos(offsetAngle) + tagent*Math.cos(Math.PI/2- offsetAngle)));
+        offsetPosition.setR(radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle()));
 
     }
 }

@@ -9,8 +9,8 @@ import com.wecanteven.UtilityClasses.Location;
 import java.awt.*;
 
 public abstract class HandState {
-    MicroPositionableViewObject leftHand;
-    MicroPositionableViewObject rightHand;
+    protected MicroPositionableViewObject leftHand;
+    protected MicroPositionableViewObject rightHand;
 
 
     protected HandState(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {

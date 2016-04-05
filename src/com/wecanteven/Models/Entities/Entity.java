@@ -62,7 +62,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         if(location.getZ() == 1){
             return false;
         }
-        System.out.println("Falling");
         return actionHandler.fall(this, this.getLocation().subtract(new Location(0,0,1)));
     }
     public void die(){
@@ -106,7 +105,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
 
     public void setLocation(Location location) {
-        System.out.println("Location was changed");
         this.location = location;
         notifyObservers();
     }
