@@ -17,11 +17,10 @@ import java.util.ArrayList;
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Avatar extends Entity{
+public class Avatar{
     Character avatar;
     AvatarState state;
     public Avatar(Character avatar, ActionHandler actionHandler){
-        super(actionHandler, avatar.getDirection());
         this.avatar = avatar;
         state = new EntityState(avatar, this);
         //this.setMovingTicks(10);
@@ -29,8 +28,8 @@ public class Avatar extends Entity{
     public boolean move(Direction d){
         return state.move(d);
     }
-    public void attack(Direction d){}
-    public void useAbility(int index){}
+    public void attack(Direction d){ state.attack(d);}
+    public void useAbility(int index){state.useAbility(index);}
     public boolean equipItem(EquipableItem item){
         return false;
     }
@@ -54,115 +53,5 @@ public class Avatar extends Entity{
     public void dismount(){
     }
 
-    @Override
-    public void setLocation(Location location) {
-        avatar.setLocation(location);
-    }
-
-    @Override
-    public void setDirection(Direction direction) {
-        avatar.setDirection(direction);
-    }
-
-    @Override
-    public void setMovingTicks(int ticks) {
-        avatar.setMovingTicks(ticks);
-    }
-
-    @Override
-    public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor) {
-        avatar.setCanMoveVisitor(canMoveVisitor);
-    }
-
-    @Override
-    public void setActionHandler(ActionHandler actionHandler) {
-        avatar.setActionHandler(actionHandler);
-    }
-
-
-
-    @Override
-    public ArrayList<Observer> getObservers() {
-        return avatar.getObservers();
-    }
-
-    @Override
-    public boolean isActive() {
-        return avatar.isActive();
-    }
-
-    @Override
-    public Location getLocation() {
-        return avatar.getLocation();
-    }
-
-    @Override
-    public int getMovingTicks() {
-        return avatar.getMovingTicks();
-    }
-
-    @Override
-    public void deIncrementTick() {
-        avatar.deIncrementTick();
-    }
-
-    @Override
-    public Direction getDirection() {
-        return avatar.getDirection();
-    }
-
-    @Override
-    public void levelUp() {
-        avatar.levelUp();
-    }
-
-    @Override
-    public Stats getStats() {
-        return avatar.getStats();
-    }
-
-    @Override
-    public void accept(EntityVisitor v) {
-        avatar.accept(v);
-    }
-
-    @Override
-    public CanMoveVisitor getCanMoveVisitor() {
-        return avatar.getCanMoveVisitor();
-    }
-
-    @Override
-    public ActionHandler getActionHandler() {
-        return avatar.getActionHandler();
-    }
-
-    @Override
-    public int getHeight() {
-        return avatar.getHeight();
-    }
-
-    @Override
-    public int getJumpHeight() {
-        return avatar.getJumpHeight();
-    }
-
-    @Override
-    public void setHeight(int height) {
-        avatar.setHeight(height);
-    }
-
-    @Override
-    public void setJumpHeight(int jumpHeight) {
-        avatar.setJumpHeight(jumpHeight);
-    }
-
-    @Override
-    public CanFallVisitor getCanFallVisitor() {
-        return avatar.getCanFallVisitor();
-    }
-
-    @Override
-    public void setCanFallVisitor(CanFallVisitor canFallVisitor) {
-        avatar.setCanFallVisitor(canFallVisitor);
-    }
+   
 }
