@@ -39,18 +39,11 @@ public class Tile implements MapVisitable {
 
         if(this.entity.add(entity)){
             System.out.println("adding fall check");
-            ModelTime.getInstance().registerAlertable(new Alertable() {
-                @Override
-                public void execute() {
-
-                }
-
-                @Override
-                public void alert() {
+            ModelTime.getInstance().registerAlertable(() -> {
                     System.out.println("entity is falling");
                     entity.fall();
                 }
-            }, 2);
+            , 2);
             return true;
         }else{
             return false;

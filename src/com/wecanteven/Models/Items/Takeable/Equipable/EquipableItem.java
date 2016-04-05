@@ -1,9 +1,8 @@
 package com.wecanteven.Models.Items.Takeable.Equipable;
 
-import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Stats.StatsAddable;
-import com.wecanteven.Models.Storage.Equipment;
+import com.wecanteven.Models.Storage.ItemStorage.Equipment;
 import com.wecanteven.Visitors.ItemVisitor;
 
 /**
@@ -27,7 +26,13 @@ public abstract class EquipableItem extends TakeableItem {
         this.stats = stats;
     }
 
-    public abstract boolean equip(Equipment equipment);
+    public abstract void equip(Equipment equipment);
+
+    public abstract void unequip(Equipment equipment);
+
+    public StatsAddable getStats() {
+        return stats;
+    }
 
     /**
      * Visitation Rights

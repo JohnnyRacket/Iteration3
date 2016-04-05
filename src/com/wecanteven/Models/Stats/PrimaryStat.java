@@ -26,6 +26,11 @@ public class PrimaryStat extends Stat implements ViewObservable {
         notifyObservers();
     }
 
+    public void subtract(int subtractable){
+        stat += subtractable;
+        notifyObservers();
+    }
+
     @Override
     public void notifyObservers(){
         for(Observer stat: observers){

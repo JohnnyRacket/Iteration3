@@ -1,6 +1,8 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Models.ModelTime.Alertable;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Observers.Directional;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
     private ActionHandler actionHandler;
-    private int movingTicks = 20;
+    private int movingTicks;
     private int height = 3;
     private Direction direction;
     private int jumpHeight;
@@ -35,6 +37,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         canMoveVisitor = new TerranianCanMoveVisitor();
         canFallVisitor = new TerranianCanFallVisitor();
         jumpHeight = 15;
+        movingTicks = 0;
     }
 
     @Override
@@ -48,7 +51,12 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
 
     public boolean move(Direction d){
+        int movementStat = this.getStats().getMovement();
+        if(movingTicks != 0 || movementStat == 0){
+            return false;
+        }
         setDirection(d);
+        setMovingTicks(movementStat);
         Location destination = location.add(d.getCoords);
         return moveHelper(destination);
     }
@@ -92,7 +100,25 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     //Alex's testing code
     public void setMovingTicks(int ticks) {
         this.movingTicks = ticks;
+        deIncrementTick();
         notifyObservers();
+    }
+
+    public void deIncrementTick(){
+        ModelTime.getInstance().registerAlertable(new Alertable() {
+            @Override
+            public void alert() {
+                if(movingTicks == 0){
+                    return;
+                }
+                movingTicks--;
+                deIncrementTick();
+            }
+        }, 1);
+    }
+
+    private int calculateMovementTicks(int movementStat){
+        return (movementStat/30)*10;
     }
 
     public void setDirection(Direction direction) {
@@ -112,7 +138,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
 
     public void levelUp(){
-        stats.modifyStats(new StatsAddable(0,1,1,1,1,0,0,0,0));
+        stats.addStats(new StatsAddable(0,1,1,1,1,0,0,0,0));
     }
 
     public Stats getStats(){
