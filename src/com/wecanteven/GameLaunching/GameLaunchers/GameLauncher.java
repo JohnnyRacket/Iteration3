@@ -69,6 +69,7 @@ public abstract class GameLauncher {
     }
 
     protected void setAvatar(Avatar avatar) {
+        SaveToXMLFile.setAvatar(avatar);
         this.avatar = avatar;
     }
 
