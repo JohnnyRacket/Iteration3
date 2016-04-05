@@ -75,10 +75,12 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         return false;
     }
     public boolean fall(){
+        System.out.println("Is gonna fall");
         if(!isActive()) {
             if (location.getZ() == 1) {
                 return false;
             }
+            System.out.println("IM FALLING!!!!!!!!!!!!!");
             return actionHandler.fall(this, this.getLocation().subtract(new Location(0, 0, 1)));
         }
         return false;
@@ -109,8 +111,12 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     //Alex's testing code
     public void setMovingTicks(int ticks) {
-        isActive = true;
         this.movingTicks = ticks;
+        if(ticks == 0){
+            isActive = false;
+            return;
+        }
+        isActive = true;
         deIncrementTick();
         notifyObservers();
     }
@@ -121,7 +127,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             public void alert() {
                 if(movingTicks == 0){
                     isActive = false;
-                    fall();
                     return;
                 }
                 movingTicks--;

@@ -48,7 +48,7 @@ public class Tile implements MapVisitable {
                 public void alert() {
                     interact(entity);
                 }
-            }, entity.getMovingTicks());
+            }, entity.getMovingTicks()+1);
             return true;
         }else{
             return false;
