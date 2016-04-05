@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Map.Terrain;
 
+import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Visitors.TerrainVisitor;
 
 /**
@@ -14,4 +15,5 @@ public class Air extends Terrain {
     public String getTerrain() {
         return "Air";
     }
+    public void interact(Entity entity){}
 }

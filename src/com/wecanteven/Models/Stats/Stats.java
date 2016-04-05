@@ -17,7 +17,7 @@ public class Stats implements Observer{
     private Entity entity;
 
     public Stats(Entity entity){
-        initStats(entity,1,1,1,1,10);
+        initStats(entity,1,1,1,1,30);
     }
     public Stats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement, int lives, int level) {
         initStats(entity, strength, agility, intellect, hardiness, movement);
