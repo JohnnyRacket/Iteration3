@@ -1,9 +1,11 @@
 package com.wecanteven.AreaView.ViewObjects.Factories;
 
+import com.sun.glass.ui.View;
 import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.AreaView.DynamicImages.DynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandViewObject;
@@ -44,8 +46,8 @@ public abstract class ViewObjectFactory {
         DirectionalViewObject body = createBody(p, subject, "Sneak");
 
 
-
-        HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 0.4, 2, -Math.PI/4, 0, hexDrawingStrategy), new HandViewObject(p, 0.4, 2, Math.PI/1.7, 0, hexDrawingStrategy), p);
+        HandsViewObject hands = new HandsViewObject(new MicroPositionableViewObject(d, p, new Position(0,0,0), createLeftHand(p), -Math.PI/4, 2, 0, 0.4), new MicroPositionableViewObject(d, p, new Position(0,0,0), createRightHand(p), Math.PI/1.7, 2, 0, 0.4), p);
+        //HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 0.4, 2, -Math.PI/4, 0, hexDrawingStrategy), new HandViewObject(p, 0.4, 2, Math.PI/1.7, 0, hexDrawingStrategy), p);
         //FeetViewObject feet = createFeet(p, d, "Brown");
         HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands);
 
@@ -60,6 +62,13 @@ public abstract class ViewObjectFactory {
 
     }
 
+    private ViewObject createRightHand(Position position) {
+        return new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy);
+    }
+
+    private ViewObject createLeftHand(Position position) {
+        return new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy);
+    }
 //    private FeetViewObject createFeet(Position p, Direction d, String name) {
 //        FootViewObject leftFoot = createFoot(p, d, name + "/Left");
 //        FootViewObject rightFoot = createFoot(p, d, name + "/Right");
