@@ -1,13 +1,13 @@
 package com.wecanteven.AreaView.ViewObjects.Factories;
 
+import com.sun.glass.ui.View;
 import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.AreaView.DynamicImages.DynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
-import com.wecanteven.AreaView.ViewObjects.Hominid.Feet.FeetViewObject;
-import com.wecanteven.AreaView.ViewObjects.Hominid.Feet.FootViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
@@ -19,9 +19,6 @@ import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.UtilityClasses.Direction;
-import javafx.geometry.Pos;
-
-import java.rmi.activation.Activatable;
 
 /**
  * Created by Alex on 3/31/2016.
@@ -46,16 +43,16 @@ public abstract class ViewObjectFactory {
     public abstract ViewObject createWater(Position p);
 
     public ViewObject createSneak(Position p, Direction d, Entity subject) {
-        DirectionalViewObject body = createBody(p, d, "Sneak");
+        DirectionalViewObject body = createBody(p, subject, "Sneak");
 
+        MicroPositionableViewObject leftHand = new MicroPositionableViewObject(createLeftHand(p));
+        MicroPositionableViewObject rightHand = new MicroPositionableViewObject(createRightHand(p));
 
-
-        HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 0.4, 2, -Math.PI/4, 0, hexDrawingStrategy), new HandViewObject(p, 0.4, 2, Math.PI/1.7, 0, hexDrawingStrategy), p);
-        FeetViewObject feet = createFeet(p, d, "Brown");
-        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands, feet);
+        HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p);
+        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands);
 
         subject.attach(stationarySneak);
-
+        subject.attach(body);
         //TEMPORARY TESTING WORKAROUND
         //TODO: make better
         hexDrawingStrategy.setCenterTarget(stationarySneak);
@@ -65,11 +62,18 @@ public abstract class ViewObjectFactory {
 
     }
 
-    private FeetViewObject createFeet(Position p, Direction d, String name) {
-        FootViewObject leftFoot = createFoot(p, d, name + "/Left");
-        FootViewObject rightFoot = createFoot(p, d, name + "/Right");
-        return new FeetViewObject(leftFoot, rightFoot, p, d);
+    private ViewObject createRightHand(Position position) {
+        return new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy);
     }
+
+    private ViewObject createLeftHand(Position position) {
+        return new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy);
+    }
+//    private FeetViewObject createFeet(Position p, Direction d, String name) {
+//        FootViewObject leftFoot = createFoot(p, d, name + "/Left");
+//        FootViewObject rightFoot = createFoot(p, d, name + "/Right");
+//        return new FeetViewObject(leftFoot, rightFoot, p, d);
+//    }
 
     public ViewObject createInteractableItem(Position p, InteractiveItem interactiveItem) {
         ActivatableViewObject vo = new ActivatableViewObject(p,
@@ -81,22 +85,12 @@ public abstract class ViewObjectFactory {
         return vo;
     }
 
-    private DirectionalViewObject createBody(Position p, Direction d, String entityName) {
+    private DirectionalViewObject createBody(Position p, Directional d, String entityName) {
         return createDirectional(p, d, "Entities/" +  entityName + "/");
     }
 
-    private FootViewObject createFoot(Position p, Direction d, String name) {
-        String path = "Feet/" + name + "/";
-        DynamicImage bodyNorth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "north.xml");
-        DynamicImage bodySouth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "south.xml");
-        DynamicImage bodyNorthEast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northeast.xml");
-        DynamicImage bodyNorthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northwest.xml");
-        DynamicImage bodySoutheast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southeast.xml");
-        DynamicImage bodySouthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southwest.xml");
-        return new FootViewObject(p, d, hexDrawingStrategy, bodyNorth, bodySouth, bodyNorthEast, bodyNorthWest, bodySoutheast, bodySouthWest);
-    }
 
-    private DirectionalViewObject createDirectional(Position p, Direction d, String path) {
+    private DirectionalViewObject createDirectional(Position p, Directional d, String path) {
         DynamicImage bodyNorth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "north.xml");
         DynamicImage bodySouth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "south.xml");
         DynamicImage bodyNorthEast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northeast.xml");

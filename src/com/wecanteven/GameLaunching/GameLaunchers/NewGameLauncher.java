@@ -4,6 +4,7 @@ import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
+import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
@@ -51,6 +52,8 @@ public class NewGameLauncher extends GameLauncher {
         setAvatar(new Avatar(player, getMap()));
         getMap().add(player, new Location(3,2,1));
         getController().setAvatar(getAvatar());
+        UIViewFactory.getInstance().setAvatar(getAvatar());
+
     }
 
     @Override
@@ -58,6 +61,13 @@ public class NewGameLauncher extends GameLauncher {
         levelFactory.populateMap();
     }
 
+    protected void initializeAreaView(){
+        getViewEngine().clear();
+        getViewEngine().getManager().popView();
+        //viewEngine.registerView(new AreaView(avatar,map));
+        getViewEngine().registerView(new AreaView(getAvatar(), getMap()));
+        getController().setPlayState();
+    }
 
 
 }

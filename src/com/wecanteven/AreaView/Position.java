@@ -2,6 +2,7 @@ package com.wecanteven.AreaView;
 
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import javafx.geometry.Pos;
 
 /**
  * Created by alexs on 3/29/2016.
@@ -42,6 +43,10 @@ public class Position {
         this.z = z;
     }
 
+    public Position copy(){
+        return new Position(r,s,z);
+    }
+
     public Location getLocation() {
         return new Location((int)r,(int)s,(int)z);
     }
@@ -56,5 +61,17 @@ public class Position {
 
         }
         return false;
+    }
+
+    public Position add(Position other) {
+        return new Position(
+                getR() + other.getR(),
+                getS() + other.getS(),
+                getZ() + other.getZ());
+    }
+
+    @Override
+    public String toString() {
+        return r + ", " + s + ", " + z;
     }
 }

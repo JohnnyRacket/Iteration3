@@ -1,6 +1,8 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Models.ModelTime.Alertable;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Observers.Directional;
@@ -9,9 +11,7 @@ import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
-import com.wecanteven.Visitors.CanMoveVisitor;
-import com.wecanteven.Visitors.EntityVisitor;
-import com.wecanteven.Visitors.TerranianCanMoveVisitor;
+import com.wecanteven.Visitors.*;
 
 import java.util.ArrayList;
 
@@ -22,16 +22,24 @@ import java.util.ArrayList;
 public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
     private ActionHandler actionHandler;
-    private int movingTicks = 20;
+    private int movingTicks;
     private int height = 3;
     private Direction direction;
     private int jumpHeight;
+    private boolean isActive;
+    protected Location location;
+    private CanMoveVisitor canMoveVisitor;
+    private CanFallVisitor canFallVisitor;
+    protected Stats stats;
 
     public Entity(ActionHandler actionHandler, Direction direction){
         this.actionHandler = actionHandler;
         this.direction = direction;
         canMoveVisitor = new TerranianCanMoveVisitor();
+        canFallVisitor = new TerranianCanFallVisitor();
         jumpHeight = 15;
+        movingTicks = 0;
+        isActive = false;
     }
 
     @Override
@@ -42,37 +50,44 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         die();
     }
 
-    protected Location location;
-    private CanMoveVisitor canMoveVisitor;
-    protected Stats stats;
+
 
     public boolean move(Direction d){
-        setDirection(d);
-        Location destination = location.add(d.getCoords);
-        return moveHelper(destination);
+        if(this.getDirection() == d){
+            int movementStat = this.getStats().getMovement();
+            if(movingTicks != 0 || movementStat == 0){
+                return false;
+            }
+            setDirection(d);
+            setMovingTicks(movementStat);
+            Location destination = location.add(d.getCoords);
+            return moveHelper(destination);
+        }else{
+            this.setDirection(d);
+            setMovingTicks(4);
+            return false;
+        }
     }
     private boolean moveHelper(Location destination){
         if(actionHandler.move(this,destination)){
             return true;
         }
-        else if(location.getZ()+jumpHeight != destination.getZ()) { //checks to see if the entity has tried to step up
-            System.out.println("Checks if it could step up");
-            return move(Direction.DOWN);
-        }
         return false;
     }
     public boolean fall(){
-        if(location.getZ() == 1){
-            return false;
+        if(!isActive()) {
+            if (location.getZ() == 1) {
+                return false;
+            }
+            return actionHandler.fall(this, this.getLocation().subtract(new Location(0, 0, 1)));
         }
-        System.out.println("Falling");
-        return moveHelper(location.add(Direction.DOWN.getCoords));
+        return false;
     }
     public void die(){
         stats.refreshStats();
     }
     public boolean isActive(){
-        return false;
+        return isActive;
     }
 
 
@@ -94,8 +109,30 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     //Alex's testing code
     public void setMovingTicks(int ticks) {
+        isActive = true;
         this.movingTicks = ticks;
+        deIncrementTick();
         notifyObservers();
+    }
+
+    public int deIncrementTick(){
+        ModelTime.getInstance().registerAlertable(new Alertable() {
+            @Override
+            public void alert() {
+                if(movingTicks == 0){
+                    isActive = false;
+                    fall();
+                    return;
+                }
+                movingTicks--;
+                deIncrementTick();
+            }
+        }, 1);
+        return movingTicks;
+    }
+
+    private int calculateMovementTicks(int movementStat){
+        return (movementStat/30)*10;
     }
 
     public void setDirection(Direction direction) {
@@ -109,13 +146,12 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
 
     public void setLocation(Location location) {
-        System.out.println("Location was changed");
         this.location = location;
         notifyObservers();
     }
 
     public void levelUp(){
-        stats.modifyStats(new StatsAddable(0,1,1,1,1,0,0,0,0));
+        stats.addStats(new StatsAddable(0,1,1,1,1,0,0,0,0));
     }
 
     public Stats getStats(){
@@ -148,5 +184,21 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public int getJumpHeight() {
+        return jumpHeight;
+    }
+
+    public void setJumpHeight(int jumpHeight) {
+        this.jumpHeight = jumpHeight;
+    }
+
+    public CanFallVisitor getCanFallVisitor() {
+        return canFallVisitor;
+    }
+
+    public void setCanFallVisitor(CanFallVisitor canFallVisitor) {
+        this.canFallVisitor = canFallVisitor;
     }
 }

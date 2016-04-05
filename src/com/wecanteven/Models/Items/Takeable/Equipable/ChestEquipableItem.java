@@ -1,7 +1,7 @@
 package com.wecanteven.Models.Items.Takeable.Equipable;
 
 import com.wecanteven.Models.Stats.StatsAddable;
-import com.wecanteven.Models.Storage.Equipment;
+import com.wecanteven.Models.Storage.ItemStorage.Equipment;
 
 /**
  * Created by simonnea on 3/31/16.
@@ -12,7 +12,12 @@ public class ChestEquipableItem extends EquipableItem {
     }
 
     @Override
-    public boolean equip(Equipment equipment) {
-        return equipment.equipChest(this);
+    public void equip(Equipment equipment) {
+        equipment.equipChest(this);
+    }
+
+    @Override
+    public void unequip(Equipment equipment) {
+        equipment.unequipChest(this);
     }
 }

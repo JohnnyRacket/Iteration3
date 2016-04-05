@@ -8,9 +8,9 @@ import com.wecanteven.AreaView.ViewObjects.ViewObject;
  * Created by alexs on 3/29/2016.
  */
 public abstract class LeafViewObject implements ViewObject {
-    private Position position;
+    private Position position = new Position(0,0,0);
     public LeafViewObject(Position position) {
-        this.position = position;
+        setPosition(position);
     }
 
 
@@ -20,7 +20,6 @@ public abstract class LeafViewObject implements ViewObject {
     }
     @Override
     public final void setPosition(Position p) {
-        this.position = p;
-
+        position = p.copy();
     }
 }

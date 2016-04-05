@@ -9,6 +9,7 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.CanFallVisitor;
 import com.wecanteven.Visitors.CanMoveVisitor;
 import com.wecanteven.Visitors.ColumnVisitor;
 import com.wecanteven.Visitors.MapVisitor;
@@ -38,9 +39,9 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     public Map(int rSize, int sSize, int zSize){
-        this.rSize = rSize-1;
-        this.sSize = sSize-1;
-        this.zSize = zSize-1;
+        this.rSize = rSize;
+        this.sSize = sSize;
+        this.zSize = zSize;
 
         columns = new Column[rSize][sSize];
         for (int i = 0; i < rSize; i++) {
@@ -54,12 +55,23 @@ public class Map implements MapVisitable, ActionHandler {
         if( location.getR() < 0 ||
             location.getS() < 0 ||
             location.getZ() < 0 ||
-            location.getR() > getrSize() ||
-            location.getZ() > getzSize() ||
-            location.getS() > getsSize()){
+            location.getR() > getrSize()-1 ||
+            location.getZ() > getzSize()-1 ||
+            location.getS() > getsSize()-1){
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean fall(Entity entity, Location destination){
+        CanFallVisitor visitor = entity.getCanFallVisitor();
+        getTile(destination).accept(visitor);
+        if(visitor.isCanMove()){
+            return move(entity,destination);
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -80,18 +92,28 @@ public class Map implements MapVisitable, ActionHandler {
         //now check the one below it.
 
         Tile tileBelow = this.getTile(destination.subtract(new Location(0,0,1)));
+        System.out.println("Tile: "+tileBelow.getTerrain().getTerrain());
         tileBelow.accept(visitor);
         canMove = canMove && visitor.CanMoveBelow();
+        if(visitor.CanMoveBelow()) {
+            if (canMove) {
+                //System.out.println("Moving from " + source + " to " + destination);
+                remove(entity, source);
+                add(entity, destination);
+                return true;
+            } else {
+                for(int i = 0; i < entity.getJumpHeight(); ++i) {
+                    if(move(entity, destination.add(Direction.UP.getCoords))){
+                        //System.out.println("jumped");
+                        return true;
+                    }
+                }
 
-        if(canMove) {
-            System.out.println("Moving from "+ source + " to " + destination);
-            remove(entity, source);
-            add(entity,destination);
-            return true;
-        }
-        else{
-            System.out.println("Couldn't move");
-            //can move visitor determined you cant move there
+                //System.out.println("Couldn't move");
+                //can move visitor determined you cant move there
+                return false;
+            }
+        }else{
             return false;
         }
     }
@@ -102,7 +124,6 @@ public class Map implements MapVisitable, ActionHandler {
 
     public Column getColumn(int r, int s) { return columns[r][s]; }
 
-    @Override
     public boolean fall(Entity entity) {
         return false;
     }
@@ -113,12 +134,12 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
-    public boolean fall(TakeableItem item) {
+    public boolean fall(TakeableItem item, Location location) {
         return false;
     }
 
     @Override
-    public boolean drop(TakeableItem item) {
+    public boolean drop(TakeableItem item, Location location) {
         return false;
     }
 

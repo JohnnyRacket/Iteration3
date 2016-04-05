@@ -4,27 +4,32 @@ import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.AvatarStates.AvatarState;
 import com.wecanteven.Models.Entities.AvatarStates.EntityState;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
+import com.wecanteven.Models.Stats.Stats;
+import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.CanFallVisitor;
 import com.wecanteven.Visitors.CanMoveVisitor;
+import com.wecanteven.Visitors.EntityVisitor;
+
+import java.util.ArrayList;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Avatar extends Entity{
+public class Avatar{
     Character avatar;
     AvatarState state;
     public Avatar(Character avatar, ActionHandler actionHandler){
-        super(actionHandler, avatar.getDirection());
         this.avatar = avatar;
         state = new EntityState(avatar, this);
-        this.setMovingTicks(10);
+        //this.setMovingTicks(10);
     }
     public boolean move(Direction d){
         return state.move(d);
     }
-    public void attack(Direction d){}
-    public void useAbility(int index){}
+    public void attack(Direction d){ state.attack(d);}
+    public void useAbility(int index){state.useAbility(index);}
     public boolean equipItem(EquipableItem item){
         return false;
     }
@@ -48,33 +53,5 @@ public class Avatar extends Entity{
     public void dismount(){
     }
 
-    @Override
-    public void setLocation(Location location) {
-        super.setLocation(location);
-        avatar.setLocation(location);
-    }
 
-    @Override
-    public void setDirection(Direction direction) {
-        super.setDirection(direction);
-        avatar.setDirection(direction);
-    }
-
-    @Override
-    public void setMovingTicks(int ticks) {
-        super.setMovingTicks(ticks);
-        avatar.setMovingTicks(ticks);
-    }
-
-    @Override
-    public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor) {
-        super.setCanMoveVisitor(canMoveVisitor);
-        avatar.setCanMoveVisitor(canMoveVisitor);
-    }
-
-    @Override
-    public void setActionHandler(ActionHandler actionHandler) {
-        super.setActionHandler(actionHandler);
-        avatar.setActionHandler(actionHandler);
-    }
 }

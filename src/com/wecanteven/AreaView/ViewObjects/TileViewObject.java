@@ -25,7 +25,7 @@ public class TileViewObject implements ViewObject {
     public void remove(ViewObject vo) {
         if (!this.children.remove(vo)) {
             System.out.println("BAD SHIT HAPPENED IN: TileViewObject.remove(ViewObject)");
-        };
+        }
     }
 
     @Override

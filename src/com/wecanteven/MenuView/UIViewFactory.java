@@ -10,6 +10,7 @@ import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenu;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenuItem;
 import com.wecanteven.ModelEngine;
+import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.ViewEngine;
 
 import javax.swing.*;
@@ -23,8 +24,15 @@ public class UIViewFactory {
     MainController controller;
     ViewEngine vEngine;
     ModelEngine mEngine;
+    Avatar avatar;
 
-    public UIViewFactory(JFrame jFrame){
+    private static UIViewFactory ourInstance = new UIViewFactory();
+
+    private UIViewFactory(){};
+
+    public static UIViewFactory getInstance(){return ourInstance;}
+
+    public void setJFrame(JFrame jFrame){
         this.jframe = jFrame;
     }
 
@@ -53,6 +61,7 @@ public class UIViewFactory {
         //return created swappable view
         return view;
     }
+
     public SwappableView createHUDView(){
         return null; //TODO: implement
     }
@@ -112,5 +121,13 @@ public class UIViewFactory {
 
     public void setmEngine(ModelEngine mEngine) {
         this.mEngine = mEngine;
+    }
+
+    public Avatar getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
     }
 }

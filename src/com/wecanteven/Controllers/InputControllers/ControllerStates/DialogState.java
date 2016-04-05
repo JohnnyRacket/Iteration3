@@ -1,5 +1,7 @@
 package com.wecanteven.Controllers.InputControllers.ControllerStates;
 
+import com.wecanteven.Controllers.InputControllers.MainController;
+
 import javax.swing.*;
 
 /**
@@ -7,16 +9,12 @@ import javax.swing.*;
  */
 public class DialogState extends ControllerState {
 
-    public DialogState(JFrame jFrame){
-        super(jFrame);
+    public DialogState(JFrame jFrame, MainController controller){
+        super(jFrame, controller);
     }
     @Override
     public void createKeybindings() {
 
     }
 
-    @Override
-    public void destroyKeyBindings() {
-
-    }
 }

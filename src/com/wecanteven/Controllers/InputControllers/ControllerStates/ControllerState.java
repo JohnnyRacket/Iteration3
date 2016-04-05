@@ -3,6 +3,7 @@ package com.wecanteven.Controllers.InputControllers.ControllerStates;
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
 import com.wecanteven.Controllers.InputControllers.KeyInteractionCommand;
+import com.wecanteven.Controllers.InputControllers.MainController;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -17,15 +18,24 @@ public abstract class ControllerState {
     private Map<ActionEnum, Integer> mappings = new HashMap<>();
     private ArrayList<KeyActionBinding> keyBindings = new ArrayList<>();
     private JFrame jFrame;
+    private MainController controller;
 
     private KeyInteractionCommand commandToExecute;
+    private KeyInteractionCommand continuousCommandToExecute;
 
-    public ControllerState(JFrame jFrame){
+    public ControllerState(JFrame jFrame, MainController controller){
+        this.controller = controller;
         this.jFrame = jFrame;
     }
 
     public abstract void createKeybindings();
-    public abstract void destroyKeyBindings();
+    public void destroyKeyBindings(){
+        System.out.println("destroying keybindings");
+        for(KeyActionBinding binding: this.getKeyBindings()){
+            this.getjFrame().removeKeyListener(binding);
+        }
+
+    }
 
     public Map<ActionEnum, Integer> getMappings() {
         return mappings;
@@ -57,5 +67,21 @@ public abstract class ControllerState {
 
     public void setCommandToExecute(KeyInteractionCommand commandToExecute) {
         this.commandToExecute = commandToExecute;
+    }
+
+    public MainController getController() {
+        return controller;
+    }
+
+    public void setController(MainController controller) {
+        this.controller = controller;
+    }
+
+    public KeyInteractionCommand getContinuousCommandToExecute() {
+        return continuousCommandToExecute;
+    }
+
+    public void setContinuousCommandToExecute(KeyInteractionCommand continuousCommandToExecute) {
+        this.continuousCommandToExecute = continuousCommandToExecute;
     }
 }

@@ -6,6 +6,8 @@ import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Terrain.Terrain;
+import com.wecanteven.Models.ModelTime.Alertable;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
@@ -34,7 +36,16 @@ public class Tile implements MapVisitable {
     }
 
     public boolean add(Entity entity){
-        return this.entity.add(entity);
+
+        if(this.entity.add(entity)){
+            ModelTime.getInstance().registerAlertable(() -> {
+                entity.fall();
+            }
+            , 2);
+            return true;
+        }else{
+            return false;
+        }
     }
     public boolean add(OneShot oneShot){
         return this.oneShot.add(oneShot);
@@ -50,7 +61,7 @@ public class Tile implements MapVisitable {
         return true;
     }
 
-    public boolean remove(Entity entity){
+    public boolean remove(Entity entity) {
         return this.entity.remove(entity);
     }
     public boolean remove(OneShot oneShot){
