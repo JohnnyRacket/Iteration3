@@ -37,7 +37,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         this.direction = direction;
         canMoveVisitor = new TerranianCanMoveVisitor();
         canFallVisitor = new TerranianCanFallVisitor();
-        jumpHeight = 1;
+        jumpHeight = 2;
         movingTicks = 0;
         isActive = false;
     }
