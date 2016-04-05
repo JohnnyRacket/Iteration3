@@ -1,6 +1,7 @@
-package com.wecanteven.Models.Storage;
+package com.wecanteven.Models.Storage.ItemStorage;
 
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.Storage.StorageComponent;
 import com.wecanteven.Visitors.EquipmentVisitor;
 
 import java.util.Iterator;
@@ -10,7 +11,7 @@ import java.util.Iterator;
  */
 public abstract class Equipment extends StorageComponent {
 
-    public Equipment(Storage owner) {
+    public Equipment(ItemStorage owner) {
         super(owner);
     }
 
