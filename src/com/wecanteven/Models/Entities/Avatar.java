@@ -8,6 +8,7 @@ import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.AvatarVisitor;
 import com.wecanteven.Visitors.CanFallVisitor;
 import com.wecanteven.Visitors.CanMoveVisitor;
 import com.wecanteven.Visitors.EntityVisitor;
@@ -51,6 +52,13 @@ public class Avatar{
     public void mount(){
     }
     public void dismount(){
+    }
+
+    public Character getCharacter(){
+        return avatar;
+    }
+    public void accept(AvatarVisitor visitor){
+        visitor.visitAvatar(this);
     }
 
 

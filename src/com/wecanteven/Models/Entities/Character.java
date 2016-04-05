@@ -24,6 +24,12 @@ public class Character extends Entity {
         stats = new Stats(this);
     }
 
+    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats){
+        super(actionHandler, direction);
+        this.occupation = occupation;
+        this.stats = stats;
+    }
+
 
     public void attack(Direction d){}
     public void useAbility(int index){}
@@ -74,6 +80,7 @@ public class Character extends Entity {
     public void levelUp(){
         stats.addStats(occupation.getStatsAddable());
     }
+    public Occupation getOccupation() {return occupation; }
 
     @Override
     public void accept(EntityVisitor v) {
