@@ -42,7 +42,13 @@ public class Tile implements MapVisitable {
 //                entity.fall();
 //            }
 //            , 2);
-            interact(entity);
+
+            ModelTime.getInstance().registerAlertable(new Alertable() {
+                @Override
+                public void alert() {
+                    interact(entity);
+                }
+            }, entity.getMovingTicks());
             return true;
         }else{
             return false;

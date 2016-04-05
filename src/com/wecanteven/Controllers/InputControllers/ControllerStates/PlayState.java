@@ -6,6 +6,7 @@ import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.MenuView.SwappableView;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Avatar;
+import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
 import com.wecanteven.UtilityClasses.Direction;
 
 import javax.swing.*;
@@ -27,6 +28,7 @@ public class PlayState extends ControllerState {
         mappings.put(ActionEnum.SOUTH, KeyEvent.VK_S);
         mappings.put(ActionEnum.SOUTHEAST, KeyEvent.VK_D);
         mappings.put(ActionEnum.SOUTHWEST, KeyEvent.VK_A);
+        mappings.put(ActionEnum.SAVE, KeyEvent.VK_P);
         mappings.put(ActionEnum.ITEMINVENTORY, KeyEvent.VK_I);
         this.setMappings(mappings);
     }
@@ -61,6 +63,11 @@ public class PlayState extends ControllerState {
             SwappableView view = UIViewFactory.getInstance().createInventoryView();
             this.getController().setMenuState(view.getMenuViewContainer());
             this.getController().changeView(view);
+        }, this.getjFrame(), this.getController()));
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SAVE), ()->{
+            System.out.println("Trying to Save");
+            new SaveToXMLFile("save1.xml").saveGame();
+
         }, this.getjFrame(), this.getController()));
     }
 

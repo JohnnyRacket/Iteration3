@@ -17,8 +17,9 @@ public class DopeAssLevelFactory extends LevelFactory{
         for (int i = 0; i<10; i++) {
             for (int j = 0; j<10; j++) {
                 map.getTile(i, j, 0).setTerrain(
-                        i + j < 15 ? new Ground() : new Current(Direction.NORTH)
+                        i + j < 15 ? new Ground() : new Current(Direction.NORTHEAST)
                 );
+
             }
         }
         for (int i = 5; i < 9; i++) {
@@ -27,6 +28,14 @@ public class DopeAssLevelFactory extends LevelFactory{
                 map.getTile(i, 0, 2).setTerrain(new Ground());
                 map.getTile(i, 0, 3).setTerrain(new Ground());
             }
+            if (i >6) {
+                map.getTile(i, 9, 1).setTerrain(new Current(Direction.NORTHEAST));
+                map.getTile(i, 9, 2).setTerrain(new Current(Direction.NORTHEAST));
+                map.getTile(i, 9, 3).setTerrain(new Current(Direction.NORTHEAST));
+            }
+                map.getTile(7,9,1).setTerrain(new Ground());
+                map.getTile(7,9,2).setTerrain(new Ground());
+                map.getTile(7,9,3).setTerrain(new Ground());
 
         }
         return map;

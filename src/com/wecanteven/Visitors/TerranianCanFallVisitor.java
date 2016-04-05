@@ -11,7 +11,7 @@ import com.wecanteven.Models.Map.Terrain.Water;
 public class TerranianCanFallVisitor extends CanFallVisitor {
     @Override
     public void visitWater(Water water) {
-        this.setCanMove(false);
+        this.setCanMove(true);
     }
 
     @Override
@@ -26,6 +26,6 @@ public class TerranianCanFallVisitor extends CanFallVisitor {
 
     @Override
     public void visitCurrent(Current current) {
-        this.setCanMove(false);
+        this.setCanMove(true);
     }
 }

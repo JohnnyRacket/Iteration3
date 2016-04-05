@@ -86,7 +86,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         setROffset();
         setSOffset();
         setZOffset();
-        System.out.println(offsetPosition + "\n");
+        //System.out.println(offsetPosition + "\n");
         updateChildPosition();
     }
 
@@ -100,9 +100,9 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     }
 
     private void setSOffset() {
-        System.out.println("radius: " + radius);
-        System.out.println("offsetAngle: " + offsetAngle);
-        System.out.println("tangent: " + tangent);
+//        System.out.println("radius: " + radius);
+//        System.out.println("offsetAngle: " + offsetAngle);
+//        System.out.println("tangent: " + tangent);
         offsetPosition.setS(1/Math.cos(Config.TILT_ANGLE)*(radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle - direction.getAngle())));
     }
 
