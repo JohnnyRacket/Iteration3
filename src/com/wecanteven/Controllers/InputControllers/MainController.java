@@ -81,7 +81,6 @@ public class MainController implements Tickable{
 
     @Override
     public void tick() {
-
         if(state.getCommandToExecute() != null) {
             //System.out.println("executing controller command");
             state.getCommandToExecute().execute();

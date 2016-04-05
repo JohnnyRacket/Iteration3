@@ -51,14 +51,20 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
 
     public boolean move(Direction d){
-        int movementStat = this.getStats().getMovement();
-        if(movingTicks != 0 || movementStat == 0){
+        if(this.getDirection() == d){
+            int movementStat = this.getStats().getMovement();
+            if(movingTicks != 0 || movementStat == 0){
+                return false;
+            }
+            setDirection(d);
+            setMovingTicks(movementStat);
+            Location destination = location.add(d.getCoords);
+            return moveHelper(destination);
+        }else{
+            this.setDirection(d);
+            setMovingTicks(4);
             return false;
         }
-        setDirection(d);
-        setMovingTicks(movementStat);
-        Location destination = location.add(d.getCoords);
-        return moveHelper(destination);
     }
     private boolean moveHelper(Location destination){
         if(actionHandler.move(this,destination)){

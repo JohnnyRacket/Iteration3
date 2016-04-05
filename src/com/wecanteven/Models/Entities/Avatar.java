@@ -53,5 +53,5 @@ public class Avatar{
     public void dismount(){
     }
 
-   
+
 }
