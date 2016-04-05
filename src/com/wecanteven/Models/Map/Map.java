@@ -38,9 +38,9 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     public Map(int rSize, int sSize, int zSize){
-        this.rSize = rSize-1;
-        this.sSize = sSize-1;
-        this.zSize = zSize-1;
+        this.rSize = rSize;
+        this.sSize = sSize;
+        this.zSize = zSize;
 
         columns = new Column[rSize][sSize];
         for (int i = 0; i < rSize; i++) {
@@ -54,9 +54,9 @@ public class Map implements MapVisitable, ActionHandler {
         if( location.getR() < 0 ||
             location.getS() < 0 ||
             location.getZ() < 0 ||
-            location.getR() > getrSize() ||
-            location.getZ() > getzSize() ||
-            location.getS() > getsSize()){
+            location.getR() > getrSize()-1 ||
+            location.getZ() > getzSize()-1 ||
+            location.getS() > getsSize()-1){
             return true;
         }
         return false;
@@ -91,6 +91,7 @@ public class Map implements MapVisitable, ActionHandler {
         //now check the one below it.
 
         Tile tileBelow = this.getTile(destination.subtract(new Location(0,0,1)));
+        System.out.println("Tile: "+tileBelow.getTerrain().getTerrain());
         tileBelow.accept(visitor);
         canMove = canMove && visitor.CanMoveBelow();
         if(visitor.CanMoveBelow()) {

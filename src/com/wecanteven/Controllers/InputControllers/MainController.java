@@ -67,7 +67,7 @@ public class MainController implements Tickable{
     public void tick() {
 
         if(state.getCommandToExecute() != null) {
-            System.out.println("executing controller command");
+            //System.out.println("executing controller command");
             state.getCommandToExecute().execute();
             state.setCommandToExecute(null);
         }
