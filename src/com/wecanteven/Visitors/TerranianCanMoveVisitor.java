@@ -14,8 +14,8 @@ public class TerranianCanMoveVisitor extends CanMoveVisitor {
 
     @Override
     public void visitWater(Water water) {
-        setCanMove(false);
-        setCanMoveBelow(false);
+        setCanMove(true);
+        setCanMoveBelow(true);
     }
 
     @Override
