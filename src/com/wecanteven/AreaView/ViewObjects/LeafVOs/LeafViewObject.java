@@ -20,8 +20,6 @@ public abstract class LeafViewObject implements ViewObject {
     }
     @Override
     public final void setPosition(Position p) {
-        position.setR(p.getR());
-        position.setS(p.getS());
-        position.setZ(p.getZ());
+        position = p.copy();
     }
 }

@@ -96,19 +96,19 @@ public class Map implements MapVisitable, ActionHandler {
         canMove = canMove && visitor.CanMoveBelow();
         if(visitor.CanMoveBelow()) {
             if (canMove) {
-                System.out.println("Moving from " + source + " to " + destination);
+                //System.out.println("Moving from " + source + " to " + destination);
                 remove(entity, source);
                 add(entity, destination);
                 return true;
             } else {
                 for(int i = 0; i < entity.getJumpHeight(); ++i) {
                     if(move(entity, destination.add(Direction.UP.getCoords))){
-                        System.out.println("jumped");
+                        //System.out.println("jumped");
                         return true;
                     }
                 }
 
-                System.out.println("Couldn't move");
+                //System.out.println("Couldn't move");
                 //can move visitor determined you cant move there
                 return false;
             }
