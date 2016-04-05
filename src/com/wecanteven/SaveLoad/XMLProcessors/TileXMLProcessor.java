@@ -56,7 +56,7 @@ public class TileXMLProcessor {
         int z = sf.getIntAttr(el, "z");
         ArrayList<Tile> tiles = new ArrayList<>();
         for(int i = 0; i < z; ++i){
-            tiles.add(parseTile(sf.getElemenetById("Tile", i)));
+            tiles.add(parseTile(sf.getElemenetById(el, "Tile", i)));
         }
         return new Column(z, tiles);
     }
@@ -73,12 +73,15 @@ public class TileXMLProcessor {
         Terrain terrain;
         switch(sf.getStrAttr(el, "terrain")){
             case "Air":
+                System.out.println("Making Air");
                 terrain = new Air();
                 break;
             case "Ground":
+                System.out.println("Making Ground");
                 terrain = new Ground();
                 break;
             case "Current":
+                System.out.println("Making Current");
                 //TODO: Later support multiple current directions
                 terrain = new Current(Direction.NORTHEAST);
                 break;

@@ -98,7 +98,7 @@ public class UIViewFactory {
                             file
                     );
                     loader.loadGame();
-                    //loadGameLauncher.launch();
+                    loadGameLauncher.launch();
             })
         );
         list.addItem(new ScrollableMenuItem("Exit", () -> {System.out.println("test 2 selected");}));
