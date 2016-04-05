@@ -30,7 +30,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     SaveFile save;
     //this is hacky as hell - @TODO: Fix this later
-    private String avatarsCharacter;
+    private Avatar avatar;
 
     public XMLSaveVisitor(SaveFile save) {
         this.save = save;
@@ -81,7 +81,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitAvatar(Avatar e) {
-        avatarsCharacter = e.getClass().get.toString();
+        avatar = e;
     }
 
     @Override
@@ -100,12 +100,8 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(save.saveAttr("Occupation", e.getOccupation().getClass().getSimpleName()));
         attr.add(save.saveAttr("Height", e.getHeight()));
-        System.out.println(avatarsCharacter);
-        System.out.println(e.getClass().toString());
-        if(avatarsCharacter == e.getClass().toString()){
-            System.out.println(avatarsCharacter);
-            System.out.println(e.getClass().toString());
-            attr.add(save.saveAttr("Avatar", "true"));
+        if(avatar.getCharacter() == e){
+            //Save Avatar
         }
         save.appendObjectTo("Tile", save.createSaveElement("Character",attr));
         saveDirection(e.getDirection());
