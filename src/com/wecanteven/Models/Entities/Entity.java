@@ -37,7 +37,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         this.direction = direction;
         canMoveVisitor = new TerranianCanMoveVisitor();
         canFallVisitor = new TerranianCanFallVisitor();
-        jumpHeight = 15;
+        jumpHeight = 1;
         movingTicks = 0;
         isActive = false;
     }
@@ -75,7 +75,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         return false;
     }
     public boolean fall(){
-        System.out.println("Is gonna fall");
+        System.out.println("Check if I can fall");
         if(!isActive()) {
             if (location.getZ() == 1) {
                 return false;

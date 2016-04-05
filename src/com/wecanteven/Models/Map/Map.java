@@ -78,19 +78,22 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean move(Entity entity, Location destination) {
         Location source = entity.getLocation();
         CanMoveVisitor visitor = entity.getCanMoveVisitor();
+
+        //checks if you are moving outside the bounds of the map
         if(isOutOfBounds(destination)){
             System.out.println("Out of Bounds");
             return false;
         }
 
+        //checks to see if anything is blocking your height when moving
         boolean canMove = true;
         for(int i = 0; i < entity.getHeight() && canMove; ++i){
             Tile tile = this.getTile(destination);
             tile.accept(visitor);
             canMove = canMove && visitor.canMove();
         }
-        //now check the one below it.
 
+        //checks the tile you will be standing on
         Tile tileBelow = this.getTile(destination.subtract(new Location(0,0,1)));
         System.out.println("Tile: "+tileBelow.getTerrain().getTerrain());
         tileBelow.accept(visitor);
@@ -101,19 +104,18 @@ public class Map implements MapVisitable, ActionHandler {
                 remove(entity, source);
                 add(entity, destination);
                 return true;
-            } else {
-                for(int i = 0; i < entity.getJumpHeight(); ++i) {
-                    if(move(entity, destination.add(Direction.UP.getCoords))){
-                        //System.out.println("jumped");
-                        return true;
-                    }
-                }
-
+            }
+            else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){
+                return move(entity, destination.add(Direction.UP.getCoords));
+            }
+            else {
                 //System.out.println("Couldn't move");
-                //can move visitor determined you cant move there
+                //can move visitor determined you can't step on the tile
                 return false;
             }
-        }else{
+        }
+        else{
+            //can move visitor determined something is blocking your path
             return false;
         }
     }
