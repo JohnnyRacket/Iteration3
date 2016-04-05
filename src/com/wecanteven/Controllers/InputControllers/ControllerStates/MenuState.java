@@ -2,6 +2,7 @@ package com.wecanteven.Controllers.InputControllers.ControllerStates;
 
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
+import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 
 import javax.swing.*;
@@ -15,8 +16,8 @@ public class MenuState extends ControllerState {
 
     private MenuViewContainer menus;
 
-    public MenuState(JFrame jFrame){
-        super(jFrame);
+    public MenuState(JFrame jFrame, MainController controller){
+        super(jFrame, controller);
         HashMap<ActionEnum, Integer> mappings = new HashMap<>();
         mappings.put(ActionEnum.UP,KeyEvent.VK_UP);
         mappings.put(ActionEnum.DOWN, KeyEvent.VK_DOWN);
@@ -24,6 +25,7 @@ public class MenuState extends ControllerState {
         mappings.put(ActionEnum.RIGHT, KeyEvent.VK_RIGHT);
         mappings.put(ActionEnum.SELECT, KeyEvent.VK_ENTER);
         mappings.put(ActionEnum.SWAPVIEW, KeyEvent.VK_SPACE);
+        mappings.put(ActionEnum.ESCAPE, KeyEvent.VK_ESCAPE);
         this.setMappings(mappings);
     }
 
@@ -55,17 +57,14 @@ public class MenuState extends ControllerState {
             System.out.println("swap hit");
             this.setCommandToExecute(()->menus.swap());
         }, this.getjFrame()));
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ESCAPE), ()->{
+            System.out.println("esc hit");
+            controller.setPlayState();
+            controller.clearViews();
+        }, this.getjFrame()));
 
     }
 
-    @Override
-    public void destroyKeyBindings() {
-        System.out.println("destroying keybindings");
-        for(KeyActionBinding binding: this.getKeyBindings()){
-            this.getjFrame().removeKeyListener(binding);
-        }
-
-    }
 
     public MenuViewContainer getMenus() {
         return menus;

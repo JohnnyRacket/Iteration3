@@ -4,6 +4,7 @@ import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
+import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
@@ -50,8 +51,9 @@ public class GameLaunchTemplate {
         avatar = new Avatar(player, map);
         map.add(player, new Location(3,2,1));
 
+        //set avatar in things that need it
         controller.setAvatar(avatar);
-
+        UIViewFactory.getInstance().setAvatar(avatar);
 
     }
 
@@ -63,7 +65,9 @@ public class GameLaunchTemplate {
 
     protected void initializeAreaView(){
         viewEngine.clear();
-        viewEngine.registerView(new AreaView(avatar,map));
+        viewEngine.getManager().popView();
+        //viewEngine.registerView(new AreaView(avatar,map));
+        viewEngine.registerView(new AreaView(avatar, map));
         controller.setPlayState();
     }
 

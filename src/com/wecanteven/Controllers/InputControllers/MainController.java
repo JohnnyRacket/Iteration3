@@ -5,8 +5,10 @@ import com.wecanteven.Controllers.InputControllers.ControllerStates.DialogState;
 import com.wecanteven.Controllers.InputControllers.ControllerStates.MenuState;
 import com.wecanteven.Controllers.InputControllers.ControllerStates.PlayState;
 import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
+import com.wecanteven.MenuView.SwappableView;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.ModelTime.Tickable;
+import com.wecanteven.ViewEngine;
 
 import javax.swing.*;
 
@@ -17,27 +19,32 @@ public class MainController implements Tickable{
 
     private ControllerState state;
     private Avatar avatar;
+    private ViewEngine viewEngine;
 
     private MenuState menuState;
     private PlayState playState;
     private DialogState dialogState;
 
-    public MainController(JFrame window){
-        menuState = new MenuState(window);
-        playState = new PlayState(window);
-        dialogState = new DialogState(window);
+    public MainController(ViewEngine window){
+        this.viewEngine = window;
+        menuState = new MenuState(window, this);
+        playState = new PlayState(window, this);
+        dialogState = new DialogState(window, this);
     }
 //testing avatar movement
-    public MainController(JFrame window,Avatar avatar){
+    public MainController(ViewEngine window,Avatar avatar){
         this.avatar = avatar;
-        menuState = new MenuState(window);
-        playState = new PlayState(window);
-        dialogState = new DialogState(window);
+        this.viewEngine = window;
+        menuState = new MenuState(window, this);
+        playState = new PlayState(window, this);
+        dialogState = new DialogState(window, this);
     }
 
     private void removeState(){
         if (state != null) {
             state.destroyKeyBindings();
+            menuState.setMenus(null);
+            System.out.println("bloopey");
         }
     }
 
@@ -61,6 +68,15 @@ public class MainController implements Tickable{
         //maybe add more here
         dialogState.createKeybindings();
         this.state = dialogState;
+    }
+
+    public void changeView(SwappableView view){
+        viewEngine.getManager().addView(view);
+    }
+
+    public void clearViews(){
+        viewEngine.getManager().clear();
+
     }
 
     @Override
