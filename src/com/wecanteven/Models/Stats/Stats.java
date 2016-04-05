@@ -51,7 +51,7 @@ public class Stats implements Observer{
         currentMana.setStat(maxMana.getStat());
     }
 
-    public void modifyStats(StatsAddable statsAddable){
+    public void addStats(StatsAddable statsAddable){
         lives.add(statsAddable.getLives());
         strength.add(statsAddable.getStrength());
         agility.add(statsAddable.getAgility());
@@ -61,6 +61,18 @@ public class Stats implements Observer{
         movement.add(statsAddable.getMovement());
         currentHealth.add(statsAddable.getHealth());
         currentMana.add(statsAddable.getMana());
+    }
+
+    public void subtractStats(StatsAddable statsAddable){
+        lives.subtract(statsAddable.getLives());
+        strength.subtract(statsAddable.getStrength());
+        agility.subtract(statsAddable.getAgility());
+        intellect.subtract(statsAddable.getIntellect());
+        hardiness.subtract(statsAddable.getHardiness());
+        experience.subtract(statsAddable.getExperience());
+        movement.subtract(statsAddable.getMovement());
+        currentHealth.subtract(statsAddable.getHealth());
+        currentMana.subtract(statsAddable.getMana());
     }
 
     //getters

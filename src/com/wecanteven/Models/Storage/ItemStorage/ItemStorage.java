@@ -65,14 +65,16 @@ public class ItemStorage {
      * */
 
     public void equip(EquipableItem item) {
-        equipped.equip(item);
+        if (equipped.equip(item))
+            owner.getStats().addStats(item.getStats());
     }
 
     /**
      * Precondition: Item must be in equipped
      * */
     public void unequip(EquipableItem item) {
-        equipped.unequip(item);
+        if (equipped.unequip(item))
+            owner.getStats().subtractStats(item.getStats());
     }
 
     // TODO does anything actually need this???

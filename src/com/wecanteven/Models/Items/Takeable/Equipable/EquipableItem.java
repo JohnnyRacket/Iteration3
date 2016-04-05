@@ -30,6 +30,10 @@ public abstract class EquipableItem extends TakeableItem {
 
     public abstract void unequip(Equipment equipment);
 
+    public StatsAddable getStats() {
+        return stats;
+    }
+
     /**
      * Visitation Rights
      * */

@@ -22,21 +22,26 @@ public abstract class Equipment extends StorageComponent {
     /**
      * Precondition: Item must be in inventory
      * */
-    public void equip(EquipableItem item) {
+    public boolean equip(EquipableItem item) {
         if (getOwner().hasItem(item)) {
             getOwner().removeItem(item);
             item.equip(this);
+            return true;
         }
+
+        return false;
     }
 
     /**
      * Precondition: Item must be equipped
      * */
-    public void unequip(EquipableItem item) {
+    public boolean unequip(EquipableItem item) {
         if (isEquiped(item)) {
             getOwner().addItem(item);
             item.unequip(this);
+            return true;
         }
+        return false;
     }
 
     public abstract boolean isEquiped(EquipableItem item);
