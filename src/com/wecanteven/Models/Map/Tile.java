@@ -39,8 +39,8 @@ public class Tile implements MapVisitable {
 
         if(this.entity.add(entity)){
             ModelTime.getInstance().registerAlertable(() -> {
-                    entity.fall();
-                }
+                entity.fall();
+            }
             , 2);
             return true;
         }else{
@@ -61,7 +61,7 @@ public class Tile implements MapVisitable {
         return true;
     }
 
-    public boolean remove(Entity entity){
+    public boolean remove(Entity entity) {
         return this.entity.remove(entity);
     }
     public boolean remove(OneShot oneShot){
