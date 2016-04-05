@@ -1,8 +1,10 @@
 package com.wecanteven.GameLaunching.LevelFactories;
 
 import com.wecanteven.Models.Map.Map;
+import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
+import com.wecanteven.UtilityClasses.Direction;
 
 /**
  * Created by alexs on 4/1/2016.
@@ -15,7 +17,7 @@ public class DopeAssLevelFactory extends LevelFactory{
         for (int i = 0; i<10; i++) {
             for (int j = 0; j<10; j++) {
                 map.getTile(i, j, 0).setTerrain(
-                        i + j < 15 ? new Ground() : new Water()
+                        i + j < 15 ? new Ground() : new Current(Direction.NORTH)
                 );
             }
         }

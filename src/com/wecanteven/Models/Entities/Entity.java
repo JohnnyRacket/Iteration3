@@ -58,7 +58,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             return false;
         }
         setDirection(d);
-        setMovingTicks(movementStat);
+        setMovingTicks(calculateMovementTicks(movementStat));
         Location destination = location.add(d.getCoords);
         return moveHelper(destination);
     }

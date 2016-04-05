@@ -38,10 +38,11 @@ public class Tile implements MapVisitable {
     public boolean add(Entity entity){
 
         if(this.entity.add(entity)){
-            ModelTime.getInstance().registerAlertable(() -> {
-                entity.fall();
-            }
-            , 2);
+//            ModelTime.getInstance().registerAlertable(() -> {
+//                entity.fall();
+//            }
+//            , 2);
+            interact(entity);
             return true;
         }else{
             return false;
@@ -109,6 +110,10 @@ public class Tile implements MapVisitable {
 
     public void setTerrain(Terrain terrain) {
         this.terrain = terrain;
+    }
+
+    public void interact(Entity entity){
+        terrain.interact(entity);
     }
 
     /**
