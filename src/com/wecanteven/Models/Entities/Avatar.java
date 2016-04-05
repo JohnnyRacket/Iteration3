@@ -18,7 +18,7 @@ public class Avatar extends Entity{
         super(actionHandler, avatar.getDirection());
         this.avatar = avatar;
         state = new EntityState(avatar, this);
-        this.setMovingTicks(10);
+        //this.setMovingTicks(10);
     }
     public boolean move(Direction d){
         return state.move(d);
