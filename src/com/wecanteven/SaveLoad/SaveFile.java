@@ -4,16 +4,15 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-import javax.print.Doc;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -26,18 +25,42 @@ public class SaveFile {
     private String fileName;
     private Document doc;
     private Element root;
+    private File file;
+
+
     public SaveFile(String fileName ) {
-        this.doc = createDocumentFile();
+        this.doc = createEmptyDOM();
         this.fileName = fileName;
-        initialize();
+        initializeDocumentHeaderFromFileName();
     }
 
-    public void initialize() {
+    public SaveFile(File file) {
+        this.file = file;
+        this.doc = createDOMFromFile();
+        initializeFileNameFromDocumentHeader(file);
+    }
+
+
+
+    //Initializes docu
+    public void initializeDocumentHeaderFromFileName() {
         this.root = doc.createElement("SaveFile");
-        Attr a = doc.createAttribute(fileName);
+        Attr a = doc.createAttribute("FileName");
         a.setValue(fileName);
         root.setAttributeNode(a);
         doc.appendChild(root);
+    }
+
+    //Initializes a
+    public void initializeFileNameFromDocumentHeader(File file) {
+        doc.normalizeDocument();
+        //--Setting the SaveFiles Root and FileName--//
+        root = doc.getDocumentElement();
+        fileName = root.getAttribute("FileName");
+        //-------------------------------------------//
+        System.out.println("Loading Save from File: " + fileName);
+
+
     }
 
     public Element createSaveElement(String elementName, ArrayList<Attr> attributes) {
@@ -59,7 +82,8 @@ public class SaveFile {
         pElement.appendChild(child);
     }
 
-    public Document createDocumentFile() {
+    //Creating the DOM object to edit
+    public Document createEmptyDOM() {
         Document doc;
         try
         {
@@ -76,7 +100,23 @@ public class SaveFile {
         return doc;
     }
 
-//Writes the Save File to an actual Save file.
+    public Document createDOMFromFile() {
+        DocumentBuilder builder;
+        try {
+            builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            return builder.parse(file);
+        } catch (ParserConfigurationException e) {
+            System.out.println("ParserError");
+        } catch (SAXException e) {
+            System.out.println("SAXException");
+        } catch (IOException e) {
+            System.out.println("IOException");
+        }
+        return null;
+    }
+
+
+    //Writes the Save File to an actual Save file.
     public void writeSaveFile() {
         TransformerFactory tFactory = TransformerFactory.newInstance();
 
@@ -92,7 +132,7 @@ public class SaveFile {
         doc.normalizeDocument();
         DOMSource source = new DOMSource(doc);
 
-        File file = getFileFromRes(fileName);
+        file = getFileFromRes(fileName);
 
         // Say where we want the XML to go
         StreamResult result = new StreamResult(file);
@@ -132,6 +172,21 @@ public class SaveFile {
         return a;
     }
 
+    public String getStrAttr(Element el, String key) {
+        return el.getAttribute(key);
+    }
+
+    public int getIntAttr(Element el, String key) {
+        return Integer.parseInt(el.getAttribute(key));
+    }
+
+    public Element getElemenetById(String id, int i) {
+        NodeList nodes = root.getElementsByTagName(id);
+        if(nodes.getLength() >= i) {
+            return (Element) nodes.item(i);
+        }
+        return null;
+    }
 
     public Document getDoc() {
         return doc;
@@ -139,5 +194,29 @@ public class SaveFile {
 
     public Element getRoot() {
         return root;
+    }
+
+
+    public static void printDocument(Document doc) {
+        try {
+            printDocument(doc, System.out );
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void printDocument(Document doc, OutputStream out) throws IOException, TransformerException {
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer transformer = tf.newTransformer();
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+        transformer.transform(new DOMSource(doc),
+                new StreamResult(new OutputStreamWriter(out, "UTF-8")));
     }
 }

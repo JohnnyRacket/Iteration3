@@ -1,5 +1,6 @@
 package com.wecanteven.Visitors;
 
+import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 
 /**
@@ -7,5 +8,5 @@ import com.wecanteven.Models.Map.Map;
  */
 public interface ColumnVisitor {
 
-    public void visitColumn(Map.Column column);
+    public void visitColumn(Column column);
 }

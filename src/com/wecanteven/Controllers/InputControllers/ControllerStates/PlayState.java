@@ -3,9 +3,12 @@ package com.wecanteven.Controllers.InputControllers.ControllerStates;
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
 import com.wecanteven.Controllers.InputControllers.MainController;
+import com.wecanteven.GameLaunching.GameLaunchers.LoadGameLauncher;
 import com.wecanteven.MenuView.SwappableView;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Avatar;
+import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
+import com.wecanteven.SaveLoad.Load.LoadGame;
 import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
 import com.wecanteven.UtilityClasses.Direction;
 
@@ -67,7 +70,6 @@ public class PlayState extends ControllerState {
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SAVE), ()->{
             System.out.println("Trying to Save");
             new SaveToXMLFile("save1.xml").saveGame();
-
         }, this.getjFrame(), this.getController()));
     }
 

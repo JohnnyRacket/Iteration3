@@ -1,6 +1,5 @@
 package com.wecanteven.SaveLoad.SaveVisitors;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Occurs;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
@@ -13,15 +12,16 @@ import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
+import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.SaveFile;
+import com.wecanteven.SaveLoad.XMLProcessors.EntityXMLProcessor;
+import com.wecanteven.SaveLoad.XMLProcessors.TileXMLProcessor;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.Visitors.*;
-import org.w3c.dom.Attr;
 
-import java.util.ArrayList;
 
 /**
  * Created by Joshua Kegley on 4/4/2016.
@@ -38,12 +38,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitMap(Map map) {
-
-        ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("r", map.getrSize()));
-        attr.add(save.saveAttr("s", map.getsSize()));
-        save.appendMap(save.createSaveElement("Map",attr));
-
+        TileXMLProcessor.formatMap(save, map);
         for(int r = 0; r < map.getrSize(); ++r){
             for(int s = 0; s < map.getsSize(); ++s){
                 map.getColumn(r, s).accept(this);
@@ -51,11 +46,8 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         }
     }
 
-    public void visitColumn(Map.Column column) {
-        ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("z", column.getZ()));
-        save.appendObjectTo("Map" ,save.createSaveElement("Column",attr));
-
+    public void visitColumn(Column column) {
+        TileXMLProcessor.formatColumn(save, column);
         for(int z  = 0; z < column.getZ(); ++z){
             column.getTile(z).accept(this);
         }
@@ -63,10 +55,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     }
     @Override
     public void visitTile(Tile tile) {
-        ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("terrain", tile.getTerrain().getTerrain()));
-        save.appendObjectTo("Column", save.createSaveElement("Tile",attr));
-
+        TileXMLProcessor.formatTile(save, tile);
         if(tile.hasEntity()){tile.getEntity().accept(this);}
         if(tile.hasObstacle()) {tile.getObstacle().accept(this);}
         if(tile.hasInteractiveItem()) {tile.getInteractiveItem().accept(this);}
@@ -86,24 +75,18 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitEntity(Entity e) {
-        ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("Height", e.getHeight()));
-        save.appendObjectTo("Tile", save.createSaveElement("Entity",attr));
+        EntityXMLProcessor.formatEntity(save, e);
         saveDirection(e.getDirection());
-
-
-
     }
 
     @Override
     public void visitCharacter(Character e) {
-        ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("Occupation", e.getOccupation().getClass().getSimpleName()));
-        attr.add(save.saveAttr("Height", e.getHeight()));
         if(avatar.getCharacter() == e){
             //Save Avatar
+            EntityXMLProcessor.formatAvatar(save, avatar);
+        }else {
+            EntityXMLProcessor.formatCharacter(save, e, "Tile");
         }
-        save.appendObjectTo("Tile", save.createSaveElement("Character",attr));
         saveDirection(e.getDirection());
         visitStats(e.getStats());
     }
@@ -111,16 +94,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitStats(Stats stats) {
-        ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("Lives", stats.getLives()));
-        attr.add(save.saveAttr("Level", stats.getLevel()));
-        attr.add(save.saveAttr("Strength", stats.getStrength()));
-        attr.add(save.saveAttr("Agility", stats.getAgility()));
-        attr.add(save.saveAttr("Intellect", stats.getIntellect()));
-        attr.add(save.saveAttr("Hardiness", stats.getHardiness()));
-        attr.add(save.saveAttr("Movement", stats.getMovement()));
-
-        save.appendObjectTo("Character", save.createSaveElement("Stats",attr));
+        EntityXMLProcessor.formatStats(save, stats);
     }
 
     @Override
@@ -169,9 +143,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     }
 
     public void saveDirection(Direction direction){
-        ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("enum", direction.ordinal()));
-        save.appendObjectTo("Character", save.createSaveElement("Direction",attr));
+        EntityXMLProcessor.formatDirection(save, direction);
     }
 
 }

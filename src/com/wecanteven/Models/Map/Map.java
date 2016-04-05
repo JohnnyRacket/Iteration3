@@ -124,6 +124,8 @@ public class Map implements MapVisitable, ActionHandler {
 
     public Column getColumn(int r, int s) { return columns[r][s]; }
 
+    public void setColumn(int r, int s, Column c) { columns[r][s] = c; }
+
     public boolean fall(Entity entity) {
         return false;
     }
@@ -186,62 +188,4 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
 
-    /**
-     * Created by John on 3/31/2016.
-     */
-    public static class Column  {
-        private ArrayList<Tile> tiles;
-        private int z = 10;
-        public Column(){
-            tiles = new ArrayList<>();
-            for (int i = 0; i < z; i++) {
-                tiles.add(new Tile(new Air()));
-            }
-        }
-
-        public Tile getTile(int zLevel) {
-            return tiles.get(zLevel);
-        }
-
-        public int getZ() {
-            return z;
-        }
-
-        public boolean add(Entity entity, int z){
-            return tiles.get(z).add(entity);
-        }
-        public boolean add(TakeableItem takeableItem, int z){
-            return tiles.get(z).add(takeableItem);
-        }
-        public boolean add(OneShot oneShot, int z){
-            return tiles.get(z).add(oneShot);
-        }
-        public boolean add(Obstacle obstacle, int z){
-            return tiles.get(z).add(obstacle);
-        }
-        public boolean add(InteractiveItem interactiveItem, int z){
-            return tiles.get(z).add(interactiveItem);
-        }
-
-        public boolean remove(Entity entity, int z){
-            return tiles.get(z).remove(entity);
-        }
-        public boolean remove(TakeableItem takeableItem, int z){
-            return tiles.get(z).remove(takeableItem);
-        }
-        public boolean remove(OneShot oneShot, int z){
-            return tiles.get(z).remove(oneShot);
-        }
-        public boolean remove(Obstacle obstacle, int z){
-            return tiles.get(z).remove(obstacle);
-        }
-        public boolean remove(InteractiveItem interactiveItem, int z){
-            return tiles.get(z).remove(interactiveItem);
-        }
-
-        public void accept(ColumnVisitor visitor) {
-            visitor.visitColumn(this);
-        }
-
-    }
 }

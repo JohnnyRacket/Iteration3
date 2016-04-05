@@ -1,6 +1,7 @@
 package com.wecanteven.MenuView;
 
 import com.wecanteven.Controllers.InputControllers.MainController;
+import com.wecanteven.GameLaunching.GameLaunchers.LoadGameLauncher;
 import com.wecanteven.GameLaunching.GameLaunchers.NewGameLauncher;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.HorizontalCenterContainer;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.VerticalCenterContainer;
@@ -11,15 +12,20 @@ import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenu;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenuItem;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
+import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.ViewEngine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 /**
  * Created by John on 3/31/2016.
  */
 public class UIViewFactory {
+    private static final String PATH = "resources/Saves/";
+
+
     private JFrame jframe;
     MainController controller;
     ViewEngine vEngine;
@@ -74,10 +80,27 @@ public class UIViewFactory {
         menu.setSelectedColor(Color.cyan);
         //make menu list
         NavigatableList list = new NavigatableList();
-        list.addItem(new ScrollableMenuItem("New Game", () -> {
-            NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine);
-            template.launch();}));
-        list.addItem(new ScrollableMenuItem("Load Game", () -> {System.out.println("test 2 selected");}));
+        list.addItem(
+                new ScrollableMenuItem("New Game", () -> {
+                    NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine);
+                    template.launch();
+            })
+        );
+        list.addItem(
+                new ScrollableMenuItem("Load Game", () -> {
+                    System.out.println("Load Game was selected");
+                    //TODO: Be moved to a Load Screen - Give the player the option to choose a file and
+                    //TODO: create the Launcher and Loader from that file selection
+                    LoadGameLauncher loadGameLauncher = new LoadGameLauncher(controller, mEngine, vEngine);
+                    File file = new File(PATH + "save1.xml");
+                    LoadFromXMLFile loader = new LoadFromXMLFile(
+                            loadGameLauncher,
+                            file
+                    );
+                    loader.loadGame();
+                    //loadGameLauncher.launch();
+            })
+        );
         list.addItem(new ScrollableMenuItem("Exit", () -> {System.out.println("test 2 selected");}));
         menu.setList(list);
         //make swappable view
