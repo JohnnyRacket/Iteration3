@@ -1,5 +1,7 @@
 package com.wecanteven.MenuView;
 
+import com.wecanteven.UtilityClasses.Config;
+
 import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.*;
@@ -19,6 +21,8 @@ public class SwingToDrawableAdapter extends JPanel{
     @Override
     public void paintComponent(Graphics g){
         //System.out.println("adapting paint component");
+        this.setBounds(0,0,Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+        //System.out.println("this width is : " + this.getWidth() + " and it should be : " + Config.SCREEN_WIDTH);
         //redraw all the things
         int windowHeight = this.getRootPane().getHeight();
         int windowWidth = this.getRootPane().getWidth();

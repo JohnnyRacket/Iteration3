@@ -72,7 +72,7 @@ public class Character extends Entity {
         return location;
     }
     public void levelUp(){
-        stats.modifyStats(occupation.getStatsAddable());
+        stats.addStats(occupation.getStatsAddable());
     }
 
     @Override
