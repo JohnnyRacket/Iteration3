@@ -13,7 +13,12 @@ public class BootsEquipableItem extends EquipableItem {
     }
 
     @Override
-    public boolean equip(Equipment equipment) {
-        return equipment.equipBoots(this);
+    public void equip(Equipment equipment) {
+        equipment.equipBoots(this);
+    }
+
+    @Override
+    public void unequip(Equipment equipment) {
+        equipment.unequipBoots(this);
     }
 }
