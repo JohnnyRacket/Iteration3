@@ -1,6 +1,6 @@
 package com.wecanteven.Visitors;
 
-import com.wecanteven.Models.Storage.Inventory;
+import com.wecanteven.Models.Storage.ItemStorage.Inventory;
 
 /**
  * Created by simonnea on 4/1/16.

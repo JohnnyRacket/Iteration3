@@ -1,4 +1,4 @@
-package com.wecanteven.Models.Storage;
+package com.wecanteven.Models.Storage.ItemStorage;
 
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class HominidEquipment extends Equipment {
 
-    public HominidEquipment(Storage owner) {
+    public HominidEquipment(ItemStorage owner) {
         super(owner);
     }
 
