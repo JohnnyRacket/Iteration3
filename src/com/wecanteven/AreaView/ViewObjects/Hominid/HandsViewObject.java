@@ -1,6 +1,8 @@
 package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
+import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
@@ -13,10 +15,16 @@ public class HandsViewObject implements ViewObject, Observer{
     private Position position;
    // private Equipment --dont have it yet..
 
+    private MicroPositionableViewObject leftHand;
+    private MicroPositionableViewObject rightHand;
 
-    public HandsViewObject(HandViewObject leftHand, HandViewObject rightHand, Position position) {
+
+
+    public HandsViewObject(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand, Direction direction, Position position) {
         this.position = position;
-        handState = new BrawlingState(leftHand, rightHand);
+        this.leftHand = leftHand;
+        this.rightHand = rightHand;
+        handState = new BrawlingState(direction, leftHand, rightHand);
     }
 
     public void drawForeground(Graphics2D graphic) {
@@ -29,13 +37,19 @@ public class HandsViewObject implements ViewObject, Observer{
 
     @Override
     public Position getPosition() {
-        return null;
+        return position;
     }
 
     @Override
     public void setPosition(Position p) {
         position = p;
-        handState.setHandsPosition(p);
+        rightHand.setPosition(p);
+        leftHand.setPosition(p);
+    }
+
+    public void changeDirection(Direction direction) {
+        leftHand.setDirection(direction);
+        rightHand.setDirection(direction);
     }
 
     public void draw(Graphics2D graphic) {
@@ -44,10 +58,6 @@ public class HandsViewObject implements ViewObject, Observer{
 
     public void move(Graphics2D graphic) {
         handState.move(graphic);
-    }
-
-    public void changeDirection(Direction direction) {
-        handState.changeDirection(direction);
     }
 
     public void update() {

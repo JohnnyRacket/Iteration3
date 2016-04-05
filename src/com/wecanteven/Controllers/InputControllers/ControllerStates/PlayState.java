@@ -32,7 +32,6 @@ public class PlayState extends ControllerState {
     }
     @Override
     public void createKeybindings() {
-        System.out.println("creating keybindings");
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.NORTH), ()->{
             System.out.println("move north hit");
             this.setContinuousCommandToExecute(()->avatar.move(Direction.NORTH));
@@ -62,7 +61,6 @@ public class PlayState extends ControllerState {
             SwappableView view = UIViewFactory.getInstance().createInventoryView();
             this.getController().setMenuState(view.getMenuViewContainer());
             this.getController().changeView(view);
-
         }, this.getjFrame(), this.getController()));
     }
 

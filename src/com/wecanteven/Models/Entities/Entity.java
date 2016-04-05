@@ -26,6 +26,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     private int height = 3;
     private Direction direction;
     private int jumpHeight;
+    private boolean isActive;
     protected Location location;
     private CanMoveVisitor canMoveVisitor;
     private CanFallVisitor canFallVisitor;
@@ -38,6 +39,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         canFallVisitor = new TerranianCanFallVisitor();
         jumpHeight = 15;
         movingTicks = 0;
+        isActive = false;
     }
 
     @Override
@@ -73,17 +75,19 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         return false;
     }
     public boolean fall(){
-        if(location.getZ() == 1){
-            return false;
+        if(!isActive()) {
+            if (location.getZ() == 1) {
+                return false;
+            }
+            return actionHandler.fall(this, this.getLocation().subtract(new Location(0, 0, 1)));
         }
-        System.out.println("Falling");
-        return actionHandler.fall(this, this.getLocation().subtract(new Location(0,0,1)));
+        return false;
     }
     public void die(){
         stats.refreshStats();
     }
     public boolean isActive(){
-        return false;
+        return isActive;
     }
 
 
@@ -105,22 +109,26 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     //Alex's testing code
     public void setMovingTicks(int ticks) {
+        isActive = true;
         this.movingTicks = ticks;
         deIncrementTick();
         notifyObservers();
     }
 
-    public void deIncrementTick(){
+    public int deIncrementTick(){
         ModelTime.getInstance().registerAlertable(new Alertable() {
             @Override
             public void alert() {
                 if(movingTicks == 0){
+                    isActive = false;
+                    fall();
                     return;
                 }
                 movingTicks--;
                 deIncrementTick();
             }
         }, 1);
+        return movingTicks;
     }
 
     private int calculateMovementTicks(int movementStat){
@@ -138,7 +146,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
 
     public void setLocation(Location location) {
-        System.out.println("Location was changed");
         this.location = location;
         notifyObservers();
     }

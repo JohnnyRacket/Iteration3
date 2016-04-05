@@ -1,9 +1,11 @@
 package com.wecanteven.AreaView.ViewObjects.Factories;
 
+import com.sun.glass.ui.View;
 import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.AreaView.DynamicImages.DynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandViewObject;
@@ -43,14 +45,14 @@ public abstract class ViewObjectFactory {
     public ViewObject createSneak(Position p, Direction d, Entity subject) {
         DirectionalViewObject body = createBody(p, subject, "Sneak");
 
+        MicroPositionableViewObject leftHand = new MicroPositionableViewObject(createLeftHand(p));
+        MicroPositionableViewObject rightHand = new MicroPositionableViewObject(createRightHand(p));
 
-
-        HandsViewObject hands = new HandsViewObject(new HandViewObject(p, 0.4, 2, -Math.PI/4, 0, hexDrawingStrategy), new HandViewObject(p, 0.4, 2, Math.PI/1.7, 0, hexDrawingStrategy), p);
-        //FeetViewObject feet = createFeet(p, d, "Brown");
+        HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p);
         HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands);
 
         subject.attach(stationarySneak);
-
+        subject.attach(body);
         //TEMPORARY TESTING WORKAROUND
         //TODO: make better
         hexDrawingStrategy.setCenterTarget(stationarySneak);
@@ -60,6 +62,13 @@ public abstract class ViewObjectFactory {
 
     }
 
+    private ViewObject createRightHand(Position position) {
+        return new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy);
+    }
+
+    private ViewObject createLeftHand(Position position) {
+        return new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy);
+    }
 //    private FeetViewObject createFeet(Position p, Direction d, String name) {
 //        FootViewObject leftFoot = createFoot(p, d, name + "/Left");
 //        FootViewObject rightFoot = createFoot(p, d, name + "/Right");
