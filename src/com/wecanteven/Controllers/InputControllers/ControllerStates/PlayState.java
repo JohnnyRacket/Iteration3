@@ -3,6 +3,7 @@ package com.wecanteven.Controllers.InputControllers.ControllerStates;
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
 import com.wecanteven.Models.Entities.Avatar;
+import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
 import com.wecanteven.UtilityClasses.Direction;
 
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class PlayState extends ControllerState {
         mappings.put(ActionEnum.SOUTH, KeyEvent.VK_S);
         mappings.put(ActionEnum.SOUTHEAST, KeyEvent.VK_D);
         mappings.put(ActionEnum.SOUTHWEST, KeyEvent.VK_A);
+        mappings.put(ActionEnum.SAVE, KeyEvent.VK_P);
         this.setMappings(mappings);
     }
     @Override
@@ -54,6 +56,12 @@ public class PlayState extends ControllerState {
             System.out.println("move southwest hit");
             this.setCommandToExecute(()->avatar.move(Direction.SOUTHWEST));
         }, this.getjFrame()));
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SAVE), ()->{
+            System.out.println("Trying to Save");
+            new SaveToXMLFile("save1.xml").saveGame();
+
+        }, this.getjFrame()));
+
     }
 
     @Override
