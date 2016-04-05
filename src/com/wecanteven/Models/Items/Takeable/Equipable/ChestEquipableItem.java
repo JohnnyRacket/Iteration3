@@ -12,7 +12,12 @@ public class ChestEquipableItem extends EquipableItem {
     }
 
     @Override
-    public boolean equip(Equipment equipment) {
-        return equipment.equipChest(this);
+    public void equip(Equipment equipment) {
+        equipment.equipChest(this);
+    }
+
+    @Override
+    public void unequip(Equipment equipment) {
+        equipment.unequipChest(this);
     }
 }

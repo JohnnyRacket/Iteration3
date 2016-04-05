@@ -35,8 +35,6 @@ public class Character extends Entity {
     /**
      * Equipment
      * */
-
-    // TODO update this to pass storage to the item, so the only the specific item and the storage interact
     public void equipItem(EquipableItem item){
         itemStorage.equip(item);
     }
@@ -44,6 +42,18 @@ public class Character extends Entity {
     public void unequipItem(EquipableItem item){
         itemStorage.unequip(item);
     }
+
+    /**
+     * Inventory
+     * */
+
+    public void drop(TakeableItem item){
+        // TODO notify map that item was dropped
+    }
+    public void pickup(TakeableItem item){
+
+    }
+
     private boolean equipAbility(String id){
         return false;
     }
@@ -57,8 +67,7 @@ public class Character extends Entity {
     public boolean consume(String id){
         return false;
     }
-    public void drop(){}
-    public void pickup(TakeableItem item){}
+
     public Location getLocation(){
         return location;
     }

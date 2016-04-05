@@ -27,7 +27,9 @@ public abstract class EquipableItem extends TakeableItem {
         this.stats = stats;
     }
 
-    public abstract boolean equip(Equipment equipment);
+    public abstract void equip(Equipment equipment);
+
+    public abstract void unequip(Equipment equipment);
 
     /**
      * Visitation Rights
