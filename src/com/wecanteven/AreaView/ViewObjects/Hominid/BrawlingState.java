@@ -13,7 +13,7 @@ public class BrawlingState extends HandState {
     private final double radius = 0.5d;
     private final double leftAngle = Math.PI/2;
     private final double rightAngle = -leftAngle;
-    private final double height = 2;
+    private final double height = 1.5;
 
     public BrawlingState(Direction direction, MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
         super(leftHand, rightHand);

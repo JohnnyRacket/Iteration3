@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.DecoratorVOs;
 
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.UtilityClasses.Direction;
@@ -12,6 +13,9 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     private Direction direction;
     private Position position;
     private Position offsetPosition;
+    private static final int HEX_WIDTH = 56;
+    private static final int HEX_LENGTH = 48;
+    private static final int HEX_HEIGHT = 15;
     private final double CAMERA_TILT_FACTOR = Config.TILT_ANGLE;
 
     private double offsetAngle;
@@ -83,15 +87,21 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     }
 
     private void updatePositionOffset() {
-        setROffset();
-        setSOffset();
-        setZOffset();
+//        setROffset();
+//        setSOffset();
+//        setZOffset();
+        offsetPosition.setR(getR());
+        offsetPosition.setS(getS());
+        offsetPosition.setZ(getZ());
         System.out.println(offsetPosition + "\n");
+        System.out.println("S: " + 1/Math.cos(Config.TILT_ANGLE)*(radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle - direction.getAngle())));
+        System.out.println("X: " + radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle()));
         updateChildPosition();
     }
 
 
     private void updateChildPosition() {
+        System.out.println("Height: " + position.add(offsetPosition).getZ());
         getChild().setPosition(position.add(offsetPosition));
     }
 
@@ -109,5 +119,27 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     private void setROffset() {
         offsetPosition.setR(radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle()));
 
+    }
+
+    private double getX() {
+        System.out.println("X: " + radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle()));
+        return 50*(radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle()));
+    }
+
+    private double getY() {
+        System.out.println("Y: " + (radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle - direction.getAngle())));
+        return 50*Math.tan(Config.TILT_ANGLE)*((radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle - direction.getAngle())));
+    }
+
+    private double getZ() {
+        return 2*height;
+    }
+
+    private double getR() {
+        return getX()/HEX_WIDTH;
+    }
+
+    private double getS() {
+        return (height*HEX_HEIGHT - getY() - getR() * (HEX_LENGTH/2)) / HEX_LENGTH;
     }
 }
