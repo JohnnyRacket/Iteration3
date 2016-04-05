@@ -1,4 +1,4 @@
-package com.wecanteven.Models.Storage;
+package com.wecanteven.Models.Storage.ItemStorage;
 
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
@@ -16,13 +16,13 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
  * subclassed into their respective implementing classes
  *
  * */
-public class Storage {
+public class ItemStorage {
     private Character owner;
 
     private Inventory inventory;
     private Equipment equipped;
 
-    public Storage(Character owner, int maxInventoryCapacity)
+    public ItemStorage(Character owner, int maxInventoryCapacity)
     {
         this.owner = owner;
 
@@ -30,7 +30,7 @@ public class Storage {
         equipped = new HominidEquipment(this);
     }
 
-    public Storage(Inventory inventory, Equipment equipment, Character owner)
+    public ItemStorage(Inventory inventory, Equipment equipment, Character owner)
     {
         this.inventory = inventory;
         this.equipped = equipment;
@@ -65,14 +65,16 @@ public class Storage {
      * */
 
     public void equip(EquipableItem item) {
-        equipped.equip(item);
+        if (equipped.equip(item))
+            owner.getStats().addStats(item.getStats());
     }
 
     /**
      * Precondition: Item must be in equipped
      * */
     public void unequip(EquipableItem item) {
-        equipped.unequip(item);
+        if (equipped.unequip(item))
+            owner.getStats().subtractStats(item.getStats());
     }
 
     // TODO does anything actually need this???

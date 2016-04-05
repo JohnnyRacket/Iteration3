@@ -1,8 +1,7 @@
 package com.wecanteven.Models.Items.Takeable.Equipable;
 
-import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Stats.StatsAddable;
-import com.wecanteven.Models.Storage.Equipment;
+import com.wecanteven.Models.Storage.ItemStorage.Equipment;
 
 /**
  * Created by simonnea on 3/31/16.

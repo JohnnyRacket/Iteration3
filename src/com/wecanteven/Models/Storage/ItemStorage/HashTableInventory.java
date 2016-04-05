@@ -1,4 +1,4 @@
-package com.wecanteven.Models.Storage;
+package com.wecanteven.Models.Storage.ItemStorage;
 
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 
@@ -12,7 +12,7 @@ public class HashTableInventory extends Inventory {
 
     private HashSet<TakeableItem> inventory;
 
-    public HashTableInventory(Storage owner, int maxCapacity) {
+    public HashTableInventory(ItemStorage owner, int maxCapacity) {
         super(owner);
 
         this.inventory = new HashSet<>();

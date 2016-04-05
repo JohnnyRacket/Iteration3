@@ -138,7 +138,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
 
     public void levelUp(){
-        stats.modifyStats(new StatsAddable(0,1,1,1,1,0,0,0,0));
+        stats.addStats(new StatsAddable(0,1,1,1,1,0,0,0,0));
     }
 
     public Stats getStats(){

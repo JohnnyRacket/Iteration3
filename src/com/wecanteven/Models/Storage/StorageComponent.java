@@ -1,20 +1,22 @@
 package com.wecanteven.Models.Storage;
 
+import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
+
 /**
  * Created by simonnea on 4/4/16.
  */
 public class StorageComponent {
-    private Storage owner;
+    private ItemStorage owner;
 
-    public StorageComponent(Storage owner) {
+    public StorageComponent(ItemStorage owner) {
         setOwner(owner);
     }
 
-    public void setOwner(Storage owner) {
+    public void setOwner(ItemStorage owner) {
         this.owner = owner;
     }
 
-    public Storage getOwner() {
+    public ItemStorage getOwner() {
         return this.owner;
     }
 }

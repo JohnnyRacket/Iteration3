@@ -6,13 +6,9 @@ import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
-import com.wecanteven.Models.Stats.StatsAddable;
-import com.wecanteven.Models.Storage.Storage;
-import com.wecanteven.Observers.Moveable;
-import com.wecanteven.Observers.Positionable;
+import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
-import com.wecanteven.Visitors.CanMoveVisitor;
 import com.wecanteven.Visitors.EntityVisitor;
 
 /**
@@ -20,7 +16,7 @@ import com.wecanteven.Visitors.EntityVisitor;
  */
 public class Character extends Entity {
     private Occupation occupation;
-    private Storage itemStorage, abilityStorage;
+    private ItemStorage itemItemStorage, abilityItemStorage;
 
     public Character(ActionHandler actionHandler, Direction direction){
         super(actionHandler, direction);
@@ -36,18 +32,18 @@ public class Character extends Entity {
      * Equipment
      * */
     public void equipItem(EquipableItem item){
-        itemStorage.equip(item);
+        itemItemStorage.equip(item);
     }
 
     public void unequipItem(EquipableItem item){
-        itemStorage.unequip(item);
+        itemItemStorage.unequip(item);
     }
 
     /**
      * Inventory
      * */
     public void removeFromInventory(TakeableItem item) {
-        itemStorage.removeItem(item);
+        itemItemStorage.removeItem(item);
         drop(item);
     }
 
@@ -55,7 +51,7 @@ public class Character extends Entity {
         // TODO notify map that item was dropped
     }
     public void pickup(TakeableItem item) {
-        itemStorage.addItem(item);
+        itemItemStorage.addItem(item);
     }
 
     private boolean equipAbility(String id){
@@ -76,7 +72,7 @@ public class Character extends Entity {
         return location;
     }
     public void levelUp(){
-        stats.modifyStats(occupation.getStatsAddable());
+        stats.addStats(occupation.getStatsAddable());
     }
 
     @Override
