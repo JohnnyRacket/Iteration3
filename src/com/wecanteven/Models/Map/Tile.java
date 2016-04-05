@@ -111,6 +111,8 @@ public class Tile implements MapVisitable {
         this.terrain = terrain;
     }
 
+
+
     /**
      * Created by John on 3/31/2016.
      */

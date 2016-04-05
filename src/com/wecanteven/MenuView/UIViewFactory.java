@@ -1,10 +1,9 @@
 package com.wecanteven.MenuView;
 
 import com.wecanteven.Controllers.InputControllers.MainController;
-import com.wecanteven.GameLaunching.GameLaunchTemplate;
+import com.wecanteven.GameLaunching.GameLaunchers.NewGameLauncher;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.HorizontalCenterContainer;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.VerticalCenterContainer;
-import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.RowedCompositeContainer;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
@@ -76,7 +75,7 @@ public class UIViewFactory {
         //make menu list
         NavigatableList list = new NavigatableList();
         list.addItem(new ScrollableMenuItem("New Game", () -> {
-            GameLaunchTemplate template = new GameLaunchTemplate(controller, mEngine, vEngine);
+            NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine);
             template.launch();}));
         list.addItem(new ScrollableMenuItem("Load Game", () -> {System.out.println("test 2 selected");}));
         list.addItem(new ScrollableMenuItem("Exit", () -> {System.out.println("test 2 selected");}));

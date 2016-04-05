@@ -11,6 +11,7 @@ import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanFallVisitor;
 import com.wecanteven.Visitors.CanMoveVisitor;
+import com.wecanteven.Visitors.ColumnVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
@@ -121,6 +122,11 @@ public class Map implements MapVisitable, ActionHandler {
         return columns[r][s].getTile(z);
     }
 
+    public Column getColumn(int r, int s) { return columns[r][s]; }
+
+    public boolean fall(Entity entity) {
+        return false;
+    }
 
     @Override
     public boolean move(TakeableItem item, Location location) {
@@ -179,21 +185,26 @@ public class Map implements MapVisitable, ActionHandler {
         return columns[loc.getR()][loc.getS()].remove(interactiveItem, loc.getZ());
     }
 
+
     /**
      * Created by John on 3/31/2016.
      */
     public static class Column  {
         private ArrayList<Tile> tiles;
-
+        private int z = 10;
         public Column(){
             tiles = new ArrayList<>();
-            for (int i = 0; i <10; i++) {
+            for (int i = 0; i < z; i++) {
                 tiles.add(new Tile(new Air()));
             }
         }
 
         public Tile getTile(int zLevel) {
             return tiles.get(zLevel);
+        }
+
+        public int getZ() {
+            return z;
         }
 
         public boolean add(Entity entity, int z){
@@ -226,6 +237,10 @@ public class Map implements MapVisitable, ActionHandler {
         }
         public boolean remove(InteractiveItem interactiveItem, int z){
             return tiles.get(z).remove(interactiveItem);
+        }
+
+        public void accept(ColumnVisitor visitor) {
+            visitor.visitColumn(this);
         }
 
     }

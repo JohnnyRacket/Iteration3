@@ -1,4 +1,4 @@
-package com.wecanteven.GameLaunching;
+package com.wecanteven.GameLaunching.GameLaunchers;
 
 import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.Controllers.InputControllers.MainController;
@@ -16,22 +16,22 @@ import com.wecanteven.ViewEngine;
 /**
  * Created by alexs on 4/1/2016.
  */
-public class GameLaunchTemplate {
+public class NewGameLauncher extends GameLauncher {
 
     private LevelFactory levelFactory = new DopeAssLevelFactory();
 
-    private Map map;
-    private Avatar avatar;
-    private MainController controller;
-    private ModelEngine modelEngine;
-    private ViewEngine viewEngine;
 
-    public GameLaunchTemplate(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine){
-        this.controller = controller;
-        this.modelEngine = modelEngine;
-        this.viewEngine = viewEngine;
+    public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine){
+        super(controller, modelEngine, viewEngine);
     }
 
+    /*
+        In order for this to work, on the Avatar creation screen that
+        creates the NewGameLauncher and then calls createAvatar, passing
+        the Occupation
+     */
+
+    @Override
     public void launch(){
         System.out.println("launching game");
         createMap();
@@ -41,37 +41,33 @@ public class GameLaunchTemplate {
         initializeUIView();
     }
 
+    @Override
     protected void createMap(){
-
-        map = levelFactory.createMap();
+        setMap(levelFactory.createMap());
     }
 
+    @Override
     protected void createAvatar(String occupation){
-        Character player = new Character(map, Direction.SOUTH);
-        avatar = new Avatar(player, map);
-        map.add(player, new Location(3,2,1));
-
-        //set avatar in things that need it
-        controller.setAvatar(avatar);
-        UIViewFactory.getInstance().setAvatar(avatar);
+        Character player = new Character(getMap(), Direction.SOUTH);
+        setAvatar(new Avatar(player, getMap()));
+        getMap().add(player, new Location(3,2,1));
+        getController().setAvatar(getAvatar());
+        UIViewFactory.getInstance().setAvatar(getAvatar());
 
     }
 
-
-
+    @Override
     protected void populateMap(){
         levelFactory.populateMap();
     }
 
     protected void initializeAreaView(){
-        viewEngine.clear();
-        viewEngine.getManager().popView();
+        getViewEngine().clear();
+        getViewEngine().getManager().popView();
         //viewEngine.registerView(new AreaView(avatar,map));
-        viewEngine.registerView(new AreaView(avatar, map));
-        controller.setPlayState();
+        getViewEngine().registerView(new AreaView(getAvatar(), getMap()));
+        getController().setPlayState();
     }
 
-    protected void initializeUIView(){
 
-    }
 }
