@@ -19,11 +19,13 @@ public class Stats implements Observer{
     public Stats(Entity entity){
         initStats(entity,1,1,1,1,30);
     }
-    public Stats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement, int lives, int level) {
+
+    public void initStats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement, int lives, int level){
         initStats(entity, strength, agility, intellect, hardiness, movement);
         this.lives.setStat(lives);
         this.level.setStat(level);
     }
+
     public void initStats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement){
         this.entity = entity;
         this.strength = new PrimaryStat("Strength",strength);

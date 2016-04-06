@@ -61,13 +61,5 @@ public class NewGameLauncher extends GameLauncher {
         levelFactory.populateMap();
     }
 
-    protected void initializeAreaView(){
-        getViewEngine().clear();
-        getViewEngine().getManager().popView();
-        //viewEngine.registerView(new AreaView(avatar,map));
-        getViewEngine().registerView(new AreaView(getAvatar(), getMap()));
-        getController().setPlayState();
-    }
-
 
 }

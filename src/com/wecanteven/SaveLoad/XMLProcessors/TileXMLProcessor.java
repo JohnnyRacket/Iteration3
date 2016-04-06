@@ -21,13 +21,13 @@ import java.util.ArrayList;
 public class TileXMLProcessor {
     private static  SaveFile sf;
 
-    public static void formatMap(SaveFile save, Map map) {
+    public static void formatMap(Map map) {
         ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("r", map.getrSize()));
-        attr.add(save.saveAttr("s", map.getsSize()));
-        attr.add(save.saveAttr("z", map.getzSize()));
+        attr.add(sf.saveAttr("r", map.getrSize()));
+        attr.add(sf.saveAttr("s", map.getsSize()));
+        attr.add(sf.saveAttr("z", map.getzSize()));
 
-        save.appendMap(save.createSaveElement("Map",attr));
+        sf.appendMap(sf.createSaveElement("Map",attr));
 
     }
 
@@ -35,9 +35,7 @@ public class TileXMLProcessor {
         Map map = new Map(sf.getIntAttr(el, "r"), sf.getIntAttr(el, "s"), sf.getIntAttr(el, "z"));
         int width = map.getrSize();
         for(int r = 0; r < map.getrSize(); ++r) {
-            System.out.println("r "+ r);
             for(int s = 0; s < map.getsSize(); ++s) {
-                System.out.println(width*r + s);
                 map.setColumn(r, s, parseColumn(map, sf.getElemenetById("Column", width*r + s)));
                 if(map.getColumn(r, s) == null){ System.out.println("WTF COLUMN"); }
             }
@@ -46,26 +44,26 @@ public class TileXMLProcessor {
     }
 
 
-    public static void formatColumn(SaveFile save, Column column) {
+    public static void formatColumn(Column column) {
         ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("z", column.getZ()));
-        save.appendObjectTo("Map" ,save.createSaveElement("Column",attr));
+        attr.add(sf.saveAttr("z", column.getZ()));
+        sf.appendObjectTo("Map" ,sf.createSaveElement("Column",attr));
     }
 
     public static Column parseColumn(Map map, Element el) {
         int z = sf.getIntAttr(el, "z");
         ArrayList<Tile> tiles = new ArrayList<>();
         for(int i = 0; i < z; ++i){
-            tiles.add(parseTile(sf.getElemenetById("Tile", i)));
+            tiles.add(parseTile(sf.getElemenetById(el, "Tile", i)));
         }
         return new Column(z, tiles);
     }
 
 
-    public static void formatTile(SaveFile save, Tile tile) {
+    public static void formatTile(Tile tile) {
         ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("terrain", tile.getTerrain().getTerrain()));
-        save.appendObjectTo("Column", save.createSaveElement("Tile",attr));
+        attr.add(sf.saveAttr("terrain", tile.getTerrain().getTerrain()));
+        sf.appendObjectTo("Column", sf.createSaveElement("Tile",attr));
 
     }
 
@@ -73,12 +71,15 @@ public class TileXMLProcessor {
         Terrain terrain;
         switch(sf.getStrAttr(el, "terrain")){
             case "Air":
+                //System.out.println("Making Air");
                 terrain = new Air();
                 break;
             case "Ground":
+                //System.out.println("Making Ground");
                 terrain = new Ground();
                 break;
             case "Current":
+                //System.out.println("Making Current");
                 //TODO: Later support multiple current directions
                 terrain = new Current(Direction.NORTHEAST);
                 break;

@@ -24,8 +24,9 @@ public class Column {
             tiles.add(new Tile(new Air()));
         }
     }
-    public Column(int z, ArrayList<Tile> tile) {
+    public Column(int z, ArrayList<Tile> tiles) {
         this.z = z;
+        this.tiles = tiles;
 
     }
 
@@ -72,4 +73,11 @@ public class Column {
         visitor.visitColumn(this);
     }
 
+    public String toString() {
+        String string = "";
+        for (Tile t: tiles) {
+            string += t.getTerrain().getTerrain() + " ";
+        }
+        return string;
+    }
 }

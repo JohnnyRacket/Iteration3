@@ -12,6 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -183,7 +184,18 @@ public class SaveFile {
     public Element getElemenetById(String id, int i) {
         NodeList nodes = root.getElementsByTagName(id);
         if(nodes.getLength() >= i) {
-            return (Element) nodes.item(i);
+            Element e = (Element) nodes.item(i);
+            return e;
+        }
+        return null;
+    }
+
+    public Element getElemenetById(Element el, String id, int i) {
+        NodeList nodes = el.getElementsByTagName(id);
+
+        if(nodes.getLength() >= i) {
+            Element e = (Element) nodes.item(i);
+            return e;
         }
         return null;
     }
