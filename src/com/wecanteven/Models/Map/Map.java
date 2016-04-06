@@ -78,42 +78,34 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean move(Entity entity, Location destination) {
         Location source = entity.getLocation();
         CanMoveVisitor visitor = entity.getCanMoveVisitor();
+
+        //checks if you are moving outside the bounds of the map
         if(isOutOfBounds(destination)){
             System.out.println("Out of Bounds");
             return false;
         }
-
+        //System.out.println("destination is : " + destination);
+        //checks to see if anything is blocking your height when moving
         boolean canMove = true;
         for(int i = 0; i < entity.getHeight() && canMove; ++i){
-            Tile tile = this.getTile(destination);
+            Tile tile = this.getTile(destination.add(new Location(0,0,i)));
             tile.accept(visitor);
             canMove = canMove && visitor.canMove();
         }
-        //now check the one below it.
 
+        //checks the tile you will be standing on
         Tile tileBelow = this.getTile(destination.subtract(new Location(0,0,1)));
-        System.out.println("Tile: "+tileBelow.getTerrain().getTerrain());
         tileBelow.accept(visitor);
         canMove = canMove && visitor.CanMoveBelow();
-        if(visitor.CanMoveBelow()) {
-            if (canMove) {
-                //System.out.println("Moving from " + source + " to " + destination);
-                remove(entity, source);
-                add(entity, destination);
-                return true;
-            } else {
-                for(int i = 0; i < entity.getJumpHeight(); ++i) {
-                    if(move(entity, destination.add(Direction.UP.getCoords))){
-                        //System.out.println("jumped");
-                        return true;
-                    }
-                }
 
-                //System.out.println("Couldn't move");
-                //can move visitor determined you cant move there
-                return false;
-            }
-        }else{
+
+        if(canMove) {//move if you can
+            remove(entity, source);
+            add(entity, destination);
+            return true;
+        }else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){//jump if you cant move
+            return move(entity, destination.add(Direction.UP.getCoords));
+      }else{//cant move or jump
             return false;
         }
     }
