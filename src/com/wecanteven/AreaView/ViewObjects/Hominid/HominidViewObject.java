@@ -38,8 +38,6 @@ public class HominidViewObject implements ViewObject, Observer{
 
     @Override
     public void setPosition(Position p) {
-        this.body.setPosition(p);
-        //this.feet.setPosition(p);
         this.position = p;
         updateComponentsPosition();
     }
@@ -60,17 +58,17 @@ public class HominidViewObject implements ViewObject, Observer{
     public void update() {
         this.direction = directionSubject.getDirection();
         updateHandsDirection();
-        //this.direction.setDirectionOf(body);
-        //feet.setDirection(direction);
     }
 
+
+
     private void updateHandsDirection() {
+        System.out.println("changing hand direction");
         hands.changeDirection(direction);
     }
 
     private void updateHandsPosition() {
-        Position tempPosition = new Position(position.getR(), position.getS(), position.getZ());
-        hands.setPosition(tempPosition);
+        hands.setPosition(position);
     }
 
     private void updateBodyPosition() {

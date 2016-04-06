@@ -35,6 +35,7 @@ public class AreaView extends JPanel {
     private Avatar avatar;
 
     public AreaView(Avatar avatar, Map map) {
+        setDoubleBuffered(true);
         this.avatar = avatar;
         PlainsViewObjectFactory factory = new PlainsViewObjectFactory(this);
         VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory);

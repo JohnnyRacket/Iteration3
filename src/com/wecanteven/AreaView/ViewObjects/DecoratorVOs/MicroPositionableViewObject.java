@@ -15,10 +15,9 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     private Direction direction;
     private Position position;
     private Position offsetPosition;
-    private static final int HEX_WIDTH = 56;
-    private static final int HEX_LENGTH = 48;
-    private static final int HEX_HEIGHT = 15;
-    private final double CAMERA_TILT_FACTOR = Config.TILT_ANGLE;
+    private static final double HEX_WIDTH = 56d;
+    private static final double HEX_LENGTH = 48d;
+    private static final double HEX_HEIGHT = 15d;
 
     private double offsetAngle;
 
@@ -27,6 +26,8 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     private double tangent;
 
     private double radius;
+
+
 
 
 
@@ -93,6 +94,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         offsetPosition.setR(getR());
         offsetPosition.setS(getS());
         offsetPosition.setZ(getZ());
+        System.out.println("Position offset did just change: " + offsetPosition);
         updateChildPosition();
     }
 
@@ -102,15 +104,15 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     }
 
     private double getX() {
-        return 50*(radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle()));
+        return (int)(50*(radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle())));
     }
 
     private double getY() {
-        return 50*Math.tan(Config.TILT_ANGLE)*((radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle - direction.getAngle())));
+        return (int)(50*Math.tan(Config.TILT_ANGLE)*((radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle - direction.getAngle()))));
     }
 
     private double getZ() {
-        return 2*height;
+        return 2d*height;
     }
 
     private double getR() {
@@ -119,10 +121,5 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
 
     private double getS() {
         return (height*HEX_HEIGHT - getY() - getR() * (HEX_LENGTH/2)) / HEX_LENGTH;
-    }
-
-    @Override
-    public void draw(Graphics2D g) {
-        super.draw(g);
     }
 }
