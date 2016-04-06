@@ -3,6 +3,7 @@ package com.wecanteven.Models.Stats;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Visitors.StatsVisitor;
+import org.omg.CORBA.portable.ValueInputStream;
 
 import java.util.ArrayList;
 
@@ -149,6 +150,6 @@ public class Stats implements Observer{
     }
 
     public void accept(StatsVisitor visitor) {
-
+        visitor.visitStats(this);
     }
 }

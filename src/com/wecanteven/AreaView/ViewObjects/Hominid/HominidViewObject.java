@@ -64,7 +64,7 @@ public class HominidViewObject implements ViewObject, Observer{
 
 
     private void updateHandsDirection() {
-        System.out.println("changing hand direction");
+        //System.out.println("changing hand direction");
         hands.changeDirection(direction);
     }
 

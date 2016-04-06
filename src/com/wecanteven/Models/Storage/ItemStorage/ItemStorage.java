@@ -4,6 +4,7 @@ import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Visitors.ItemStorageVisitor;
 
 /**
  * Created by Brandon on 3/31/2016.
@@ -21,11 +22,18 @@ public class ItemStorage {
 
     private Inventory inventory;
     private Equipment equipped;
+    private int maxInventoryCapacity;
+
+    public ItemStorage(int maxInventoryCapacity){
+        this.maxInventoryCapacity = maxInventoryCapacity;
+        inventory = new HashTableInventory(this, maxInventoryCapacity);
+        equipped = new HominidEquipment(this);
+    }
 
     public ItemStorage(Character owner, int maxInventoryCapacity)
     {
         this.owner = owner;
-
+        this.maxInventoryCapacity = maxInventoryCapacity;
         inventory = new HashTableInventory(this, maxInventoryCapacity);
         equipped = new HominidEquipment(this);
     }
@@ -103,7 +111,21 @@ public class ItemStorage {
      *
      * */
 
+    public int getMaxInventoryCapacity() {
+        return maxInventoryCapacity;
+    }
     public void drop(TakeableItem item) {
         owner.drop(item);
+    }
+
+    public void setOwner(Character character) {
+        this.owner = character;
+    }
+
+    public void accept(ItemStorageVisitor visitor) {
+        visitor.visitItemStorage(this);
+        inventory.accept(visitor);
+        equipped.accept(visitor);
+
     }
 }
