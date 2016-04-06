@@ -56,19 +56,15 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public boolean move(Direction d){
         if(this.getDirection() == d){
-            System.out.println("starting move with right direction");
             int movementStat = this.getStats().getMovement();
             if(movementStat == 0 || isActive){
-                System.out.println("got dicked");
                 return false;
             }
-            System.out.println("move has been called");
             setDirection(d);
             setMovingTicks(calculateMovementTicks(movementStat));
             Location destination = location.add(d.getCoords);
             return moveHelper(destination);
         }else{
-            System.out.println("wrong direction, I will turn");
             this.setDirection(d);
             setMovingTicks(4);
             return false;
@@ -81,12 +77,10 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         return false;
     }
     public boolean fall(){
-        System.out.println("Check if I can fall");
         if(!isActive()) {
             if (location.getZ() == 1) {
                 return false;
             }
-            System.out.println("IM FALLING!!!!!!!!!!!!!");
             return actionHandler.fall(this, this.getLocation().subtract(new Location(0, 0, 1)));
         }
         return false;

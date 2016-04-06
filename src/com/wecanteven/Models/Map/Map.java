@@ -100,7 +100,6 @@ public class Map implements MapVisitable, ActionHandler {
 
 
         if(canMove) {//move if you can
-            System.out.println("canMove");
             remove(entity, source);
             add(entity, destination);
             return true;
@@ -108,7 +107,6 @@ public class Map implements MapVisitable, ActionHandler {
             //jump if you cant move
             return move(entity, destination.add(Direction.UP.getCoords));
       }else{
-            System.out.println("cant  Move");
             //cant move or jump
             return false;
         }
@@ -122,9 +120,6 @@ public class Map implements MapVisitable, ActionHandler {
 
     public void setColumn(int r, int s, Column c) { columns[r][s] = c; }
 
-    public boolean fall(Entity entity) {
-        return false;
-    }
 
     @Override
     public boolean move(TakeableItem item, Location location) {
