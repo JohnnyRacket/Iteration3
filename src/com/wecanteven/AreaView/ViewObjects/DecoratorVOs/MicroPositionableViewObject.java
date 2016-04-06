@@ -1,9 +1,12 @@
 package com.wecanteven.AreaView.ViewObjects.DecoratorVOs;
 
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.UtilityClasses.Direction;
+
+import java.awt.*;
 
 /**
  * Created by adamfortier on 4/4/16.
@@ -12,6 +15,9 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     private Direction direction;
     private Position position;
     private Position offsetPosition;
+    private static final int HEX_WIDTH = 56;
+    private static final int HEX_LENGTH = 48;
+    private static final int HEX_HEIGHT = 15;
     private final double CAMERA_TILT_FACTOR = Config.TILT_ANGLE;
 
     private double offsetAngle;
@@ -83,10 +89,10 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     }
 
     private void updatePositionOffset() {
-        setROffset();
-        setSOffset();
-        setZOffset();
-        //System.out.println(offsetPosition + "\n");
+
+        offsetPosition.setR(getR());
+        offsetPosition.setS(getS());
+        offsetPosition.setZ(getZ());
         updateChildPosition();
     }
 
@@ -95,19 +101,28 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         getChild().setPosition(position.add(offsetPosition));
     }
 
-    private void setZOffset() {
-        offsetPosition.setZ(height);
+    private double getX() {
+        return 50*(radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle()));
     }
 
-    private void setSOffset() {
-//        System.out.println("radius: " + radius);
-//        System.out.println("offsetAngle: " + offsetAngle);
-//        System.out.println("tangent: " + tangent);
-        offsetPosition.setS(1/Math.cos(Config.TILT_ANGLE)*(radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle - direction.getAngle())));
+    private double getY() {
+        return 50*Math.tan(Config.TILT_ANGLE)*((radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle - direction.getAngle())));
     }
 
-    private void setROffset() {
-        offsetPosition.setR(radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle()));
+    private double getZ() {
+        return 2*height;
+    }
 
+    private double getR() {
+        return getX()/HEX_WIDTH;
+    }
+
+    private double getS() {
+        return (height*HEX_HEIGHT - getY() - getR() * (HEX_LENGTH/2)) / HEX_LENGTH;
+    }
+
+    @Override
+    public void draw(Graphics2D g) {
+        super.draw(g);
     }
 }
