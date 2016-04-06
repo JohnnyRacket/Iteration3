@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Storage.ItemStorage;
 
+import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 
 import java.util.*;
@@ -17,6 +18,11 @@ public class HashTableInventory extends Inventory {
 
         this.inventory = new HashSet<>();
         this.maxCapacity = maxCapacity;
+        TakeableItem item = new TakeableItem("Test");
+        add(item);
+        System.out.println("Test Item being picked up: " + item.getName());
+
+
     }
 
     @Override

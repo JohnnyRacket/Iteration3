@@ -15,8 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by Joshua Kegley on 4/4/2016.
  */
-public class EntityXMLProcessor {
-    private static  SaveFile sf;
+public class EntityXMLProcessor extends XMLProcessor {
 
     public static void formatEntity(Entity e) {
         ArrayList<Attr> attr = new ArrayList<>();
@@ -103,9 +102,6 @@ public class EntityXMLProcessor {
         return Direction.values()[sf.getIntAttr(el, "enum")];
     }
 
-    public static void setCurrentSave(SaveFile currentSave) {
-        EntityXMLProcessor.sf = currentSave;
-    }
 
 
 }
