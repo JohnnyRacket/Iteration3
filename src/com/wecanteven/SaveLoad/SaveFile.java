@@ -27,7 +27,7 @@ public class SaveFile {
     private Document doc;
     private Element root;
     private File file;
-
+    private Element mostRecentElement;
 
     public SaveFile(String fileName ) {
         this.doc = createEmptyDOM();
@@ -45,7 +45,7 @@ public class SaveFile {
 
     //Initializes docu
     public void initializeDocumentHeaderFromFileName() {
-        this.root = doc.createElement("SaveFile");
+        root = doc.createElement("SaveFile");
         Attr a = doc.createAttribute("FileName");
         a.setValue(fileName);
         root.setAttributeNode(a);
@@ -56,7 +56,7 @@ public class SaveFile {
     public void initializeFileNameFromDocumentHeader(File file) {
         doc.normalizeDocument();
         //--Setting the SaveFiles Root and FileName--//
-        root = doc.getDocumentElement();
+        mostRecentElement = root = doc.getDocumentElement();
         fileName = root.getAttribute("FileName");
         //-------------------------------------------//
         System.out.println("Loading Save from File: " + fileName);
@@ -81,6 +81,10 @@ public class SaveFile {
         NodeList nodes = root.getElementsByTagName(parent);
         Element pElement = (Element) nodes.item(nodes.getLength() - 1);
         pElement.appendChild(child);
+        mostRecentElement = child;
+    }
+    public void appendObjectToMostRecent(Element child) {
+          mostRecentElement.appendChild(child);
     }
 
     //Creating the DOM object to edit

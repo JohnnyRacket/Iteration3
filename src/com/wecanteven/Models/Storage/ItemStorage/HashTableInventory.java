@@ -56,4 +56,8 @@ public class HashTableInventory extends Inventory {
     public Iterator<TakeableItem> getIterator() {
         return inventory.iterator();
     }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
 }

@@ -36,7 +36,7 @@ public abstract class GameLauncher {
 
     protected void createAvatar(String occupation){}
 
-    protected void populateMap() {}
+    protected void populateMap(Map map) {}
 
 
 

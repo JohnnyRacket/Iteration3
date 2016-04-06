@@ -1,10 +1,12 @@
 package com.wecanteven.GameLaunching.LevelFactories;
 
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Location;
 
 /**
  * Created by alexs on 4/1/2016.
@@ -51,7 +53,7 @@ public class DopeAssLevelFactory extends LevelFactory{
     }
 
     @Override
-    public void populateMap() {
-
+    public void populateMap(Map map) {
+        map.add(new TakeableItem("LOL"), new Location(1, 2, 1));
     }
 }

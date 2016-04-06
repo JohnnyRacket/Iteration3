@@ -36,4 +36,9 @@ public abstract class Inventory extends StorageComponent<ItemStorage> {
         visitor.visitInventory(this);
 
     }
+
+    public int getMaxCapacity() {
+        return Integer.MAX_VALUE;
+    };
+
 }
