@@ -57,6 +57,10 @@ public class ItemStorage {
         inventory.add(item);
     }
 
+    public void addItem(TakeableItem item, int order) {
+        inventory.add(item, order);
+    }
+
     public void removeItem(TakeableItem item) {
         inventory.remove(item);
     }

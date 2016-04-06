@@ -92,7 +92,15 @@ public class TupleInventory extends Inventory {
 
     @Override
     public Iterator<TakeableItem> getIterator() {
-        return new ArrayList<TakeableItem>(Arrays.asList(inventory)).iterator();
+        List<TakeableItem> itemList = new ArrayList<>();
+
+        for (int i = 0; i < maxCapacity; i++) {
+            if (inventory[i] != null) {
+                itemList.add(inventory[i]);
+            }
+        }
+
+        return itemList.iterator();
     }
 
     @Override
