@@ -1,5 +1,6 @@
 package com.wecanteven.Visitors;
 
+import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.Models.Map.Terrain.Current;
@@ -14,6 +15,7 @@ public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor {
 
     private boolean canMove = true;
     private boolean canMoveBelow = true;
+    private Entity entity;
 
     @Override
     public void visitMap(Map map) {
@@ -25,7 +27,7 @@ public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor {
     public void visitTile(Tile tile) {
         setCanMove(true);
         setCanMoveBelow(true);
-        if (tile.hasEntity() || tile.hasObstacle() ) setCanMove(false);
+        if ((tile.hasEntity() && tile.getEntity()!= this.getEntity() )|| tile.hasObstacle() ) setCanMove(false);
         else {
             tile.getTerrain().accept(this);
         }
@@ -45,5 +47,13 @@ public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor {
 
     public void setCanMoveBelow(boolean canMoveBelow) {
         this.canMoveBelow = canMoveBelow;
+    }
+
+    public Entity getEntity() {
+        return entity;
+    }
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
     }
 }

@@ -84,38 +84,28 @@ public class Map implements MapVisitable, ActionHandler {
             System.out.println("Out of Bounds");
             return false;
         }
-
+        //System.out.println("destination is : " + destination);
         //checks to see if anything is blocking your height when moving
         boolean canMove = true;
         for(int i = 0; i < entity.getHeight() && canMove; ++i){
-            Tile tile = this.getTile(destination);
+            Tile tile = this.getTile(destination.add(new Location(0,0,i)));
             tile.accept(visitor);
             canMove = canMove && visitor.canMove();
         }
 
         //checks the tile you will be standing on
         Tile tileBelow = this.getTile(destination.subtract(new Location(0,0,1)));
-        System.out.println("Tile: "+tileBelow.getTerrain().getTerrain());
         tileBelow.accept(visitor);
         canMove = canMove && visitor.CanMoveBelow();
-        if(visitor.CanMoveBelow()) {
-            if (canMove) {
-                //System.out.println("Moving from " + source + " to " + destination);
-                remove(entity, source);
-                add(entity, destination);
-                return true;
-            }
-            else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){
-                return move(entity, destination.add(Direction.UP.getCoords));
-            }
-            else {
-                //System.out.println("Couldn't move");
-                //can move visitor determined you can't step on the tile
-                return false;
-            }
-        }
-        else{
-            //can move visitor determined something is blocking your path
+
+
+        if(canMove) {//move if you can
+            remove(entity, source);
+            add(entity, destination);
+            return true;
+        }else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){//jump if you cant move
+            return move(entity, destination.add(Direction.UP.getCoords));
+      }else{//cant move or jump
             return false;
         }
     }
