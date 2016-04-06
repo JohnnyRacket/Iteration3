@@ -26,15 +26,17 @@ public class ItemStorage {
 
     public ItemStorage(int maxInventoryCapacity){
         this.maxInventoryCapacity = maxInventoryCapacity;
-        inventory = new HashTableInventory(this, maxInventoryCapacity);
+        inventory = new TupleInventory(this, maxInventoryCapacity);
         equipped = new HominidEquipment(this);
     }
 
     public ItemStorage(Character owner, int maxInventoryCapacity)
     {
         this.owner = owner;
+
+        inventory = new TupleInventory(this, maxInventoryCapacity);
         this.maxInventoryCapacity = maxInventoryCapacity;
-        inventory = new HashTableInventory(this, maxInventoryCapacity);
+        inventory = new TupleInventory(this, maxInventoryCapacity);
         equipped = new HominidEquipment(this);
     }
 
