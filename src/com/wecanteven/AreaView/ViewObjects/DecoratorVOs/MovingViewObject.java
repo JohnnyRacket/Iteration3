@@ -86,7 +86,7 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
         if (shouldSwapNow())  {
             swap();
         } else {
-            viewTime.register( this::swap, endTime-startTime);
+            viewTime.register( this::swap, (endTime-startTime)/4*3);
         }
     }
 
