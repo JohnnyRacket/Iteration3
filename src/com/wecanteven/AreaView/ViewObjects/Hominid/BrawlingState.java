@@ -28,18 +28,6 @@ public class BrawlingState extends HandState {
         rightHand.setHeight(height);
     }
 
-    public void drawForeground(Graphics2D graphic) {
-        //TODO
-    }
-
-    public void drawBackground(Graphics2D graphic) {
-        //TODO
-    }
-
-    public void draw(Graphics2D graphic) {
-        super.draw(graphic);
-    }
-
     public void move(Graphics2D graphic) {
         //TODO
     }

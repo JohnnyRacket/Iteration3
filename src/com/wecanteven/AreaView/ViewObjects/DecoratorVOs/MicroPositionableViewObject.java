@@ -94,7 +94,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         offsetPosition.setR(getR());
         offsetPosition.setS(getS());
         offsetPosition.setZ(getZ());
-        System.out.println("Position offset did just change: " + offsetPosition);
+        //System.out.println("Position offset did just change: " + offsetPosition);
         updateChildPosition();
     }
 
@@ -103,16 +103,16 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         getChild().setPosition(position.add(offsetPosition));
     }
 
-    private double getX() {
-        return (int)(50*(radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle())));
+    public double getX() {
+        return (int)(50*(radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle()))) -1 ;
     }
 
-    private double getY() {
+    public double getY() {
         return (int)(50*Math.tan(Config.TILT_ANGLE)*((radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle - direction.getAngle()))));
     }
 
     private double getZ() {
-        return 2d*height;
+        return height/3*2;
     }
 
     private double getR() {
@@ -120,6 +120,6 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     }
 
     private double getS() {
-        return (height*HEX_HEIGHT - getY() - getR() * (HEX_LENGTH/2)) / HEX_LENGTH;
+        return (0 - getY() - getR() * (HEX_LENGTH/2)) / HEX_LENGTH;
     }
 }

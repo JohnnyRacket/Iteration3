@@ -49,8 +49,9 @@ public class HominidViewObject implements ViewObject, Observer{
 
     @Override
     public void draw(Graphics2D g) {
+        hands.drawBackground(g);
         body.draw(g);
-        hands.draw(g);
+        hands.drawForeground(g);
         //feet.draw(g);
     }
 
@@ -63,7 +64,7 @@ public class HominidViewObject implements ViewObject, Observer{
 
 
     private void updateHandsDirection() {
-        System.out.println("changing hand direction");
+        //System.out.println("changing hand direction");
         hands.changeDirection(direction);
     }
 
