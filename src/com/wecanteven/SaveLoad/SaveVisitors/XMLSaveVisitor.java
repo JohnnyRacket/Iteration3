@@ -38,7 +38,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitMap(Map map) {
-        TileXMLProcessor.formatMap(save, map);
+        TileXMLProcessor.formatMap(map);
         for(int r = 0; r < map.getrSize(); ++r){
             for(int s = 0; s < map.getsSize(); ++s){
                 map.getColumn(r, s).accept(this);
@@ -47,7 +47,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     }
 
     public void visitColumn(Column column) {
-        TileXMLProcessor.formatColumn(save, column);
+        TileXMLProcessor.formatColumn(column);
         for(int z  = 0; z < column.getZ(); ++z){
             column.getTile(z).accept(this);
         }
@@ -55,7 +55,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     }
     @Override
     public void visitTile(Tile tile) {
-        TileXMLProcessor.formatTile(save, tile);
+        TileXMLProcessor.formatTile(tile);
         if(tile.hasEntity()){tile.getEntity().accept(this);}
         if(tile.hasObstacle()) {tile.getObstacle().accept(this);}
         if(tile.hasInteractiveItem()) {tile.getInteractiveItem().accept(this);}
@@ -75,7 +75,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitEntity(Entity e) {
-        EntityXMLProcessor.formatEntity(save, e);
+        EntityXMLProcessor.formatEntity(e);
         saveDirection(e.getDirection());
     }
 
@@ -83,9 +83,9 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     public void visitCharacter(Character e) {
         if(avatar.getCharacter() == e){
             //Save Avatar
-            EntityXMLProcessor.formatAvatar(save, avatar);
+            EntityXMLProcessor.formatAvatar(avatar);
         }else {
-            EntityXMLProcessor.formatCharacter(save, e, "Tile");
+            EntityXMLProcessor.formatCharacter(e, "Tile");
         }
         saveDirection(e.getDirection());
         visitStats(e.getStats());
@@ -94,7 +94,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitStats(Stats stats) {
-        EntityXMLProcessor.formatStats(save, stats);
+        EntityXMLProcessor.formatStats(stats);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     }
 
     public void saveDirection(Direction direction){
-        EntityXMLProcessor.formatDirection(save, direction);
+        EntityXMLProcessor.formatDirection(direction);
     }
 
 }

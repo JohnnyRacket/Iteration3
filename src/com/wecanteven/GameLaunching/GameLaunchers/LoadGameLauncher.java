@@ -20,6 +20,7 @@ public class LoadGameLauncher extends GameLauncher {
     public void launch(){
         initializeAreaView();
         initializeUIView();
+
     }
 
     //Load will call loadMap
@@ -29,5 +30,6 @@ public class LoadGameLauncher extends GameLauncher {
 
     public void loadAvatar(Avatar avatar){
         setAvatar(avatar);
+        getController().setAvatar(avatar);
     }
 }

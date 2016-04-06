@@ -2,10 +2,13 @@ package com.wecanteven.SaveLoad.XMLProcessors;
 
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Location;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 
@@ -13,48 +16,96 @@ import java.util.ArrayList;
  * Created by Joshua Kegley on 4/4/2016.
  */
 public class EntityXMLProcessor {
+    private static  SaveFile sf;
 
-    public static void formatEntity(SaveFile save, Entity e) {
+    public static void formatEntity(Entity e) {
         ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("Height", e.getHeight()));
-        save.appendObjectTo("Tile", save.createSaveElement("Entity",attr));
-    }
-
-    public static void parseEntity() {
+        attr.add(sf.saveAttr("Height", e.getHeight()));
+        sf.appendObjectTo("Tile", sf.createSaveElement("Entity",attr));
+        formatLocation(sf, e, "Entity");
 
     }
 
-    public static void formatCharacter(SaveFile save, Character e, String parent) {
+    public static void parseEntity(Map map, Element el) {
+
+    }
+
+    public static void formatCharacter(Character e, String parent) {
         ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("Occupation", e.getOccupation().getClass().getSimpleName()));
-        attr.add(save.saveAttr("Height", e.getHeight()));
-        save.appendObjectTo(parent, save.createSaveElement("Character",attr));
+        attr.add(sf.saveAttr("Occupation", e.getOccupation().getClass().getSimpleName()));
+        attr.add(sf.saveAttr("Height", e.getHeight()));
+        sf.appendObjectTo(parent, sf.createSaveElement("Character",attr));
+        formatLocation(sf, e, "Character");
     }
 
-    public static void formatAvatar(SaveFile save, Avatar avatar) {
+    public static Character parseCharacter(Map map, Element el) {
+        Character c =  new Character(map, parseDirection(sf.getElemenetById(el, "Direction", 0)));
+        parseStats(c, sf.getElemenetById(el, "Stats", 0));
+        map.add(c, parseLocation(sf.getElemenetById(el, "Location", 0)));
+        return c;
+    }
+
+    public static void formatAvatar(Avatar avatar) {
         ArrayList<Attr> attr = new ArrayList<>();
-        save.appendObjectTo("Tile", save.createSaveElement("Avatar", attr));
-        formatCharacter(save, avatar.getCharacter(), "Avatar");
+        sf.appendObjectTo("Tile", sf.createSaveElement("Avatar", attr));
+        formatCharacter(avatar.getCharacter(), "Avatar");
     }
 
-    public static void formatStats(SaveFile save, Stats stats) {
+    public static Avatar parseAvatar(Map map, Element el) {
+        return new Avatar(parseCharacter(map, sf.getElemenetById(el, "Character", 0)), map);
+    }
+    public static void formatStats(Stats stats) {
         ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("Lives", stats.getLives()));
-        attr.add(save.saveAttr("Level", stats.getLevel()));
-        attr.add(save.saveAttr("Strength", stats.getStrength()));
-        attr.add(save.saveAttr("Agility", stats.getAgility()));
-        attr.add(save.saveAttr("Intellect", stats.getIntellect()));
-        attr.add(save.saveAttr("Hardiness", stats.getHardiness()));
-        attr.add(save.saveAttr("Movement", stats.getMovement()));
+        attr.add(sf.saveAttr("lives", stats.getLives()));
+        attr.add(sf.saveAttr("level", stats.getLevel()));
+        attr.add(sf.saveAttr("strength", stats.getStrength()));
+        attr.add(sf.saveAttr("agility", stats.getAgility()));
+        attr.add(sf.saveAttr("intellect", stats.getIntellect()));
+        attr.add(sf.saveAttr("hardiness", stats.getHardiness()));
+        attr.add(sf.saveAttr("movement", stats.getMovement()));
 
-        save.appendObjectTo("Character", save.createSaveElement("Stats",attr));
+        sf.appendObjectTo("Character", sf.createSaveElement("Stats",attr));
     }
 
-    public static void formatDirection(SaveFile save, Direction direction) {
+    public static void parseStats(Entity e, Element el) {
+        e.getStats().initStats(e,
+                sf.getIntAttr(el, "strength"),
+                sf.getIntAttr(el, "agility"),
+                sf.getIntAttr(el, "intellect"),
+                sf.getIntAttr(el, "hardiness"),
+                sf.getIntAttr(el, "movement"),
+                sf.getIntAttr(el, "lives"),
+                sf.getIntAttr(el, "level")
+        );
+    }
+
+
+    public static void formatLocation(SaveFile save, Entity e, String parent) {
         ArrayList<Attr> attr = new ArrayList<>();
-        attr.add(save.saveAttr("enum", direction.ordinal()));
-        save.appendObjectTo("Character", save.createSaveElement("Direction",attr));
+        attr.add(save.saveAttr("r", e.getLocation().getR()));
+        attr.add(save.saveAttr("s", e.getLocation().getS()));
+        attr.add(save.saveAttr("z", e.getLocation().getZ()));
+        save.appendObjectTo(parent, save.createSaveElement("Location",attr));
+    }
+
+    public static Location parseLocation(Element el){
+        return new Location(sf.getIntAttr(el,"r"),sf.getIntAttr(el, "s"), sf.getIntAttr(el, "z"));
+    }
+
+    public static void formatDirection(Direction direction) {
+        ArrayList<Attr> attr = new ArrayList<>();
+        attr.add(sf.saveAttr("enum", direction.ordinal()));
+        sf.appendObjectTo("Character", sf.createSaveElement("Direction",attr));
 
     }
+
+    public static Direction parseDirection(Element el) {
+        return Direction.values()[sf.getIntAttr(el, "enum")];
+    }
+
+    public static void setCurrentSave(SaveFile currentSave) {
+        EntityXMLProcessor.sf = currentSave;
+    }
+
 
 }

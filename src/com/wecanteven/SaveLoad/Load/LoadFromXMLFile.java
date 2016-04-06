@@ -27,30 +27,32 @@ public class LoadFromXMLFile implements LoadGame {
         this.launcher = launcher;
         this.saveFile = new SaveFile(file);
         TileXMLProcessor.setCurrentSave(saveFile);
+        EntityXMLProcessor.setCurrentSave(saveFile);
     }
 
     @Override
-    public Map loadGame() {
+    public void loadGame() {
         loadSaveFile();
-        System.out.println(map.getColumn(0, 1).toString());
-        launcher.loadAvatar(getAvatar());
         launcher.loadMap(getMap());
-        return null;
+        launcher.loadAvatar(getAvatar());
+
     }
 
     public void loadSaveFile() {
         map = loadMap();
+        avatar = loadAvatar();
     }
 
     public Map loadMap() {
-        map = TileXMLProcessor.parseMap(saveFile.getElemenetById("Map", 0));
-        return map;
+        return TileXMLProcessor.parseMap(saveFile.getElemenetById("Map", 0));
     }
 
-
+    public Avatar loadAvatar() {
+        return EntityXMLProcessor.parseAvatar(map, saveFile.getElemenetById("Avatar", 0));
+    }
 
     public Avatar getAvatar() {
-        return new Avatar(new Character(getMap(), Direction.NORTHEAST), getMap());
+        return avatar;
     }
 
     public Map getMap() {
