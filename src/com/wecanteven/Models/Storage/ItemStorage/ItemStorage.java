@@ -66,7 +66,7 @@ public class ItemStorage {
 
     public void equip(EquipableItem item) {
         if (equipped.equip(item))
-            owner.getStats().addStats(item.getStats());
+            owner.getStats().addStats(item.getStats()); //TODO update so Entity has this method
     }
 
     /**
