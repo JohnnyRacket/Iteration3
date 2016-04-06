@@ -18,19 +18,6 @@ public abstract class HandState {
         this.rightHand = rightHand;
     }
 
-    public void drawForeground(Graphics2D graphic) {
-        //TODO
-    }
-
-    public void drawBackground(Graphics2D graphic) {
-        //TODO
-    }
-
-    public void draw(Graphics2D graphic) {
-        leftHand.draw(graphic);
-        rightHand.draw(graphic);
-    }
-
     public void move(Graphics2D graphic) {
         //TODO
     }

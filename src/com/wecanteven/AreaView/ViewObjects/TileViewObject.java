@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects;
 
 
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.AreaView.Position;
 
@@ -22,9 +23,18 @@ public class TileViewObject implements ViewObject {
         this.children.add(vo);
     }
 
+    private int loomingDeathCounter = 0;
+
     public void remove(ViewObject vo) {
         if (!this.children.remove(vo)) {
+            System.out.println("LOOMING DEATH IS APPROACHING THE VIEW! Danger level: " + loomingDeathCounter++);
+            //ViewTime.getInstance().register(() -> this.remove(vo), 0);
             System.out.println("BAD SHIT HAPPENED IN: TileViewObject.remove(ViewObject)");
+        } else {
+            if (loomingDeathCounter > 0) {
+                System.out.print("WOOT WOOT!!!!!! Looming death averted");
+                loomingDeathCounter = 0;
+            }
         }
     }
 

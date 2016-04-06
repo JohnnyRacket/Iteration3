@@ -63,7 +63,8 @@ public class HandsViewObject implements ViewObject, Observer{
     }
 
     public void draw(Graphics2D graphic) {
-        handState.draw(graphic);
+        drawBackground(graphic);
+        drawForeground(graphic);
     }
 
     public void move(Graphics2D graphic) {

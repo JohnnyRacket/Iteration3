@@ -104,7 +104,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     }
 
     public double getX() {
-        return (int)(50*(radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle())));
+        return (int)(50*(radius*Math.cos(offsetAngle + direction.getAngle()) + tangent *Math.cos(Math.PI/2- offsetAngle - direction.getAngle()))) -1 ;
     }
 
     public double getY() {
@@ -112,7 +112,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     }
 
     private double getZ() {
-        return 2d*height;
+        return height/3*2;
     }
 
     private double getR() {
@@ -120,6 +120,6 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     }
 
     private double getS() {
-        return (height*HEX_HEIGHT - getY() - getR() * (HEX_LENGTH/2)) / HEX_LENGTH;
+        return (0 - getY() - getR() * (HEX_LENGTH/2)) / HEX_LENGTH;
     }
 }
