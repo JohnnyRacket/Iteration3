@@ -103,9 +103,11 @@ public class Map implements MapVisitable, ActionHandler {
             remove(entity, source);
             add(entity, destination);
             return true;
-        }else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){//jump if you cant move
+        }else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){
+            //jump if you cant move
             return move(entity, destination.add(Direction.UP.getCoords));
-      }else{//cant move or jump
+      }else{
+            //cant move or jump
             return false;
         }
     }
@@ -118,9 +120,6 @@ public class Map implements MapVisitable, ActionHandler {
 
     public void setColumn(int r, int s, Column c) { columns[r][s] = c; }
 
-    public boolean fall(Entity entity) {
-        return false;
-    }
 
     @Override
     public boolean move(TakeableItem item, Location location) {

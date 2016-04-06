@@ -9,7 +9,7 @@ import java.util.Iterator;
 /**
  * Created by Brandon on 3/31/2016.
  */
-public abstract class Equipment extends StorageComponent {
+public abstract class Equipment extends StorageComponent<ItemStorage> {
 
     public Equipment(ItemStorage owner) {
         super(owner);

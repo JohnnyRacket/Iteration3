@@ -5,18 +5,18 @@ import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 /**
  * Created by simonnea on 4/4/16.
  */
-public class StorageComponent {
-    private ItemStorage owner;
+public class StorageComponent<K> {
+    private K owner;
 
-    public StorageComponent(ItemStorage owner) {
+    public StorageComponent(K owner) {
         setOwner(owner);
     }
 
-    public void setOwner(ItemStorage owner) {
+    public void setOwner(K owner) {
         this.owner = owner;
     }
 
-    public ItemStorage getOwner() {
+    public K getOwner() {
         return this.owner;
     }
 }

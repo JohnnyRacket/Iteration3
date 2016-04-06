@@ -10,7 +10,7 @@ import java.util.Iterator;
  * Created by Brandon on 3/31/2016.
  */
 
-public abstract class Inventory extends StorageComponent {
+public abstract class Inventory extends StorageComponent<ItemStorage> {
 
     public Inventory(ItemStorage owner) {
         super(owner);
