@@ -69,6 +69,7 @@ public class Map implements MapVisitable, ActionHandler {
         getTile(destination).accept(visitor);
         if(visitor.isCanMove()){
             return move(entity,destination);
+
         }else{
             return false;
         }

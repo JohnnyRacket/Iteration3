@@ -75,7 +75,7 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
 
 
     private void adjustPosition(long endTime) {
-        System.out.println("******************************** MVO updating child");
+        //System.out.println("******************************** MVO updating child");
         getChild().setPosition(calculateCurrentPosition());
         if (viewTime.getCurrentTime() < endTime) {
             viewTime.register(() -> adjustPosition(endTime), 1);

@@ -217,7 +217,11 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
     public void unlock(){
         lock = false;
-        setIsActive(false);
+        if(getMovingTicks() <= 0){
+            setIsActive(false);
+        }else{
+            setIsActive(true);
+        }
     }
     private void setIsActive(boolean isActive){
         if(!isLocked()){
