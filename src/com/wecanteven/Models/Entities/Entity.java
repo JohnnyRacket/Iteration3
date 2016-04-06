@@ -27,6 +27,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     private Direction direction;
     private int jumpHeight;
     private boolean isActive;
+    private boolean lock;
     protected Location location;
     private CanMoveVisitor canMoveVisitor;
     private CanFallVisitor canFallVisitor;
@@ -55,15 +56,19 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public boolean move(Direction d){
         if(this.getDirection() == d){
+            System.out.println("starting move with right direction");
             int movementStat = this.getStats().getMovement();
-            if(movingTicks != 0 || movementStat == 0){
+            if(movementStat == 0 || isActive){
+                System.out.println("got dicked");
                 return false;
             }
+            System.out.println("move has been called");
             setDirection(d);
             setMovingTicks(calculateMovementTicks(movementStat));
             Location destination = location.add(d.getCoords);
             return moveHelper(destination);
         }else{
+            System.out.println("wrong direction, I will turn");
             this.setDirection(d);
             setMovingTicks(4);
             return false;
@@ -114,10 +119,10 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     public void setMovingTicks(int ticks) {
         this.movingTicks = ticks;
         if(ticks == 0){
-            isActive = false;
+            setIsActive(false);
             return;
         }
-        isActive = true;
+        setIsActive(true);
         deIncrementTick();
         notifyObservers();
     }
@@ -127,7 +132,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             @Override
             public void alert() {
                 if(movingTicks == 0){
-                    isActive = false;
+                    setIsActive(false);
                     return;
                 }
                 movingTicks--;
@@ -206,5 +211,23 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public void setCanFallVisitor(CanFallVisitor canFallVisitor) {
         this.canFallVisitor = canFallVisitor;
+    }
+
+    public boolean isLocked() {
+        return lock;
+    }
+
+    public void lock() {
+        lock = true;
+
+    }
+    public void unlock(){
+        lock = false;
+        setIsActive(false);
+    }
+    private void setIsActive(boolean isActive){
+        if(!isLocked()){
+            this.isActive = isActive;
+        }
     }
 }
