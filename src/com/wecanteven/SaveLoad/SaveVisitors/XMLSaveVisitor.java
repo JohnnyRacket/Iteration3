@@ -16,8 +16,12 @@ import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Models.Stats.Stats;
+import com.wecanteven.Models.Storage.ItemStorage.Equipment;
+import com.wecanteven.Models.Storage.ItemStorage.Inventory;
+import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.SaveLoad.XMLProcessors.EntityXMLProcessor;
+import com.wecanteven.SaveLoad.XMLProcessors.StorageXMLProcessor;
 import com.wecanteven.SaveLoad.XMLProcessors.TileXMLProcessor;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.Visitors.*;
@@ -26,7 +30,7 @@ import com.wecanteven.Visitors.*;
 /**
  * Created by Joshua Kegley on 4/4/2016.
  */
-public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor, EntityVisitor, StatsVisitor, ItemVisitor{
+public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor, EntityVisitor, StatsVisitor, ItemStorageVisitor, ItemVisitor{
 
     SaveFile save;
     //this is hacky as hell - @TODO: Fix this later
@@ -88,7 +92,8 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
             EntityXMLProcessor.formatCharacter(e, "Tile");
         }
         saveDirection(e.getDirection());
-        visitStats(e.getStats());
+        e.getStats().accept(this);
+        e.getItemStorage().accept(this);
     }
 
 
@@ -100,6 +105,21 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     @Override
     public void visitItem(Item item) {
 
+    }
+
+    @Override
+    public void visitItemStorage(ItemStorage itemStorage) {
+        StorageXMLProcessor.formatItemStorage(itemStorage);
+    }
+
+    @Override
+    public void visitEquipment(Equipment equipment) {
+        StorageXMLProcessor.formatEquipment(equipment);
+    }
+
+    @Override
+    public void visitInventory(Inventory inventory) {
+        StorageXMLProcessor.formatInvetory(inventory);
     }
 
     @Override

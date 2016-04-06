@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Occupation.Occupation;
@@ -10,27 +11,35 @@ import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.EntityVisitor;
+import com.wecanteven.Visitors.ItemStorageVisitor;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
 public class Character extends Entity {
     private Occupation occupation;
-    private ItemStorage itemItemStorage, abilityItemStorage;
+    private ItemStorage itemStorage, abilityItemStorage;
 
     public Character(ActionHandler actionHandler, Direction direction){
         super(actionHandler, direction);
         occupation = new Smasher();
         stats = new Stats(this);
+        this.itemStorage = new ItemStorage(this, 5);
     }
 
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats){
         super(actionHandler, direction);
         this.occupation = occupation;
         this.stats = stats;
+        this.itemStorage = new ItemStorage(this, 5);
     }
 
-
+    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats, ItemStorage itemStorage){
+        super(actionHandler, direction);
+        this.occupation = occupation;
+        this.stats = stats;
+        this.itemStorage = itemStorage;
+    }
     public void attack(Direction d){}
     public void useAbility(int index){}
 
@@ -38,18 +47,18 @@ public class Character extends Entity {
      * Equipment
      * */
     public void equipItem(EquipableItem item){
-        itemItemStorage.equip(item);
+        itemStorage.equip(item);
     }
 
     public void unequipItem(EquipableItem item){
-        itemItemStorage.unequip(item);
+        itemStorage.unequip(item);
     }
 
     /**
      * Inventory
      * */
     public void removeFromInventory(TakeableItem item) {
-        itemItemStorage.removeItem(item);
+        itemStorage.removeItem(item);
         drop(item);
     }
 
@@ -57,7 +66,7 @@ public class Character extends Entity {
         // TODO notify map that item was dropped
     }
     public void pickup(TakeableItem item) {
-        itemItemStorage.addItem(item);
+        itemStorage.addItem(item);
     }
 
     private boolean equipAbility(String id){
@@ -86,4 +95,7 @@ public class Character extends Entity {
     public void accept(EntityVisitor v) {
         v.visitCharacter(this);
     }
+
+    public ItemStorage getItemStorage() {return itemStorage;}
+
 }

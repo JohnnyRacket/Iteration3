@@ -2,7 +2,7 @@ package com.wecanteven.Models.Storage.ItemStorage;
 
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Storage.StorageComponent;
-import com.wecanteven.Visitors.InventoryVisitor;
+import com.wecanteven.Visitors.ItemStorageVisitor;
 
 import java.util.Iterator;
 
@@ -32,7 +32,8 @@ public abstract class Inventory extends StorageComponent {
 
     public abstract Iterator<TakeableItem> getIterator();
 
-    public void accept(InventoryVisitor visitor) {
+    public void accept(ItemStorageVisitor visitor) {
         visitor.visitInventory(this);
+
     }
 }

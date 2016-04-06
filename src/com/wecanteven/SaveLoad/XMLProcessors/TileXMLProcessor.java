@@ -18,8 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by Joshua Kegley on 4/4/2016.
  */
-public class TileXMLProcessor {
-    private static  SaveFile sf;
+public class TileXMLProcessor extends XMLProcessor {
 
     public static void formatMap(Map map) {
         ArrayList<Attr> attr = new ArrayList<>();
@@ -90,8 +89,4 @@ public class TileXMLProcessor {
         return new Tile(terrain);
     }
 
-
-    public static void setCurrentSave(SaveFile currentSave) {
-        TileXMLProcessor.sf = currentSave;
-    }
 }
