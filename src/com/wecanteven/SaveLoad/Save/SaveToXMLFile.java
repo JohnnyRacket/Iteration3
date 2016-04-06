@@ -7,6 +7,7 @@ import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.SaveLoad.SaveVisitors.XMLSaveVisitor;
 import com.wecanteven.SaveLoad.XMLProcessors.EntityXMLProcessor;
 import com.wecanteven.SaveLoad.XMLProcessors.TileXMLProcessor;
+import com.wecanteven.SaveLoad.XMLProcessors.XMLProcessor;
 
 
 /**
@@ -24,8 +25,7 @@ public class SaveToXMLFile implements SaveGame {
     public SaveToXMLFile(String fileName) {
         //this.file = getFileFromRes(fileName);
         this.saveFile = new SaveFile(fileName);
-        TileXMLProcessor.setCurrentSave(saveFile);
-        EntityXMLProcessor.setCurrentSave(saveFile);
+        XMLProcessor.setCurrentSave(saveFile);
         this.map = currentMap;
         this.avatar = currentAvatar;
         this.saveVisitor = new XMLSaveVisitor(saveFile);

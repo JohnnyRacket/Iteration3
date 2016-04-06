@@ -17,7 +17,7 @@ public class StorageXMLProcessor extends XMLProcessor {
         System.out.println("Formatting Item Storage");
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("maxInventoryCapacity", is.getMaxInventoryCapacity()));
-        sf.appendObjectTo("Character", sf.createSaveElement("Character",attr));
+        sf.appendObjectTo("Character", sf.createSaveElement("ItemStorage",attr));
     }
 
     private static ItemStorage parseItemStorage() {
@@ -26,6 +26,9 @@ public class StorageXMLProcessor extends XMLProcessor {
 
     public static void formatInvetory(Inventory i) {
         System.out.println("Formatting Item Inventory");
+        ArrayList<Attr> attr = new ArrayList<>();
+        attr.add(sf.saveAttr("maxInventoryCapacity", i.getMaxCapacity()));
+        sf.appendObjectTo("ItemStorage", sf.createSaveElement("Inventory",attr));
     }
 
     private static Inventory parseInventory() {
@@ -34,6 +37,8 @@ public class StorageXMLProcessor extends XMLProcessor {
 
     public static void formatEquipment(Equipment e) {
         System.out.println("Formatting Item Equipment");
+        ArrayList<Attr> attr = new ArrayList<>();
+        sf.appendObjectTo("ItemStorage", sf.createSaveElement("Equipment",attr));
     }
 
     public static Equipment parseEquipment() {

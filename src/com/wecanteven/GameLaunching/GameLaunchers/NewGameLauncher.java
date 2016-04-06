@@ -36,7 +36,7 @@ public class NewGameLauncher extends GameLauncher {
         System.out.println("launching game");
         createMap();
         createAvatar("test");
-        populateMap();
+        populateMap(getMap());
         initializeAreaView();
         initializeUIView();
     }
@@ -57,8 +57,8 @@ public class NewGameLauncher extends GameLauncher {
     }
 
     @Override
-    protected void populateMap(){
-        levelFactory.populateMap();
+    protected void populateMap(Map map){
+        levelFactory.populateMap(map);
     }
 
 

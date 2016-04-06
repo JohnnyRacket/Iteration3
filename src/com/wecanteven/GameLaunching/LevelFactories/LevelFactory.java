@@ -7,5 +7,5 @@ import com.wecanteven.Models.Map.Map;
  */
 public abstract class LevelFactory {
     public abstract Map createMap();
-    public abstract void populateMap();
+    public abstract void populateMap(Map map);
 }
