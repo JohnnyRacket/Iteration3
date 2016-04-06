@@ -11,5 +11,7 @@ public class AbilityStorage
 
     }
 
+    public void useAbility(Ability ability) {
 
+    }
 }
