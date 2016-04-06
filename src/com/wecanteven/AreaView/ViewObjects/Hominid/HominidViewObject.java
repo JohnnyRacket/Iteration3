@@ -49,8 +49,9 @@ public class HominidViewObject implements ViewObject, Observer{
 
     @Override
     public void draw(Graphics2D g) {
+        hands.drawBackground(g);
         body.draw(g);
-        hands.draw(g);
+        hands.drawForeground(g);
         //feet.draw(g);
     }
 

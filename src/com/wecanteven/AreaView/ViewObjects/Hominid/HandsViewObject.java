@@ -28,11 +28,21 @@ public class HandsViewObject implements ViewObject, Observer{
     }
 
     public void drawForeground(Graphics2D graphic) {
-        handState.drawForeground(graphic);
+        if (leftHand.getY() < 0) {
+            leftHand.draw(graphic);
+        }
+        if (rightHand.getY() < 0) {
+            rightHand.draw(graphic);
+        }
     }
 
     public void drawBackground(Graphics2D graphic) {
-        handState.drawBackground(graphic);
+        if (leftHand.getY() >= 0) {
+            leftHand.draw(graphic);
+        }
+        if (rightHand.getY() >= 0) {
+            rightHand.draw(graphic);
+        }
     }
 
     @Override

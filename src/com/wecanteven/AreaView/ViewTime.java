@@ -4,11 +4,13 @@ import com.wecanteven.UtilityClasses.Tuple;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Alex on 3/31/2016.
  */
 public class ViewTime {
+    private CopyOnWriteArrayList<Tuple<vCommand, Long>> staging = new CopyOnWriteArrayList<>();
     private PriorityQueue<Tuple<vCommand, Long>> executables = new PriorityQueue<>(
             (Tuple<vCommand, Long> o1, Tuple<vCommand, Long> o2) ->  (int)(o1.y - o2.y)
     );
@@ -18,6 +20,10 @@ public class ViewTime {
 
     public void tick() {
         this.currentTime = System.currentTimeMillis();
+
+        while (!staging.isEmpty()) {
+            executables.add(staging.remove(0));
+        }
 
         while (readyToExecute()) {
             executables.poll().x.execute();
@@ -31,7 +37,7 @@ public class ViewTime {
 
     public void register(vCommand action, long time) {
         if (time <= 0) time = 1;
-        executables.add(new Tuple<>(action, time + currentTime ));
+        staging.add(new Tuple<>(action, time + currentTime ));
     }
 
     public long getCurrentTime() {
