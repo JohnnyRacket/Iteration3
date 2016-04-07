@@ -68,7 +68,8 @@ public class Map implements MapVisitable, ActionHandler {
         CanFallVisitor visitor = entity.getCanFallVisitor();
         getTile(destination).accept(visitor);
         if(visitor.isCanMove()){
-            return move(entity,destination);
+            System.out.println("FALLING");
+            return move(entity,destination, 5);
 
         }else{
             return false;
@@ -76,7 +77,7 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
-    public boolean move(Entity entity, Location destination) {
+    public boolean move(Entity entity, Location destination, int movespeed) {
         Location source = entity.getLocation();
         CanMoveVisitor visitor = entity.getCanMoveVisitor();
 
@@ -101,12 +102,14 @@ public class Map implements MapVisitable, ActionHandler {
 
 
         if(canMove) {//move if you can
+            entity.setLocation(destination);
+            entity.setMovingTicks(movespeed);
             remove(entity, source);
             add(entity, destination);
             return true;
         }else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){
             //jump if you cant move
-            return move(entity, destination.add(Direction.UP.getCoords));
+            return move(entity, destination.add(Direction.UP.getCoords), movespeed);
       }else{
             //cant move or jump
             return false;
@@ -123,7 +126,7 @@ public class Map implements MapVisitable, ActionHandler {
 
 
     @Override
-    public boolean move(TakeableItem item, Location location) {
+    public boolean move(TakeableItem item, Location location, int movespeed) {
         return false;
     }
 

@@ -78,6 +78,8 @@ public class HominidViewObject implements ViewObject, Observer{
             changeDirection();
         }
         if (subjectHasMoved()) {
+            System.out.println("Last Z: " + lastLocation.getZ());
+            System.out.println("Next Z: " + movingSubject.getLocation().getZ());
             if (isFalling()) {
                 fall();
             } else if (isJumping()) {
