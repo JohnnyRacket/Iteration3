@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Factories.Item;
 
+import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 
@@ -8,19 +9,19 @@ import java.util.HashMap;
 /**
  * Created by simonnea on 4/6/16.
  */
-public class OneShotItemMap {
-    private static OneShotItemMap instance;
+public class ObstacleItemMap {
+    private static ObstacleItemMap instance;
 
-    private HashMap<String, OneShot> itemMap;
+    private HashMap<String, Obstacle> itemMap;
 
-    private OneShotItemMap() {
+    private ObstacleItemMap() {
         itemMap = new HashMap<>();
         initialize();
     }
 
-    public static OneShotItemMap getInstance() {
+    public static ObstacleItemMap getInstance() {
         if (instance == null) {
-            instance = new OneShotItemMap();
+            instance = new ObstacleItemMap();
         }
 
         return instance;
@@ -29,15 +30,14 @@ public class OneShotItemMap {
     private void initialize() {
         itemMap.clear();
 
-        //TODO alex is this right?
-        itemMap.put("", new OneShot("", (entity) -> entity.die()));
+        itemMap.put("", new Obstacle(""));
     }
 
-    public OneShot getItemAsOneShot(String name) {
+    public Obstacle getItemAsObstacle(String name) {
         if (itemMap.containsKey(name)) {
             return itemMap.get(name);
         }
 
-        throw new IllegalArgumentException("There is no OneShot Item with name: " + name);
+        throw new IllegalArgumentException("There is no Obstacle with name: " + name);
     }
 }
