@@ -21,10 +21,14 @@ import com.wecanteven.Models.Storage.ItemStorage.Inventory;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.SaveLoad.XMLProcessors.EntityXMLProcessor;
+import com.wecanteven.SaveLoad.XMLProcessors.ItemXMLProcessor;
 import com.wecanteven.SaveLoad.XMLProcessors.StorageXMLProcessor;
 import com.wecanteven.SaveLoad.XMLProcessors.TileXMLProcessor;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Tuple;
 import com.wecanteven.Visitors.*;
+
+import java.util.Iterator;
 
 
 /**
@@ -37,6 +41,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     private Avatar avatar;
 
     public XMLSaveVisitor(SaveFile save) {
+
         this.save = save;
     }
 
@@ -120,6 +125,14 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     @Override
     public void visitInventory(Inventory inventory) {
         StorageXMLProcessor.formatInvetory(inventory);
+        Iterator itemIter = inventory.getOrderedIterator();
+        Tuple<TakeableItem, Integer> itemSlot;
+        while(itemIter.hasNext()) {
+
+            itemSlot = (Tuple)itemIter.next();
+            StorageXMLProcessor.formatItemSlot(itemSlot.y);
+            itemSlot.x.accept(this);
+        }
     }
 
     @Override
@@ -139,7 +152,8 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitTakeableItem(TakeableItem item) {
-
+        System.out.println("Found Item: " + item.getName());
+        ItemXMLProcessor.formatTakeableItem(item);
     }
 
     @Override
