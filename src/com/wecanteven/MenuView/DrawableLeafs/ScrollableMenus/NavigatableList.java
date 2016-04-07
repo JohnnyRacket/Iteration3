@@ -52,6 +52,19 @@ public class NavigatableList{
         this.currentIndex = currentIndex;
     }
 
+    public void clear(){
+        this.list.clear();
+    }
+
+    public NavigatableList clone(){
+        NavigatableList listToReturn = new NavigatableList();
+        Iterator<SelectableItem> iter = list.iterator();
+        while(iter.hasNext()){
+            listToReturn.addItem(iter.next());
+        }
+        return listToReturn;
+    }
+
     public SelectableItem getCurrentMenuItem(){
         return list.get(currentIndex);
     }

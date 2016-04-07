@@ -1,10 +1,14 @@
 package com.wecanteven.MenuView;
 
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.GameLaunchers.LoadGameLauncher;
 import com.wecanteven.GameLaunching.GameLaunchers.NewGameLauncher;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.HorizontalCenterContainer;
+import com.wecanteven.MenuView.DrawableContainers.Decorators.TitleBarDecorator;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.VerticalCenterContainer;
+import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
+import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
@@ -12,6 +16,9 @@ import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenu;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenuItem;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
+import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
+import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.ViewEngine;
 
@@ -27,10 +34,12 @@ public class UIViewFactory {
 
 
     private JFrame jframe;
-    MainController controller;
-    ViewEngine vEngine;
-    ModelEngine mEngine;
-    Avatar avatar;
+    private MainController controller;
+    private ViewEngine vEngine;
+    private ModelEngine mEngine;
+    private Avatar avatar;
+
+    private UIObjectCreationVisitor visitor = new UIObjectCreationVisitor(this);
 
     private static UIViewFactory ourInstance = new UIViewFactory();
 
@@ -42,29 +51,56 @@ public class UIViewFactory {
         this.jframe = jFrame;
     }
 
-    public SwappableView createInventoryView(){
+    public SwappableView createInventoryView(Character character){
+        character.accept(visitor);
+        NavigatableList list = visitor.getInventoryItems();
+        NavigatableList equiplist = visitor.getEquippedItems();
         //make menu
-        NavigatableGrid menu = new NavigatableGrid(400, 400, 3, 3);
+        NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
+        menu.setBgColor(new Color(90,70,50));
+
+        NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
+        equipMenu.setBgColor(new Color(60,50,60));
+
+        //NavigatableList equiplist = new NavigatableList();
+        equiplist.addItem(new GridItem("New Game", () -> {System.out.println("test 1 selected");}));
+
+
         //menu.setSelectedColor(Color.cyan);
         //make menu list
-        NavigatableList list = new NavigatableList();
+        //NavigatableList list = new NavigatableList();
         list.addItem(new GridItem("New Game", () -> {System.out.println("test 1 selected");}));
-        list.addItem(new GridItem("Load Game", () -> {System.out.println("test 2 selected");}));
-        list.addItem(new GridItem("Exit", () -> {System.out.println("test 2 selected");}));
-        list.addItem(new GridItem("bloop", () -> {System.out.println("test 1 selected");}));
-        list.addItem(new GridItem("Lsdfdme", () -> {System.out.println("test 2 selected");}));
-        list.addItem(new GridItem("E55555it", () -> {System.out.println("test 2 selected");}));
-        list.addItem(new GridItem("Nddddddde", () -> {System.out.println("test 1 selected");}));
+
 
         menu.setList(list);
+        equipMenu.setList(equiplist);
         //make swappable view
         SwappableView view = new SwappableView();
         //add decorators to center the menu
-        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(menu);
+        CustomScaleColumnsContainer columns  = new CustomScaleColumnsContainer(new int[]{4,1});
+        columns.setHeight(400);
+        columns.setWidth(700);
+        columns.addDrawable(menu);
+        columns.addDrawable(equipMenu);
+
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment");
+        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
+//        view.addDrawable(vertCenter);
+
+
+
+
         view.addDrawable(vertCenter);
         view.addNavigatable(menu);
+        view.addNavigatable(equipMenu);
         //return created swappable view
+
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+
         return view;
     }
 
@@ -113,6 +149,96 @@ public class UIViewFactory {
         //return created swappable view
         return view;
     }
+
+    public void createEquippableItemMenu(Character character, EquipableItem item){
+        NavigatableList list = new NavigatableList();
+        list.addItem(new ScrollableMenuItem("Equip", () ->{
+            System.out.println("equip pressed");
+            character.equipItem(item);
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createInventoryView(avatar.getCharacter());
+            },0);
+
+        }));
+        list.addItem(new ScrollableMenuItem("Drop", () ->{
+            System.out.println("drop pressed");
+            character.drop(item);
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createInventoryView(avatar.getCharacter());
+            },0);
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+            System.out.println("cancel pressed");
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createInventoryView(avatar.getCharacter());
+            },0);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+
+    }
+    public void createEquippedItemMenu(Character character, EquipableItem item){
+        NavigatableList list = new NavigatableList();
+        list.addItem(new ScrollableMenuItem("Unequip", () ->{
+            System.out.println("unequip pressed");
+            character.unequipItem(item);
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createInventoryView(avatar.getCharacter());
+            },0);
+
+        }));
+        list.addItem(new ScrollableMenuItem("Drop", () ->{
+            System.out.println("drop pressed");
+            character.drop(item);
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createInventoryView(avatar.getCharacter());
+            },0);
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+            System.out.println("cancel pressed");
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createInventoryView(avatar.getCharacter());
+            },0);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+    }
+    public SwappableView createUsableItemMenu(){
+        return null;
+    }
+    public SwappableView createConsumableItemMenu(){
+        return null;
+    }
+    public SwappableView createAbilityItemMenu(){
+        return null;
+    }
+
 
     public MainController getController() {
         return controller;

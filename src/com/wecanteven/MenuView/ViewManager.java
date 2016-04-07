@@ -13,7 +13,8 @@ public class ViewManager {
 
     public void draw(Graphics2D g2d, int windowWidth, int windowHeight){
         int i = 0;
-        Iterator<SwappableView> iter = viewStack.iterator();
+        Stack<SwappableView> tmpStack = (Stack<SwappableView>) viewStack.clone();
+        Iterator<SwappableView> iter = tmpStack.iterator();
         while(iter.hasNext()){
             //System.out.println("in view manager drawing" + i++);
             iter.next().draw(g2d, windowWidth, windowHeight);

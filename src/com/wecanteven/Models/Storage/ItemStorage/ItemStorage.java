@@ -135,6 +135,5 @@ public class ItemStorage {
         visitor.visitItemStorage(this);
         inventory.accept(visitor);
         equipped.accept(visitor);
-
     }
 }

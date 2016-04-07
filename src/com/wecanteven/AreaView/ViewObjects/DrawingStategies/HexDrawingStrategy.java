@@ -12,9 +12,9 @@ import java.awt.*;
  * Created by alexs on 3/29/2016.
  */
 public class HexDrawingStrategy implements DynamicImageDrawingStrategy, StringDrawingStrategy {
-    private final int HEX_WIDTH = 56;
-    private final int HEX_LENGTH = 48;
-    private final int HEX_HEIGHT = 15;
+    public static final int HEX_WIDTH = 56;
+    public static final int HEX_LENGTH = 48;
+    public static final int HEX_HEIGHT = 15;
     private ViewObject centerTarget;
 
     public HexDrawingStrategy() {}

@@ -18,30 +18,17 @@ public abstract class HandState {
         this.rightHand = rightHand;
     }
 
-    public void move(long duration) {
-        //TODO
-    }
+    public abstract void move(long duration);
 
-    public void changeDirection(Direction direction) {
-        //TODO
-    }
+    public abstract void jump(long duration);
 
-    public void setLocation(Location location) {
-        //TODO
-    }
+    public abstract void changeDirection(Direction direction);
 
-    public Location getLocation() {
-        return null;
-    }
+    public abstract void setLocation(Location location);
 
-    public void attack(long durationOfAttack) {
-        //TODO
-    }
+    public abstract Location getLocation();
 
-    public void setHandsPosition(Position position) {
-        this.leftHand.setPosition(position);
-        this.rightHand.setPosition(position);
-    }
+    public abstract void attack(long durationOfAttack);
 
     public void equip(/*add weapon param model doesnt exist*/) {
 
