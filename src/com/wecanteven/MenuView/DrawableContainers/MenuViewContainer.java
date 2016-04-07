@@ -35,6 +35,7 @@ public class MenuViewContainer implements Navigatable {
 
     @Override
     public void select() {
+        System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
         menus.get(current).select();
     }
 

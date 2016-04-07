@@ -1,5 +1,6 @@
 package com.wecanteven.Controllers.InputControllers.ControllerStates;
 
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
 import com.wecanteven.Controllers.InputControllers.MainController;
@@ -39,6 +40,7 @@ public class MenuState extends ControllerState {
             this.setCommandToExecute(()->menus.down());
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SELECT), ()->{
+            System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
             this.setCommandToExecute(()->menus.select());
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.LEFT), ()->{
@@ -53,7 +55,9 @@ public class MenuState extends ControllerState {
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ESCAPE), ()->{
             System.out.println("esc hit");
             this.getController().setPlayState();
-            this.getController().clearViews();
+            ViewTime.getInstance().register(()->{
+                this.getController().clearViews();
+            },0);
         }, this.getjFrame(), this.getController()));
 
     }

@@ -52,6 +52,10 @@ public class NavigatableList{
         this.currentIndex = currentIndex;
     }
 
+    public void clear(){
+        this.list.clear();
+    }
+
     public SelectableItem getCurrentMenuItem(){
         return list.get(currentIndex);
     }

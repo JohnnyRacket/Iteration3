@@ -1,5 +1,6 @@
 package com.wecanteven.Controllers.InputControllers.ControllerStates;
 
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
 import com.wecanteven.Controllers.InputControllers.MainController;
@@ -63,9 +64,11 @@ public class PlayState extends ControllerState {
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ITEMINVENTORY), ()->{
             System.out.println("open inventory hit");
-            SwappableView view = UIViewFactory.getInstance().createInventoryView();
-            this.getController().setMenuState(view.getMenuViewContainer());
-            this.getController().changeView(view);
+            ViewTime.getInstance().register(()->{
+                UIViewFactory.getInstance().createInventoryView(avatar.getCharacter());
+            },0);
+            //this.getController().setMenuState(view.getMenuViewContainer());
+            //this.getController().changeView(view);
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SAVE), ()->{
             System.out.println("Trying to Save");

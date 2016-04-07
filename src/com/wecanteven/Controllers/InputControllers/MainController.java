@@ -50,6 +50,7 @@ public class MainController implements Tickable{
 
     public void setMenuState(MenuViewContainer menuViewContainer){
         removeState();
+        menuState.setCommandToExecute(null);
         menuState.setMenus(menuViewContainer);
         menuState.createKeybindings();
         this.state = menuState;
@@ -77,6 +78,10 @@ public class MainController implements Tickable{
     public void clearViews(){
         viewEngine.getManager().clear();
 
+    }
+
+    public void popView(){
+        viewEngine.getManager().popView();
     }
 
     @Override
