@@ -49,7 +49,7 @@ public abstract class ViewObjectFactory {
         MicroPositionableViewObject rightHand = new MicroPositionableViewObject(createRightHand(p));
 
         HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p);
-        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands);
+        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, body, hands);
 
         subject.attach(stationarySneak);
         subject.attach(body);

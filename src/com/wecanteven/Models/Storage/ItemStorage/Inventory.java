@@ -11,6 +11,13 @@ import java.util.Iterator;
  * Created by Brandon on 3/31/2016.
  */
 
+/**
+ * DESIGN DEVIATION NOTES
+ *
+ * Inventory was redesigned to support slot ordering for the user to be able to organize their
+ * inventory in an order fashion according to how they want it
+ * */
+
 public abstract class Inventory extends StorageComponent<ItemStorage> {
 
     public Inventory(ItemStorage owner) {
@@ -54,5 +61,4 @@ public abstract class Inventory extends StorageComponent<ItemStorage> {
     }
 
     public abstract int getMaxCapacity();
-
 }

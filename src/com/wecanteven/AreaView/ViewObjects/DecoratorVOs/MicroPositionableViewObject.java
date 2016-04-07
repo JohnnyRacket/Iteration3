@@ -108,7 +108,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     }
 
     public double getY() {
-        return (int)(50*Math.tan(Config.TILT_ANGLE)*((radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle - direction.getAngle()))));
+        return (int)(50*Math.tan(Config.TILT_ANGLE)*((radius*Math.sin(offsetAngle + direction.getAngle()) + tangent *Math.sin(Math.PI/2 - offsetAngle + direction.getAngle()))));
     }
 
     private double getZ() {

@@ -18,7 +18,7 @@ public abstract class HandState {
         this.rightHand = rightHand;
     }
 
-    public void move(Graphics2D graphic) {
+    public void move(long duration) {
         //TODO
     }
 
