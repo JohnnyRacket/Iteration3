@@ -74,10 +74,11 @@ public class HominidViewObject implements ViewObject, Observer{
         if (subjectChangedDirection()) {
             changeDirection();
         }
-        if (subjectHasMoved()) {
+        else if (subjectHasMoved()) {
             move();
         }
     }
+
 
     private boolean subjectHasMoved() {
         long currentTime = ViewTime.getInstance().getCurrentTime();

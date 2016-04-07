@@ -2,6 +2,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.FeetFallingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.FeetWalkingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.LimbStrategy;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
@@ -27,12 +28,14 @@ public class FeetViewObject implements ViewObject {
     private Position position;
 
     private LimbStrategy walkingStrategy;
+    private LimbStrategy fallingStartegy;
 
     public FeetViewObject(Direction direction, MicroPositionableViewObject leftFoot, MicroPositionableViewObject rightFoot) {
         this.leftFoot = leftFoot;
         this.rightFoot = rightFoot;
         changeDirection(direction);
         walkingStrategy = new FeetWalkingStrategy(0.3, leftFoot, rightFoot);
+        fallingStartegy = new FeetFallingStrategy(0.3, leftFoot, rightFoot);
         this.leftFoot.setRadius(radius);
         this.leftFoot.setOffsetAngle(leftAngle);
         this.leftFoot.setTangent(tangent);
@@ -50,6 +53,10 @@ public class FeetViewObject implements ViewObject {
 
     public void move(long duration) {
         walkingStrategy.execute(duration);
+    }
+
+    public void fall(long duration) {
+        fallingStartegy.execute(duration);
     }
 
     @Override
