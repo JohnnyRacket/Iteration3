@@ -30,8 +30,7 @@ public class ItemStorage {
         equipped = new HominidEquipment(this);
     }
 
-    public ItemStorage(Character owner, int maxInventoryCapacity)
-    {
+    public ItemStorage(Character owner, int maxInventoryCapacity) {
         this.owner = owner;
 
         inventory = new TupleInventory(this, maxInventoryCapacity);
@@ -40,8 +39,7 @@ public class ItemStorage {
         equipped = new HominidEquipment(this);
     }
 
-    public ItemStorage(Inventory inventory, Equipment equipment, Character owner)
-    {
+    public ItemStorage(Inventory inventory, Equipment equipment, Character owner) {
         this.inventory = inventory;
         this.equipped = equipment;
         this.owner = owner;
@@ -61,16 +59,17 @@ public class ItemStorage {
         inventory.add(item, order);
     }
 
+    public void swap(int origin, int destination) { inventory.swap(origin, destination); }
+
     public void removeItem(TakeableItem item) {
         inventory.remove(item);
     }
 
+    public TakeableItem removeItem(int order) { return inventory.remove(order); }
+
     public boolean hasItem(TakeableItem item) {
         return inventory.contains(item);
     }
-
-    // TODO does anything actually need this???
-    public boolean isFull() { return inventory.isFull(); }
 
     /**
      *
@@ -80,20 +79,15 @@ public class ItemStorage {
 
     public void equip(EquipableItem item) {
         if (equipped.equip(item))
-            owner.getStats().addStats(item.getStats()); //TODO update so Entity has this method
+            owner.getStats().addStats(item.getStats());
     }
 
     /**
-     * Precondition: Item must be in equipped
+     * Precondition: Item must be equipped
      * */
     public void unequip(EquipableItem item) {
         if (equipped.unequip(item))
             owner.getStats().subtractStats(item.getStats());
-    }
-
-    // TODO does anything actually need this???
-    public boolean isEquipped(EquipableItem item) {
-        return equipped.isEquiped(item);
     }
 
     /**
@@ -102,13 +96,14 @@ public class ItemStorage {
      *
      * */
 
-    // TODO implement
     /**
      * Precondition: Item must be in inventory
      * */
-    private boolean use(ConsumeableItem item) {
-
-        return false;
+    public void use(ConsumeableItem item) {
+        if (inventory.contains(item)) {
+            inventory.remove(item);
+            item.use(owner);
+        }
     }
 
     /**
@@ -117,15 +112,23 @@ public class ItemStorage {
      *
      * */
 
-    public int getMaxInventoryCapacity() {
-        return maxInventoryCapacity;
-    }
+
     public void drop(TakeableItem item) {
         owner.drop(item);
     }
 
+    /**
+     *
+     * Other methods
+     *
+     * */
+
     public void setOwner(Character character) {
         this.owner = character;
+    }
+
+    public int getMaxInventoryCapacity() {
+        return maxInventoryCapacity;
     }
 
     public void accept(ItemStorageVisitor visitor) {
