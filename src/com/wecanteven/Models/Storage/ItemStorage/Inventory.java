@@ -53,8 +53,6 @@ public abstract class Inventory extends StorageComponent<ItemStorage> {
 
     }
 
-    public int getMaxCapacity() {
-        return Integer.MAX_VALUE;
-    };
+    public abstract int getMaxCapacity();
 
 }

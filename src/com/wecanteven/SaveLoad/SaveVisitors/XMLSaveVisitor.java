@@ -25,6 +25,7 @@ import com.wecanteven.SaveLoad.XMLProcessors.ItemXMLProcessor;
 import com.wecanteven.SaveLoad.XMLProcessors.StorageXMLProcessor;
 import com.wecanteven.SaveLoad.XMLProcessors.TileXMLProcessor;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Tuple;
 import com.wecanteven.Visitors.*;
 
 import java.util.Iterator;
@@ -124,11 +125,13 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     @Override
     public void visitInventory(Inventory inventory) {
         StorageXMLProcessor.formatInvetory(inventory);
-        Iterator itemIter = inventory.getIterator();
-        TakeableItem item;
+        Iterator itemIter = inventory.getOrderedIterator();
+        Tuple<TakeableItem, Integer> itemSlot;
         while(itemIter.hasNext()) {
-            item = (TakeableItem)itemIter.next();
-            item.accept(this);
+
+            itemSlot = (Tuple)itemIter.next();
+            StorageXMLProcessor.formatItemSlot(itemSlot.y);
+            itemSlot.x.accept(this);
         }
     }
 
