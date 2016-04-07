@@ -18,6 +18,7 @@ import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
+import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.ViewEngine;
@@ -51,7 +52,63 @@ public class UIViewFactory {
         this.jframe = jFrame;
     }
 
-    public SwappableView createInventoryView(Character character){
+    public void createStatsView(Character character){
+
+
+        NavigatableList skillList = new NavigatableList();
+        skillList.addItem(new ScrollableMenuItem("placeholder skill", ()->{
+            System.out.println("you tried to level up palcehold skill kappafacenospace");
+        }));
+
+        ScrollableMenu skillMenu = new ScrollableMenu(300,600);
+        skillMenu.setList(skillList);
+
+        Stats stats = character.getStats();
+        NavigatableList statsList = new NavigatableList();
+
+        statsList.addItem(new ScrollableMenuItem("Level: " + stats.getLevel(),null));
+        statsList.addItem(new ScrollableMenuItem("Health: " + stats.getHealth() + "/" + stats.getMaxHealth(),null));
+        statsList.addItem(new ScrollableMenuItem("Mana: " + stats.getMana() + "/" + stats.getMaxMana(),null));
+        statsList.addItem(new ScrollableMenuItem("Experience: " + stats.getExperience() + "/" + "not Implemented",null));
+        statsList.addItem(new ScrollableMenuItem("Lives: " + stats.getLives(),null));
+
+        statsList.addItem(new ScrollableMenuItem("",null));
+        statsList.addItem(new ScrollableMenuItem("Agility: " + stats.getAgility(),null));
+        statsList.addItem(new ScrollableMenuItem("Strength: " + stats.getStrength(),null));
+        statsList.addItem(new ScrollableMenuItem("Hardiness: " + stats.getHardiness(),null));
+        statsList.addItem(new ScrollableMenuItem("Movement: " + stats.getMovement(),null));
+        statsList.addItem(new ScrollableMenuItem("Intellect: " + stats.getIntellect(),null));
+
+        statsList.addItem(new ScrollableMenuItem("" ,null));//spacer
+        statsList.addItem(new ScrollableMenuItem("Offensive Rating: " + stats.getOffensiveRating(),null));
+        statsList.addItem(new ScrollableMenuItem("Defensive Rating: " + stats.getDefensiveRating(),null));
+        statsList.addItem(new ScrollableMenuItem("Armor Rating: " + stats.getArmorRating(),null));
+
+        ScrollableMenu menu = new ScrollableMenu(300,600);
+        menu.setList(statsList);
+
+        ColumnatedCompositeContainer columns = new ColumnatedCompositeContainer();
+        columns.setWidth(400);
+        columns.setHeight(500);
+        columns.addDrawable(menu);
+        columns.addDrawable(skillMenu);
+
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(columns);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        SwappableView view = new SwappableView();
+        view.addNavigatable(skillMenu);
+        view.addDrawable(vert);
+
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+
+
+    }
+
+    public void createInventoryView(Character character){
         character.accept(visitor);
         NavigatableList list = visitor.getInventoryItems();
         NavigatableList equiplist = visitor.getEquippedItems();
@@ -64,12 +121,6 @@ public class UIViewFactory {
 
         //NavigatableList equiplist = new NavigatableList();
         //equiplist.addItem();
-
-
-        //menu.setSelectedColor(Color.cyan);
-        //make menu list
-        //NavigatableList list = new NavigatableList();
-
 
         menu.setList(list);
         equipMenu.setList(equiplist);
@@ -88,8 +139,6 @@ public class UIViewFactory {
 //        view.addDrawable(vertCenter);
 
 
-
-
         view.addDrawable(vertCenter);
         view.addNavigatable(menu);
         view.addNavigatable(equipMenu);
@@ -99,8 +148,6 @@ public class UIViewFactory {
             vEngine.getManager().addView(view);
         },0);
         controller.setMenuState(view.getMenuViewContainer());
-
-        return view;
     }
 
     public SwappableView createHUDView(){
@@ -200,14 +247,6 @@ public class UIViewFactory {
             },0);
 
         }));
-        list.addItem(new ScrollableMenuItem("Drop", () ->{
-            System.out.println("drop pressed");
-            character.drop(item);
-            ViewTime.getInstance().register(() ->{
-                controller.popView();
-                createInventoryView(avatar.getCharacter());
-            },0);
-        }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
             System.out.println("cancel pressed");
             ViewTime.getInstance().register(() ->{
@@ -215,7 +254,7 @@ public class UIViewFactory {
                 createInventoryView(avatar.getCharacter());
             },0);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
+        ScrollableMenu menu = new ScrollableMenu(100,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
 

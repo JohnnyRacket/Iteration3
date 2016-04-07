@@ -34,6 +34,7 @@ public class PlayState extends ControllerState {
         mappings.put(ActionEnum.SOUTHWEST, KeyEvent.VK_A);
         mappings.put(ActionEnum.SAVE, KeyEvent.VK_P);
         mappings.put(ActionEnum.ITEMINVENTORY, KeyEvent.VK_I);
+        mappings.put(ActionEnum.STATS, KeyEvent.VK_K);
         this.setMappings(mappings);
     }
     @Override
@@ -69,6 +70,12 @@ public class PlayState extends ControllerState {
             },0);
             //this.getController().setMenuState(view.getMenuViewContainer());
             //this.getController().changeView(view);
+        }, this.getjFrame(), this.getController()));
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.STATS), ()->{
+            System.out.println("open stats hit");
+            ViewTime.getInstance().register(()->{
+                UIViewFactory.getInstance().createStatsView(avatar.getCharacter());
+            },0);
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SAVE), ()->{
             System.out.println("Trying to Save");
