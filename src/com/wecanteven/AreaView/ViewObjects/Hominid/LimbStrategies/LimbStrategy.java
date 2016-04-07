@@ -7,9 +7,10 @@ import com.wecanteven.AreaView.ViewTime;
  */
 public abstract class LimbStrategy {
 
-    public abstract void animate(double percentage);
+    protected abstract void animate(double percentage);
+    protected abstract void complete();
 
-    public void execute(long duration) {
+    public final void execute(long duration) {
         long startTime = ViewTime.getInstance().getCurrentTime();
         step(startTime, duration);
     }
@@ -19,6 +20,8 @@ public abstract class LimbStrategy {
         if (percentage < 1) {
             animate(percentage);
             ViewTime.getInstance().register(() -> step(startTime, duration), 1);
+        } else {
+            complete();
         }
 
     }

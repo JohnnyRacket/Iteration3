@@ -66,7 +66,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             return moveHelper(destination);
         }else{
             this.setDirection(d);
-            setMovingTicks(4);
+            setMovingTicks(0);
             return false;
         }
     }
@@ -122,16 +122,14 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
 
     public int deIncrementTick(){
-        ModelTime.getInstance().registerAlertable(new Alertable() {
-            @Override
-            public void alert() {
+        ModelTime.getInstance().registerAlertable(() -> {
                 if(movingTicks == 0){
                     setIsActive(false);
                     return;
                 }
                 movingTicks--;
                 deIncrementTick();
-            }
+
         }, 1);
         return movingTicks;
     }
