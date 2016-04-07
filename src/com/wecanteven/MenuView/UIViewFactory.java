@@ -69,7 +69,7 @@ public class UIViewFactory {
         statsList.addItem(new ScrollableMenuItem("Level: " + stats.getLevel(),null));
         statsList.addItem(new ScrollableMenuItem("Health: " + stats.getHealth() + "/" + stats.getMaxHealth(),null));
         statsList.addItem(new ScrollableMenuItem("Mana: " + stats.getMana() + "/" + stats.getMaxMana(),null));
-        statsList.addItem(new ScrollableMenuItem("Experience: " + stats.getExperience() + "/" + "not Implemented",null));
+        statsList.addItem(new ScrollableMenuItem("Experience: " + stats.getExperience() + "/" + "?????",null));
         statsList.addItem(new ScrollableMenuItem("Lives: " + stats.getLives(),null));
 
         statsList.addItem(new ScrollableMenuItem("",null));
@@ -88,12 +88,13 @@ public class UIViewFactory {
         menu.setList(statsList);
 
         ColumnatedCompositeContainer columns = new ColumnatedCompositeContainer();
-        columns.setWidth(400);
+        columns.setWidth(600);
         columns.setHeight(500);
         columns.addDrawable(menu);
         columns.addDrawable(skillMenu);
 
-        HorizontalCenterContainer horiz = new HorizontalCenterContainer(columns);
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats");
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
 
         SwappableView view = new SwappableView();
