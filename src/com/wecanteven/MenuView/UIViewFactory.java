@@ -4,7 +4,10 @@ import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.GameLaunchers.LoadGameLauncher;
 import com.wecanteven.GameLaunching.GameLaunchers.NewGameLauncher;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.HorizontalCenterContainer;
+import com.wecanteven.MenuView.DrawableContainers.Decorators.TitleBarDecorator;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.VerticalCenterContainer;
+import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
+import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
@@ -12,6 +15,7 @@ import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenu;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenuItem;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
+import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.ViewEngine;
 
@@ -42,9 +46,19 @@ public class UIViewFactory {
         this.jframe = jFrame;
     }
 
-    public SwappableView createInventoryView(){
+    public SwappableView createInventoryView(ItemStorage storage){
         //make menu
-        NavigatableGrid menu = new NavigatableGrid(400, 400, 3, 3);
+        NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
+        menu.setBgColor(new Color(90,70,50));
+
+        NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
+        equipMenu.setBgColor(new Color(60,50,60));
+
+        NavigatableList equiplist = new NavigatableList();
+        equiplist.addItem(new GridItem("New Game", () -> {System.out.println("test 1 selected");}));
+        equiplist.addItem(new GridItem("Load Game", () -> {System.out.println("test 2 selected");}));
+        equiplist.addItem(new GridItem("Exit", () -> {System.out.println("test 2 selected");}));
+
         //menu.setSelectedColor(Color.cyan);
         //make menu list
         NavigatableList list = new NavigatableList();
@@ -57,13 +71,27 @@ public class UIViewFactory {
         list.addItem(new GridItem("Nddddddde", () -> {System.out.println("test 1 selected");}));
 
         menu.setList(list);
+        equipMenu.setList(equiplist);
         //make swappable view
         SwappableView view = new SwappableView();
         //add decorators to center the menu
-        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(menu);
+        CustomScaleColumnsContainer columns  = new CustomScaleColumnsContainer(new int[]{4,1});
+        columns.setHeight(500);
+        columns.setWidth(700);
+        columns.addDrawable(menu);
+        columns.addDrawable(equipMenu);
+
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment");
+        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
+//        view.addDrawable(vertCenter);
+
+
+
+
         view.addDrawable(vertCenter);
         view.addNavigatable(menu);
+        view.addNavigatable(equipMenu);
         //return created swappable view
         return view;
     }

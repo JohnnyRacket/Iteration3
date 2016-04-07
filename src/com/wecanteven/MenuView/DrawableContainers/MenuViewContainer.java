@@ -15,7 +15,6 @@ public class MenuViewContainer implements Navigatable {
 
     @Override
     public void up() {
-        System.out.println("doing up");
         menus.get(current).up();
     }
 
@@ -41,15 +40,21 @@ public class MenuViewContainer implements Navigatable {
 
     public void swap() {
         System.out.println("swapping, size is: " + menus.size());
+        menus.get(current).active(false);
         if (current < menus.size() - 1) {
             ++current;
         } else {
             current = 0;
         }
+        menus.get(current).active(true);
         System.out.println("current is:" + current);
     }
+    public void active(boolean active){}
 
     public void add(Navigatable navigatable){
+        if(menus.isEmpty()){
+            navigatable.active(true);
+        }
         menus.add(navigatable);
     }
     public void remove(Navigatable navigatable){

@@ -20,6 +20,7 @@ public class ScrollableMenu extends Drawable implements Navigatable {
     private int xOffset = 0;
     private int yOffset = 0;
     private int padding; //this will be represented in %
+    private boolean active = false;
     private boolean scalingX = false;
     private boolean scalingY = false;
 
@@ -62,7 +63,7 @@ public class ScrollableMenu extends Drawable implements Navigatable {
         //paint list items
         Iterator<SelectableItem> iter = list.getIterator();
         while (iter.hasNext()) {
-            if (index == list.getCurrentIndex()) {
+            if (index == list.getCurrentIndex() && active) {
                 //System.out.println(list.getCurrentIndex());
                 SelectableItem current = iter.next();
                 g2d.setColor(selectedColor);
@@ -202,4 +203,8 @@ public class ScrollableMenu extends Drawable implements Navigatable {
         this.yOffset = yOffset;
     }
 
+    @Override
+    public void active(boolean active) {
+        this.active = active;
+    }
 }
