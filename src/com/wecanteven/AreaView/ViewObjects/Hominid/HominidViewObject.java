@@ -27,8 +27,7 @@ public class HominidViewObject implements ViewObject, Observer{
     private FeetViewObject feet;
     //private FeetViewObject feet;
 
-    public HominidViewObject(Position position, Direction direction, Directional directionSubject, DirectionalViewObject body, HandsViewObject hands, FeetViewObject feet) {
-    public HominidViewObject(Position position, Direction direction, Directional directionSubject, Moveable movingSubject, DirectionalViewObject body, HandsViewObject hands) {
+    public HominidViewObject(Position position, Direction direction, Directional directionSubject, Moveable movingSubject, DirectionalViewObject body, HandsViewObject hands, FeetViewObject feet) {
         this.position = position;
         this.direction = direction;
         this.directionSubject = directionSubject;
@@ -96,6 +95,7 @@ public class HominidViewObject implements ViewObject, Observer{
 
     private void move() {
         hands.move(movingSubject.getMovingTicks()*Config.MODEL_TICK);
+        feet.move(movingSubject.getMovingTicks()*Config.MODEL_TICK);
     }
 
     private void changeDirection() {
