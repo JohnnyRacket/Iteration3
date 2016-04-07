@@ -61,7 +61,8 @@ public class ScrollableMenu extends Drawable implements Navigatable {
         }
 
         //paint list items
-        Iterator<SelectableItem> iter = list.getIterator();
+        NavigatableList tmpList = list.clone();
+        Iterator<SelectableItem> iter = tmpList.getIterator();
         while (iter.hasNext()) {
             if (index == list.getCurrentIndex() && active) {
                 //System.out.println(list.getCurrentIndex());

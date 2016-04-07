@@ -77,7 +77,6 @@ public class MainController implements Tickable{
 
     public void clearViews(){
         viewEngine.getManager().clear();
-
     }
 
     public void popView(){

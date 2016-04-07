@@ -111,7 +111,7 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
     public void visitEquipableItem(EquipableItem equipable) {
         inventoryItems.addItem(new GridItem(equipable.getName(), () ->{
             System.out.println("select hit on equppable item");
-            SwappableView view = factory.createEquippableItemMenu(character, equipable);
+            factory.createEquippableItemMenu(character, equipable);
         }));
     }
 

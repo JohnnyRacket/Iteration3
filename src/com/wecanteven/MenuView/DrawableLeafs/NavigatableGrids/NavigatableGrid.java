@@ -40,7 +40,8 @@ public class NavigatableGrid extends Drawable implements Navigatable {
         g2d.fillRect(offsetX, offsetY, this.getWidth(), this.getHeight());
 
         //paint list items
-        Iterator<SelectableItem> iter = list.getIterator();
+        NavigatableList tmpList = list.clone();
+        Iterator<SelectableItem> iter = tmpList.getIterator();
         while (iter.hasNext()) {
             if (index == list.getCurrentIndex() && active) {
                 //System.out.println(list.getCurrentIndex());

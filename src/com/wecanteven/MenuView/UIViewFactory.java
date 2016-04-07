@@ -78,7 +78,7 @@ public class UIViewFactory {
         SwappableView view = new SwappableView();
         //add decorators to center the menu
         CustomScaleColumnsContainer columns  = new CustomScaleColumnsContainer(new int[]{4,1});
-        columns.setHeight(500);
+        columns.setHeight(400);
         columns.setWidth(700);
         columns.addDrawable(menu);
         columns.addDrawable(equipMenu);
@@ -169,7 +169,14 @@ public class UIViewFactory {
                 createInventoryView(avatar.getCharacter());
             },0);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,70);
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+            System.out.println("cancel pressed");
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createInventoryView(avatar.getCharacter());
+            },0);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
 
