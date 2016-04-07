@@ -1,5 +1,7 @@
-package com.wecanteven.Models.Factories.Item;
+package com.wecanteven.Models.Factories.ItemMaps;
 
+import com.wecanteven.Models.Factories.ItemFactories.CreateCommands.ITakeableItemCreateCommand;
+import com.wecanteven.Models.Factories.ItemFactories.TakeableItemFactory;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 
 import java.util.HashMap;
@@ -10,7 +12,7 @@ import java.util.HashMap;
 public class TakeableItemMap {
     private static TakeableItemMap instance;
 
-    private HashMap<String, TakeableItem> itemMap;
+    private HashMap<String, ITakeableItemCreateCommand> itemMap;
 
     private TakeableItemMap() {
         itemMap = new HashMap<>();
@@ -28,14 +30,24 @@ public class TakeableItemMap {
     private void initialize() {
         itemMap.clear();
 
-        itemMap.put("", new TakeableItem(""));
+        // TODO create takeable Items
+        itemMap.put("", () -> new TakeableItemFactory().vendDefaultTakeableItem());
     }
 
     public TakeableItem getItemAsTakeable(String name) {
         if (itemMap.containsKey(name)) {
-            return itemMap.get(name);
+            return itemMap.get(name).create();
         }
 
         throw new IllegalArgumentException("There is no TakeableItem with name: " + name);
+    }
+
+    // TODO update to reference factory method
+    protected void insertNewItem(String name, ITakeableItemCreateCommand itemCreationCommand) {
+        itemMap.put(name, itemCreationCommand);
+    }
+
+    protected void removeItem(String name) {
+        itemMap.remove(name);
     }
 }
