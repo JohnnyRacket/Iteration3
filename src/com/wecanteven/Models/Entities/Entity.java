@@ -76,7 +76,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             if (location.getZ() == 1) {
                 return false;
             }
-            setMovingTicks(1);
+            setMovingTicks(3);
             return actionHandler.fall(this, this.getLocation().subtract(new Location(0, 0, 1)));
         }
         return false;
