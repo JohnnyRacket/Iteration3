@@ -33,6 +33,7 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
     private NavigatableList equippedItems = new NavigatableList();
     private UIViewFactory factory;
     private Character character;
+    private boolean inInv = true;
 
     public UIObjectCreationVisitor(UIViewFactory factory){
         this.factory = factory;
@@ -59,12 +60,14 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
 
     @Override
     public void visitItemStorage(ItemStorage itemStorage) {
+        inInv = true;
         inventoryItems.clear();
         equippedItems.clear();
     }
 
     @Override
     public void visitEquipment(Equipment equipment) {
+        inInv = false;
         Iterator<EquipableItem> iter = equipment.getIterator();
         while(iter.hasNext()){
             iter.next().accept(this);
@@ -73,7 +76,7 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
 
     @Override
     public void visitInventory(Inventory inventory) {
-
+        inInv = true;
         Iterator<TakeableItem> iter = inventory.getIterator();
         while(iter.hasNext()){
             TakeableItem item = iter.next();
@@ -109,10 +112,17 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
 
     @Override
     public void visitEquipableItem(EquipableItem equipable) {
-        inventoryItems.addItem(new GridItem(equipable.getName(), () ->{
-            System.out.println("select hit on equppable item");
-            factory.createEquippableItemMenu(character, equipable);
-        }));
+        if(inInv) {
+            inventoryItems.addItem(new GridItem(equipable.getName(), () -> {
+                System.out.println("select hit on equppable item");
+                factory.createEquippableItemMenu(character, equipable);
+            }));
+        }else{
+            inventoryItems.addItem(new GridItem(equipable.getName(), () -> {
+                System.out.println("select hit on equpped item");
+                factory.createEquippedItemMenu(character, equipable);
+            }));
+        }
     }
 
     @Override

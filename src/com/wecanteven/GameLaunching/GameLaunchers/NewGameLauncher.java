@@ -53,6 +53,7 @@ public class NewGameLauncher extends GameLauncher {
         Character player = new Character(getMap(), Direction.SOUTH);
         player.pickup(new ChestEquipableItem("Dank Chesplate", new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.pickup(new ChestEquipableItem("Lame Chesplate", new StatsAddable(1,1,1,1,1,1,1,1,1)));
+        player.getItemStorage().equip(new ChestEquipableItem("Mediocre Top", new StatsAddable(1,1,1,1,1,1,1,1,1)));
         setAvatar(new Avatar(player, getMap()));
         getMap().add(player, new Location(3,2,1));
         getController().setAvatar(getAvatar());

@@ -134,7 +134,8 @@ public class Map implements MapVisitable, ActionHandler {
 
     @Override
     public boolean drop(TakeableItem item, Location location) {
-        return false;
+        getTile(location).add(item);
+        return true;
     }
 
     public Tile getTile(Location loc){

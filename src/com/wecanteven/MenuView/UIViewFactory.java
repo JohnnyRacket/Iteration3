@@ -150,7 +150,7 @@ public class UIViewFactory {
         return view;
     }
 
-    public SwappableView createEquippableItemMenu(Character character, EquipableItem item){
+    public void createEquippableItemMenu(Character character, EquipableItem item){
         NavigatableList list = new NavigatableList();
         list.addItem(new ScrollableMenuItem("Equip", () ->{
             System.out.println("equip pressed");
@@ -189,7 +189,45 @@ public class UIViewFactory {
         },0);
         controller.setMenuState(view.getMenuViewContainer());
 
-        return view;
+    }
+    public void createEquippedItemMenu(Character character, EquipableItem item){
+        NavigatableList list = new NavigatableList();
+        list.addItem(new ScrollableMenuItem("Unequip", () ->{
+            System.out.println("unequip pressed");
+            character.unequipItem(item);
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createInventoryView(avatar.getCharacter());
+            },0);
+
+        }));
+        list.addItem(new ScrollableMenuItem("Drop", () ->{
+            System.out.println("drop pressed");
+            character.drop(item);
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createInventoryView(avatar.getCharacter());
+            },0);
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+            System.out.println("cancel pressed");
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createInventoryView(avatar.getCharacter());
+            },0);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
     }
     public SwappableView createUsableItemMenu(){
         return null;
