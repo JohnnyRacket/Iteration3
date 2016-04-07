@@ -8,6 +8,7 @@ import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
+import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
@@ -42,14 +43,20 @@ public abstract class ViewObjectFactory {
     public abstract ViewObject createGround(Position p);
     public abstract ViewObject createWater(Position p);
 
-    public ViewObject createSneak(Position p, Direction d, Entity subject) {
+
+
+        public ViewObject createSneak(Position p, Direction d, Entity subject) {
         DirectionalViewObject body = createBody(p, subject, "Sneak");
 
         MicroPositionableViewObject leftHand = new MicroPositionableViewObject(createLeftHand(p));
         MicroPositionableViewObject rightHand = new MicroPositionableViewObject(createRightHand(p));
-
         HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p);
-        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands);
+
+        MicroPositionableViewObject leftFoot = createLeftFoot(p, d, subject);
+        MicroPositionableViewObject rightFoot = createRightFoot(p, d, subject);
+
+        FeetViewObject feet = new FeetViewObject(d, leftFoot, rightFoot);
+        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands, feet);
 
         subject.attach(stationarySneak);
         subject.attach(body);
@@ -60,6 +67,18 @@ public abstract class ViewObjectFactory {
 
         return createMovingViewObject(subject, stationarySneak);
 
+    }
+
+    private MicroPositionableViewObject createLeftFoot(Position position, Direction direction, Entity entity) {
+        DirectionalViewObject leftFootDirectional = createDirectional(position, entity, "Feet/Brown/Left/");
+        entity.attach(leftFootDirectional);
+        return new MicroPositionableViewObject(leftFootDirectional);
+    }
+
+    private MicroPositionableViewObject createRightFoot(Position position, Direction direction, Entity entity) {
+        DirectionalViewObject rightFootDirectional = createDirectional(position, entity, "Feet/Brown/Right/");
+        entity.attach(rightFootDirectional);
+        return new MicroPositionableViewObject(rightFootDirectional);
     }
 
     private ViewObject createRightHand(Position position) {

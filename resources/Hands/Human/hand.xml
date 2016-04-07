@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <single_frame_animation>
-  <x>8</x>
-  <y>8</y>
+  <x>9</x>
+  <y>9</y>
   <rootPath>Hands/Human/</rootPath>
   <fileName>hand.png</fileName>
 </single_frame_animation>
