@@ -129,6 +129,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         Tuple<TakeableItem, Integer> itemSlot;
         while(itemIter.hasNext()) {
             itemSlot = (Tuple)itemIter.next();
+            System.out.println(itemSlot.x.getName());
             StorageXMLProcessor.formatItemSlot(itemSlot.y);
             itemSlot.x.accept(this);
         }
@@ -152,12 +153,13 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     @Override
     public void visitTakeableItem(TakeableItem item) {
         System.out.println("Found Item: " + item.getName());
-        ItemXMLProcessor.formatTakeableItem(item);
+        ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 
     @Override
     public void visitEquipableItem(EquipableItem item) {
-
+        System.out.println("Found Item: " + item.getName());
+        ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 
     @Override

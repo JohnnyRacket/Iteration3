@@ -11,10 +11,10 @@ import java.util.ArrayList;
  */
 public class ItemXMLProcessor extends XMLProcessor {
 
-    public static void formatTakeableItem(TakeableItem i) {
+    public static void formatItem(String type, TakeableItem i) {
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("name", i.getName()));
-        sf.appendObjectToMostRecent(sf.createSaveElement("Takeable",attr));
+        sf.appendObjectToMostRecent(sf.createSaveElement(type, attr));
     }
 
     public static TakeableItem parseTakeableItem(Element el) {
