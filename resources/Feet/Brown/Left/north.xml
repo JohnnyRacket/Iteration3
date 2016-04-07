@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <single_frame_animation>
-  <x>8</x>
-  <y>8</y>
+  <x>16</x>
+  <y>16</y>
   <rootPath>Feet/Brown/Left/</rootPath>
   <fileName>north.png</fileName>
 </single_frame_animation>

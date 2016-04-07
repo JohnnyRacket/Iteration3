@@ -9,6 +9,7 @@ import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Location;
 
 import java.awt.*;
 
@@ -24,17 +25,20 @@ public class HominidViewObject implements ViewObject, Observer{
     private Moveable movingSubject;
 
     private HandsViewObject hands;
+    private FeetViewObject feet;
     //private FeetViewObject feet;
 
-    public HominidViewObject(Position position, Direction direction, Directional directionSubject, Moveable movingSubject, DirectionalViewObject body, HandsViewObject hands) {
+    private Location lastLocation;
+
+    public HominidViewObject(Position position, Direction direction, Directional directionSubject, Moveable movingSubject, DirectionalViewObject body, HandsViewObject hands, FeetViewObject feet) {
         this.position = position;
         this.direction = direction;
         this.directionSubject = directionSubject;
         this.movingSubject = movingSubject;
         this.body = body;
         this.hands = hands;
-        //this.feet = feet;
-
+        this.feet = feet;
+        this.lastLocation = movingSubject.getLocation();
         direction.setDirectionOf(body);
     }
 
@@ -52,14 +56,20 @@ public class HominidViewObject implements ViewObject, Observer{
     private void updateComponentsPosition() {
         updateBodyPosition();
         updateHandsPosition();
+        updateFeetPosition();
+    }
+
+    private void updateFeetPosition() {
+        feet.setPosition(position);
     }
 
     @Override
     public void draw(Graphics2D g) {
         hands.drawBackground(g);
+        feet.draw(g);
         body.draw(g);
         hands.drawForeground(g);
-        //feet.draw(g);
+
     }
 
     @Override
@@ -68,9 +78,17 @@ public class HominidViewObject implements ViewObject, Observer{
             changeDirection();
         }
         if (subjectHasMoved()) {
-            move();
+            if (isFalling()) {
+                fall();
+            } else if (isJumping()) {
+                jump();
+            } else {
+                move();
+            }
+            lastLocation = movingSubject.getLocation();
         }
     }
+
 
     private boolean subjectHasMoved() {
         long currentTime = ViewTime.getInstance().getCurrentTime();
@@ -88,14 +106,25 @@ public class HominidViewObject implements ViewObject, Observer{
 
     private void move() {
         hands.move(movingSubject.getMovingTicks()*Config.MODEL_TICK);
+        feet.move(movingSubject.getMovingTicks()*Config.MODEL_TICK);
+    }
+    private void jump() {
+        hands.jump(movingSubject.getMovingTicks()*Config.MODEL_TICK);
+
+    }
+    private void fall() {
+
     }
 
     private void changeDirection() {
         updateMyDirection();
         updateHandsDirection();
+        updateFeetDirection();
     }
 
-
+    private void updateFeetDirection() {
+        feet.changeDirection(direction);
+    }
 
 
     private void updateMyDirection() {
@@ -116,7 +145,12 @@ public class HominidViewObject implements ViewObject, Observer{
     }
 
 
-
+    private boolean isFalling() {
+        return movingSubject.getLocation().getZ() < lastLocation.getZ();
+    }
+    private boolean isJumping() {
+        return movingSubject.getLocation().getZ() > lastLocation.getZ();
+    }
 
     private long endMoveTime = 0;
 

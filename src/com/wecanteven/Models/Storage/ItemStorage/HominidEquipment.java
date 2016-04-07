@@ -15,10 +15,10 @@ public class HominidEquipment extends Equipment {
         super(owner);
     }
 
-    ChestEquipableItem chest;
-    BootsEquipableItem boots;
-    HeadEquipableItem head;
-    WeaponEquipableItem weapon;
+    private ChestEquipableItem chest;
+    private BootsEquipableItem boots;
+    private HeadEquipableItem head;
+    private WeaponEquipableItem weapon;
 
     @Override
     public boolean isEquiped(EquipableItem item) {
@@ -78,26 +78,42 @@ public class HominidEquipment extends Equipment {
 
     @Override
     public boolean unequipChest(ChestEquipableItem item) {
-        chest = null;
-        return true;
+        if (chest == item) {
+            getOwner().addItem(item);
+            chest = null;
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean unequipBoots(BootsEquipableItem item) {
-        boots = null;
-        return true;
+        if (boots == item) {
+            getOwner().addItem(item);
+            boots = null;
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean unequipHead(HeadEquipableItem item) {
-        head = null;
-        return true;
+        if (head == item) {
+            getOwner().addItem(item);
+            head = null;
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean unequipWeapon(WeaponEquipableItem item) {
-        weapon = null;
-        return true;
+        if (weapon == item) {
+            getOwner().addItem(item);
+            weapon = null;
+            return true;
+        }
+        return false;
     }
 
     @Override
