@@ -30,6 +30,8 @@ public abstract class HandState {
 
     public abstract void attack(long durationOfAttack);
 
+    public abstract void fall(long duration);
+
     public void equip(/*add weapon param model doesnt exist*/) {
 
     }

@@ -71,6 +71,9 @@ public class HandsViewObject implements ViewObject, Observer{
         handState.move(duration);
     }
     public void jump(long duration) { handState.jump(duration); }
+    public void fall(long duration) {
+        handState.fall(duration);
+    }
 
     public void update() {
         //TODO

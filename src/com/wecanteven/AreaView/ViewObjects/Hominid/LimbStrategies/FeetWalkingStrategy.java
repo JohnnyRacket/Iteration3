@@ -10,10 +10,10 @@ public class FeetWalkingStrategy extends LimbStrategy {
     private MicroPositionableViewObject leftFoot;
     private MicroPositionableViewObject rightFoot;
 
-    public FeetWalkingStrategy(double maxTangent, MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
+    public FeetWalkingStrategy(double maxTangent, MicroPositionableViewObject leftFoot, MicroPositionableViewObject rightFoot) {
         this.maxTangent = maxTangent;
-        this.leftFoot = leftHand;
-        this.rightFoot = rightHand;
+        this.leftFoot = leftFoot;
+        this.rightFoot = rightFoot;
     }
 
     @Override
