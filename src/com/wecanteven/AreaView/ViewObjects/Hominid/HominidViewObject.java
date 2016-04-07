@@ -64,18 +64,47 @@ public class HominidViewObject implements ViewObject, Observer{
 
     @Override
     public void update() {
-        this.direction = directionSubject.getDirection();
-        updateHandsDirection();
-        if (subjectHasMoved()) {
-            hands.move(movingSubject.getMovingTicks()*Config.MODEL_TICK);
+        if (subjectChangedDirection()) {
+            changeDirection();
         }
+        if (subjectHasMoved()) {
+            move();
+        }
+    }
+
+    private boolean subjectHasMoved() {
+        long currentTime = ViewTime.getInstance().getCurrentTime();
+        System.out.println("Moving Ticks: " + movingSubject.getMovingTicks());
+        if (currentTime >= endMoveTime && movingSubject.getMovingTicks() > 0) {
+            endMoveTime = currentTime + movingSubject.getMovingTicks()* Config.MODEL_TICK;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean subjectChangedDirection() {
+        return this.direction != directionSubject.getDirection();
+    }
+
+    private void move() {
+        hands.move(movingSubject.getMovingTicks()*Config.MODEL_TICK);
+    }
+
+    private void changeDirection() {
+        updateMyDirection();
+        updateHandsDirection();
     }
 
 
 
+
+    private void updateMyDirection() {
+        this.direction = directionSubject.getDirection();
+    }
+
     private void updateHandsDirection() {
         //System.out.println("changing hand direction");
-        hands.changeDirection(direction);
+        hands.changeDirection(directionSubject.getDirection());
     }
 
     private void updateHandsPosition() {
@@ -87,16 +116,10 @@ public class HominidViewObject implements ViewObject, Observer{
     }
 
 
+
+
     private long endMoveTime = 0;
-    public boolean subjectHasMoved() {
-        long currentTime = ViewTime.getInstance().getCurrentTime();
-        System.out.println("Moving Ticks: " + movingSubject.getMovingTicks());
-        if (currentTime >= endMoveTime && movingSubject.getMovingTicks() > 0) {
-            endMoveTime = currentTime + movingSubject.getMovingTicks()* Config.MODEL_TICK;
-            return true;
-        }
-        return false;
-    }
+
 }
 
 
