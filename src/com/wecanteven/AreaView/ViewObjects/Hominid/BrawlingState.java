@@ -41,7 +41,7 @@ public class BrawlingState extends HandState {
 
     @Override
     public void jump(long duration) {
-
+        jumpingStrategy.execute(duration);
     }
 
     @Override
