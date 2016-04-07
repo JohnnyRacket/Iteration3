@@ -22,16 +22,17 @@ import java.util.ArrayList;
 public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
     private ActionHandler actionHandler;
-    private int movingTicks;
+    protected Stats stats;
     private int height = 3;
-    private Direction direction;
     private int jumpHeight;
-    private boolean isActive;
-    private boolean lock;
     protected Location location;
+    private Direction direction;
     private CanMoveVisitor canMoveVisitor;
     private CanFallVisitor canFallVisitor;
-    protected Stats stats;
+    private int movingTicks;
+    private boolean isActive;
+    private boolean lock;
+
 
     public Entity(ActionHandler actionHandler, Direction direction){
         this.actionHandler = actionHandler;
@@ -55,36 +56,33 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
 
     public boolean move(Direction d){
+        int movementStat = this.getStats().getMovement();
+        if(movementStat == 0 || isActive){
+            return false;
+        }
         if(this.getDirection() == d){
-            int movementStat = this.getStats().getMovement();
-            if(movementStat == 0 || isActive){
-                return false;
-            }
             setDirection(d);
             setMovingTicks(calculateMovementTicks(movementStat));
             Location destination = location.add(d.getCoords);
-            return moveHelper(destination);
+            return actionHandler.move(this,destination);
         }else{
             this.setDirection(d);
-            setMovingTicks(0);
             return false;
         }
     }
-    private boolean moveHelper(Location destination){
-        if(actionHandler.move(this,destination)){
-            return true;
-        }
-        return false;
-    }
+
     public boolean fall(){
         if(!isActive()) {
             if (location.getZ() == 1) {
                 return false;
             }
+            setMovingTicks(1);
             return actionHandler.fall(this, this.getLocation().subtract(new Location(0, 0, 1)));
         }
         return false;
     }
+
+
     public void die(){
         stats.refreshStats();
     }
@@ -109,7 +107,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         return movingTicks;
     }
 
-    //Alex's testing code
     public void setMovingTicks(int ticks) {
         this.movingTicks = ticks;
         if(ticks == 0){
@@ -129,7 +126,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
                 }
                 movingTicks--;
                 deIncrementTick();
-
         }, 1);
         return movingTicks;
     }
@@ -217,7 +213,8 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         lock = false;
         if(getMovingTicks() <= 0){
             setIsActive(false);
-        }else{
+        }
+        else{
             setIsActive(true);
         }
     }
