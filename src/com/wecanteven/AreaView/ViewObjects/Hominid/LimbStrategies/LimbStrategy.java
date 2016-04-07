@@ -1,17 +1,17 @@
-package com.wecanteven.AreaView.ViewObjects.Hominid;
+package com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies;
 
 import com.wecanteven.AreaView.ViewTime;
 
 /**
  * Created by Alex on 4/6/2016.
  */
-public abstract class LimbStrategies {
+public abstract class LimbStrategy {
 
     public abstract void animate(double percentage);
 
     public void execute(long duration) {
         long startTime = ViewTime.getInstance().getCurrentTime();
-
+        step(startTime, duration);
     }
 
     private void step(long startTime, long duration) {
