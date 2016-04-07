@@ -62,9 +62,9 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         }
         if(this.getDirection() == d){
             setDirection(d);
-            setMovingTicks(calculateMovementTicks(movementStat));
+            //setMovingTicks(calculateMovementTicks(movementStat));
             Location destination = location.add(d.getCoords);
-            return actionHandler.move(this,destination);
+            return actionHandler.move(this,destination, calculateMovementTicks(movementStat));
         }else{
             this.setDirection(d);
             return false;
@@ -76,7 +76,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             if (location.getZ() == 1) {
                 return false;
             }
-            setMovingTicks(3);
+            //setMovingTicks(2);
             return actionHandler.fall(this, this.getLocation().subtract(new Location(0, 0, 1)));
         }
         return false;

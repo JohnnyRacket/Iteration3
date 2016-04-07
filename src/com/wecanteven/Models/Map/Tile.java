@@ -116,6 +116,7 @@ public class Tile implements MapVisitable {
 
     public void interact(Entity entity){
         entity.unlock();
+
         terrain.interact(entity);
     }
 
