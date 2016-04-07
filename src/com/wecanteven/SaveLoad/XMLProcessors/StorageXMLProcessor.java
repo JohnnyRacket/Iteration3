@@ -20,7 +20,8 @@ public class StorageXMLProcessor extends XMLProcessor {
         sf.appendObjectTo("Character", sf.createSaveElement("ItemStorage",attr));
     }
 
-    private static ItemStorage parseItemStorage() {
+    public static ItemStorage parseItemStorage() {
+
         return null;
     }
 
@@ -31,7 +32,7 @@ public class StorageXMLProcessor extends XMLProcessor {
         sf.appendObjectTo("ItemStorage", sf.createSaveElement("Inventory",attr));
     }
 
-    private static Inventory parseInventory() {
+    public static Inventory parseInventory() {
         return null;
     }
 

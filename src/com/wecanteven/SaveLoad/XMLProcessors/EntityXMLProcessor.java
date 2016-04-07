@@ -3,12 +3,15 @@ package com.wecanteven.SaveLoad.XMLProcessors;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Map.Map;
+import com.wecanteven.Models.Occupation.Occupation;
+import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
+import sun.print.SunMinMaxPage;
 
 import java.util.ArrayList;
 
@@ -38,8 +41,9 @@ public class EntityXMLProcessor extends XMLProcessor {
     }
 
     public static Character parseCharacter(Map map, Element el) {
-        Character c =  new Character(map, parseDirection(sf.getElemenetById(el, "Direction", 0)));
+        Character c =  new Character(map, parseDirection(sf.getElemenetById(el, "Direction", 0)), parseOccupation(sf.getStrAttr(el, "Occupation")), StorageXMLProcessor.parseItemStorage());
         parseStats(c, sf.getElemenetById(el, "Stats", 0));
+        StorageXMLProcessor.parseItemStorage();
         map.add(c, parseLocation(sf.getElemenetById(el, "Location", 0)));
         return c;
     }
@@ -102,6 +106,20 @@ public class EntityXMLProcessor extends XMLProcessor {
         return Direction.values()[sf.getIntAttr(el, "enum")];
     }
 
+    public static Occupation parseOccupation(String o) {
+        switch(o){
+            case "Smasher":
+                return new Smasher();
+            case "Summoner":
+                //new Summoner();
+                return null;
+            case "Sneak":
+                //new Sneak();
+                return null;
+            default:
+                return new Smasher();
+        }
+    }
 
 
 }
