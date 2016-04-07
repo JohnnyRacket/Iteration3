@@ -89,6 +89,7 @@ public class HominidViewObject implements ViewObject, Observer{
         }
     }
 
+
     private boolean subjectHasMoved() {
         long currentTime = ViewTime.getInstance().getCurrentTime();
         System.out.println("Moving Ticks: " + movingSubject.getMovingTicks());

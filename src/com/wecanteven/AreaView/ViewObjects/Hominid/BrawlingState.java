@@ -2,6 +2,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandWalkingStrategy;
+import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandsFallingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandsYJumpingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.LimbStrategy;
 import com.wecanteven.UtilityClasses.Direction;
@@ -20,11 +21,13 @@ public class BrawlingState extends HandState {
 
     private LimbStrategy walkingStrategy;
     private LimbStrategy jumpingStrategy;
+    private LimbStrategy fallingStrategy;
 
     public BrawlingState(Direction direction, MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
         super(leftHand, rightHand);
         walkingStrategy = new HandWalkingStrategy(0.3, leftHand, rightHand);
         jumpingStrategy = new HandsYJumpingStrategy(height, 5, leftHand, rightHand);
+        fallingStrategy = new HandsFallingStrategy(0.3, leftHand, rightHand);
         changeDirection(direction);
         leftHand.setRadius(radius);
         leftHand.setOffsetAngle(leftAngle);
@@ -53,6 +56,10 @@ public class BrawlingState extends HandState {
 
     public void setLocation(Location location) {
         //TODO
+    }
+
+    public void fall(long duration) {
+        fallingStrategy.execute(duration);
     }
 
     public Location getLocation() {
