@@ -63,13 +63,12 @@ public class UIViewFactory {
         equipMenu.setBgColor(new Color(60,50,60));
 
         //NavigatableList equiplist = new NavigatableList();
-        equiplist.addItem(new GridItem("New Game", () -> {System.out.println("test 1 selected");}));
+        //equiplist.addItem();
 
 
         //menu.setSelectedColor(Color.cyan);
         //make menu list
         //NavigatableList list = new NavigatableList();
-        list.addItem(new GridItem("New Game", () -> {System.out.println("test 1 selected");}));
 
 
         menu.setList(list);

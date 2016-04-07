@@ -33,10 +33,11 @@ public class HominidEquipment extends Equipment {
 
     @Override
     public boolean equipChest(ChestEquipableItem item) {
+        System.out.println("blubb");
         if (chest != null) {
             getOwner().addItem(chest);
         }
-
+        System.out.println("item is equippzed");
         chest = item;
 
         return true;

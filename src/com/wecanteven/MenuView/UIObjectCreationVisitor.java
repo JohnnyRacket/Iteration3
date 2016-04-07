@@ -118,7 +118,7 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
                 factory.createEquippableItemMenu(character, equipable);
             }));
         }else{
-            inventoryItems.addItem(new GridItem(equipable.getName(), () -> {
+            equippedItems.addItem(new GridItem(equipable.getName(), () -> {
                 System.out.println("select hit on equpped item");
                 factory.createEquippedItemMenu(character, equipable);
             }));
