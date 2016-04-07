@@ -1,5 +1,7 @@
-package com.wecanteven.Models.Factories.Item;
+package com.wecanteven.Models.Factories.ItemMaps;
 
+import com.wecanteven.Models.Factories.ItemFactories.CreateCommands.IEquipableItemCreateCommand;
+import com.wecanteven.Models.Factories.ItemFactories.EquipableItemFactory;
 import com.wecanteven.Models.Items.Takeable.Equipable.BootsEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
@@ -13,7 +15,7 @@ import java.util.HashMap;
 public class EquipableItemMap {
     private static EquipableItemMap instance;
 
-    private HashMap<String, EquipableItem> itemMap;
+    private HashMap<String, IEquipableItemCreateCommand> itemMap;
 
     private EquipableItemMap() {
         itemMap = new HashMap<>();
@@ -31,12 +33,12 @@ public class EquipableItemMap {
     private void initialize() {
         itemMap.clear();
 
-        itemMap.put("", new BootsEquipableItem("", new StatsAddable(0,0,0,0,0,0,0,0,0)));
+        itemMap.put("", () -> new EquipableItemFactory().vendDefaultBootsInstance());
     }
 
     public TakeableItem getItemAsTakeable(String name) {
         if (itemMap.containsKey(name)) {
-            return itemMap.get(name);
+            return itemMap.get(name).create();
         }
 
         throw new IllegalArgumentException("There is no TakeableItem with name: " + name);
@@ -44,9 +46,20 @@ public class EquipableItemMap {
 
     public EquipableItem getItemAsEquippable(String name) {
         if (itemMap.containsKey(name)) {
-            return itemMap.get(name);
+            return itemMap.get(name).create();
         }
 
         throw new IllegalArgumentException("There is no Equipable with name: " + name);
+    }
+
+    /**
+     * Extensibility
+     * */
+    protected void addNewItem(String name, IEquipableItemCreateCommand createNewItem) {
+        itemMap.put(name, createNewItem);
+    }
+
+    protected void removeItem(String name) {
+        itemMap.remove(name);
     }
 }
