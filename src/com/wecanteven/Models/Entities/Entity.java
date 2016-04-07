@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
     private ActionHandler actionHandler;
-    private int movingTicks;
+    private int movingTicks, fallingTicks;
     private int height = 3;
     private Direction direction;
     private int jumpHeight;
@@ -55,35 +55,38 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
 
     public boolean move(Direction d){
+        int movementStat = this.getStats().getMovement();
+        if(movementStat == 0 || isActive){
+            return false;
+        }
         if(this.getDirection() == d){
-            int movementStat = this.getStats().getMovement();
-            if(movementStat == 0 || isActive){
-                return false;
-            }
             setDirection(d);
             setMovingTicks(calculateMovementTicks(movementStat));
             Location destination = location.add(d.getCoords);
-            return moveHelper(destination);
+            return actionHandler.move(this,destination);
         }else{
             this.setDirection(d);
-            setMovingTicks(0);
             return false;
         }
     }
-    private boolean moveHelper(Location destination){
-        if(actionHandler.move(this,destination)){
-            return true;
-        }
-        return false;
-    }
+
     public boolean fall(){
         if(!isActive()) {
             if (location.getZ() == 1) {
                 return false;
             }
+            setFallingTicks(1);
             return actionHandler.fall(this, this.getLocation().subtract(new Location(0, 0, 1)));
         }
         return false;
+    }
+
+    public int getMaxTicks(){
+        int maxTicks = movingTicks;
+        if(maxTicks < fallingTicks){
+            maxTicks = fallingTicks;
+        }
+        return maxTicks;
     }
     public void die(){
         stats.refreshStats();
@@ -108,8 +111,20 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     public int getMovingTicks() {
         return movingTicks;
     }
+    public int getFallingTicks(){
+        return fallingTicks;
+    }
 
-    //Alex's testing code
+    public void setFallingTicks(int ticks) {
+        setIsActive(true);
+        fallingTicks = ticks;
+        if(ticks == 0){
+            setIsActive(false);
+            return;
+        }
+        deIncrementTick();
+        notifyObservers();
+    }
     public void setMovingTicks(int ticks) {
         this.movingTicks = ticks;
         if(ticks == 0){
@@ -123,12 +138,23 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public int deIncrementTick(){
         ModelTime.getInstance().registerAlertable(() -> {
-                if(movingTicks == 0){
-                    setIsActive(false);
-                    return;
-                }
+//                if(movingTicks == 0){
+//                    setIsActive(false);
+//                    return;
+//                }
+//                movingTicks--;
+//                deIncrementTick();
+            if(movingTicks > 0){
                 movingTicks--;
-                deIncrementTick();
+            }
+            if(fallingTicks > 0){
+                fallingTicks--;
+            }
+            if(movingTicks == 0 && fallingTicks == 0){
+                setIsActive(false);
+                return;
+            }
+            deIncrementTick();
 
         }, 1);
         return movingTicks;
@@ -217,7 +243,10 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         lock = false;
         if(getMovingTicks() <= 0){
             setIsActive(false);
-        }else{
+        }else if(getFallingTicks() <= 0) {
+            setIsActive(false);
+        }
+        else{
             setIsActive(true);
         }
     }
