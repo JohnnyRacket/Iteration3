@@ -63,8 +63,13 @@ public class TileXMLProcessor extends XMLProcessor {
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("terrain", tile.getTerrain().getTerrain()));
         sf.appendObjectTo("Column", sf.createSaveElement("Tile",attr));
-
+        if(tile.getTerrain().getTerrain() == "Current"){
+            formatCurrentDirection(tile.getTerrain());
+        }
     }
+
+
+
 
     public static Tile parseTile(Element el){
         Terrain terrain;
@@ -80,13 +85,19 @@ public class TileXMLProcessor extends XMLProcessor {
             case "Current":
                 //System.out.println("Making Current");
                 //TODO: Later support multiple current directions
-                terrain = new Current(Direction.NORTHEAST);
+                terrain = new Current(EntityXMLProcessor.parseDirection(sf.getElemenetById(el, "CurrentDirection", 0)));
                 break;
             default:
                 terrain = new Ground();
             break;
         }
         return new Tile(terrain);
+    }
+
+    public static void formatCurrentDirection(Terrain terrain) {
+        ArrayList<Attr> attr = new ArrayList<>();
+        attr.add(sf.saveAttr("enum", ((Current)terrain).getDirection().ordinal()));
+        sf.appendObjectToMostRecent(sf.createSaveElement("CurrentDirection",attr));
     }
 
 }

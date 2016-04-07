@@ -41,4 +41,8 @@ public abstract class EquipableItem extends TakeableItem {
     {
         visitor.visitEquipableItem(this);
     }
+
+    public void accept(ItemVisitor visitor){
+        visitor.visitEquipableItem(this);
+    }
 }

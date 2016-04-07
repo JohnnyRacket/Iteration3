@@ -9,4 +9,5 @@ public interface Navigatable {
     void left();
     void right();
     void select();
+    void active(boolean active);
 }

@@ -45,4 +45,13 @@ public class StorageXMLProcessor extends XMLProcessor {
         return null;
     }
 
+    public static void formatItemSlot(int i) {
+        System.out.println("Formatting Item Slot");
+        ArrayList<Attr> attr = new ArrayList<>();
+        attr.add(sf.saveAttr("position", i));
+        sf.appendObjectTo("Inventory", sf.createSaveElement("ItemSlot",attr));
+    }
+    public static void parseItemSlot(Equipment el) {
+
+    }
 }

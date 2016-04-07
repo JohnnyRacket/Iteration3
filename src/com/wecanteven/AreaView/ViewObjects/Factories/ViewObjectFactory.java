@@ -57,6 +57,7 @@ public abstract class ViewObjectFactory {
 
         FeetViewObject feet = new FeetViewObject(d, leftFoot, rightFoot);
         HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, body, hands, feet);
+        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, body, hands);
 
         subject.attach(stationarySneak);
         subject.attach(body);
