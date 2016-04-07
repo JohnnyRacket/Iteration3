@@ -23,7 +23,7 @@ public class Character extends Entity {
     public Character(ActionHandler actionHandler, Direction direction){
         super(actionHandler, direction);
         occupation = new Smasher();
-        stats = new Stats(this);
+        this.stats = new Stats(this);
         this.itemStorage = new ItemStorage(this, 5);
     }
 
@@ -34,10 +34,10 @@ public class Character extends Entity {
         this.itemStorage = new ItemStorage(this, 5);
     }
 
-    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats, ItemStorage itemStorage){
+    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage){
         super(actionHandler, direction);
+        this.stats = new Stats(this);
         this.occupation = occupation;
-        this.stats = stats;
         this.itemStorage = itemStorage;
     }
     public void attack(Direction d){}

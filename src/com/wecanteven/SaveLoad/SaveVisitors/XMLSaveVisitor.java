@@ -128,7 +128,6 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         Iterator itemIter = inventory.getOrderedIterator();
         Tuple<TakeableItem, Integer> itemSlot;
         while(itemIter.hasNext()) {
-
             itemSlot = (Tuple)itemIter.next();
             StorageXMLProcessor.formatItemSlot(itemSlot.y);
             itemSlot.x.accept(this);
