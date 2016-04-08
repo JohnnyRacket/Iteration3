@@ -17,17 +17,18 @@ public class TitleBarDecorator extends DrawableDecorator {
     public TitleBarDecorator(Drawable d, String title) {
         super(d);
         this.title = title;
+        //d.setHeight(d.getHeight());
     }
 
     @Override
     public void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight) {
         g2d.setColor(bgColor);
-        g2d.fillRect(x,y-25,(windowWidth - x*2 ),50);
+        g2d.fillRect(x,y,(this.getDrawable().getWidth()),50);
         g2d.setColor(textColor);
         g2d.setFont(new Font("Helvetica",1,20));
         FontMetrics metrics = g2d.getFontMetrics();
-        g2d.drawString(title,x + (windowWidth - x*2)/2 - metrics.stringWidth(title)/2,y+5);
-        super.draw(g2d,x,y + 25, windowWidth, windowHeight);
+        g2d.drawString(title,x + this.getDrawable().getWidth()/2 - metrics.stringWidth(title)/2,y+30);
+        super.draw(g2d,x,y + 50, windowWidth, windowHeight);
     }
 
     public Color getBgColor() {

@@ -5,8 +5,9 @@ package com.wecanteven.Models.Storage.EquipmentSlots;
  */
 
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
+import com.wecanteven.Observers.Observable;
 
-public class EquipmentSlot  <T extends EquipableItem>{
-    T equipment;
-
+public interface EquipmentSlot extends Observable {
+    EquipableItem getItem();
+    boolean hasItem();
 }

@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Storage.ItemStorage;
 
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 
@@ -15,14 +16,13 @@ import java.util.List;
 public class HominidEquipment extends Equipment {
 
     public HominidEquipment(ItemStorage owner) {
-
         super(owner);
     }
 
-    private EquipmentSlot<ChestEquipableItem> chest = new EquipmentSlot<>();
-    private EquipmentSlot<BootsEquipableItem> boots = new EquipmentSlot<>();
-    private EquipmentSlot<HeadEquipableItem> head = new EquipmentSlot<>();
-    private EquipmentSlot<WeaponEquipableItem> weapon = new EquipmentSlot<>();
+    private HominindEquipmentSlot<ChestEquipableItem> chest = new HominindEquipmentSlot<>();
+    private HominindEquipmentSlot<BootsEquipableItem> boots = new HominindEquipmentSlot<>();
+    private HominindEquipmentSlot<HeadEquipableItem> head = new HominindEquipmentSlot<>();
+    private HominindEquipmentSlot<WeaponEquipableItem> weapon = new HominindEquipmentSlot<>();
 
     @Override
     public boolean isEquiped(EquipableItem item) {
@@ -76,6 +76,26 @@ public class HominidEquipment extends Equipment {
     }
 
     @Override
+    public EquipmentSlot getChest() {
+        return chest;
+    }
+
+    @Override
+    public EquipmentSlot getBoots() {
+        return boots;
+    }
+
+    @Override
+    public EquipmentSlot getHead() {
+        return head;
+    }
+
+    @Override
+    public EquipmentSlot getWeapon() {
+        return weapon;
+    }
+
+    @Override
     public Iterator<EquipableItem> getIterator() {
         List<EquipableItem> equippedItemList = new ArrayList<>();
 
@@ -87,19 +107,21 @@ public class HominidEquipment extends Equipment {
         return equippedItemList.iterator();
     }
 
-    public class EquipmentSlot  <T extends EquipableItem> implements Observable{
-        private ArrayList<Observer> observers;
+    public class HominindEquipmentSlot  <T extends EquipableItem> implements Observable, EquipmentSlot{
+        private ArrayList<Observer> observers = new ArrayList<>();
         T currentlyEquipped;
         boolean equip(T item) {
             if (currentlyEquipped != null)
                 getOwner().addItem(currentlyEquipped);
             currentlyEquipped = item;
+            notifyObservers();
             return true;
         }
         boolean unequip(T item) {
             if (currentlyEquipped == item) {
                 getOwner().addItem(item);
                 currentlyEquipped = null;
+                notifyObservers();
                 return true;
             }
             return false;
@@ -110,6 +132,15 @@ public class HominidEquipment extends Equipment {
                 list.add(currentlyEquipped);
         }
 
+        @Override
+        public EquipableItem getItem() {
+            return currentlyEquipped;
+        }
+
+        @Override
+        public boolean hasItem() {
+            return currentlyEquipped != null;
+        }
 
         @Override
         public ArrayList<Observer> getObservers() {

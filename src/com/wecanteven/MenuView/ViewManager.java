@@ -10,15 +10,26 @@ import java.util.Stack;
 public class ViewManager {
     //needs a stack of view things.
     Stack<SwappableView> viewStack = new Stack<>();
+    Stack<SwappableView> permViewStack = new Stack<>();
 
     public void draw(Graphics2D g2d, int windowWidth, int windowHeight){
         int i = 0;
-        Stack<SwappableView> tmpStack = (Stack<SwappableView>) viewStack.clone();
-        Iterator<SwappableView> iter = tmpStack.iterator();
+        Stack<SwappableView> tmpPermStack = (Stack<SwappableView>) permViewStack.clone();
+        Iterator<SwappableView> iter = tmpPermStack.iterator();
         while(iter.hasNext()){
             //System.out.println("in view manager drawing" + i++);
             iter.next().draw(g2d, windowWidth, windowHeight);
         }
+        Stack<SwappableView> tmpStack = (Stack<SwappableView>) viewStack.clone();
+        iter = tmpStack.iterator();
+        while(iter.hasNext()){
+            //System.out.println("in view manager drawing" + i++);
+            iter.next().draw(g2d, windowWidth, windowHeight);
+        }
+    }
+
+    public void addPermView(SwappableView view){
+        permViewStack.push(view);
     }
 
     public void addView(SwappableView view){

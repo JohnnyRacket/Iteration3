@@ -163,4 +163,12 @@ public class ItemStorage {
         inventory.accept(visitor);
         equipped.accept(visitor);
     }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public Equipment getEquipped() {
+        return equipped;
+    }
 }

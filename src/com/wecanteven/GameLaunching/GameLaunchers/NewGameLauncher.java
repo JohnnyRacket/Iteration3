@@ -9,6 +9,7 @@ import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.HeadEquipableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
@@ -51,8 +52,8 @@ public class NewGameLauncher extends GameLauncher {
     @Override
     protected void createAvatar(String occupation){
         Character player = new Character(getMap(), Direction.SOUTH);
-        player.pickup(new ChestEquipableItem("Dank Chesplate", new StatsAddable(1,1,1,1,1,1,1,1,1)));
-        player.pickup(new ChestEquipableItem("Lame Chesplate", new StatsAddable(1,1,1,1,1,1,1,1,1)));
+        player.pickup(new HeadEquipableItem("Top Hat", new StatsAddable(1,1,1,1,1,1,1,1,1)));
+        player.pickup(new HeadEquipableItem("THE GAME CRASHER", new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.getItemStorage().equip(new ChestEquipableItem("Mediocre Top", new StatsAddable(1,1,1,1,1,1,1,1,1)));
         setAvatar(new Avatar(player, getMap()));
         getMap().add(player, new Location(3,2,1));
@@ -66,5 +67,8 @@ public class NewGameLauncher extends GameLauncher {
         levelFactory.populateMap(map);
     }
 
-
+    @Override
+    protected void initializeUIView() {
+        UIViewFactory.getInstance().createHUDView(getAvatar().getCharacter());
+    }
 }

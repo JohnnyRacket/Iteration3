@@ -8,16 +8,20 @@ import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.ActivatableViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
+import com.wecanteven.AreaView.ViewObjects.LeafVOs.NullViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
+import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.UtilityClasses.Direction;
 
@@ -45,18 +49,31 @@ public abstract class ViewObjectFactory {
 
 
 
-        public ViewObject createSneak(Position p, Direction d, Entity subject) {
+    public ViewObject createSneak(Position p, Direction d, Character subject) {
+        EquipmentSlot chestSlot = subject.getItemStorage().getEquipped().getChest();
+        EquipmentSlot weaponSlot = subject.getItemStorage().getEquipped().getWeapon();
+        EquipmentSlot hatSlot = subject.getItemStorage().getEquipped().getHead();
+
+
         DirectionalViewObject body = createBody(p, subject, "Sneak");
+        EquipableViewObject bodyArmor = createEquipable(body, createNullViewObject(), chestSlot, subject);
+        EquipableViewObject hatArmor = createEquipable(bodyArmor, createNullViewObject(), hatSlot, subject);
+
+        chestSlot.attach(bodyArmor);
+        hatSlot.attach(hatArmor);
+
 
         MicroPositionableViewObject leftHand = new MicroPositionableViewObject(createLeftHand(p));
         MicroPositionableViewObject rightHand = new MicroPositionableViewObject(createRightHand(p));
-        HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p);
+        HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p, weaponSlot);
+
+        weaponSlot.attach(hands);
 
         MicroPositionableViewObject leftFoot = createLeftFoot(p, d, subject);
         MicroPositionableViewObject rightFoot = createRightFoot(p, d, subject);
 
         FeetViewObject feet = new FeetViewObject(d, leftFoot, rightFoot);
-        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, body, hands, feet);
+        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, hatArmor, hands, feet);
 
         subject.attach(stationarySneak);
         subject.attach(body);
@@ -104,6 +121,10 @@ public abstract class ViewObjectFactory {
         return vo;
     }
 
+    public DirectionalViewObject createEquipment(Position p, Directional d, String name ) {
+        return createDirectional(p, d, "Equipment/" + name + "/");
+    }
+
     private DirectionalViewObject createBody(Position p, Directional d, String entityName) {
         return createDirectional(p, d, "Entities/" +  entityName + "/");
     }
@@ -131,6 +152,14 @@ public abstract class ViewObjectFactory {
 
     public DynamicImageFactory getDynamicImageFactory() {
         return factory;
+    }
+
+    public EquipableViewObject createEquipable(ViewObject child, ViewObject equipment, EquipmentSlot subject, Directional directional) {
+        return new EquipableViewObject(child, equipment, subject, this, directional);
+    }
+
+    public NullViewObject createNullViewObject() {
+        return new NullViewObject(new Position(0,0,0));
     }
 
     protected SimpleViewObject createSimpleViewObject(Position p, String path) {
