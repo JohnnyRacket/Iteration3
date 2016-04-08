@@ -30,7 +30,7 @@ public class PrimaryStat extends Stat implements ViewObservable {
 
     public void subtract(int subtractable){
         if(subtractable !=0){
-            stat += subtractable;
+            stat -= subtractable;
             notifyObservers();
         }
     }
