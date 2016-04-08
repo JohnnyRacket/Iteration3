@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Skills;
 
 import com.wecanteven.Models.Abilities.Ability;
+import com.wecanteven.Visitors.SkillVisitor;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -38,4 +39,8 @@ public abstract class SkillManager {
     protected abstract void initStorage();
 
     public abstract Iterator<Skill> getIterator();
+
+    public void accept(SkillVisitor visitor) {
+        visitor.visitSkillManager(this);
+    }
 }

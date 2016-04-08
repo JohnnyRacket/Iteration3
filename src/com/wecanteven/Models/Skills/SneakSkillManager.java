@@ -10,7 +10,6 @@ import java.util.Iterator;
  * Created by simonnea on 4/7/16.
  */
 public class SneakSkillManager extends HashMapSkillManager {
-    HashMap<String, Skill> skills;
 
     public SneakSkillManager() {
         super();

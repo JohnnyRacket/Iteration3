@@ -9,6 +9,7 @@ import java.util.Iterator;
 /**
  * Created by simonnea on 4/8/16.
  */
+
 public abstract class HashMapSkillManager extends SkillManager {
     HashMap<String, Skill> skills;
 
