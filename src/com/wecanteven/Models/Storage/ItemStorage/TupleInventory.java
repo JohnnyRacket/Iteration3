@@ -21,7 +21,6 @@ public class TupleInventory extends Inventory {
         this.inventory = new TakeableItem[maxCapacity];
         this.maxCapacity = maxCapacity;
 
-        add(new TakeableItem("ItemInINventory"), 4);
     }
 
     @Override
