@@ -22,8 +22,6 @@ public class HandsViewObject implements ViewObject, Observer{
 
     public HandsViewObject(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand, Direction direction, Position position) {
         this.position = position;
-//        this.leftHand = leftHand;
-//        this.rightHand = rightHand;
         handState = new BrawlingState(direction, leftHand, rightHand);
     }
 

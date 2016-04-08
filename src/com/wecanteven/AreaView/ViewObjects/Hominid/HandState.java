@@ -66,7 +66,6 @@ public abstract class HandState {
     }
 
     public void drawLeftHand(Graphics2D g) {
-        System.out.println("Trying to draw left Hand");
         leftHand.draw(g);
     }
 
