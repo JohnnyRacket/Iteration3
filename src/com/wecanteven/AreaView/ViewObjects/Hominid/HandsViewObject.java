@@ -22,26 +22,26 @@ public class HandsViewObject implements ViewObject, Observer{
 
     public HandsViewObject(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand, Direction direction, Position position) {
         this.position = position;
-        this.leftHand = leftHand;
-        this.rightHand = rightHand;
+//        this.leftHand = leftHand;
+//        this.rightHand = rightHand;
         handState = new BrawlingState(direction, leftHand, rightHand);
     }
 
     public void drawForeground(Graphics2D graphic) {
-        if (leftHand.getY() < 0) {
-            leftHand.draw(graphic);
+        if (handState.getLeftHandY() < 0) {
+            handState.drawLeftHand(graphic);
         }
-        if (rightHand.getY() < 0) {
-            rightHand.draw(graphic);
+        if (handState.getRightHandY() < 0) {
+            handState.drawRightHand(graphic);
         }
     }
 
     public void drawBackground(Graphics2D graphic) {
-        if (leftHand.getY() >= 0) {
-            leftHand.draw(graphic);
+        if (handState.getLeftHandY() >= 0) {
+            handState.drawLeftHand(graphic);
         }
-        if (rightHand.getY() >= 0) {
-            rightHand.draw(graphic);
+        if (handState.getRightHandY() >= 0) {
+            handState.drawRightHand(graphic);
         }
     }
 
@@ -53,13 +53,14 @@ public class HandsViewObject implements ViewObject, Observer{
     @Override
     public void setPosition(Position p) {
         position = p;
-        rightHand.setPosition(p);
-        leftHand.setPosition(p);
+        handState.setRightHandPosition(p);
+        handState.setLeftHandPosition(p);
     }
 
     public void changeDirection(Direction direction) {
-        leftHand.setDirection(direction);
-        rightHand.setDirection(direction);
+        handState.setLeftHandDirection(direction);
+        handState.setRightHandDirection(direction);
+
     }
 
     public void draw(Graphics2D graphic) {

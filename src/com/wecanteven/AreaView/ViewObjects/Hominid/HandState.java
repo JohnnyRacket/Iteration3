@@ -32,7 +32,45 @@ public abstract class HandState {
 
     public abstract void fall(long duration);
 
+    public double getLeftHandY() {
+        return leftHand.getY();
+    }
+
+    public double getRightHandY() {
+        return rightHand.getY();
+    }
+
+
+    public void setLeftHandPosition(Position position) {
+        leftHand.setPosition(position);
+    }
+
+    public void setRightHandPosition(Position position) {
+        rightHand.setPosition(position);
+    }
+
+    public void setLeftHandDirection(Direction direction) {
+        leftHand.setDirection(direction);
+    }
+
+    public void setRightHandDirection(Direction direction) {
+        rightHand.setDirection(direction);
+    }
     public void equip(/*add weapon param model doesnt exist*/) {
 
+    }
+
+    public void draw(Graphics2D g) {
+        leftHand.draw(g);
+        rightHand.draw(g);
+    }
+
+    public void drawLeftHand(Graphics2D g) {
+        System.out.println("Trying to draw left Hand");
+        leftHand.draw(g);
+    }
+
+    public void drawRightHand(Graphics2D g) {
+        rightHand.draw(g);
     }
 }
