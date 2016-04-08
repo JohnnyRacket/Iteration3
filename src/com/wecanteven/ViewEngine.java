@@ -55,7 +55,7 @@ public class ViewEngine extends JFrame implements Runnable{
         pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-
+        //dumb
     }
 
 
