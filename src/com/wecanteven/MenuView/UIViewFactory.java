@@ -277,6 +277,13 @@ public class UIViewFactory {
     }
 
 
+    public SwappableView createTradeView(Character npcInventory, Character playerInventory, int bargainLevel){
+
+        return null;
+    }
+
+
+
     public MainController getController() {
         return controller;
     }
