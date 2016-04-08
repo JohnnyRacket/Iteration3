@@ -19,10 +19,10 @@ public class HominidEquipment extends Equipment {
         super(owner);
     }
 
-    private EquipmentSlot<ChestEquipableItem> chest = new EquipmentSlot<>();
-    private EquipmentSlot<BootsEquipableItem> boots = new EquipmentSlot<>();
-    private EquipmentSlot<HeadEquipableItem> head = new EquipmentSlot<>();
-    private EquipmentSlot<WeaponEquipableItem> weapon = new EquipmentSlot<>();
+    private HominindEquipmentSlot<ChestEquipableItem> chest = new HominindEquipmentSlot<>();
+    private HominindEquipmentSlot<BootsEquipableItem> boots = new HominindEquipmentSlot<>();
+    private HominindEquipmentSlot<HeadEquipableItem> head = new HominindEquipmentSlot<>();
+    private HominindEquipmentSlot<WeaponEquipableItem> weapon = new HominindEquipmentSlot<>();
 
     @Override
     public boolean isEquiped(EquipableItem item) {
@@ -87,7 +87,7 @@ public class HominidEquipment extends Equipment {
         return equippedItemList.iterator();
     }
 
-    public class EquipmentSlot  <T extends EquipableItem> implements Observable{
+    public class HominindEquipmentSlot  <T extends EquipableItem> implements Observable{
         private ArrayList<Observer> observers;
         T currentlyEquipped;
         boolean equip(T item) {

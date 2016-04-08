@@ -64,6 +64,6 @@ public abstract class Equipment extends StorageComponent<ItemStorage> {
     public abstract boolean unequipWeapon(WeaponEquipableItem item);
 
     public abstract Iterator<EquipableItem> getIterator();
-    
+
 
 }
