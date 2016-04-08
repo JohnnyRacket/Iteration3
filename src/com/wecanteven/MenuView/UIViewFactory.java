@@ -154,6 +154,9 @@ public class UIViewFactory {
 
     public void createHUDView(Character character){
         StatsHUD statsHUD = new StatsHUD(character.getStats());
+        statsHUD.setHeight(150);
+        statsHUD.setWidth(300);
+        statsHUD.setBgColor(new Color(.5f,.5f,.5f,.5f));
         SwappableView view = new SwappableView();
         view.addDrawable(statsHUD);
         ViewTime.getInstance().register(()->{
