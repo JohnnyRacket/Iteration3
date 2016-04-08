@@ -99,6 +99,8 @@ public class ItemMap {
 
         //Weapon
 
+        // TODO need 3 one handed, 3 two handed, 3 brawler
+
         //Melee
         EquipableItemMap.put("Default Melee", () -> factory.vendDefaultMeleeWeapon("Default Melee"));
         //EquipableItemMap.put("", () -> {});
