@@ -131,8 +131,7 @@ public class UIViewFactory {
         columns.setHeight(400);
         columns.setWidth(700);
 
-        TitleBarDecorator foo = new TitleBarDecorator(menu, "test");
-        columns.addDrawable(foo);
+        columns.addDrawable(menu);
         columns.addDrawable(equipMenu);
 
         TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment");
