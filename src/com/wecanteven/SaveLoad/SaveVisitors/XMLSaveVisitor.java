@@ -65,7 +65,6 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     @Override
     public void visitTile(Tile tile) {
         TileXMLProcessor.formatTile(tile);
-        if(tile.hasEntity()){tile.getEntity().accept(this);}
         if(tile.hasObstacle()) {tile.getObstacle().accept(this);}
         if(tile.hasInteractiveItem()) {tile.getInteractiveItem().accept(this);}
         if(tile.hasOneShot()) {tile.getOneShot().accept(this);}
@@ -74,6 +73,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
                 i.accept(this);
             }
         }
+        if(tile.hasEntity()){tile.getEntity().accept(this);}
 
     }
 
