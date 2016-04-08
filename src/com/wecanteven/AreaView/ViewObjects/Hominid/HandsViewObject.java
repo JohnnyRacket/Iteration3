@@ -7,6 +7,7 @@ import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Items.Takeable.Equipable.MeleeWeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.RangedWeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
+import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
@@ -17,12 +18,14 @@ import java.awt.*;
 public class HandsViewObject implements ViewObject, Observer {
     private HandState handState;
     private Position position;
+    private EquipmentSlot subject;
    // private Equipment --dont have it yet..
 
 
 
-    public HandsViewObject(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand, Direction direction, Position position) {
+    public HandsViewObject(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand, Direction direction, Position position, EquipmentSlot subject) {
         this.position = position;
+        this.subject = subject;
         handState = new BrawlingState(direction, leftHand, rightHand);
     }
 
