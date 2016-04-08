@@ -115,12 +115,14 @@ public class HominidEquipment extends Equipment {
             if (currentlyEquipped != null)
                 getOwner().addItem(currentlyEquipped);
             currentlyEquipped = item;
+            notifyObservers();
             return true;
         }
         boolean unequip(T item) {
             if (currentlyEquipped == item) {
                 getOwner().addItem(item);
                 currentlyEquipped = null;
+                notifyObservers();
                 return true;
             }
             return false;

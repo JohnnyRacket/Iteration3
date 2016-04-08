@@ -50,7 +50,7 @@ public abstract class ViewObjectFactory {
     public ViewObject createSneak(Position p, Direction d, Character subject) {
         DirectionalViewObject body = createBody(p, subject, "Sneak");
 
-            
+
 
 
         MicroPositionableViewObject leftHand = new MicroPositionableViewObject(createLeftHand(p));
