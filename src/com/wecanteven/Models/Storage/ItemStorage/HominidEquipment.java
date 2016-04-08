@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Storage.ItemStorage;
 
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 
@@ -76,6 +77,26 @@ public class HominidEquipment extends Equipment {
     }
 
     @Override
+    public EquipmentSlot getChest() {
+        return chest;
+    }
+
+    @Override
+    public EquipmentSlot getBoots() {
+        return boots;
+    }
+
+    @Override
+    public EquipmentSlot getHead() {
+        return null;
+    }
+
+    @Override
+    public EquipmentSlot getWeapon() {
+        return null;
+    }
+
+    @Override
     public Iterator<EquipableItem> getIterator() {
         List<EquipableItem> equippedItemList = new ArrayList<>();
 
@@ -87,8 +108,8 @@ public class HominidEquipment extends Equipment {
         return equippedItemList.iterator();
     }
 
-    public class HominindEquipmentSlot  <T extends EquipableItem> implements Observable{
-        private ArrayList<Observer> observers;
+    public class HominindEquipmentSlot  <T extends EquipableItem> implements Observable, EquipmentSlot{
+        private ArrayList<Observer> observers = new ArrayList<>();
         T currentlyEquipped;
         boolean equip(T item) {
             if (currentlyEquipped != null)
@@ -110,6 +131,10 @@ public class HominidEquipment extends Equipment {
                 list.add(currentlyEquipped);
         }
 
+        @Override
+        public EquipableItem getItem() {
+            return currentlyEquipped;
+        }
 
         @Override
         public ArrayList<Observer> getObservers() {

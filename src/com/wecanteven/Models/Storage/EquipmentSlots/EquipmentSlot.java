@@ -8,5 +8,5 @@ import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Observers.Observable;
 
 public interface EquipmentSlot extends Observable {
-    String getItemName();
+    EquipableItem getItem();
 }
