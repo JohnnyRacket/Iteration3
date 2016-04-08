@@ -4,6 +4,7 @@ import com.wecanteven.MenuView.Drawable;
 import com.wecanteven.MenuView.DrawableLeafs.ProgressBars.AnimatedChangeProgressBar;
 import com.wecanteven.Models.Stats.*;
 import com.wecanteven.Observers.Observer;
+import com.wecanteven.UtilityClasses.Config;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -23,7 +24,7 @@ public class StatsHUD extends Drawable implements Observer {
     private  AnimatedChangeProgressBar expBar;
     private BufferedImage stoneTexture;
     private TexturePaint texture;
-    private Color borderColor = new Color(40,40,40);
+    private Color borderColor = Config.DARKGREY;
 
     public StatsHUD(Stats stats){
         this.stats = stats;
@@ -81,7 +82,7 @@ public class StatsHUD extends Drawable implements Observer {
 
 
         //g2d.setPaint(texture);
-        g2d.setColor(new Color(80,80,80));
+        g2d.setColor(Config.MEDIUMGREY);
         g2d.fillPolygon(new int[]{0,0,290},new int[]{0,290,0},3);
         g2d.fillPolygon(new int[]{windowWidth,windowWidth,windowWidth - 290},new int[]{0,290,0},3);
 
@@ -110,6 +111,7 @@ public class StatsHUD extends Drawable implements Observer {
 
         mana = stats.getMana();
         maxMana = stats.getMaxMana();
+        manaBar.setPercent(30);
         //manaBar.setCurrentProgress(mana);
         //manaBar.setMaxProgress(maxMana);
 

@@ -1,6 +1,7 @@
 package com.wecanteven.MenuView.DrawableContainers.Decorators;
 
 import com.wecanteven.MenuView.Drawable;
+import com.wecanteven.UtilityClasses.Config;
 
 import java.awt.*;
 
@@ -10,7 +11,7 @@ import java.awt.*;
 
 public class TitleBarDecorator extends DrawableDecorator {
 
-    private Color bgColor = Color.DARK_GRAY;
+    private Color bgColor = Config.DARKGREY;
     private Color textColor = Color.WHITE;
     private String title;
 
