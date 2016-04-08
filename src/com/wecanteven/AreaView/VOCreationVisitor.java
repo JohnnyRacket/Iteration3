@@ -40,7 +40,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitEntity(Entity e) {
         System.out.println("adding entity to areaview");
-        areaView.addViewObject(factory.createSneak(currentPosition, e.getDirection(), e));
+        //areaView.addViewObject(factory.createSneak(currentPosition, e.getDirection(), e));
     }
 
     @Override

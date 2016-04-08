@@ -19,7 +19,7 @@ import java.awt.*;
 public class HominidViewObject implements ViewObject, Observer{
     private Position position;
     private Direction direction;
-    private DirectionalViewObject body;
+    private ViewObject body;
 
     private Directional directionSubject;
     private Moveable movingSubject;
@@ -30,7 +30,7 @@ public class HominidViewObject implements ViewObject, Observer{
 
     private Location lastLocation;
 
-    public HominidViewObject(Position position, Direction direction, Directional directionSubject, Moveable movingSubject, DirectionalViewObject body, HandsViewObject hands, FeetViewObject feet) {
+    public HominidViewObject(Position position, Direction direction, Directional directionSubject, Moveable movingSubject, ViewObject body, HandsViewObject hands, FeetViewObject feet) {
         this.position = position;
         this.direction = direction;
         this.directionSubject = directionSubject;
@@ -39,7 +39,6 @@ public class HominidViewObject implements ViewObject, Observer{
         this.hands = hands;
         this.feet = feet;
         this.lastLocation = movingSubject.getLocation();
-        direction.setDirectionOf(body);
     }
 
     @Override

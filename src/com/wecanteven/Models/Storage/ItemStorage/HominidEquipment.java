@@ -16,7 +16,6 @@ import java.util.List;
 public class HominidEquipment extends Equipment {
 
     public HominidEquipment(ItemStorage owner) {
-
         super(owner);
     }
 
@@ -88,12 +87,12 @@ public class HominidEquipment extends Equipment {
 
     @Override
     public EquipmentSlot getHead() {
-        return null;
+        return head;
     }
 
     @Override
     public EquipmentSlot getWeapon() {
-        return null;
+        return weapon;
     }
 
     @Override
@@ -136,6 +135,11 @@ public class HominidEquipment extends Equipment {
         @Override
         public EquipableItem getItem() {
             return currentlyEquipped;
+        }
+
+        @Override
+        public boolean hasItem() {
+            return currentlyEquipped != null;
         }
 
         @Override

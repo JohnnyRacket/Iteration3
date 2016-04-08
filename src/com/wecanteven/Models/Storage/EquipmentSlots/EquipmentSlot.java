@@ -9,4 +9,5 @@ import com.wecanteven.Observers.Observable;
 
 public interface EquipmentSlot extends Observable {
     EquipableItem getItem();
+    boolean hasItem();
 }
