@@ -3,6 +3,7 @@ package com.wecanteven.Models.Storage.ItemStorage;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
+import com.wecanteven.Models.Items.Takeable.MoneyItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Visitors.ItemStorageVisitor;
 
@@ -24,25 +25,51 @@ public class ItemStorage {
     private Equipment equipped;
     private int maxInventoryCapacity;
 
+    private int money;
+
     public ItemStorage(int maxInventoryCapacity){
         this.maxInventoryCapacity = maxInventoryCapacity;
         inventory = new TupleInventory(this, maxInventoryCapacity);
         equipped = new HominidEquipment(this);
+        money = 0;
     }
 
     public ItemStorage(Character owner, int maxInventoryCapacity) {
         this.owner = owner;
-
         inventory = new TupleInventory(this, maxInventoryCapacity);
         this.maxInventoryCapacity = maxInventoryCapacity;
         inventory = new TupleInventory(this, maxInventoryCapacity);
         equipped = new HominidEquipment(this);
+        money = 0;
     }
 
     public ItemStorage(Inventory inventory, Equipment equipment, Character owner) {
         this.inventory = inventory;
         this.equipped = equipment;
         this.owner = owner;
+        money = 0;
+    }
+
+    public void addMoney(MoneyItem m) {
+        money += m.getValue();
+    }
+
+    public boolean buy(int value) {
+        if(value < money) {
+            money -= value;
+            return true;
+        }
+        return false;
+    }
+
+    public void setMoney(int value) {
+        money = value;
+    }
+
+    public MoneyItem money() {
+        int temp = money;
+        money = 0;
+        return new MoneyItem(temp);
     }
 
     /**

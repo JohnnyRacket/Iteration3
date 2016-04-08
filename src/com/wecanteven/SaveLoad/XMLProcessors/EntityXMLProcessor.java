@@ -41,10 +41,13 @@ public class EntityXMLProcessor extends XMLProcessor {
     }
 
     public static Character parseCharacter(Map map, Element el) {
-        Character c =  new Character(map, parseDirection(sf.getElemenetById(el, "Direction", 0)), parseOccupation(sf.getStrAttr(el, "Occupation")), StorageXMLProcessor.parseItemStorage());
+        Character c =  new Character(map, parseDirection(sf.getElemenetById(el, "Direction", 0)), parseOccupation(sf.getStrAttr(el, "Occupation")), StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0)));
         parseStats(c, sf.getElemenetById(el, "Stats", 0));
-        StorageXMLProcessor.parseItemStorage();
+        c.getItemStorage();
+        System.out.println(c.getItemStorage());
+        System.out.println("Finisihing loading the Character");
         map.add(c, parseLocation(sf.getElemenetById(el, "Location", 0)));
+        System.out.println("Character Added to Map");
         return c;
     }
 

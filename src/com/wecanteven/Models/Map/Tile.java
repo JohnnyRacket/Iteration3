@@ -67,6 +67,9 @@ public class Tile implements MapVisitable {
     }
     public boolean add(StatsAddable effect){
         System.out.println("adding stats to the tile ");
+        if(hasEntity()){
+            getEntity().modifyStats(effect);
+        }
         return this.effects.add(effect);
     }
 
