@@ -34,8 +34,13 @@ public class LoadFromXMLFile implements LoadGame {
     @Override
     public void loadGame() {
         loadSaveFile();
+        System.out.println("Map Being Created");
         launcher.loadMap(getMap());
+        System.out.println("Map Finished");
+        System.out.println("Avatar Being Created");
         launcher.loadAvatar(getAvatar());
+        System.out.println("Avatar Finished");
+
 
     }
 

@@ -4,6 +4,7 @@ import com.wecanteven.Models.Storage.ItemStorage.Equipment;
 import com.wecanteven.Models.Storage.ItemStorage.Inventory;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 
@@ -20,9 +21,9 @@ public class StorageXMLProcessor extends XMLProcessor {
         sf.appendObjectTo("Character", sf.createSaveElement("ItemStorage",attr));
     }
 
-    public static ItemStorage parseItemStorage() {
+    public static ItemStorage parseItemStorage(Element el) {
 
-        return null;
+        return new ItemStorage(5);
     }
 
     public static void formatInvetory(Inventory i) {
@@ -52,7 +53,7 @@ public class StorageXMLProcessor extends XMLProcessor {
         attr.add(sf.saveAttr("position", i));
         sf.appendObjectTo("Inventory", sf.createSaveElement("ItemSlot",attr));
     }
-    public static void parseItemSlot(Equipment el) {
+    public static void parseItemSlots(Equipment el) {
 
     }
 }
