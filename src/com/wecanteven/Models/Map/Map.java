@@ -7,6 +7,7 @@ import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Terrain.Air;
+import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanFallVisitor;
@@ -67,11 +68,23 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean fall(Entity entity, Location destination){
         CanFallVisitor visitor = entity.getCanFallVisitor();
         getTile(destination).accept(visitor);
-        if(visitor.isCanMove()){
-            System.out.println("FALLING");
-            return move(entity,destination, 5);
-
-        }else{
+//        if(visitor.isCanMove()){
+//            System.out.println("FALLING");
+//            return move(entity,destination, 5);
+//
+//        }else{
+//            return false;
+//        }
+        int tilesCount = 0;
+        while(visitor.isCanMove() && destination.getZ() != 1){
+            tilesCount++;
+            destination.setZ(destination.getZ()-1);
+            getTile(destination).accept(visitor);
+        }
+        if(tilesCount > 0) {
+            return move(entity, destination, 5*tilesCount);
+        }
+        else{
             return false;
         }
     }
@@ -139,6 +152,15 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean drop(TakeableItem item, Location location) {
         getTile(location).add(item);
         return true;
+    }
+
+    @Override
+    public void useAbility(ArrayList<Location> locations, StatsAddable effect){
+        System.out.println("these are the number of locations "+ locations.size());
+        for(Location location : locations){
+            System.out.println("adding things again and again");
+            getTile(location).add(effect);
+        }
     }
 
     public Tile getTile(Location loc){
