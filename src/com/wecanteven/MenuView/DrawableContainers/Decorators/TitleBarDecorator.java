@@ -17,7 +17,8 @@ public class TitleBarDecorator extends DrawableDecorator {
     public TitleBarDecorator(Drawable d, String title) {
         super(d);
         this.title = title;
-        d.setHeight(d.getHeight()-50);
+        this.setHeight(d.getHeight());
+        //d.setHeight(d.getHeight()-50);
     }
 
     @Override
@@ -28,13 +29,18 @@ public class TitleBarDecorator extends DrawableDecorator {
         g2d.setFont(new Font("Helvetica",1,20));
         FontMetrics metrics = g2d.getFontMetrics();
         g2d.drawString(title,x + this.getDrawable().getWidth()/2 - metrics.stringWidth(title)/2,y+30);
+        //this.getDrawable().setHeight(this.getHeight()-50);
         super.draw(g2d,x,y+50, windowWidth, windowHeight);
     }
 
     @Override
     public void setHeight(int height) {
-        super.setHeight(height);
-        this.getDrawable().setHeight(height-50);
+        //System.out.println
+        super.setHeight(height - 50);
+    }
+    @Override
+    public int getHeight(){
+        return super.getHeight()+50;
     }
 
     public Color getBgColor() {
