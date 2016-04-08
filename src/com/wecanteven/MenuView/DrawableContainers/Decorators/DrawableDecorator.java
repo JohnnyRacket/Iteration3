@@ -11,8 +11,9 @@ public abstract class DrawableDecorator extends Drawable {
     private Drawable drawable;
 
     public DrawableDecorator(Drawable d){
-            this.setDrawable(d);
-        }
+        super();
+        this.setDrawable(d);
+    }
     @Override
     public void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight) {
         this.getDrawable().draw(g2d,x,y,windowWidth,windowHeight);

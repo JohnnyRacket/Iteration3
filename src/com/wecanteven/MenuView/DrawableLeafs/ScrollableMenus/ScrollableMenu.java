@@ -65,7 +65,6 @@ public class ScrollableMenu extends Drawable implements Navigatable {
         Iterator<SelectableItem> iter = tmpList.getIterator();
         while (iter.hasNext()) {
             if (index == list.getCurrentIndex() && active) {
-                //System.out.println(list.getCurrentIndex());
                 SelectableItem current = iter.next();
                 g2d.setColor(selectedColor);
                 g2d.fillRect(offsetX + calculatedPadding / 2, offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
@@ -75,6 +74,10 @@ public class ScrollableMenu extends Drawable implements Navigatable {
                 current.draw(g2d, offsetX + calculatedPadding / 2, offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
             }
             offsetY += itemHeight;
+            if(offsetY - y > this.getHeight() -50){
+                System.out.println(offsetY+  " / " + this.getHeight());
+                return;
+            }
             index++;
         }
     }
@@ -89,25 +92,6 @@ public class ScrollableMenu extends Drawable implements Navigatable {
         return yOffset;
     }
 
-    @Override
-    public int getWidth() {
-        return bgWidth;
-    }
-
-    @Override
-    public int getHeight() {
-        return bgHeight;
-    }
-
-    @Override
-    public void setWidth(int width){
-        this.bgWidth = width;
-    }
-
-    @Override
-    public void setHeight(int height){
-        this.bgHeight = height;
-    }
 
     // Public Api
     public void setList(NavigatableList list){

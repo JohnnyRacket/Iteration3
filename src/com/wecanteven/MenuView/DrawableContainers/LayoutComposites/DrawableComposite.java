@@ -13,11 +13,14 @@ public abstract class DrawableComposite extends Drawable{
     private ArrayList<Drawable> drawables = new ArrayList();
     private boolean scaling = true;
 
-
+    public DrawableComposite(){
+        super();
+    }
     public DrawableComposite(Drawable... drawables){
-            for(Drawable drawable : drawables){
-                this.drawables.add(drawable);
-            }
+        super();
+        for(Drawable drawable : drawables){
+            this.drawables.add(drawable);
+        }
     }
     @Override
     public abstract void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight);

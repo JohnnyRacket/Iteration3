@@ -4,6 +4,7 @@ import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.GameLaunchers.LoadGameLauncher;
 import com.wecanteven.GameLaunching.GameLaunchers.NewGameLauncher;
+import com.wecanteven.MenuView.DrawableContainers.Decorators.AnimatedCollapseDecorator;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.HorizontalCenterContainer;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.TitleBarDecorator;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.VerticalCenterContainer;
@@ -96,10 +97,11 @@ public class UIViewFactory {
         TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats");
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
 
         SwappableView view = new SwappableView();
         view.addNavigatable(skillMenu);
-        view.addDrawable(vert);
+        view.addDrawable(anim);
 
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
@@ -138,10 +140,11 @@ public class UIViewFactory {
         TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment");
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
+        AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
 //        view.addDrawable(vertCenter);
 
 
-        view.addDrawable(vertCenter);
+        view.addDrawable(animation);
         view.addNavigatable(menu);
         view.addNavigatable(equipMenu);
         //return created swappable view

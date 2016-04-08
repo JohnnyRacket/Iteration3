@@ -34,9 +34,20 @@ public class GridItem extends SelectableItem{
     @Override
     public void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight) {
         g2d.setColor(Color.WHITE);
-        g2d.setFont(new Font("Helvetica", 1, 16));
-        FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
-        g2d.drawImage(this.icon, x + padding/2, y + padding/2,windowWidth - padding, windowHeight- metrics.getAscent() - padding, null);
+
+        int maxFont = 16;
+        g2d.setFont(new Font("Helvetica", 1, maxFont));
+        FontMetrics metrics = g2d.getFontMetrics();
+        int i = 0;
+        while(metrics.stringWidth(this.getName()) > windowWidth ){
+            g2d.setFont(new Font("Helvetica", 1, maxFont - i));
+            metrics = g2d.getFontMetrics();
+            ++i;
+        }
+
+        int imageSize = Math.min(windowHeight- 20 - padding,windowWidth - padding);
+
+        g2d.drawImage(this.icon, x + windowWidth/2 - imageSize/2, y + imageSize/2 - 10,imageSize, imageSize, null);
         g2d.drawString(this.name, x + windowWidth/2 - metrics.stringWidth(this.name)/2, y + windowHeight - padding/2);
 
     }

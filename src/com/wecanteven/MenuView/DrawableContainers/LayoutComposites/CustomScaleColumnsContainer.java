@@ -13,6 +13,7 @@ public class CustomScaleColumnsContainer extends DrawableComposite {
     private int[] sizes;
 
     public CustomScaleColumnsContainer(int[] sizes){
+        super();
         this.sizes = sizes;
     }
     @Override

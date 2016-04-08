@@ -10,6 +10,9 @@ public abstract class Drawable{
     private int y = 0;
     private int width = 0;
     private int height = 0;
+    public Drawable(){
+        openWindowAction();
+    }
 
     public abstract void  draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight);
     public int getX(){return this.x;}
@@ -20,4 +23,6 @@ public abstract class Drawable{
     public int getHeight(){return this.height;}
     public void setWidth(int width){this.width = width;}
     public void setHeight(int height){this.height = height;}
+    public void closeWindowAction(){}
+    public void openWindowAction(){}
 }
