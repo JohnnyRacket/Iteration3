@@ -19,13 +19,13 @@ public class MeleeRangeHitBoxGenerator {
     public MeleeRangeHitBoxGenerator(Character caster){
         this.caster = caster;
         locations = new ArrayList();
-        effect = new StatsAddable(0,0,0,0,0,0,0,-1,0);
+        effect = new StatsAddable(0,0,0,0,0,0,0,-5,0);
     }
     public void generate(){
         locations = new ArrayList<>();
         Location location = caster.getLocation();
         Direction direction = caster.getDirection();
-        locations.add(0, location);
+        locations.add(0, location.add(direction.getCoords));
         caster.cast(locations, effect);
     }
 }

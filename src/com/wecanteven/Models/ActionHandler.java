@@ -19,4 +19,5 @@ public interface ActionHandler {
     boolean fall(TakeableItem item, Location location);
     boolean drop(TakeableItem item, Location location);
     void useAbility(ArrayList<Location> locations, StatsAddable effect);
+    void death(Entity entity);
 }

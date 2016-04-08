@@ -18,7 +18,9 @@ public class EntityState extends AvatarState {
        return avatar.move(d);
     }
     public void attack(Direction d){}
-    public void useAbility(int index){}
+    public void useAbility(int index){
+        avatar.useAbility(index);
+    }
     public boolean equipItem(String id){
         return false;
     }

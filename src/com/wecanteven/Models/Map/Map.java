@@ -68,21 +68,15 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean fall(Entity entity, Location destination){
         CanFallVisitor visitor = entity.getCanFallVisitor();
         getTile(destination).accept(visitor);
-//        if(visitor.isCanMove()){
-//            System.out.println("FALLING");
-//            return move(entity,destination, 5);
-//
-//        }else{
-//            return false;
-//        }
         int tilesCount = 0;
-        while(visitor.isCanMove() && destination.getZ() != 1){
-            tilesCount++;
+        while(visitor.isCanMove() && destination.getZ() > 0){
             destination.setZ(destination.getZ()-1);
             getTile(destination).accept(visitor);
+            tilesCount++;
         }
         if(tilesCount > 0) {
-            return move(entity, destination, 5*tilesCount);
+            destination.setZ(destination.getZ()+1);
+            return move(entity, destination, 2*tilesCount);
         }
         else{
             return false;
@@ -204,6 +198,9 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean remove(InteractiveItem interactiveItem, Location loc){
         return columns[loc.getR()][loc.getS()].remove(interactiveItem, loc.getZ());
     }
-
+    public void death(Entity entity){
+        remove(entity, entity.getLocation());
+        System.out.println("An entity was removed from the map");
+    }
 
 }

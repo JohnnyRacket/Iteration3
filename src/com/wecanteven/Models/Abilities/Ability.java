@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Ability {
     private int castTicks,cooldownTicks;
     private int baseFailChance;
-    private Stat stat;
+    private int skill;
     private MeleeRangeHitBoxGenerator hitBoxGenerator;
 
     public Ability(Character caster){
@@ -22,5 +22,4 @@ public class Ability {
     public void cast(){
         hitBoxGenerator.generate();
     }
-    
 }

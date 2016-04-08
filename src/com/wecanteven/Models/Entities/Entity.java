@@ -76,7 +76,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             if (location.getZ() == 1) {
                 return false;
             }
-            //setMovingTicks(3);
             return actionHandler.fall(this, this.getLocation().subtract(new Location(0, 0, 1)));
         }
         return false;
@@ -85,6 +84,11 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public void die(){
         stats.refreshStats();
+        if(stats.getLives() < 0){
+            System.out.println("The entity has died");
+            actionHandler.death(this);
+            notifyObservers();
+        }
     }
     public boolean isActive(){
         return isActive;
@@ -131,7 +135,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
 
     private int calculateMovementTicks(int movementStat){
-        return (movementStat/30)*10;
+        return (30/movementStat)*10;
     }
 
     public void setDirection(Direction direction) {
@@ -218,12 +222,13 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             setIsActive(true);
         }
     }
-    private void setIsActive(boolean isActive){
+    protected void setIsActive(boolean isActive){
         if(!isLocked()){
             this.isActive = isActive;
         }
     }
     public void modifyStats(StatsAddable addable){
+        System.out.println("The Entity's stats have changed");
         this.stats.addStats(addable);
     }
 

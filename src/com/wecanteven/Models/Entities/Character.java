@@ -23,14 +23,7 @@ import java.util.ArrayList;
 public class Character extends Entity {
     private Occupation occupation;
     private ItemStorage itemStorage, abilityItemStorage;
-
-    ////testing
-    private Ability ability = new Ability(this);
-    @Override
-    public boolean move(Direction d){
-        ability.cast();
-        return super.move(d);
-    }
+    private int windUpTicks, coolDownTicks;
 
 
     public Character(ActionHandler actionHandler, Direction direction){
@@ -38,6 +31,8 @@ public class Character extends Entity {
         occupation = new Smasher();
         this.stats = new Stats(this);
         this.itemStorage = new ItemStorage(this, 5);
+        windUpTicks = 0;
+        coolDownTicks = 0;
     }
 
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats){
@@ -54,7 +49,11 @@ public class Character extends Entity {
         this.itemStorage = itemStorage;
     }
     public void attack(Direction d){}
-    public void useAbility(int index){}
+    public void useAbility(int index){
+        System.out.println("An ability was used");
+        Ability ability = new Ability(this);
+        ability.cast();
+    }
 
     /**
      * Equipment
@@ -120,4 +119,24 @@ public class Character extends Entity {
         getActionHandler().useAbility(locations,effect);
     }
 
+    public void setWindUpTicks(int ticks){
+        this.windUpTicks = ticks;
+        if(ticks == 0){
+            setIsActive(false);
+            return;
+        }
+        setIsActive(true);
+        deIncrementTick();
+        notifyObservers();
+    }
+    public void setCoolDownTicks(int ticks){
+        this.coolDownTicks = ticks;
+        if(ticks == 0){
+            setIsActive(false);
+            return;
+        }
+        setIsActive(true);
+        deIncrementTick();
+        notifyObservers();
+    }
 }
