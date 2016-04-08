@@ -109,7 +109,9 @@ public class HominidViewObject implements ViewObject, Observer{
     }
 
     private void move() {
+        System.out.println("Pre hands.move");
         hands.move(movingSubject.getMovingTicks()*Config.MODEL_TICK);
+        System.out.println("hands.move happened");
         feet.move(movingSubject.getMovingTicks()*Config.MODEL_TICK);
     }
     private void jump() {

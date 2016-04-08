@@ -1,10 +1,13 @@
 package com.wecanteven.Models.Storage.ItemStorage;
 
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Observers.Observable;
+import com.wecanteven.Observers.Observer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 
 /**
  * Created by simonnea on 4/4/16.
@@ -12,13 +15,14 @@ import java.util.List;
 public class HominidEquipment extends Equipment {
 
     public HominidEquipment(ItemStorage owner) {
+
         super(owner);
     }
 
-    private ChestEquipableItem chest;
-    private BootsEquipableItem boots;
-    private HeadEquipableItem head;
-    private WeaponEquipableItem weapon;
+    private EquipmentSlot<ChestEquipableItem> chest = new EquipmentSlot<>();
+    private EquipmentSlot<BootsEquipableItem> boots = new EquipmentSlot<>();
+    private EquipmentSlot<HeadEquipableItem> head = new EquipmentSlot<>();
+    private EquipmentSlot<WeaponEquipableItem> weapon = new EquipmentSlot<>();
 
     @Override
     public boolean isEquiped(EquipableItem item) {
@@ -33,86 +37,83 @@ public class HominidEquipment extends Equipment {
 
     @Override
     public boolean equipChest(ChestEquipableItem item) {
-        System.out.println("blubb");
-        if (chest != null) {
-            getOwner().addItem(chest);
-        }
-        System.out.println("item is equippzed");
-        chest = item;
-
-        return true;
+        return chest.equip(item);
     }
 
     @Override
     public boolean equipBoots(BootsEquipableItem item) {
-        if (boots != null) {
-            getOwner().addItem(boots);
-        }
-
-        boots = item;
-
-        return true;
+        return boots.equip(item);
     }
 
     @Override
     public boolean equipHead(HeadEquipableItem item) {
-        if (head != null) {
-            getOwner().addItem(head);
-        }
-
-        head = item;
-
-        return true;
+        return head.equip(item);
     }
 
     @Override
     public boolean equipWeapon(WeaponEquipableItem item) {
-        if (weapon != null) {
-            getOwner().addItem(weapon);
-        }
-
-        weapon = item;
-
-        return true;
+        return weapon.equip(item);
     }
 
     @Override
     public boolean unequipChest(ChestEquipableItem item) {
-        chest = null;
-        return true;
+        return chest.unequip(item);
     }
 
     @Override
     public boolean unequipBoots(BootsEquipableItem item) {
-        boots = null;
-        return true;
+        return boots.unequip(item);
     }
 
     @Override
     public boolean unequipHead(HeadEquipableItem item) {
-        head = null;
-        return true;
+        return head.unequip(item);
     }
 
     @Override
     public boolean unequipWeapon(WeaponEquipableItem item) {
-        weapon = null;
-        return true;
+        return weapon.unequip(item);
     }
 
     @Override
     public Iterator<EquipableItem> getIterator() {
         List<EquipableItem> equippedItemList = new ArrayList<>();
 
-        if (chest != null)
-            equippedItemList.add(chest);
-        if (boots != null)
-            equippedItemList.add(boots);
-        if (head != null)
-            equippedItemList.add(head);
-        if (weapon != null)
-            equippedItemList.add(weapon);
+        chest.addToList(equippedItemList);
+        boots.addToList(equippedItemList);
+        head.addToList(equippedItemList);
+        weapon.addToList(equippedItemList);
 
         return equippedItemList.iterator();
+    }
+
+    public class EquipmentSlot  <T extends EquipableItem> implements Observable{
+        private ArrayList<Observer> observers;
+        T currentlyEquipped;
+        boolean equip(T item) {
+            if (currentlyEquipped != null)
+                getOwner().addItem(currentlyEquipped);
+            currentlyEquipped = item;
+            return true;
+        }
+        boolean unequip(T item) {
+            if (currentlyEquipped == item) {
+                getOwner().addItem(item);
+                currentlyEquipped = null;
+                return true;
+            }
+            return false;
+        }
+
+        void addToList(List<EquipableItem> list) {
+            if (currentlyEquipped != null)
+                list.add(currentlyEquipped);
+        }
+
+
+        @Override
+        public ArrayList<Observer> getObservers() {
+            return observers;
+        }
     }
 }
