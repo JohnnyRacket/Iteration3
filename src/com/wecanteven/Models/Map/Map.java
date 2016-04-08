@@ -68,11 +68,23 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean fall(Entity entity, Location destination){
         CanFallVisitor visitor = entity.getCanFallVisitor();
         getTile(destination).accept(visitor);
-        if(visitor.isCanMove()){
-            System.out.println("FALLING");
-            return move(entity,destination, 5);
-
-        }else{
+//        if(visitor.isCanMove()){
+//            System.out.println("FALLING");
+//            return move(entity,destination, 5);
+//
+//        }else{
+//            return false;
+//        }
+        int tilesCount = 0;
+        while(visitor.isCanMove() && destination.getZ() != 1){
+            tilesCount++;
+            destination.setZ(destination.getZ()-1);
+            getTile(destination).accept(visitor);
+        }
+        if(tilesCount > 0) {
+            return move(entity, destination, 5*tilesCount);
+        }
+        else{
             return false;
         }
     }

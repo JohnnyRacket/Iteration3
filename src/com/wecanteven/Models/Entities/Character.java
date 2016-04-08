@@ -26,7 +26,6 @@ public class Character extends Entity {
 
     ////testing
     private Ability ability = new Ability(this);
-
     @Override
     public boolean move(Direction d){
         ability.cast();
