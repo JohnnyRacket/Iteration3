@@ -11,9 +11,7 @@ import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCom
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
-import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
-import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenu;
-import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenuItem;
+import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
@@ -66,34 +64,35 @@ public class UIViewFactory {
         Stats stats = character.getStats();
         NavigatableList statsList = new NavigatableList();
 
-        statsList.addItem(new ScrollableMenuItem("Level: " + stats.getLevel(),null));
-        statsList.addItem(new ScrollableMenuItem("Health: " + stats.getHealth() + "/" + stats.getMaxHealth(),null));
-        statsList.addItem(new ScrollableMenuItem("Mana: " + stats.getMana() + "/" + stats.getMaxMana(),null));
-        statsList.addItem(new ScrollableMenuItem("Experience: " + stats.getExperience() + "/" + "not Implemented",null));
-        statsList.addItem(new ScrollableMenuItem("Lives: " + stats.getLives(),null));
+        statsList.addItem(new SplitTextScrollableItem("Level: " , ""+ stats.getLevel(),null));
+        statsList.addItem(new SplitTextScrollableItem("Health: ", stats.getHealth() + "/" + stats.getMaxHealth(),null));
+        statsList.addItem(new SplitTextScrollableItem("Mana: ", "" + stats.getMana() + "/" + stats.getMaxMana(),null));
+        statsList.addItem(new SplitTextScrollableItem("Experience: ", "" + stats.getExperience() + "/" + "?????",null));
+        statsList.addItem(new SplitTextScrollableItem("Lives: ", "" + stats.getLives(),null));
 
         statsList.addItem(new ScrollableMenuItem("",null));
-        statsList.addItem(new ScrollableMenuItem("Agility: " + stats.getAgility(),null));
-        statsList.addItem(new ScrollableMenuItem("Strength: " + stats.getStrength(),null));
-        statsList.addItem(new ScrollableMenuItem("Hardiness: " + stats.getHardiness(),null));
-        statsList.addItem(new ScrollableMenuItem("Movement: " + stats.getMovement(),null));
-        statsList.addItem(new ScrollableMenuItem("Intellect: " + stats.getIntellect(),null));
+        statsList.addItem(new SplitTextScrollableItem("Agility: ", "" + stats.getAgility(),null));
+        statsList.addItem(new SplitTextScrollableItem("Strength: ", "" + stats.getStrength(),null));
+        statsList.addItem(new SplitTextScrollableItem("Hardiness: ", "" + stats.getHardiness(),null));
+        statsList.addItem(new SplitTextScrollableItem("Movement: ", "" + stats.getMovement(),null));
+        statsList.addItem(new SplitTextScrollableItem("Intellect: ", "" + stats.getIntellect(),null));
 
         statsList.addItem(new ScrollableMenuItem("" ,null));//spacer
-        statsList.addItem(new ScrollableMenuItem("Offensive Rating: " + stats.getOffensiveRating(),null));
-        statsList.addItem(new ScrollableMenuItem("Defensive Rating: " + stats.getDefensiveRating(),null));
-        statsList.addItem(new ScrollableMenuItem("Armor Rating: " + stats.getArmorRating(),null));
+        statsList.addItem(new SplitTextScrollableItem("Offensive Rating: ", "" + stats.getOffensiveRating(),null));
+        statsList.addItem(new SplitTextScrollableItem("Defensive Rating: ", "" + stats.getDefensiveRating(),null));
+        statsList.addItem(new SplitTextScrollableItem("Armor Rating: ", "" + stats.getArmorRating(),null));
 
         ScrollableMenu menu = new ScrollableMenu(300,600);
         menu.setList(statsList);
 
         ColumnatedCompositeContainer columns = new ColumnatedCompositeContainer();
-        columns.setWidth(400);
+        columns.setWidth(600);
         columns.setHeight(500);
         columns.addDrawable(menu);
         columns.addDrawable(skillMenu);
 
-        HorizontalCenterContainer horiz = new HorizontalCenterContainer(columns);
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats");
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
 
         SwappableView view = new SwappableView();
