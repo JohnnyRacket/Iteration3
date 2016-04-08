@@ -3,5 +3,10 @@ package com.wecanteven.Models.Storage.EquipmentSlots;
 /**
  * Created by simonnea on 4/2/16.
  */
-public class EquipmentSlot {
+
+import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
+import com.wecanteven.Observers.Observable;
+
+public interface EquipmentSlot extends Observable {
+    EquipableItem getItem();
 }

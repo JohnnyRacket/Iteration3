@@ -16,8 +16,10 @@ import com.wecanteven.AreaView.ViewObjects.LeafVOs.ActivatableViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
+import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.UtilityClasses.Direction;
 
@@ -45,12 +47,17 @@ public abstract class ViewObjectFactory {
 
 
 
-        public ViewObject createSneak(Position p, Direction d, Entity subject) {
+    public ViewObject createSneak(Position p, Direction d, Character subject) {
         DirectionalViewObject body = createBody(p, subject, "Sneak");
+
+
+
 
         MicroPositionableViewObject leftHand = new MicroPositionableViewObject(createLeftHand(p));
         MicroPositionableViewObject rightHand = new MicroPositionableViewObject(createRightHand(p));
-        HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p);
+        EquipmentSlot weaponSlot = subject.getItemStorage().getEquipped().getWeapon();
+        HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p, weaponSlot);
+        weaponSlot.attach(hands);
 
         MicroPositionableViewObject leftFoot = createLeftFoot(p, d, subject);
         MicroPositionableViewObject rightFoot = createRightFoot(p, d, subject);

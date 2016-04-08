@@ -64,6 +64,7 @@ public class Stats implements Observer, Observable{
     }
 
     public void addStats(StatsAddable statsAddable){
+        System.out.println("The entities Stats were modified");
         lives.add(statsAddable.getLives());
         strength.add(statsAddable.getStrength());
         agility.add(statsAddable.getAgility());

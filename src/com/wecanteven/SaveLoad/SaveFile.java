@@ -6,6 +6,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -14,6 +15,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
 import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 /**
@@ -137,6 +139,24 @@ public class SaveFile {
         doc.normalizeDocument();
         DOMSource source = new DOMSource(doc);
 
+        File theDir = new File(PATH);
+
+        // if the directory does not exist, create it
+        if (!theDir.exists()) {
+            System.out.println("creating directory: " + PATH);
+            boolean result = false;
+
+            try{
+                theDir.mkdir();
+                result = true;
+            }
+            catch(SecurityException se) {
+                System.out.println("Error in SaveFile Security Exception");
+            }
+            if(result) {
+                System.out.println("DIR created");
+            }
+        }
         file = getFileFromRes(fileName);
 
         // Say where we want the XML to go
