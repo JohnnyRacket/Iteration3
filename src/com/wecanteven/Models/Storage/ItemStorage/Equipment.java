@@ -65,4 +65,5 @@ public abstract class Equipment extends StorageComponent<ItemStorage> {
 
     public abstract Iterator<EquipableItem> getIterator();
     
+
 }
