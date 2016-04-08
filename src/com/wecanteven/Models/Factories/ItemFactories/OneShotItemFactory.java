@@ -8,26 +8,24 @@ import com.wecanteven.Models.Stats.StatsAddable;
  */
 public class OneShotItemFactory {
 
-    public OneShot vendDefaultOneShot() {
-        return new OneShot("Default One Shot", (entity) -> {});
+    public OneShot vendDefaultOneShot(String name) {
+        return new OneShot(name, (entity) -> {});
     }
 
-    public OneShot vendInstaDeathOneShot() {
-        return new OneShot("Oops you died", (entity) -> entity.die());
+    public OneShot vendInstaDeathOneShot(String name) {
+        return new OneShot(name, (entity) -> entity.die());
     }
 
-    // TODO balancing
-    public OneShot vendMinorHealOneShot() {
-        return new OneShot("Heal-a-little",
+    public OneShot vendHealingOneShot(String name, int amount) {
+        return new OneShot(name,
                 // TODO semantically add more meaningful messages i.e. entity.increaseHealth( int )
-                (entity) -> entity.getStats().addStats(new StatsAddable(0,0,0,0,0,0,0,10,0))
+                (entity) -> entity.getStats().addStats(new StatsAddable(0,0,0,0,0,0,0,amount,0))
         );
     }
 
-    // TODO balancing
-    public OneShot vendManaOrb() {
-        return new OneShot ("Here have some mana",
-                (entity) -> entity.getStats().addStats(new StatsAddable(0,0,0,0,0,0,0,0,10))
+    public OneShot vendManaRestoringOneShot(String name, int amount) {
+        return new OneShot (name,
+                (entity) -> entity.getStats().addStats(new StatsAddable(0,0,0,0,0,0,0,0,amount))
         );
     }
 }
