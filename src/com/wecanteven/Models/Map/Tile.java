@@ -8,6 +8,7 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Terrain.Terrain;
 import com.wecanteven.Models.ModelTime.Alertable;
 import com.wecanteven.Models.ModelTime.ModelTime;
+import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Tile implements MapVisitable {
     private TileSlot<OneShot> oneShot = new TileSlot<>();
     private ArrayList<TakeableItem> takeableItems = new ArrayList<>();
     private TileSlot<Entity> entity = new TileSlot<>();
+    private ArrayList<StatsAddable> effects = new ArrayList<>();
 
     private Terrain terrain;
 
@@ -63,6 +65,10 @@ public class Tile implements MapVisitable {
         this.takeableItems.add(takeableItem);
         return true;
     }
+    public boolean add(StatsAddable effect){
+        System.out.println("adding stats to the tile ");
+        return this.effects.add(effect);
+    }
 
     public boolean remove(Entity entity) {
         return this.entity.remove(entity);
@@ -80,11 +86,17 @@ public class Tile implements MapVisitable {
         this.takeableItems.remove(takeableItem);
         return true;
     }
+    public boolean remove(StatsAddable effect){
+        return this.effects.remove(effect);
+    }
 
     public boolean hasEntity() {return !this.entity.isEmpty();}
     public boolean hasObstacle() { return !this.obstacle.isEmpty(); }
     public boolean hasInteractiveItem() {return !this.interactiveItem.isEmpty();}
     public boolean hasOneShot() { return !this.oneShot.isEmpty(); }
+    public boolean hasEffect(){
+        return !this.effects.isEmpty();
+    }
 
     public Obstacle getObstacle() {
         return obstacle.getToken();
@@ -106,6 +118,10 @@ public class Tile implements MapVisitable {
         return entity.getToken();
     }
 
+    public ArrayList<StatsAddable> getEffects(){
+        return getEffects();
+    }
+
     public Terrain getTerrain() {
         return terrain;
     }
@@ -116,7 +132,9 @@ public class Tile implements MapVisitable {
 
     public void interact(Entity entity){
         entity.unlock();
-
+        for(StatsAddable effect: effects){
+            entity.modifyStats(effect);
+        }
         terrain.interact(entity);
     }
 

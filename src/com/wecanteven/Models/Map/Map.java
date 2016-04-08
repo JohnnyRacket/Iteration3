@@ -7,6 +7,7 @@ import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Terrain.Air;
+import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanFallVisitor;
@@ -139,6 +140,15 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean drop(TakeableItem item, Location location) {
         getTile(location).add(item);
         return true;
+    }
+
+    @Override
+    public void useAbility(ArrayList<Location> locations, StatsAddable effect){
+        System.out.println("these are the number of locations "+ locations.size());
+        for(Location location : locations){
+            System.out.println("adding things again and again");
+            getTile(location).add(effect);
+        }
     }
 
     public Tile getTile(Location loc){

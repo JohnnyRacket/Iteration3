@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Takeable.*;
@@ -7,11 +8,14 @@ import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
+import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.EntityVisitor;
 import com.wecanteven.Visitors.ItemStorageVisitor;
+
+import java.util.ArrayList;
 
 /**
  * Created by Brandon on 3/31/2016.
@@ -19,6 +23,16 @@ import com.wecanteven.Visitors.ItemStorageVisitor;
 public class Character extends Entity {
     private Occupation occupation;
     private ItemStorage itemStorage, abilityItemStorage;
+
+    ////testing
+    private Ability ability = new Ability(this);
+
+    @Override
+    public boolean move(Direction d){
+        ability.cast();
+        return super.move(d);
+    }
+
 
     public Character(ActionHandler actionHandler, Direction direction){
         super(actionHandler, direction);
@@ -90,6 +104,7 @@ public class Character extends Entity {
     public Location getLocation(){
         return location;
     }
+    @Override
     public void levelUp(){
         stats.addStats(occupation.getStatsAddable());
     }
@@ -101,5 +116,9 @@ public class Character extends Entity {
     }
 
     public ItemStorage getItemStorage() {return itemStorage;}
+
+    public void cast(ArrayList<Location> locations, StatsAddable effect){
+        getActionHandler().useAbility(locations,effect);
+    }
 
 }
