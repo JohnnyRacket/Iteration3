@@ -4,17 +4,22 @@ import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
 import com.wecanteven.Controllers.InputControllers.MainController;
-import com.wecanteven.GameLaunching.GameLaunchers.LoadGameLauncher;
-import com.wecanteven.MenuView.SwappableView;
+import com.wecanteven.GameLaunching.GameLaunchers.GameLauncher;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Avatar;
-import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
-import com.wecanteven.SaveLoad.Load.LoadGame;
+import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Entities.NPC;
+import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
+import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
+import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
 import com.wecanteven.UtilityClasses.Direction;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -35,6 +40,8 @@ public class PlayState extends ControllerState {
         mappings.put(ActionEnum.SAVE, KeyEvent.VK_P);
         mappings.put(ActionEnum.ITEMINVENTORY, KeyEvent.VK_I);
         mappings.put(ActionEnum.STATS, KeyEvent.VK_K);
+        mappings.put(ActionEnum.TRADE, KeyEvent.VK_T);
+
         this.setMappings(mappings);
     }
     @Override
@@ -77,6 +84,14 @@ public class PlayState extends ControllerState {
                 UIViewFactory.getInstance().createStatsView(avatar.getCharacter());
             },0);
         }, this.getjFrame(), this.getController()));
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.TRADE), ()->{
+            System.out.println("open trade menu");
+            //TODO: THIS IS NOT PROGRAMING!
+            NPC c = new NPC(getAvatar().getCharacter().getActionHandler(), Direction.NORTH, new DialogInteractionStrategy(new ArrayList<String>()));
+            c.pickup(new ChestEquipableItem("NPC's Wares", null));
+            c.interact(getAvatar().getCharacter());
+        }, this.getjFrame(), this.getController()));
+
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SAVE), ()->{
             System.out.println("Trying to Save");
             new SaveToXMLFile("save1.xml").saveGame();

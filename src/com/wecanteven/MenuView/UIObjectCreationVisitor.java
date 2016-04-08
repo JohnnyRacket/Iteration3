@@ -63,6 +63,7 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
         inInv = true;
 //        inventoryItems.clear();
 //        equippedItems.clear();
+        System.out.println("Inv Items " + inventoryItems);
         inventoryItems = new NavigatableList();
         equippedItems = new NavigatableList();
     }

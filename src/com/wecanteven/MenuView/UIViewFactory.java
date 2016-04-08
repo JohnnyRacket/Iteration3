@@ -16,6 +16,7 @@ import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
@@ -277,9 +278,65 @@ public class UIViewFactory {
     }
 
 
-    public SwappableView createTradeView(Character npcInventory, Character playerInventory, int bargainLevel){
+    public void createTradeView(Character npc, Character player, int bargainLevel){
+        npc.accept(visitor);
+        NavigatableList npcList = visitor.getInventoryItems();
+        player.accept(visitor);
+        NavigatableList playerList = visitor.getInventoryItems();
 
-        return null;
+        //make menu
+        NavigatableGrid npcInv = new NavigatableGrid(250, 400, 5, 5);
+        npcInv.setBgColor(new Color(90,70,50));
+
+        NavigatableGrid playerInv = new NavigatableGrid(250, 400, 5, 5);
+        playerInv.setBgColor(new Color(90,70,70));
+
+        npcInv.setList(npcList);
+        playerInv.setList(playerList);
+        //make swappable view
+        SwappableView view = new SwappableView();
+        //add decorators to center the menu
+        ColumnatedCompositeContainer columns  = new ColumnatedCompositeContainer();
+        columns.setHeight(400);
+        columns.setWidth(700);
+
+
+
+        VerticalCenterContainer npcTradeTitle =
+                new VerticalCenterContainer(
+                        new HorizontalCenterContainer(
+                                new TitleBarDecorator(npcInv, "NPC Inventory")
+                        )
+                );
+        columns.addDrawable(npcTradeTitle);
+
+        VerticalCenterContainer playerTradeTitle =
+                new VerticalCenterContainer(
+                        new HorizontalCenterContainer(
+                                new TitleBarDecorator(playerInv, "NPC Your Inventory")
+                        )
+                );
+
+        columns.addDrawable(playerTradeTitle);
+
+        VerticalCenterContainer title =
+                new VerticalCenterContainer(
+                        new HorizontalCenterContainer(
+                                new TitleBarDecorator(columns, "Trade")
+                        )
+                );
+
+        view.addDrawable(title);
+
+
+        view.addNavigatable(npcInv);
+        //view.addNavigatable(playerInv);
+
+
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
     }
 
 
