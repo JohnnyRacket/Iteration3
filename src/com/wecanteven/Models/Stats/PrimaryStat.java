@@ -22,13 +22,17 @@ public class PrimaryStat extends Stat implements ViewObservable {
     }
 
     public void add(int addable){
-        stat += addable;
-        notifyObservers();
+        if(addable !=0){
+            stat += addable;
+            notifyObservers();
+        }
     }
 
     public void subtract(int subtractable){
-        stat += subtractable;
-        notifyObservers();
+        if(subtractable !=0){
+            stat += subtractable;
+            notifyObservers();
+        }
     }
 
     @Override

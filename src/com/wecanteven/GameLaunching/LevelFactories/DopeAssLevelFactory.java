@@ -29,6 +29,11 @@ public class DopeAssLevelFactory extends LevelFactory{
             if (i >6) {
                 map.getTile(i, 0, 2).setTerrain(new Ground());
                 map.getTile(i, 0, 3).setTerrain(new Ground());
+                map.getTile(i, 0, 4).setTerrain(new Ground());
+                map.getTile(i, 0, 5).setTerrain(new Ground());
+                map.getTile(i, 0, 6).setTerrain(new Ground());
+
+
             }
             if (i >6) {
                 map.getTile(i, 9, 1).setTerrain(new Current(Direction.NORTH));
