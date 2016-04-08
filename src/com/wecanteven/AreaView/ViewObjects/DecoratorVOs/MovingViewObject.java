@@ -56,11 +56,19 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     }
 
     private double parabola(double start, double end, double percentage) {
-        double jumpConstant = end > start ? 0.8 : 0;
         double deltaY = end - start;
-        double a = -2*deltaY-4*jumpConstant;
-        double v = 3*deltaY+4*jumpConstant;
-        return a*Math.pow(percentage, 2) + v*percentage + start;
+
+        if (end > start) {
+            double jumpConstant = 0.8;
+            double a = -2*deltaY*(end < start ? 0 : 1) -4*jumpConstant;
+            double v = 3*deltaY+4*jumpConstant;
+            return a*Math.pow(percentage, 2) + v*percentage + start;
+        } else {
+            return start + (end - start) * percentage;
+        }
+
+
+
     }
 
     private boolean hasStateChange() {
@@ -77,6 +85,7 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     private void adjustPosition(long endTime) {
         //System.out.println("******************************** MVO updating child");
         getChild().setPosition(calculateCurrentPosition());
+        System.out.println("Z Level: " + getPosition().getZ());
         if (viewTime.getCurrentTime() < endTime) {
             viewTime.register(() -> adjustPosition(endTime), 1);
         }
