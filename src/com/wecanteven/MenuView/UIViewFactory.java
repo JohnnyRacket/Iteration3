@@ -9,6 +9,7 @@ import com.wecanteven.MenuView.DrawableContainers.Decorators.TitleBarDecorator;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.VerticalCenterContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
+import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
@@ -129,7 +130,9 @@ public class UIViewFactory {
         CustomScaleColumnsContainer columns  = new CustomScaleColumnsContainer(new int[]{4,1});
         columns.setHeight(400);
         columns.setWidth(700);
-        columns.addDrawable(menu);
+
+        TitleBarDecorator foo = new TitleBarDecorator(menu, "test");
+        columns.addDrawable(foo);
         columns.addDrawable(equipMenu);
 
         TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment");
@@ -149,11 +152,16 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
     }
 
-    public SwappableView createHUDView(){
-        return null; //TODO: implement
+    public void createHUDView(Character character){
+        StatsHUD statsHUD = new StatsHUD(character.getStats());
+        SwappableView view = new SwappableView();
+        view.addDrawable(statsHUD);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addPermView(view);
+        },0);
     }
-    public SwappableView createAbilityView(){
-        return null; //TODO: implement
+    public void createAbilityView(){
+
     }
     public SwappableView createMainMenuView(){
         //make menu

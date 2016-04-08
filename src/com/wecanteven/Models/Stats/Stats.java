@@ -1,21 +1,24 @@
 package com.wecanteven.Models.Stats;
 
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Visitors.StatsVisitor;
 import org.omg.CORBA.portable.ValueInputStream;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Stats implements Observer{
+public class Stats implements Observer, Observable{
     private PrimaryStat strength,agility,intellect, hardiness, experience, movement;
     private PrimaryStat lives, level;
     private PrimaryStat currentHealth,currentMana;
     private Stat maxHealth,maxMana,offensiveRating,defensiveRating,armorRating;
     private Entity entity;
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     public Stats(Entity entity){
         initStats(entity,1,1,1,1,30);
@@ -52,6 +55,7 @@ public class Stats implements Observer{
     public void update(){
         entity.levelUp();
         refreshStats();
+        notifyObservers();
     }
 
     public void refreshStats(){
@@ -148,6 +152,29 @@ public class Stats implements Observer{
         s += defensiveRating.getName() + ": " + getDefensiveRating() + "\n";
         s += armorRating.getName() + ": " + getArmorRating() + "\n";
         return s;
+    }
+
+    @Override
+    public ArrayList<Observer> getObservers() {
+        return null;
+    }
+
+    @Override
+    public void attach(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void dettach(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        Iterator<Observer> iter = observers.iterator();
+        while(iter.hasNext()){
+            iter.next().notify();
+        }
     }
 
     public void accept(StatsVisitor visitor) {
