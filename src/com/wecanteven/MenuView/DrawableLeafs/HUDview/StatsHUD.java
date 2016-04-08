@@ -76,15 +76,15 @@ public class StatsHUD extends Drawable implements Observer {
 
 
         g2d.setColor(borderColor);
-        g2d.fillPolygon(new int[]{0,0,300},new int[]{0,300,0},3);
+        g2d.fillPolygon(new int[]{0,0,300},new int[]{0,250,0},3);
 
-        g2d.fillPolygon(new int[]{windowWidth,windowWidth,windowWidth - 300},new int[]{0,300,0},3);
+        g2d.fillPolygon(new int[]{windowWidth,windowWidth,windowWidth - 300},new int[]{0,250,0},3);
 
 
         //g2d.setPaint(texture);
         g2d.setColor(Config.MEDIUMGREY);
-        g2d.fillPolygon(new int[]{0,0,290},new int[]{0,290,0},3);
-        g2d.fillPolygon(new int[]{windowWidth,windowWidth,windowWidth - 290},new int[]{0,290,0},3);
+        g2d.fillPolygon(new int[]{0,0,290},new int[]{0,240,0},3);
+        g2d.fillPolygon(new int[]{windowWidth,windowWidth,windowWidth - 290},new int[]{0,240,0},3);
 
 
         healthBar.draw(g2d,20,20,windowWidth,windowHeight);
