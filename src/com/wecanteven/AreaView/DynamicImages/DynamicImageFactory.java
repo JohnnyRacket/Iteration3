@@ -51,6 +51,27 @@ public class DynamicImageFactory {
         return null;
     }
 
+    private StartableDynamicImage loadActiveDynamicImage(String xmlPath) {
+        try {
+            File imageSpec = new File(PATH + xmlPath);
+            DocumentBuilderFactory dbFactory = new DocumentBuilderFactoryImpl();
+            DocumentBuilder documentBuilder = dbFactory.newDocumentBuilder();
+            Document doc = documentBuilder.parse(imageSpec);
+            doc.getDocumentElement().normalize();
+
+            return this.createStartableAnimation(doc.getDocumentElement());
+
+
+        } catch (Exception e ) {
+            System.out.println("WUT");
+
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
     private DynamicImage createSingleFrameAnimation(Element root) {
         Element element = root;
 
@@ -63,6 +84,11 @@ public class DynamicImageFactory {
                 -Integer.parseInt(element.getElementsByTagName("x").item(0).getTextContent()),
                 -Integer.parseInt(element.getElementsByTagName("y").item(0).getTextContent()),
                 image);
+
+    }
+
+    private StartableDynamicImage createStartableAnimation(Element root) {
+        return null;
     }
 
 
