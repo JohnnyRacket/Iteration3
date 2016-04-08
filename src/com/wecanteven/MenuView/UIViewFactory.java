@@ -60,7 +60,7 @@ public class UIViewFactory {
             System.out.println("you tried to level up palcehold skill kappafacenospace");
         }));
 
-        ScrollableMenu skillMenu = new ScrollableMenu(300,600);
+        ScrollableMenu skillMenu = new ScrollableMenu(300,650);
         skillMenu.setList(skillList);
 
         Stats stats = character.getStats();
@@ -89,7 +89,7 @@ public class UIViewFactory {
 
         ColumnatedCompositeContainer columns = new ColumnatedCompositeContainer();
         columns.setWidth(600);
-        columns.setHeight(500);
+        columns.setHeight(550);
         columns.addDrawable(menu);
         columns.addDrawable(skillMenu);
 
@@ -130,7 +130,7 @@ public class UIViewFactory {
         //add decorators to center the menu
         CustomScaleColumnsContainer columns  = new CustomScaleColumnsContainer(new int[]{4,1});
         columns.setHeight(400);
-        columns.setWidth(700);
+        columns.setWidth(600);
 
         columns.addDrawable(menu);
         columns.addDrawable(equipMenu);

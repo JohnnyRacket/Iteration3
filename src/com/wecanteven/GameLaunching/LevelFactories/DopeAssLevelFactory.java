@@ -64,5 +64,6 @@ public class DopeAssLevelFactory extends LevelFactory{
         map.add(new TakeableItem("LOL"), new Location(1, 2, 1));
                 Character npc = new Character(map,Direction.SOUTH);
         map.add(npc,new Location(2,2,1));
+        //npc.move(Direction.SOUTH);
     }
 }

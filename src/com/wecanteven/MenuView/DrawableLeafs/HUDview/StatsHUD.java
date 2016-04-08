@@ -19,9 +19,14 @@ public class StatsHUD extends Drawable implements Observer {
 
     public StatsHUD(Stats stats){
         this.stats = stats;
-        healthBar = new AnimatedChangeProgressBar(200,40);
-        manaBar = new AnimatedChangeProgressBar(200,40);
-        expBar = new AnimatedChangeProgressBar(200,40);
+        healthBar = new AnimatedChangeProgressBar(200,20);
+        healthBar.setBorderWidth(8);
+        manaBar = new AnimatedChangeProgressBar(200,20);
+        manaBar.setBorderWidth(8);
+        expBar = new AnimatedChangeProgressBar(200,20);
+        expBar.setBorderWidth(8);
+
+        update();
     }
 
     @Override
