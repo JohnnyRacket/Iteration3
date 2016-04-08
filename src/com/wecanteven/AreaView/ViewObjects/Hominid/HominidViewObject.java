@@ -78,10 +78,14 @@ public class HominidViewObject implements ViewObject, Observer{
             changeDirection();
         }
         if (subjectHasMoved()) {
+            System.out.println("Last Z: " + lastLocation.getZ());
+            System.out.println("Next Z: " + movingSubject.getLocation().getZ());
             if (isFalling()) {
                 fall();
             } else if (isJumping()) {
                 jump();
+            } else if(isFalling()) {
+                fall();
             } else {
                 move();
             }
@@ -110,10 +114,12 @@ public class HominidViewObject implements ViewObject, Observer{
     }
     private void jump() {
         hands.jump(movingSubject.getMovingTicks()*Config.MODEL_TICK);
+        feet.jump(movingSubject.getMovingTicks()*Config.MODEL_TICK);
 
     }
     private void fall() {
-
+        hands.fall(movingSubject.getMovingTicks()*Config.MODEL_TICK);
+        feet.fall(movingSubject.getMovingTicks()*Config.MODEL_TICK);
     }
 
     private void changeDirection() {

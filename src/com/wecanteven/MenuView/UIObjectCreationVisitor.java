@@ -61,8 +61,10 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
     @Override
     public void visitItemStorage(ItemStorage itemStorage) {
         inInv = true;
-        inventoryItems.clear();
-        equippedItems.clear();
+//        inventoryItems.clear();
+//        equippedItems.clear();
+        inventoryItems = new NavigatableList();
+        equippedItems = new NavigatableList();
     }
 
     @Override
@@ -118,7 +120,7 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
                 factory.createEquippableItemMenu(character, equipable);
             }));
         }else{
-            inventoryItems.addItem(new GridItem(equipable.getName(), () -> {
+            equippedItems.addItem(new GridItem(equipable.getName(), () -> {
                 System.out.println("select hit on equpped item");
                 factory.createEquippedItemMenu(character, equipable);
             }));

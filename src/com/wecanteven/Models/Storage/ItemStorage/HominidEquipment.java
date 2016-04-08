@@ -33,10 +33,11 @@ public class HominidEquipment extends Equipment {
 
     @Override
     public boolean equipChest(ChestEquipableItem item) {
+        System.out.println("blubb");
         if (chest != null) {
             getOwner().addItem(chest);
         }
-
+        System.out.println("item is equippzed");
         chest = item;
 
         return true;
@@ -77,42 +78,26 @@ public class HominidEquipment extends Equipment {
 
     @Override
     public boolean unequipChest(ChestEquipableItem item) {
-        if (chest == item) {
-            getOwner().addItem(item);
-            chest = null;
-            return true;
-        }
-        return false;
+        chest = null;
+        return true;
     }
 
     @Override
     public boolean unequipBoots(BootsEquipableItem item) {
-        if (boots == item) {
-            getOwner().addItem(item);
-            boots = null;
-            return true;
-        }
-        return false;
+        boots = null;
+        return true;
     }
 
     @Override
     public boolean unequipHead(HeadEquipableItem item) {
-        if (head == item) {
-            getOwner().addItem(item);
-            head = null;
-            return true;
-        }
-        return false;
+        head = null;
+        return true;
     }
 
     @Override
     public boolean unequipWeapon(WeaponEquipableItem item) {
-        if (weapon == item) {
-            getOwner().addItem(item);
-            weapon = null;
-            return true;
-        }
-        return false;
+        weapon = null;
+        return true;
     }
 
     @Override

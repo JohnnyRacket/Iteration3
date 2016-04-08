@@ -10,9 +10,9 @@ import com.wecanteven.UtilityClasses.Location;
  */
 public interface ActionHandler {
 
-    boolean move(Entity entity, Location location);
+    boolean move(Entity entity, Location location, int movespeed);
     boolean fall(Entity entity, Location location);
-    boolean move(TakeableItem item, Location location);
+    boolean move(TakeableItem item, Location location, int movespeed);
     boolean fall(TakeableItem item, Location location);
     boolean drop(TakeableItem item, Location location);
 }
