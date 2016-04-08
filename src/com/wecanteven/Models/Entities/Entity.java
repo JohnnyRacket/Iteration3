@@ -40,7 +40,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         canMoveVisitor = new TerranianCanMoveVisitor();
         canMoveVisitor.setEntity(this);
         canFallVisitor = new TerranianCanFallVisitor();
-        jumpHeight = 2;
+        jumpHeight = 25;
         movingTicks = 0;
         isActive = false;
     }
@@ -76,7 +76,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             if (location.getZ() == 1) {
                 return false;
             }
-            //setMovingTicks(2);
+            //setMovingTicks(3);
             return actionHandler.fall(this, this.getLocation().subtract(new Location(0, 0, 1)));
         }
         return false;
@@ -223,4 +223,8 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             this.isActive = isActive;
         }
     }
+    public void modifyStats(StatsAddable addable){
+        this.stats.addStats(addable);
+    }
+
 }

@@ -10,13 +10,10 @@ import com.wecanteven.UtilityClasses.Location;
 
 import java.awt.*;
 
-public class HandsViewObject implements ViewObject, Observer{
+public class HandsViewObject implements ViewObject, Observer {
     private HandState handState;
     private Position position;
    // private Equipment --dont have it yet..
-
-    private MicroPositionableViewObject leftHand;
-    private MicroPositionableViewObject rightHand;
 
 
 
@@ -77,6 +74,7 @@ public class HandsViewObject implements ViewObject, Observer{
     public void update() {
         //TODO
     }
+
 
     public void swapHandsState(HandState handState) {
         this.handState = handState;
