@@ -61,8 +61,10 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
     @Override
     public void visitItemStorage(ItemStorage itemStorage) {
         inInv = true;
-        inventoryItems.clear();
-        equippedItems.clear();
+//        inventoryItems.clear();
+//        equippedItems.clear();
+        inventoryItems = new NavigatableList();
+        equippedItems = new NavigatableList();
     }
 
     @Override

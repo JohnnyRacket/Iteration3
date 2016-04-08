@@ -73,6 +73,5 @@ public class BrawlingState extends HandState {
     public void equip(/*add weapon param model doesnt exist*/) {
 
     }
-
     //swapping states could be here
 }

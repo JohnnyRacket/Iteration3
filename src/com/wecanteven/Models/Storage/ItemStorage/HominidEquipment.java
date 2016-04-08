@@ -19,10 +19,10 @@ public class HominidEquipment extends Equipment {
         super(owner);
     }
 
-    private EquipmentSlot<ChestEquipableItem> chest;
-    private EquipmentSlot<BootsEquipableItem> boots;
-    private EquipmentSlot<HeadEquipableItem> head;
-    private EquipmentSlot<WeaponEquipableItem> weapon;
+    private EquipmentSlot<ChestEquipableItem> chest = new EquipmentSlot<>();
+    private EquipmentSlot<BootsEquipableItem> boots = new EquipmentSlot<>();
+    private EquipmentSlot<HeadEquipableItem> head = new EquipmentSlot<>();
+    private EquipmentSlot<WeaponEquipableItem> weapon = new EquipmentSlot<>();
 
     @Override
     public boolean isEquiped(EquipableItem item) {
