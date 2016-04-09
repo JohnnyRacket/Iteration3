@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+  <x>39</x>
+  <y>64</y>
+  <rootPath>resources/items/box/</rootPath>
+  <fileName>box.png</fileName>
+  <fileName>box_broken_1.png</fileName>
+  <fileName>box_broken_2.png</fileName>
+  <fileName>box_broken_3.png</fileName>
+  <fileName>box_broken_4.png</fileName>
+  <fileName>box_broken_5.png</fileName>
+</single_frame_animation>

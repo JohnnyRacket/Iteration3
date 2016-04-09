@@ -67,7 +67,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitOneShotItem(OneShot oneshot) {
-
+        areaView.addViewObject(factory.createOneShotItem(currentPosition, oneshot));
     }
 
     @Override

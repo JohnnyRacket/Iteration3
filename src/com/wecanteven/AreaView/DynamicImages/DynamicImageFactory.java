@@ -24,61 +24,53 @@ public class DynamicImageFactory {
         return ourInstance;
     }
 
+    private final String NULL_PATH = "Null/null.xml";
+
     private DynamicImageFactory() {
     }
 
     public DynamicImage loadDynamicImage(String xmlPath) {
+
+        Element element = getRootElement(xmlPath);
+        switch(element.getNodeName()) {
+            case "single_frame_animation":
+                return this.createSingleFrameAnimation(element);
+            default:
+                System.out.println("Could not find dynamic image for: " + element.getNodeName());
+                return loadDynamicImage(NULL_PATH);
+
+        }
+
+
+    }
+
+    public StartableDynamicImage loadActiveDynamicImage(String xmlPath) {
+        Element element = getRootElement(xmlPath);
+        return this.createStartableAnimation(element);
+    }
+
+    private Element getRootElement(String xmlPath) {
         try {
             File imageSpec = new File(PATH + xmlPath);
             DocumentBuilderFactory dbFactory = new DocumentBuilderFactoryImpl();
             DocumentBuilder documentBuilder = dbFactory.newDocumentBuilder();
             Document doc = documentBuilder.parse(imageSpec);
             doc.getDocumentElement().normalize();
-            switch(doc.getDocumentElement().getNodeName()) {
-                case "single_frame_animation":
-                    return this.createSingleFrameAnimation(doc.getDocumentElement());
-                default:
-                    System.out.println("Could not find dynamic image for: " + doc.getDocumentElement().getNodeName());
 
-            }
-
-        } catch (Exception e ) {
-            System.out.println("WUT");
-
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    private StartableDynamicImage loadActiveDynamicImage(String xmlPath) {
-        try {
-            File imageSpec = new File(PATH + xmlPath);
-            DocumentBuilderFactory dbFactory = new DocumentBuilderFactoryImpl();
-            DocumentBuilder documentBuilder = dbFactory.newDocumentBuilder();
-            Document doc = documentBuilder.parse(imageSpec);
-            doc.getDocumentElement().normalize();
-
-            return this.createStartableAnimation(doc.getDocumentElement());
+            return doc.getDocumentElement();
 
 
         } catch (Exception e ) {
             System.out.println("WUT");
-
             e.printStackTrace();
+            return getRootElement(NULL_PATH);
         }
-
-        return null;
-
     }
 
-    private DynamicImage createSingleFrameAnimation(Element root) {
-        Element element = root;
-
+    private DynamicImage createSingleFrameAnimation(Element element) {
         String rootPath = element.getElementsByTagName("rootPath").item(0).getTextContent();
 
-        Image image = (new ImageIcon(PATH + rootPath + element.getElementsByTagName("fileName").item(0).getTextContent())).getImage();
-
+        Image image = createImage(PATH + rootPath + element.getElementsByTagName("fileName").item(0).getTextContent());
 
         return new ConstantDynamicImage(
                 -Integer.parseInt(element.getElementsByTagName("x").item(0).getTextContent()),
@@ -87,8 +79,22 @@ public class DynamicImageFactory {
 
     }
 
-    private StartableDynamicImage createStartableAnimation(Element root) {
-        return null;
+    private Image createImage(String filePath) {
+        return (new ImageIcon(filePath)).getImage();
+    }
+
+    private StartableDynamicImage createStartableAnimation(Element element) {
+        String rootPath = element.getElementsByTagName("rootPath").item(0).getTextContent();
+
+        NodeList nList = element.getElementsByTagName("fileName");
+        Image[] activeFilePaths = new Image[nList.getLength()];
+        for (int i=0; i<nList.getLength(); i++) {
+            activeFilePaths[i] = createImage(rootPath + nList.item(i).getTextContent());
+        }
+        return new StartableDynamicImage(
+                -Integer.parseInt(element.getElementsByTagName("x").item(0).getTextContent()),
+                -Integer.parseInt(element.getElementsByTagName("y").item(0).getTextContent()),
+                activeFilePaths);
     }
 
 

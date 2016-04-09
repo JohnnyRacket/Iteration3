@@ -1,30 +1,50 @@
 package com.wecanteven.Models.Items;
 
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Observers.Destroyable;
+import com.wecanteven.Observers.Observable;
+import com.wecanteven.Observers.Observer;
 import com.wecanteven.Visitors.ItemVisitor;
+
+import java.util.ArrayList;
 
 /**
  * Created by simonnea on 3/31/16.
  */
-public class OneShot extends Item {
+public class OneShot extends Item implements Destroyable, Observable{
+    private ArrayList<Observer> observers = new ArrayList<>();
 
-    private ItemAction action;
+    private boolean isDestroyed = false;
+    private ItemAction itemAction;
 
-    public OneShot(String name, ItemAction action) {
+    public OneShot(String name, ItemAction itemAction) {
         super(name);
-
-        this.action = action;
+        this.itemAction = itemAction;
     }
 
     public void interact(Entity entity) {
-        action.execute(entity);
+        isDestroyed = true;
+        itemAction.execute(entity);
+        notifyObservers();
+        System.out.println("DESTROYED A BOX");
     }
 
     /**
      * Visitation Rights
      * */
 
-    public void visit(ItemVisitor visitor) {
+    @Override
+    public void accept(ItemVisitor visitor) {
         visitor.visitOneShotItem(this);
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
+    @Override
+    public ArrayList<Observer> getObservers() {
+        return observers;
     }
 }

@@ -77,8 +77,6 @@ public class HominidViewObject implements ViewObject, Observer{
             changeDirection();
         }
         if (subjectHasMoved()) {
-            System.out.println("Last Z: " + lastLocation.getZ());
-            System.out.println("Next Z: " + movingSubject.getLocation().getZ());
             if (isFalling()) {
                 fall();
             } else if (isJumping()) {
@@ -95,7 +93,6 @@ public class HominidViewObject implements ViewObject, Observer{
 
     private boolean subjectHasMoved() {
         long currentTime = ViewTime.getInstance().getCurrentTime();
-        System.out.println("Moving Ticks: " + movingSubject.getMovingTicks());
         if (currentTime >= endMoveTime && movingSubject.getMovingTicks() > 0) {
             endMoveTime = currentTime + movingSubject.getMovingTicks()* Config.MODEL_TICK;
             return true;
@@ -108,9 +105,7 @@ public class HominidViewObject implements ViewObject, Observer{
     }
 
     private void move() {
-        System.out.println("Pre hands.move");
         hands.move(movingSubject.getMovingTicks()*Config.MODEL_TICK);
-        System.out.println("hands.move happened");
         feet.move(movingSubject.getMovingTicks()*Config.MODEL_TICK);
     }
     private void jump() {

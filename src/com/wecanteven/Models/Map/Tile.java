@@ -41,12 +41,9 @@ public class Tile implements MapVisitable {
 
         if(this.entity.add(entity)){
             entity.lock();
-            ModelTime.getInstance().registerAlertable(new Alertable() {
-                @Override
-                public void alert() {
-                    interact(entity);
-                }
-            }, entity.getMovingTicks() + 1);
+            ModelTime.getInstance().registerAlertable(
+                    () -> interact(entity)
+                    , entity.getMovingTicks() + 1);
             return true;
         }else{
             return false;
@@ -135,16 +132,16 @@ public class Tile implements MapVisitable {
 
     public void interact(Entity entity){
         entity.unlock();
-        for(StatsAddable effect: effects){
-            entity.modifyStats(effect);
-        }
+        effects.forEach( effect -> entity.modifyStats(effect));
         terrain.interact(entity);
+        if (!oneShot.isEmpty() )
+            oneShot.getToken().interact(entity);
     }
 
     /**
      * Created by John on 3/31/2016.
      */
-    public static class TileSlot<T> {
+    public class TileSlot<T> {
         private T t;
 
         public T getToken() {
