@@ -2,6 +2,7 @@ package com.wecanteven.GameLaunching.LevelFactories;
 
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Map;
@@ -66,6 +67,7 @@ public class DopeAssLevelFactory extends LevelFactory{
                 Character npc = new Character(map,Direction.SOUTH);
         map.add(npc,new Location(2,2,1));
         map.add(new OneShot("Box", (entity) -> {}), new Location(3,3,1));
+        map.add(new InteractiveItem("Button"), new Location(5,5,1));
         //npc.move(Direction.SOUTH);
     }
 }

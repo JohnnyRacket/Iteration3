@@ -71,7 +71,10 @@ public class Tile implements MapVisitable {
     }
 
     public boolean remove(Entity entity) {
+        if (!interactiveItem.isEmpty())
+            interactiveItem.getToken().release();
         return this.entity.remove(entity);
+
     }
     public boolean remove(OneShot oneShot){
         return this.oneShot.remove(oneShot);
@@ -136,6 +139,8 @@ public class Tile implements MapVisitable {
         terrain.interact(entity);
         if (!oneShot.isEmpty() )
             oneShot.getToken().interact(entity);
+        if (!interactiveItem.isEmpty())
+            interactiveItem.getToken().trigger();
     }
 
     /**
