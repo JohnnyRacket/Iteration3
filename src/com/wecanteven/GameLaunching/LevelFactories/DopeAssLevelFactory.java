@@ -2,16 +2,22 @@ package com.wecanteven.GameLaunching.LevelFactories;
 
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
+import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
+import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+
+import java.util.ArrayList;
 
 /**
  * Created by alexs on 4/1/2016.
@@ -64,8 +70,15 @@ public class DopeAssLevelFactory extends LevelFactory{
 
     @Override
     public void populateMap(Map map) {
-        map.add(new TakeableItem("LOL"), new Location(1, 2, 1));
-                Character npc = new Character(map,Direction.SOUTH);
+        map.add(new TakeableItem("NPC Chest"), new Location(1, 2, 1));
+        //"Creating an NPC and Giving him a chest Plate
+        NPC npc = new NPC(map,Direction.SOUTH, new DialogInteractionStrategy(new ArrayList<>()));
+        WeaponEquipableItem i = new WeaponEquipableItem("Katar", new StatsAddable(0,0,0,0,0,0,0,0,0));
+        npc.pickup(i);
+        npc.equipItem(i);
+        System.out.println(npc.getItemStorage().getEquipped().getChest().getItem());
+
+
         map.add(npc,new Location(2,2,1));
         map.add(new OneShot("Box", (entity) -> {}), new Location(3,3,1));
         map.add(new InteractiveItem("Button"), new Location(5,5,1));

@@ -10,7 +10,9 @@ import com.wecanteven.SaveLoad.XMLProcessors.EntityXMLProcessor;
 import com.wecanteven.SaveLoad.XMLProcessors.TileXMLProcessor;
 import com.wecanteven.SaveLoad.XMLProcessors.XMLProcessor;
 import com.wecanteven.UtilityClasses.Direction;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.File;
 
@@ -47,6 +49,9 @@ public class LoadFromXMLFile implements LoadGame {
     public void loadSaveFile() {
         map = loadMap();
         avatar = loadAvatar();
+        loadNPCs();
+        //loadItems();
+
     }
 
     public Map loadMap() {
@@ -55,6 +60,14 @@ public class LoadFromXMLFile implements LoadGame {
 
     public Avatar loadAvatar() {
         return EntityXMLProcessor.parseAvatar(map, saveFile.getElemenetById("Avatar", 0));
+    }
+
+    public void loadNPCs() {
+        NodeList nl = saveFile.getElementsById("NPC");
+        for(int i = 0; i < nl.getLength(); ++i) {
+            System.out.println("Loading NPC: " + i);
+            EntityXMLProcessor.parseNPC(getMap(), (Element)nl.item(i));
+        }
     }
 
     public Avatar getAvatar() {

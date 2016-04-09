@@ -18,7 +18,7 @@ public class StorageXMLProcessor extends XMLProcessor {
         System.out.println("Formatting Item Storage");
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("maxInventoryCapacity", is.getMaxInventoryCapacity()));
-        sf.appendObjectTo("Character", sf.createSaveElement("ItemStorage",attr));
+        sf.appendObjectToMostRecent(sf.createSaveElement("ItemStorage",attr));
     }
 
     public static ItemStorage parseItemStorage(Element el) {

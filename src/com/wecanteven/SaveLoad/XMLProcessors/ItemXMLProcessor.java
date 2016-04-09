@@ -1,5 +1,6 @@
 package com.wecanteven.SaveLoad.XMLProcessors;
 
+import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -11,11 +12,11 @@ import java.util.ArrayList;
  */
 public class ItemXMLProcessor extends XMLProcessor {
 
-    public static void formatItem(String type, TakeableItem i) {
+    public static void formatItem(String type, Item i) {
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("name", i.getName()));
         System.out.println("Adding item to most recent: " + type + ":" + i.getName());
-        sf.appendObjectToMostRecent(sf.createSaveElement(type, attr));
+        sf.appendObjectToMostRecent(sf.createSaveElement("Item", attr));
     }
 
     public static TakeableItem parseTakeableItem(Element el) {

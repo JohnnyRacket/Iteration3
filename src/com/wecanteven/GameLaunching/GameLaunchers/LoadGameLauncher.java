@@ -22,7 +22,6 @@ public class LoadGameLauncher extends GameLauncher {
         initializeUIView();
 
     }
-
     //Load will call loadMap
     public void loadMap(Map map) {
         setMap(map);

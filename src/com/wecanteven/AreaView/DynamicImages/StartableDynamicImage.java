@@ -24,8 +24,6 @@ public class StartableDynamicImage extends DynamicImage {
 
     @Override
     public Image getImage() {
-        System.out.println(getPercentage());
-        System.out.println((int)((images.length - 1)*getPercentage()));
         return images[(int)((images.length - 1)*getPercentage())];
     }
 

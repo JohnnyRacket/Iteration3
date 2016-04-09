@@ -2,6 +2,7 @@ package com.wecanteven.SaveLoad.XMLProcessors;
 
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Smasher;
@@ -24,7 +25,7 @@ public class EntityXMLProcessor extends XMLProcessor {
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("Height", e.getHeight()));
         sf.appendObjectTo("Tile", sf.createSaveElement("Entity",attr));
-        formatLocation(sf, e, "Entity");
+        formatLocation(sf, e);
 
     }
 
@@ -37,11 +38,15 @@ public class EntityXMLProcessor extends XMLProcessor {
         attr.add(sf.saveAttr("Occupation", e.getOccupation().getClass().getSimpleName()));
         attr.add(sf.saveAttr("Height", e.getHeight()));
         sf.appendObjectTo(parent, sf.createSaveElement("Character",attr));
-        formatLocation(sf, e, "Character");
+        formatLocation(sf, e);
     }
 
     public static Character parseCharacter(Map map, Element el) {
-        Character c =  new Character(map, parseDirection(sf.getElemenetById(el, "Direction", 0)), parseOccupation(sf.getStrAttr(el, "Occupation")), StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0)));
+        Character c =  new Character(map,
+                parseDirection(sf.getElemenetById(el, "Direction", 0)),
+                parseOccupation(sf.getStrAttr(el, "Occupation")),
+                StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0))
+        );
         parseStats(c, sf.getElemenetById(el, "Stats", 0));
         c.getItemStorage();
         System.out.println(c.getItemStorage());
@@ -50,6 +55,7 @@ public class EntityXMLProcessor extends XMLProcessor {
         System.out.println("Character Added to Map");
         return c;
     }
+
 
     public static void formatAvatar(Avatar avatar) {
         ArrayList<Attr> attr = new ArrayList<>();
@@ -60,6 +66,28 @@ public class EntityXMLProcessor extends XMLProcessor {
     public static Avatar parseAvatar(Map map, Element el) {
         return new Avatar(parseCharacter(map, sf.getElemenetById(el, "Character", 0)), map);
     }
+
+
+    public static void formatNPC(NPC npc, String parent) {
+        ArrayList<Attr> attr = new ArrayList<>();
+        attr.add(sf.saveAttr("Occupation", npc.getOccupation().getClass().getSimpleName()));
+        attr.add(sf.saveAttr("Height", npc.getHeight()));
+        sf.appendObjectTo(parent, sf.createSaveElement("NPC",attr));
+        formatLocation(sf, npc);
+
+    }
+
+    public static NPC parseNPC(Map map, Element el) {
+        NPC npc  = new NPC(map,
+                parseDirection(sf.getElemenetById(el, "Direction", 0)),
+                new DialogInteractionStrategy(new ArrayList<>()),
+                parseOccupation(sf.getStrAttr(el, "Occupation")),
+                StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0))
+        );
+        map.add(npc, parseLocation(sf.getElemenetById(el, "Location", 0)));
+        return npc;
+    }
+
     public static void formatStats(Stats stats) {
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("lives", stats.getLives()));
@@ -70,7 +98,7 @@ public class EntityXMLProcessor extends XMLProcessor {
         attr.add(sf.saveAttr("hardiness", stats.getHardiness()));
         attr.add(sf.saveAttr("movement", stats.getMovement()));
 
-        sf.appendObjectTo("Character", sf.createSaveElement("Stats",attr));
+        sf.appendObjectToMostRecent(sf.createSaveElement("Stats",attr));
     }
 
     public static void parseStats(Entity e, Element el) {
@@ -86,12 +114,12 @@ public class EntityXMLProcessor extends XMLProcessor {
     }
 
 
-    public static void formatLocation(SaveFile save, Entity e, String parent) {
+    public static void formatLocation(SaveFile save, Entity e) {
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(save.saveAttr("r", e.getLocation().getR()));
         attr.add(save.saveAttr("s", e.getLocation().getS()));
         attr.add(save.saveAttr("z", e.getLocation().getZ()));
-        save.appendObjectTo(parent, save.createSaveElement("Location",attr));
+        save.appendObjectToMostRecent(save.createSaveElement("Location",attr));
     }
 
     public static Location parseLocation(Element el){
@@ -101,7 +129,7 @@ public class EntityXMLProcessor extends XMLProcessor {
     public static void formatDirection(Direction direction) {
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("enum", direction.ordinal()));
-        sf.appendObjectTo("Character", sf.createSaveElement("Direction",attr));
+        sf.appendObjectToMostRecent(sf.createSaveElement("Direction",attr));
 
     }
 
