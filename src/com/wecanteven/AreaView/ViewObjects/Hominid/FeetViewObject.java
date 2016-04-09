@@ -37,7 +37,7 @@ public class FeetViewObject implements ViewObject {
         this.rightFoot = rightFoot;
         changeDirection(direction);
         walkingStrategy = new FeetWalkingStrategy(0.3, leftFoot, rightFoot);
-        fallingStartegy = new FeetFallingStrategy(0.3, leftFoot, rightFoot);//new FeetFallingStrategy(height, 5, leftFoot, rightFoot);
+        fallingStartegy = new FeetJumpingStrategy(height, 2, leftFoot, rightFoot);//new FeetFallingStrategy(height, 5, leftFoot, rightFoot);
         jumpingStrategy = new FeetJumpingStrategy(height, 2, leftFoot, rightFoot);
         this.leftFoot.setRadius(radius);
         this.leftFoot.setOffsetAngle(leftAngle);

@@ -1,11 +1,10 @@
 package com.wecanteven.AreaView.ViewObjects.LeafVOs;
 
-import com.wecanteven.AreaView.DynamicImages.DynamicImage;
+import com.wecanteven.AreaView.DynamicImages.SimpleDynamicImage;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.DynamicImageDrawingStrategy;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Observer;
-import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Directionalizable;
 
 import java.awt.*;
@@ -14,14 +13,14 @@ import java.awt.*;
  * Created by Alex on 3/31/2016.
  */
 public class DirectionalViewObject extends LeafViewObject implements Directionalizable, Observer{
-    private DynamicImage north;
-    private DynamicImage south;
-    private DynamicImage northeast;
-    private DynamicImage northwest;
-    private DynamicImage southeast;
-    private DynamicImage southwest;
+    private SimpleDynamicImage north;
+    private SimpleDynamicImage south;
+    private SimpleDynamicImage northeast;
+    private SimpleDynamicImage northwest;
+    private SimpleDynamicImage southeast;
+    private SimpleDynamicImage southwest;
 
-    private DynamicImage currentImage;
+    private SimpleDynamicImage currentImage;
 
     private Directional subject;
 
@@ -35,12 +34,12 @@ public class DirectionalViewObject extends LeafViewObject implements Directional
     public DirectionalViewObject(Position position,
                                  Directional subject,
                                  DynamicImageDrawingStrategy drawingStrategy,
-                                 DynamicImage north,
-                                 DynamicImage south,
-                                 DynamicImage northeast,
-                                 DynamicImage northwest,
-                                 DynamicImage southeast,
-                                 DynamicImage southwest) {
+                                 SimpleDynamicImage north,
+                                 SimpleDynamicImage south,
+                                 SimpleDynamicImage northeast,
+                                 SimpleDynamicImage northwest,
+                                 SimpleDynamicImage southeast,
+                                 SimpleDynamicImage southwest) {
         super(position);
         this.drawingStrategy = drawingStrategy;
         this.subject = subject;

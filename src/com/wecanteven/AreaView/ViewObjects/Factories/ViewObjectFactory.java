@@ -1,7 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.Factories;
 
 import com.wecanteven.AreaView.AreaView;
-import com.wecanteven.AreaView.DynamicImages.DynamicImage;
+import com.wecanteven.AreaView.DynamicImages.SimpleDynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.DynamicImages.StartableDynamicImage;
 import com.wecanteven.AreaView.JumpDetector;
@@ -153,12 +153,12 @@ public abstract class ViewObjectFactory {
 
 
     private DirectionalViewObject createDirectional(Position p, Directional d, String path) {
-        DynamicImage bodyNorth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "north.xml");
-        DynamicImage bodySouth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "south.xml");
-        DynamicImage bodyNorthEast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northeast.xml");
-        DynamicImage bodyNorthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northwest.xml");
-        DynamicImage bodySoutheast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southeast.xml");
-        DynamicImage bodySouthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southwest.xml");
+        SimpleDynamicImage bodyNorth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "north.xml");
+        SimpleDynamicImage bodySouth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "south.xml");
+        SimpleDynamicImage bodyNorthEast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northeast.xml");
+        SimpleDynamicImage bodyNorthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northwest.xml");
+        SimpleDynamicImage bodySoutheast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southeast.xml");
+        SimpleDynamicImage bodySouthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southwest.xml");
         return new DirectionalViewObject(p, d, hexDrawingStrategy, bodyNorth, bodySouth, bodyNorthEast, bodyNorthWest, bodySoutheast, bodySouthWest);
     }
 

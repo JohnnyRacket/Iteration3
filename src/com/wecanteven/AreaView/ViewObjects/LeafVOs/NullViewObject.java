@@ -1,8 +1,6 @@
 package com.wecanteven.AreaView.ViewObjects.LeafVOs;
 
-import com.wecanteven.AreaView.DynamicImages.DynamicImage;
 import com.wecanteven.AreaView.Position;
-import com.wecanteven.AreaView.ViewObjects.DrawingStategies.DynamicImageDrawingStrategy;
 
 import java.awt.*;
 

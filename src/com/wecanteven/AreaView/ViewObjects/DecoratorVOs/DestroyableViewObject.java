@@ -1,9 +1,6 @@
 package com.wecanteven.AreaView.ViewObjects.DecoratorVOs;
 
-import com.wecanteven.AreaView.DynamicImages.DynamicImage;
-import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DecoratorViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.StartableViewObject;
-import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Observers.Destroyable;
 import com.wecanteven.Observers.Observer;
 

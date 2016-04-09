@@ -2,19 +2,25 @@ package com.wecanteven.AreaView.DynamicImages;
 
 import com.wecanteven.AreaView.ViewTime;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
  * Created by Alex on 4/7/2016.
  */
-public class StartableDynamicImage extends DynamicImage {
-    private Image[] images;
+public class StartableDynamicImage extends SimpleDynamicImage {
+    private ArrayList<Image> images = new ArrayList<>();
+    private String[] paths;
     private long duration;
     private long startTime = 0;
-    public StartableDynamicImage(int xOffset, int yOffset, Image ... images) {
+
+    public StartableDynamicImage(int xOffset, int yOffset, String ... paths) {
         super(xOffset, yOffset);
-        this.images = images;
+        this.paths = paths;
+        for (int i = 0; i< paths.length; i++) {
+            images.add(new ImageIcon(paths[i]).getImage());
+        }
     }
 
     public void start(long duration) {
@@ -24,9 +30,12 @@ public class StartableDynamicImage extends DynamicImage {
 
     @Override
     public Image getImage() {
-        System.out.println(getPercentage());
-        System.out.println((int)((images.length - 1)*getPercentage()));
-        return images[(int)((images.length - 1)*getPercentage())];
+        return images.get((int)((images.size() - 1)*getPercentage()));
+    }
+
+    @Override
+    public String getImagePath() {
+        return paths[(int)((images.size() - 1)*getPercentage())];
     }
 
     private double getPercentage() {

@@ -4,7 +4,6 @@ package com.wecanteven.AreaView.DynamicImages;
 import com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.swing.*;
@@ -12,7 +11,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * Created by Alex on 2/21/2016.
@@ -29,7 +27,7 @@ public class DynamicImageFactory {
     private DynamicImageFactory() {
     }
 
-    public DynamicImage loadDynamicImage(String xmlPath) {
+    public SimpleDynamicImage loadDynamicImage(String xmlPath) {
 
         Element element = getRootElement(xmlPath);
         switch(element.getNodeName()) {
@@ -67,10 +65,10 @@ public class DynamicImageFactory {
         }
     }
 
-    private DynamicImage createSingleFrameAnimation(Element element) {
+    private SimpleDynamicImage createSingleFrameAnimation(Element element) {
         String rootPath = element.getElementsByTagName("rootPath").item(0).getTextContent();
 
-        Image image = createImage(rootPath + element.getElementsByTagName("fileName").item(0).getTextContent());
+        String image = PATH + rootPath + element.getElementsByTagName("fileName").item(0).getTextContent();
 
         return new ConstantDynamicImage(
                 -Integer.parseInt(element.getElementsByTagName("x").item(0).getTextContent()),
@@ -87,9 +85,9 @@ public class DynamicImageFactory {
         String rootPath = element.getElementsByTagName("rootPath").item(0).getTextContent();
 
         NodeList nList = element.getElementsByTagName("fileName");
-        Image[] activeFilePaths = new Image[nList.getLength()];
+        String[] activeFilePaths = new String[nList.getLength()];
         for (int i=0; i<nList.getLength(); i++) {
-            activeFilePaths[i] = createImage(rootPath + nList.item(i).getTextContent());
+            activeFilePaths[i] = PATH +rootPath + nList.item(i).getTextContent();
         }
         return new StartableDynamicImage(
                 -Integer.parseInt(element.getElementsByTagName("x").item(0).getTextContent()),
