@@ -20,6 +20,7 @@ import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
+import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Destroyable;
@@ -94,6 +95,13 @@ public abstract class ViewObjectFactory {
         DestroyableViewObject destroyableVO = new DestroyableViewObject(internalVO, oneShot);
         oneShot.attach(destroyableVO);
         return destroyableVO;
+    }
+
+    public SimpleViewObject createObstacle(Position position, Obstacle obstacle) {
+        return new SimpleViewObject(
+                position,
+                factory.loadDynamicImage("Items/" + obstacle.getName() + "/" + obstacle.getName() + ".xml"),
+                hexDrawingStrategy);
     }
 
     private MicroPositionableViewObject createLeftFoot(Position position, Direction direction, Entity entity) {

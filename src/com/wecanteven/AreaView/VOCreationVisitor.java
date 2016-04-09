@@ -57,7 +57,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitObstacle(Obstacle obstacle) {
-
+        areaView.addViewObject(factory.createObstacle(currentPosition, obstacle));
     }
 
     @Override

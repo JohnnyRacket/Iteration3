@@ -70,7 +70,7 @@ public class DynamicImageFactory {
     private DynamicImage createSingleFrameAnimation(Element element) {
         String rootPath = element.getElementsByTagName("rootPath").item(0).getTextContent();
 
-        Image image = createImage(PATH + rootPath + element.getElementsByTagName("fileName").item(0).getTextContent());
+        Image image = createImage(rootPath + element.getElementsByTagName("fileName").item(0).getTextContent());
 
         return new ConstantDynamicImage(
                 -Integer.parseInt(element.getElementsByTagName("x").item(0).getTextContent()),
@@ -80,7 +80,7 @@ public class DynamicImageFactory {
     }
 
     private Image createImage(String filePath) {
-        return (new ImageIcon(filePath)).getImage();
+        return (new ImageIcon(PATH + filePath)).getImage();
     }
 
     private StartableDynamicImage createStartableAnimation(Element element) {
