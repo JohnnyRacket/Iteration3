@@ -84,8 +84,6 @@ public class TileXMLProcessor extends XMLProcessor {
                 terrain = new Ground();
                 break;
             case "Current":
-                //System.out.println("Making Current");
-                //TODO: Later support multiple current directions
                 terrain = new Current(EntityXMLProcessor.parseDirection(sf.getElemenetById(el, "CurrentDirection", 0)));
                 break;
             default:
