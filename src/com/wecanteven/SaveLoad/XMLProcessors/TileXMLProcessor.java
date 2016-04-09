@@ -11,6 +11,7 @@ import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.UtilityClasses.Direction;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class TileXMLProcessor extends XMLProcessor {
         int z = sf.getIntAttr(el, "z");
         ArrayList<Tile> tiles = new ArrayList<>();
         for(int i = 0; i < z; ++i){
-            tiles.add(parseTile(sf.getElemenetById(el, "Tile", i)));
+            tiles.add(parseTile(map, sf.getElemenetById(el, "Tile", i)));
         }
         return new Column(z, tiles);
     }
@@ -71,7 +72,7 @@ public class TileXMLProcessor extends XMLProcessor {
 
 
 
-    public static Tile parseTile(Element el){
+    public static Tile parseTile(Map map, Element el){
         Terrain terrain;
         switch(sf.getStrAttr(el, "terrain")){
             case "Air":
@@ -83,15 +84,30 @@ public class TileXMLProcessor extends XMLProcessor {
                 terrain = new Ground();
                 break;
             case "Current":
-                //System.out.println("Making Current");
-                //TODO: Later support multiple current directions
                 terrain = new Current(EntityXMLProcessor.parseDirection(sf.getElemenetById(el, "CurrentDirection", 0)));
                 break;
             default:
                 terrain = new Ground();
             break;
         }
-        return new Tile(terrain);
+        Tile t = new Tile(terrain);
+        Element obstacle = sf.getElemenetById(el, "Obstacle", 0);
+        if(obstacle != null){
+            t.add(ItemXMLProcessor.parseObstacleItem(obstacle));
+        }
+        Element Interactive = sf.getElemenetById(el, "InteractiveItem", 0);
+        if(Interactive != null){
+            t.add(ItemXMLProcessor.parseInteractiveItem(Interactive));
+        }
+        Element OneShot = sf.getElemenetById(el, "OneShot", 0);
+        if(OneShot != null){
+            t.add(ItemXMLProcessor.parseOneShotItem(OneShot));
+        }
+        Element NPC  = sf.getElemenetById(el, "NPC", 0);
+        if(NPC != null) {
+            t.add(EntityXMLProcessor.parseNPC(map, NPC));
+        }
+        return t;
     }
 
     public static void formatCurrentDirection(Terrain terrain) {

@@ -2,6 +2,7 @@ package com.wecanteven.GameLaunching.GameLaunchers;
 
 import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.Controllers.InputControllers.MainController;
+import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
@@ -50,7 +51,7 @@ public abstract class GameLauncher {
     }
 
     protected void initializeUIView(){
-
+        UIViewFactory.getInstance().createHUDView(getAvatar().getCharacter());
     }
 
 
@@ -72,6 +73,8 @@ public abstract class GameLauncher {
 
     protected void setAvatar(Avatar avatar) {
         SaveToXMLFile.setAvatar(avatar);
+        getController().setAvatar(getAvatar());
+        UIViewFactory.getInstance().setAvatar(getAvatar());
         this.avatar = avatar;
     }
 

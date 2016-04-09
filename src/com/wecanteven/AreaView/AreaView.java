@@ -174,13 +174,11 @@ public class AreaView extends JPanel {
 
             //add xzPlanes until the Rs line up
             for (; ySize <= y; ySize++) {
-                System.out.println("adding y: " + ySize);
                 cube.add(xzPlane(ySize));
             }
 
             //add xRows to every yzPlane till the Zs line up
             for(; zSize <= z; zSize++) {
-                System.out.println("adding z: " + zSize);
                 for (int j = 0; j < ySize; j++) {
                     cube.get(j).add(xRow(j, zSize));
                 }
@@ -188,7 +186,6 @@ public class AreaView extends JPanel {
 
             //append tVOs to every xColumn until the x's line up
             for(; xSize <= x; xSize++) {
-                System.out.println("adding x: " + xSize);
                 for (int j = 0; j < ySize; j++) {
                     ArrayList<ArrayList<TileViewObject>> xzPlane = cube.get(j);
                     for (int k = 0; k< zSize; k++) {

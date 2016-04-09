@@ -5,6 +5,7 @@ import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.SelectableItem;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
@@ -56,6 +57,12 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
     public void visitCharacter(Character c) {
         this.character = c;
         c.getItemStorage().accept(this);
+    }
+
+    @Override
+    public void visitNPC(NPC npc) {
+        this.character = npc;
+        npc.getItemStorage().accept(this);
     }
 
     @Override

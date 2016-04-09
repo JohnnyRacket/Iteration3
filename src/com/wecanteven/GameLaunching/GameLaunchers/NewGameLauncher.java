@@ -58,7 +58,7 @@ public class NewGameLauncher extends GameLauncher {
         setAvatar(new Avatar(player, getMap()));
         getMap().add(player, new Location(3,2,1));
         getController().setAvatar(getAvatar());
-        UIViewFactory.getInstance().setAvatar(getAvatar());
+        //UIViewFactory.getInstance().setAvatar(getAvatar());
 
     }
 
@@ -67,8 +67,4 @@ public class NewGameLauncher extends GameLauncher {
         levelFactory.populateMap(map);
     }
 
-    @Override
-    protected void initializeUIView() {
-        UIViewFactory.getInstance().createHUDView(getAvatar().getCharacter());
-    }
 }

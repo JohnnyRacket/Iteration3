@@ -1,9 +1,6 @@
 package com.wecanteven.SaveLoad;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.swing.plaf.synth.SynthTextAreaUI;
@@ -223,6 +220,15 @@ public class SaveFile {
         }
         return null;
     }
+
+    public NodeList getElementsById(String id) {
+        return root.getElementsByTagName(id);
+    }
+
+    public NodeList getElementsById(Element el, String id) {
+        return el.getElementsByTagName(id);
+    }
+
 
     public Document getDoc() {
         return doc;
