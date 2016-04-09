@@ -111,6 +111,8 @@ public class UIViewFactory {
 
     }
 
+
+
     public void createInventoryView(Character character){
         character.accept(visitor);
         NavigatableList list = visitor.getInventoryItems();
@@ -140,11 +142,11 @@ public class UIViewFactory {
         TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment");
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
-        AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
+        //AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
 //        view.addDrawable(vertCenter);
 
 
-        view.addDrawable(animation);
+        view.addDrawable(vertCenter);
         view.addNavigatable(menu);
         view.addNavigatable(equipMenu);
         //return created swappable view
