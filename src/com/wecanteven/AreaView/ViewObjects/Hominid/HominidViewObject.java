@@ -1,15 +1,19 @@
 package com.wecanteven.AreaView.ViewObjects.Hominid;
 
+import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.Models.Map.Map;
+import com.wecanteven.Models.Map.Terrain.*;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.TerrainVisitor;
 
 import java.awt.*;
 
@@ -26,11 +30,14 @@ public class HominidViewObject implements ViewObject, Observer{
 
     private HandsViewObject hands;
     private FeetViewObject feet;
+
+    private JumpDetector jumpDetector;
+
     //private FeetViewObject feet;
 
     private Location lastLocation;
 
-    public HominidViewObject(Position position, Direction direction, Directional directionSubject, Moveable movingSubject, ViewObject body, HandsViewObject hands, FeetViewObject feet) {
+    public HominidViewObject(Position position, Direction direction, Directional directionSubject, Moveable movingSubject, ViewObject body, HandsViewObject hands, FeetViewObject feet, JumpDetector jumpDetector) {
         this.position = position;
         this.direction = direction;
         this.directionSubject = directionSubject;
@@ -39,6 +46,8 @@ public class HominidViewObject implements ViewObject, Observer{
         this.hands = hands;
         this.feet = feet;
         this.lastLocation = movingSubject.getLocation();
+
+        this.jumpDetector = jumpDetector;
     }
 
     @Override
@@ -151,7 +160,7 @@ public class HominidViewObject implements ViewObject, Observer{
         return movingSubject.getLocation().getZ() < lastLocation.getZ();
     }
     private boolean isJumping() {
-        return movingSubject.getLocation().getZ() > lastLocation.getZ();
+        return jumpDetector.isJumping(lastLocation, movingSubject.getLocation());
     }
 
     private long endMoveTime = 0;

@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.DecoratorVOs;
 
 import com.wecanteven.AreaView.AreaView;
+import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
@@ -27,13 +28,16 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
 
     private Moveable subject;
 
+    private JumpDetector jumpDetector;
 
-    public MovingViewObject(ViewObject child, Moveable subject, AreaView areaView) {
+
+    public MovingViewObject(ViewObject child, Moveable subject, AreaView areaView, JumpDetector jumpDetector) {
         super(child);
         this.subject = subject;
         this.areaView = areaView;
         this.source = child.getPosition();
         this.destination = child.getPosition();
+        this.jumpDetector = jumpDetector;
     }
 
 
@@ -47,7 +51,7 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
         return new Position(
                 inBetween(source.getR(), destination.getR(), percentage),
                 inBetween(source.getS(), destination.getS(), percentage),
-                parabola(source.getZ(), destination.getZ(), percentage)
+                parabola(source, destination, percentage)
         );
     }
 
@@ -55,12 +59,14 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
         return start + percentage*(end - start);
     }
 
-    private double parabola(double start, double end, double percentage) {
+    private double parabola(Position startLoc, Position endLoc, double percentage) {
+        double start = startLoc.getZ();
+        double end = endLoc.getZ();
         double deltaY = end - start;
 
-        if (end > start) {
+        if (jumpDetector.isJumping(startLoc, endLoc)) {
             double jumpConstant = 0.8;
-            double a = -2*deltaY*(end < start ? 0 : 1) -4*jumpConstant;
+            double a = -2*deltaY -4*jumpConstant;
             double v = 3*deltaY+4*jumpConstant;
             return a*Math.pow(percentage, 2) + v*percentage + start;
         } else {

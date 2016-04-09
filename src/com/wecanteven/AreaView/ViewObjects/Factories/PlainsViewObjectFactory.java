@@ -6,6 +6,7 @@ import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Models.Map.Map;
 
 /**
  * Created by Alex on 3/31/2016.
@@ -13,8 +14,8 @@ import com.wecanteven.AreaView.ViewObjects.ViewObject;
 public class PlainsViewObjectFactory extends ViewObjectFactory {
 
 
-    public PlainsViewObjectFactory(AreaView areaView) {
-        super(areaView);
+    public PlainsViewObjectFactory(AreaView areaView, Map gameMap) {
+        super(areaView, gameMap);
     }
 
     @Override

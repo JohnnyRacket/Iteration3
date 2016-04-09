@@ -5,6 +5,7 @@ import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.AreaView.DynamicImages.DynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.DynamicImages.StartableDynamicImage;
+import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DestroyableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
@@ -22,6 +23,7 @@ import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
+import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Destroyable;
 import com.wecanteven.Observers.Directional;
@@ -34,8 +36,10 @@ public abstract class ViewObjectFactory {
     private HexDrawingStrategy hexDrawingStrategy;
     private AreaView areaView;
     private DynamicImageFactory factory = DynamicImageFactory.getInstance();
+    private JumpDetector jumpDetector;
 
-    public ViewObjectFactory(AreaView areaView) {
+
+    public ViewObjectFactory(AreaView areaView, Map gameMap) {
         this.hexDrawingStrategy = new HexDrawingStrategy();
         this.hexDrawingStrategy.setCenterTarget(
                 createSimpleViewObject(
@@ -44,6 +48,7 @@ public abstract class ViewObjectFactory {
                 )
         );
         this.areaView = areaView;
+        this.jumpDetector = new JumpDetector(gameMap);
     }
 
     public abstract ViewObject createGround(Position p);
@@ -75,7 +80,7 @@ public abstract class ViewObjectFactory {
         MicroPositionableViewObject rightFoot = createRightFoot(p, d, subject);
 
         FeetViewObject feet = new FeetViewObject(d, leftFoot, rightFoot);
-        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, hatArmor, hands, feet);
+        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, hatArmor, hands, feet, jumpDetector);
 
         subject.attach(stationarySneak);
         subject.attach(body);
@@ -159,7 +164,7 @@ public abstract class ViewObjectFactory {
     }
 
     private MovingViewObject createMovingViewObject(Entity subject, ViewObject child) {
-        MovingViewObject mvo = new  MovingViewObject(child, subject, areaView);
+        MovingViewObject mvo = new  MovingViewObject(child, subject, areaView, jumpDetector);
         subject.attach(mvo);
         return mvo;
     }
