@@ -30,10 +30,10 @@ public class HandsFallingStrategy extends LimbStrategy {
 
     @Override
     public void animate(double percentage) {
-        leftHand.setRadius(radius0 + radius0*fatSine(percentage)/2);
-        leftHand.setHeight(height0 + height0*fatSine(percentage));
-        rightHand.setRadius(radius0 + radius0*fatSine(percentage)/2);
-        rightHand.setHeight(height0 + height0*fatSine(percentage));
+        leftHand.setRadius(radius0 + radius0*fatSine(percentage)/4);
+        leftHand.setHeight(height0 + height0*fatSine(percentage)/4);
+        rightHand.setRadius(radius0 + radius0*fatSine(percentage)/4);
+        rightHand.setHeight(height0 + height0*fatSine(percentage)/4);
     }
 
     private double fatSine(double percentage) {
