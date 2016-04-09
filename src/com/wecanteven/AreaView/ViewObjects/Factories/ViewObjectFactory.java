@@ -27,6 +27,7 @@ import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Destroyable;
 import com.wecanteven.Observers.Directional;
+import com.wecanteven.Observers.Observable;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
@@ -64,7 +65,7 @@ public abstract class ViewObjectFactory {
 
         DirectionalViewObject body = createBody(p, subject, "Sneak");
         EquipableViewObject bodyArmor = createEquipable(body, createNullViewObject(), chestSlot, subject);
-        EquipableViewObject hatArmor = createEquipable(bodyArmor, createNullViewObject(), hatSlot, subject);
+        EquipableViewObject hatArmor = createEquipable(bodyArmor, createEquipment(p, subject, "Shaved"), hatSlot, subject);
 
         chestSlot.attach(bodyArmor);
         hatSlot.attach(hatArmor);
@@ -144,8 +145,10 @@ public abstract class ViewObjectFactory {
         return vo;
     }
 
-    public DirectionalViewObject createEquipment(Position p, Directional d, String name ) {
-        return createDirectional(p, d, "Equipment/" + name + "/");
+    public DirectionalViewObject createEquipment(Position p, Entity entity, String name ) {
+        DirectionalViewObject directionalViewObject =  createDirectional(p, entity, "Equipment/" + name + "/");
+        entity.attach(directionalViewObject);
+        return directionalViewObject;
     }
 
     private DirectionalViewObject createBody(Position p, Directional d, String entityName) {
@@ -177,8 +180,8 @@ public abstract class ViewObjectFactory {
         return factory;
     }
 
-    public EquipableViewObject createEquipable(ViewObject child, ViewObject equipment, EquipmentSlot subject, Directional directional) {
-        return new EquipableViewObject(child, equipment, subject, this, directional);
+    public EquipableViewObject createEquipable(ViewObject child, ViewObject equipment, EquipmentSlot subject, Entity entity) {
+        return new EquipableViewObject(child, equipment, subject, this, entity);
     }
 
     public NullViewObject createNullViewObject() {
