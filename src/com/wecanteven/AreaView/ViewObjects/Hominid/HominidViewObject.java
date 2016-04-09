@@ -2,18 +2,15 @@ package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
-import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
-import com.wecanteven.Models.Map.Map;
-import com.wecanteven.Models.Map.Terrain.*;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
-import com.wecanteven.Visitors.TerrainVisitor;
 
 import java.awt.*;
 

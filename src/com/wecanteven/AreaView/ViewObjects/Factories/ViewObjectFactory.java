@@ -1,6 +1,5 @@
 package com.wecanteven.AreaView.ViewObjects.Factories;
 
-import com.sun.glass.ui.View;
 import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.AreaView.DynamicImages.DynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
@@ -13,8 +12,7 @@ import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
-import com.wecanteven.AreaView.ViewObjects.Hominid.HandViewObject;
-import com.wecanteven.AreaView.ViewObjects.Hominid.HandsViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.*;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
@@ -25,9 +23,7 @@ import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
-import com.wecanteven.Observers.Destroyable;
 import com.wecanteven.Observers.Directional;
-import com.wecanteven.Observers.Observable;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**

@@ -1,14 +1,13 @@
-package com.wecanteven.AreaView.ViewObjects.Hominid;
+package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandState;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandWalkingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandsFallingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandsYJumpingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.LimbStrategy;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
-
-import java.awt.*;
 
 
 public class BrawlingState extends HandState {
@@ -17,7 +16,7 @@ public class BrawlingState extends HandState {
     private final double radius = 0.5d;
     private final double leftAngle = Math.PI/2;
     private final double rightAngle = -leftAngle;
-    private final double height = 2;
+    private final double height = 2d;
 
     private LimbStrategy walkingStrategy;
     private LimbStrategy jumpingStrategy;
@@ -27,7 +26,7 @@ public class BrawlingState extends HandState {
         super(leftHand, rightHand);
         walkingStrategy = new HandWalkingStrategy(0.3, leftHand, rightHand);
         jumpingStrategy = new HandsYJumpingStrategy(height, 5, leftHand, rightHand);
-        fallingStrategy = new HandsFallingStrategy(0.3, leftHand, rightHand);
+        fallingStrategy = new HandsFallingStrategy(height, radius, leftHand, rightHand);
         changeDirection(direction);
         leftHand.setRadius(radius);
         leftHand.setOffsetAngle(leftAngle);

@@ -1,4 +1,4 @@
-package com.wecanteven.AreaView.ViewObjects.Hominid;
+package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 
 import com.wecanteven.AreaView.DynamicImages.ConstantDynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImage;
