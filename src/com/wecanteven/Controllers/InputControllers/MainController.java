@@ -83,6 +83,7 @@ public class MainController implements Tickable{
         viewEngine.getManager().popView();
     }
 
+
     @Override
     public void tick() {
         if(state.getCommandToExecute() != null) {

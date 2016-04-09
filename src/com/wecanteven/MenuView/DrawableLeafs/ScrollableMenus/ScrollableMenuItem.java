@@ -43,7 +43,15 @@ public class ScrollableMenuItem extends SelectableItem{
     @Override
     public void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight) {
         g2d.setColor(textColor);
-        FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
+        int maxFont = 16;
+        g2d.setFont(new Font("Helvetica", 1, maxFont));
+        FontMetrics metrics = g2d.getFontMetrics();
+        int i = 0;
+        while(metrics.getHeight() + 8 > windowWidth ){
+            g2d.setFont(new Font("Helvetica", 1, maxFont - i));
+            metrics = g2d.getFontMetrics();
+            ++i;
+        }
         g2d.drawString(this.name, x + windowWidth/2 - metrics.stringWidth(this.name)/2, y + windowHeight/2 + metrics.getAscent()/2);
 
     }

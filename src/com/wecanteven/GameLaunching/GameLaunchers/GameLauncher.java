@@ -72,10 +72,11 @@ public abstract class GameLauncher {
     }
 
     protected void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
         SaveToXMLFile.setAvatar(avatar);
         getController().setAvatar(getAvatar());
         UIViewFactory.getInstance().setAvatar(getAvatar());
-        this.avatar = avatar;
+
     }
 
     protected MainController getController() {

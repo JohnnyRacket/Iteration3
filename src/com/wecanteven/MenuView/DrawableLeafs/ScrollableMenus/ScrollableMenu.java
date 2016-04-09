@@ -74,8 +74,8 @@ public class ScrollableMenu extends Drawable implements Navigatable {
                 current.draw(g2d, offsetX + calculatedPadding / 2, offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
             }
             offsetY += itemHeight;
-            if(offsetY - y > this.getHeight() -50){
-                System.out.println(offsetY+  " / " + this.getHeight());
+            if(offsetY - y > this.getHeight() - 20){
+                System.out.println(offsetY +  " / " + this.getHeight());
                 return;
             }
             index++;
