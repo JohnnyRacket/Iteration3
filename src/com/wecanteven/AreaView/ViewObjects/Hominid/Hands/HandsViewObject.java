@@ -2,6 +2,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
+import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Items.Takeable.Equipable.MeleeWeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.RangedWeaponEquipableItem;
@@ -66,6 +67,11 @@ public class HandsViewObject implements ViewObject, Observer {
     public void draw(Graphics2D graphic) {
         drawBackground(graphic);
         drawForeground(graphic);
+    }
+
+    @Override
+    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
+        //TODO: fill this
     }
 
     public void move(long duration) {

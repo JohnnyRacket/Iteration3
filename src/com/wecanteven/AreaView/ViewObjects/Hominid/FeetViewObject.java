@@ -2,6 +2,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
+import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.FeetFallingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.FeetJumpingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.FeetWalkingStrategy;
@@ -86,5 +87,11 @@ public class FeetViewObject implements ViewObject {
         leftFoot.draw(g);
         rightFoot.draw(g);
         //feet.draw(g);
+    }
+
+    @Override
+    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
+        leftFoot.addToFogOfWarViewObject(fogOfWarViewObject);
+        rightFoot.addToFogOfWarViewObject(fogOfWarViewObject);
     }
 }

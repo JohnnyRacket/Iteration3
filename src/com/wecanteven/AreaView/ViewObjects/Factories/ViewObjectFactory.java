@@ -9,7 +9,9 @@ import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DestroyableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.VisibilitySourceViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
+import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
@@ -81,12 +83,15 @@ public abstract class ViewObjectFactory {
 
         subject.attach(stationarySneak);
         subject.attach(body);
+
+        VisibilitySourceViewObject visibilitySourceViewObject = new VisibilitySourceViewObject(stationarySneak, subject, areaView, 3);
+        subject.attach(visibilitySourceViewObject);
         //TEMPORARY TESTING WORKAROUND
         //TODO: make better
         hexDrawingStrategy.setCenterTarget(stationarySneak);
 
 
-        return createMovingViewObject(subject, stationarySneak);
+        return createMovingViewObject(subject, visibilitySourceViewObject);
 
     }
 
@@ -151,6 +156,9 @@ public abstract class ViewObjectFactory {
         return createDirectional(p, d, "Entities/" +  entityName + "/");
     }
 
+    public FogOfWarViewObject createFogOfWarViewObject(Position p) {
+        return new FogOfWarViewObject(p);
+    }
 
     private DirectionalViewObject createDirectional(Position p, Directional d, String path) {
         SimpleDynamicImage bodyNorth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "north.xml");
