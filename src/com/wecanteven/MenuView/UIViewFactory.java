@@ -13,6 +13,7 @@ import com.wecanteven.MenuView.DrawableContainers.Decorators.VerticalCenterConta
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
+import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
@@ -431,6 +432,12 @@ public class UIViewFactory {
             java.util.Map.Entry pair = (java.util.Map.Entry)it.next();
             list.addItem(new ScrollableMenuItem(pair.getKey() + " ---> " + pair.getValue(), ()->{
                 //do something
+                SwappableView view = new SwappableView();
+                view.addDrawable(new VerticalCenterContainer(new HorizontalCenterContainer(new KeyBindView(40,200))));
+                ViewTime.getInstance().register(()->{
+                    vEngine.getManager().addView(view);
+                },0);
+                //controller.setMenuState(view.getMenuViewContainer());
 
             }));
         }
