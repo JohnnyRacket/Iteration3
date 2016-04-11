@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.DecoratorVOs;
 
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 
 import java.awt.*;
@@ -32,5 +33,10 @@ public abstract class DecoratorViewObject implements ViewObject{
     @Override
     public void draw(Graphics2D g) {
         child.draw(g);
+    }
+
+    @Override
+    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
+        child.addToFogOfWarViewObject(fogOfWarViewObject);
     }
 }

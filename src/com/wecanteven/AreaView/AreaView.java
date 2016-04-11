@@ -1,23 +1,12 @@
 package com.wecanteven.AreaView;
 
 
-import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
-import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
-import com.wecanteven.AreaView.ViewObjects.DrawingStategies.DynamicImageDrawingStrategy;
-import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Factories.PlainsViewObjectFactory;
-import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
-import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
-import com.wecanteven.AreaView.ViewObjects.TileViewObject;
+import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
+import com.wecanteven.AreaView.ViewObjects.Tiles.TileViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
-import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
-import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.Models.Entities.Avatar;
-import com.wecanteven.Models.Entities.Entity;
-import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Map.Map;
-import com.wecanteven.Observers.Directional;
-import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
 import javax.swing.*;
@@ -33,11 +22,11 @@ public class AreaView extends JPanel {
     //FOR TESTING ONLY
     private xySorted3DArray backingArray = new xySorted3DArray();
     private Avatar avatar;
-
+    private ViewObjectFactory factory;
     public AreaView(Avatar avatar, Map map) {
         setDoubleBuffered(true);
         this.avatar = avatar;
-        PlainsViewObjectFactory factory = new PlainsViewObjectFactory(this, map);
+        this.factory = new PlainsViewObjectFactory(this, map);
         VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory);
         map.accept(voCreationVisitor);
 
@@ -118,6 +107,12 @@ public class AreaView extends JPanel {
         backingArray.remove(vo, p);
     }
 
+    public void reveal(Position p) {
+        backingArray.reveal(p);
+    }
+    public void conceal(Position p) {
+        backingArray.conceal(p);
+    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -165,6 +160,34 @@ public class AreaView extends JPanel {
                 }
             }
         }
+
+        public void reveal(Position p) {
+            int x = convertToX(p);
+            int y = convertToY(p);
+            for (int i = 0; i < zSize; i++) {
+                if (!isSafe(x, y, i)) return;
+                get(x, y, i).reveal();
+            }
+        }
+
+        public void conceal(Position p) {
+            int x = convertToX(p);
+            int y = convertToY(p);
+            for (int i = 0; i < zSize; i++) {
+                if (!isSafe(x, y, i)) return;
+                get(x, y, i).conceal();
+            }
+        }
+
+        private boolean isSafe(int x, int y, int z) {
+            return  x >=0 &&
+                    y >=0 &&
+                    z >=0 &&
+                    x < xSize &&
+                    y < ySize &&
+                    z < zSize;
+        }
+
         private TileViewObject get(int x, int y, int z) {
             //System.out.println("" + x + ", " + y + ", " + z);
             return cube.get(y).get(z).get(x);

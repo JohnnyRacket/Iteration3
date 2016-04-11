@@ -2,6 +2,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
@@ -74,7 +75,15 @@ public class HominidViewObject implements ViewObject, Observer{
         feet.draw(g);
         body.draw(g);
         hands.drawForeground(g);
+    }
 
+    @Override
+    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
+        //TODO: hand order
+
+        hands.addToFogOfWarViewObject(fogOfWarViewObject);
+        feet.addToFogOfWarViewObject(fogOfWarViewObject);
+        body.addToFogOfWarViewObject(fogOfWarViewObject);
     }
 
     @Override

@@ -12,4 +12,5 @@ public interface ViewObject {
     Position getPosition();
     void setPosition(Position p);
     void draw(Graphics2D g);
+    void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject);
 }

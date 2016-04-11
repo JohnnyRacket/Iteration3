@@ -3,6 +3,7 @@ package com.wecanteven.AreaView.ViewObjects.LeafVOs;
 import com.wecanteven.AreaView.DynamicImages.StartableDynamicImage;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.DynamicImageDrawingStrategy;
+import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 
 import java.awt.*;
 
@@ -26,5 +27,10 @@ public class StartableViewObject extends LeafViewObject {
     @Override
     public void draw(Graphics2D g) {
         drawingStrategy.draw(g, startableDynamicImage, getPosition());
+    }
+
+    @Override
+    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
+        fogOfWarViewObject.add(startableDynamicImage, getPosition(), drawingStrategy);
     }
 }
