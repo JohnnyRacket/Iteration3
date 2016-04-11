@@ -324,13 +324,13 @@ public class UIViewFactory {
             //go to key binding menu
             NavigatableList keyBindList = new NavigatableList();
             keyBindList.addItem(new ScrollableMenuItem("Menu KeyBindings", ()->{
-                //add save stuff here
+                createKeyBindMenu(controller.getMenuState());
             }));
             keyBindList.addItem(new ScrollableMenuItem("Game KeyBindings", ()->{
-                //add save stuff here
+                createKeyBindMenu(controller.getPlayState());
             }));
             keyBindList.addItem(new ScrollableMenuItem("Dialogue KeyBindings", ()->{
-                //add save stuff here
+                createKeyBindMenu(controller.getDialogState());
             }));
             keyBindList.addItem(new ScrollableMenuItem("Back", ()->{
                 menu.setList(list);
@@ -421,8 +421,32 @@ public class UIViewFactory {
     }
 
     public void createKeyBindMenu(ControllerState state){
+
+        ScrollableMenu menu = new ScrollableMenu(400,500);
+        NavigatableList list = new NavigatableList();
+
         java.util.Map<ActionEnum, Integer> map = state.getMappings();
-        Iterator iter;
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            java.util.Map.Entry pair = (java.util.Map.Entry)it.next();
+            list.addItem(new ScrollableMenuItem(pair.getKey() + " ---> " + pair.getValue(), ()->{
+                //do something
+
+            }));
+        }
+        menu.setList(list);
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Rebind Keys");
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+
     }
 
     public MainController getController() {
