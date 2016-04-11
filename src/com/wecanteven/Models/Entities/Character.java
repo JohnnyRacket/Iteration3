@@ -113,4 +113,25 @@ public class Character extends Entity {
 
     public ItemStorage getItemStorage() {return itemStorage;}
 
+
+//    public void setWindUpTicks(int ticks){
+//        this.windUpTicks = ticks;
+//        if(ticks == 0){
+//            setIsActive(false);
+//            return;
+//        }
+//        setIsActive(true);
+//        deIncrementTick();
+//        modelNotifyObservers();
+//    }
+//    public void setCoolDownTicks(int ticks){
+//        this.coolDownTicks = ticks;
+//        if(ticks == 0){
+//            setIsActive(false);
+//            return;
+//        }
+//        setIsActive(true);
+//        deIncrementTick();
+//        modelNotifyObservers();
+//    }
 }

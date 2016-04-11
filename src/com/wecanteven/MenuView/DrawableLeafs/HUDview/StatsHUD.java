@@ -27,6 +27,7 @@ public class StatsHUD extends Drawable implements Observer {
 
     public StatsHUD(Stats stats){
         this.stats = stats;
+        stats.attach(this);
         healthBar = new CircularHealthBar(180,180);
         healthBar.setCurrentColor(new Color(40,250,80));
         healthBar.setDepletedColor(new Color(20,140,40));

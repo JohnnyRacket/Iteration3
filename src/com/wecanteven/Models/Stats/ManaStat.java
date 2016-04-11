@@ -11,9 +11,9 @@ public class ManaStat extends Stat implements Observer{
     public ManaStat(PrimaryStat intellect, PrimaryStat level){
         name = "Mana";
         this.intellect = intellect;
-        this.intellect.attach(this);
+        this.intellect.modelAttach(this);
         this.level = level;
-        this.level.attach(this);
+        this.level.modelAttach(this);
         update();
     }
     public void update(){
