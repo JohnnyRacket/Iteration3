@@ -15,15 +15,15 @@ public class LivesStat extends PrimaryStat implements Observer {
         super("Lives",3);
         observers = new ArrayList<>();
         this.health = health;
-        health.attach(this);
-        attach(entity);
+        health.modelAttach(this);
+        modelAttach(entity);
         update();
     }
     public void update(){
         if(health.getStat() <= 0){
             System.out.println("The Entity has died");
             stat--;
-            notifyObservers();
+            modelNotifyObservers();
         }
     }
 }

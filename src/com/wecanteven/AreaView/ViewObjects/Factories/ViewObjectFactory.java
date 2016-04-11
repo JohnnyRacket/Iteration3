@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.Factories;
 
 import com.wecanteven.AreaView.AreaView;
+import com.wecanteven.AreaView.BackgroundDrawable;
 import com.wecanteven.AreaView.DynamicImages.SimpleDynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.DynamicImages.StartableDynamicImage;
@@ -95,6 +96,10 @@ public abstract class ViewObjectFactory {
 
     }
 
+    public BackgroundDrawable createBackgroundDrawable(ViewObject centerTarget) {
+        return new BackgroundDrawable(factory.loadDynamicImage("Textures/DarkBlue.xml"), getDrawingStrategy(), centerTarget);
+    }
+
     public DestroyableViewObject createOneShotItem(Position position, OneShot oneShot) {
         StartableDynamicImage animation = factory.loadActiveDynamicImage("Items/" + oneShot.getName() + "/" + oneShot.getName() + ".xml");
 
@@ -175,6 +180,17 @@ public abstract class ViewObjectFactory {
         subject.attach(mvo);
         return mvo;
     }
+
+//    public HandState createOneHandedWeaponState(Position position, Direction direction, String weaponImagePath, Entity entity) {
+//        return new OneHandedWeaponState(direction, new MicroPositionableViewObject(createLeftHand(position)) ,createMicroPositionableViewObject(position, direction, weaponImagePath, entity));
+//    }
+
+    public MicroPositionableViewObject createMicroPositionableViewObject(Position position, Direction direction, String path, Entity entity) {
+        DirectionalViewObject directionalViewObject = createDirectional(position, entity, path);
+        entity.attach(directionalViewObject);
+        return new MicroPositionableViewObject(directionalViewObject);
+    }
+
 
     public HexDrawingStrategy getDrawingStrategy() {
         return hexDrawingStrategy;
