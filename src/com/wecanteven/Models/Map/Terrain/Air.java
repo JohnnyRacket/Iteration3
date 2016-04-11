@@ -16,7 +16,6 @@ public class Air extends Terrain {
         return "Air";
     }
     public void interact(Entity entity){
-        System.out.println("Entity is about to fall "+entity.getMovingTicks() + entity.isActive());
         entity.fall();
 
     }

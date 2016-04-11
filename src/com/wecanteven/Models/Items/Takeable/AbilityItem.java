@@ -9,8 +9,8 @@ import com.wecanteven.Visitors.ItemVisitor;
 public class AbilityItem extends UseableItem {
 
 
-    public AbilityItem(String name) {
-        super(name);
+    public AbilityItem(String name, int value) {
+        super(name, value);
     }
 
     @Override

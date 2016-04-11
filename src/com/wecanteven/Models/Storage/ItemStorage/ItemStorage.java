@@ -55,7 +55,7 @@ public class ItemStorage {
     }
 
     public boolean buy(int value) {
-        if(value < money) {
+        if(value <= money) {
             money -= value;
             return true;
         }
@@ -66,10 +66,8 @@ public class ItemStorage {
         money = value;
     }
 
-    public MoneyItem money() {
-        int temp = money;
-        money = 0;
-        return new MoneyItem(temp);
+    public MoneyItem getMoney() {
+        return new MoneyItem(money);
     }
 
     /**
@@ -158,6 +156,9 @@ public class ItemStorage {
         return maxInventoryCapacity;
     }
 
+    public boolean inventoryIsFull() {
+        return getInventory().isFull();
+    }
     public void accept(ItemStorageVisitor visitor) {
         visitor.visitItemStorage(this);
         inventory.accept(visitor);

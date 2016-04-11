@@ -7,8 +7,8 @@ import com.wecanteven.Visitors.ItemVisitor;
  * Created by simonnea on 3/31/16.
  */
 public class ConsumeableItem extends UseableItem {
-    public ConsumeableItem(String name) {
-        super(name);
+    public ConsumeableItem(String name, int value) {
+        super(name, value);
     }
 
     @Override
