@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Abilities;
 
+import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 

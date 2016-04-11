@@ -1,8 +1,8 @@
-package com.wecanteven.MenuView;
+package com.wecanteven.MenuView.UIObjectCreationVisitors;
 
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
-import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.SelectableItem;
+import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Entities.NPC;
@@ -22,22 +22,25 @@ import com.wecanteven.Visitors.EntityVisitor;
 import com.wecanteven.Visitors.ItemStorageVisitor;
 import com.wecanteven.Visitors.ItemVisitor;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
  * Created by John on 4/6/2016.
  */
-public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor, EntityVisitor {
+public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor, EntityVisitor, UIObjectCreationVisitor {
 
     private NavigatableList inventoryItems = new NavigatableList();
     private NavigatableList equippedItems = new NavigatableList();
     private UIViewFactory factory;
+    private NPC shopOwner;
+    private Character buyer;
     private Character character;
     private boolean inInv = true;
 
-    public UIObjectCreationVisitor(UIViewFactory factory){
+    public BuyableUIObjectCreationVisitor(UIViewFactory factory, NPC shopOwner, Character buyer){
         this.factory = factory;
+        this.shopOwner = shopOwner;
+        this.buyer = buyer;
     }
 
     public NavigatableList getInventoryItems (){
@@ -114,42 +117,34 @@ public class UIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor,
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-
-    }
-
-    @Override
-    public void visitEquipableItem(EquipableItem equipable) {
-        if(inInv) {
-            inventoryItems.addItem(new GridItem(equipable.getName(), () -> {
-                System.out.println("select hit on equppable item");
-                factory.createEquippableItemMenu(character, equipable);
+        if (character == buyer) {
+            inventoryItems.addItem(new GridItem(takeable.getName(), () -> {
+                factory.createSellableItemMenu(shopOwner, buyer, takeable);
             }));
-        }else{
-            equippedItems.addItem(new GridItem(equipable.getName(), () -> {
-                System.out.println("select hit on equpped item");
-                factory.createEquippedItemMenu(character, equipable);
+        }else {
+            inventoryItems.addItem(new GridItem(takeable.getName(), () -> {
+                factory.createBuyableItemMenu(shopOwner, buyer, takeable);
             }));
         }
     }
 
     @Override
+    public void visitEquipableItem(EquipableItem equipable) {
+        visitTakeableItem(equipable);
+    }
+
+    @Override
     public void visitUseableItem(UseableItem useable) {
-        inventoryItems.addItem(new GridItem(useable.getName(), () ->{
-            factory.createUsableItemMenu();
-        }));
+        visitTakeableItem(useable);
     }
 
     @Override
     public void visitAbilityItem(AbilityItem ability) {
-        inventoryItems.addItem(new GridItem(ability.getName(), () ->{
-            factory.createAbilityItemMenu();
-        }));
+        visitTakeableItem(ability);
     }
 
     @Override
     public void visitConsumableItem(ConsumeableItem consumable) {
-        inventoryItems.addItem(new GridItem(consumable.getName(), () ->{
-            factory.createConsumableItemMenu();
-        }));
+        visitTakeableItem(consumable);
     }
 }

@@ -70,10 +70,10 @@ public class DopeAssLevelFactory extends LevelFactory{
 
     @Override
     public void populateMap(Map map) {
-        map.add(new TakeableItem("NPC Chest"), new Location(1, 2, 1));
+        map.add(new TakeableItem("NPC Chest", 10), new Location(1, 2, 1));
         //"Creating an NPC and Giving him a chest Plate
         NPC npc = new NPC(map,Direction.SOUTH, new DialogInteractionStrategy(new ArrayList<>()));
-        WeaponEquipableItem i = new WeaponEquipableItem("Katar", new StatsAddable(0,0,0,0,0,0,0,0,0));
+        WeaponEquipableItem i = new WeaponEquipableItem("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
         npc.pickup(i);
         npc.equipItem(i);
         System.out.println(npc.getItemStorage().getEquipped().getChest().getItem());

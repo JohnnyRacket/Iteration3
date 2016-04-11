@@ -111,4 +111,16 @@ public class MainController implements Tickable{
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
     }
+
+    public MenuState getMenuState() {
+        return menuState;
+    }
+
+    public PlayState getPlayState() {
+        return playState;
+    }
+
+    public DialogState getDialogState() {
+        return dialogState;
+    }
 }

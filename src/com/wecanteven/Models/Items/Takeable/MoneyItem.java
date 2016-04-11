@@ -6,7 +6,7 @@ package com.wecanteven.Models.Items.Takeable;
 public class MoneyItem extends TakeableItem {
     private int value;
     public MoneyItem(int value) {
-        super("Money");
+        super("Money", value);
         this.value = value;
     }
     

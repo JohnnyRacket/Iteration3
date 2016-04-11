@@ -11,9 +11,9 @@ public class DefensiveRatingStat extends Stat implements Observer {
     public DefensiveRatingStat(PrimaryStat agility, PrimaryStat level){
         name = "Defensive Rating";
         this.agility = agility;
-        this.agility.attach(this);
+        this.agility.modelAttach(this);
         this.level = level;
-        this.level.attach(this);
+        this.level.modelAttach(this);
         update();
     }
     public void update(){

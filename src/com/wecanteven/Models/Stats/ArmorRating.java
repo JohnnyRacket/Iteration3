@@ -11,7 +11,7 @@ public class ArmorRating extends Stat implements Observer {
     public ArmorRating(PrimaryStat hardiness){
         name = "Armor Rating";
         this.hardiness = hardiness;
-        this.hardiness.attach(this);
+        this.hardiness.modelAttach(this);
         update();
     }
     public void update(){

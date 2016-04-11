@@ -7,8 +7,8 @@ import com.wecanteven.Models.Storage.ItemStorage.Equipment;
  * Created by simonnea on 3/31/16.
  */
 public class BootsEquipableItem extends EquipableItem {
-    public BootsEquipableItem(String name, StatsAddable stats) {
-        super(name, stats);
+    public BootsEquipableItem(String name, int value, StatsAddable stats) {
+        super(name, value, stats);
     }
 
     @Override

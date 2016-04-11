@@ -11,9 +11,9 @@ public class HealthStat extends Stat implements Observer {
     public HealthStat(PrimaryStat hardiness, PrimaryStat level){
         name = "Health";
         this.hardiness = hardiness;
-        this.hardiness.attach(this);
+        this.hardiness.modelAttach(this);
         this.level = level;
-        this.level.attach(this);
+        this.level.modelAttach(this);
         update();
     }
     public void update(){

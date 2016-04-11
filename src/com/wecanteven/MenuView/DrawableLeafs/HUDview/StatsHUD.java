@@ -2,21 +2,20 @@ package com.wecanteven.MenuView.DrawableLeafs.HUDview;
 
 import com.wecanteven.MenuView.Drawable;
 import com.wecanteven.MenuView.DrawableLeafs.ProgressBars.AnimatedChangeProgressBar;
+import com.wecanteven.MenuView.DrawableLeafs.ProgressBars.CircularHealthBar;
 import com.wecanteven.Models.Stats.*;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Config;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 /**
  * Created by John on 4/7/2016.
  */
 public class StatsHUD extends Drawable implements Observer {
 
-    private int health, mana, exp, maxHealth, maxMana, maxExp;
+    private float health, mana, exp, maxHealth, maxMana, maxExp;
     private Stats stats;
 
     private Color bgColor = Color.GRAY;
@@ -28,6 +27,7 @@ public class StatsHUD extends Drawable implements Observer {
 
     public StatsHUD(Stats stats){
         this.stats = stats;
+        stats.attach(this);
         healthBar = new CircularHealthBar(180,180);
         healthBar.setCurrentColor(new Color(40,250,80));
         healthBar.setDepletedColor(new Color(20,140,40));
@@ -106,19 +106,17 @@ public class StatsHUD extends Drawable implements Observer {
     public void update() {
         health = stats.getHealth();
         maxHealth = stats.getMaxHealth();
-        //healthBar.setCurrentProgress(health);
-        //healthBar.setMaxProgress(maxHealth);
+        healthBar.setPercent((int)((health/maxHealth)*100f));
 
         mana = stats.getMana();
         maxMana = stats.getMaxMana();
-        manaBar.setPercent(30);
-        //manaBar.setCurrentProgress(mana);
-        //manaBar.setMaxProgress(maxMana);
+        manaBar.setPercent((int)((mana/maxMana)*100f));
 
         exp = stats.getExperience();
         maxExp = 100; //TODO fix this
-        expBar.setCurrentProgress(70);
+        expBar.setCurrentProgress((int)exp);
         expBar.setMaxProgress(100);
+        System.out.println("The stats hud was updated");
     }
 
     public Color getBgColor() {
