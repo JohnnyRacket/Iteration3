@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.Factories;
 
 import com.wecanteven.AreaView.AreaView;
+import com.wecanteven.AreaView.BackgroundDrawable;
 import com.wecanteven.AreaView.DynamicImages.SimpleDynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.DynamicImages.StartableDynamicImage;
@@ -93,6 +94,10 @@ public abstract class ViewObjectFactory {
 
         return createMovingViewObject(subject, visibilitySourceViewObject);
 
+    }
+
+    public BackgroundDrawable createBackgroundDrawable(ViewObject centerTarget) {
+        return new BackgroundDrawable(factory.loadDynamicImage("Textures/DarkBlue.xml"), getDrawingStrategy(), centerTarget);
     }
 
     public DestroyableViewObject createOneShotItem(Position position, OneShot oneShot) {
