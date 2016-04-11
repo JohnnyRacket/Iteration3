@@ -6,8 +6,8 @@ import com.wecanteven.Models.Stats.StatsAddable;
  * Created by simonnea on 3/31/16.
  */
 public class MeleeWeaponEquipableItem extends WeaponEquipableItem {
-    public MeleeWeaponEquipableItem(String name, StatsAddable stats) {
-        super(name, stats);
+    public MeleeWeaponEquipableItem(String name, int value, StatsAddable stats) {
+        super(name, value, stats);
     }
 
     // Behaviors for Melee + subclasses for one handed/two handed

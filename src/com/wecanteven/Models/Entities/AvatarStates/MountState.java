@@ -11,7 +11,7 @@ public class MountState extends AvatarState {
     public boolean move(Direction d){
        return avatar.move(d);
     }
-    public void attack(Direction d){}
+    public void attack(){}
     public void useAbility(int index){}
     public boolean equipItem(String id){
         return false;

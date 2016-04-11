@@ -35,21 +35,11 @@ public class HandsViewObject implements ViewObject, Observer {
     }
 
     public void drawForeground(Graphics2D graphic) {
-        if (handState.getLeftHandY() < 0) {
-            handState.drawLeftHand(graphic);
-        }
-        if (handState.getRightHandY() < 0) {
-            handState.drawRightHand(graphic);
-        }
+        handState.drawForeground(graphic);
     }
 
     public void drawBackground(Graphics2D graphic) {
-        if (handState.getLeftHandY() >= 0) {
-            handState.drawLeftHand(graphic);
-        }
-        if (handState.getRightHandY() >= 0) {
-            handState.drawRightHand(graphic);
-        }
+        handState.drawBackground(graphic);
     }
 
 
@@ -77,9 +67,12 @@ public class HandsViewObject implements ViewObject, Observer {
         drawForeground(graphic);
     }
 
+
+
     @Override
     public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
-        //TODO: fill this
+        handState.addBackgroundToFogOfWar(fogOfWarViewObject);
+        handState.addForegroundToFogOfWar(fogOfWarViewObject);
     }
 
     public void move(long duration) {
@@ -121,4 +114,5 @@ public class HandsViewObject implements ViewObject, Observer {
             handState.equip(weapon);
         }
     }
+
 }

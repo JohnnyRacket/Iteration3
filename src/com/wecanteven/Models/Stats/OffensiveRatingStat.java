@@ -11,9 +11,9 @@ public class OffensiveRatingStat extends Stat implements Observer {
     public OffensiveRatingStat(PrimaryStat strength, PrimaryStat level){
         name = "Offensive Rating";
         this.strength = strength;
-        this.strength.attach(this);
+        this.strength.modelAttach(this);
         this.level = level;
-        this.level.attach(this);
+        this.level.modelAttach(this);
         update();
     }
     public void update(){

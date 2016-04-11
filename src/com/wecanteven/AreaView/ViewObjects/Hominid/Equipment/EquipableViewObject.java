@@ -3,6 +3,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Equipment;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DecoratorViewObject;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
+import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.NullViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
@@ -49,12 +50,19 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
     }
 
     @Override
+    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
+        super.addToFogOfWarViewObject(fogOfWarViewObject);
+        equipment.addToFogOfWarViewObject(fogOfWarViewObject);
+    }
+
+    @Override
     public void update() {
         if (subject.hasItem()) {
             System.out.println("EQUIPING: " + subject.getItem().getName());
             equipment = factory.createEquipment(getPosition(),entitySubject, subject.getItem().getName());
         } else {
             equipment = defaultEquipment;
+            defaultEquipment.setPosition(getPosition());
         }
 
     }

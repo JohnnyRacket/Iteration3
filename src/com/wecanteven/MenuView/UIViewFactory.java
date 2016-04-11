@@ -1,6 +1,8 @@
 package com.wecanteven.MenuView;
 
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.Controllers.InputControllers.ActionEnum;
+import com.wecanteven.Controllers.InputControllers.ControllerStates.ControllerState;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.GameLaunchers.LoadGameLauncher;
 import com.wecanteven.GameLaunching.GameLaunchers.NewGameLauncher;
@@ -11,22 +13,31 @@ import com.wecanteven.MenuView.DrawableContainers.Decorators.VerticalCenterConta
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
+import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
+
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
+import com.wecanteven.MenuView.UIObjectCreationVisitors.BuyableUIObjectCreationVisitor;
+import com.wecanteven.MenuView.UIObjectCreationVisitors.EquippableUIObjectCreationVisitor;
+import com.wecanteven.MenuView.UIObjectCreationVisitors.UIObjectCreationVisitor;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Entities.NPC;
+import com.wecanteven.Models.Interactions.InteractionStrategy;
+import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Stats.Stats;
-import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.ViewEngine;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.Iterator;
 
 /**
  * Created by John on 3/31/2016.
@@ -40,8 +51,6 @@ public class UIViewFactory {
     private ViewEngine vEngine;
     private ModelEngine mEngine;
     private Avatar avatar;
-
-    private UIObjectCreationVisitor visitor = new UIObjectCreationVisitor(this);
 
     private static UIViewFactory ourInstance = new UIViewFactory();
 
@@ -114,6 +123,8 @@ public class UIViewFactory {
 
 
     public void createInventoryView(Character character){
+
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this);
         character.accept(visitor);
         NavigatableList list = visitor.getInventoryItems();
         NavigatableList equiplist = visitor.getEquippedItems();
@@ -212,6 +223,7 @@ public class UIViewFactory {
     }
 
     public void createEquippableItemMenu(Character character, EquipableItem item){
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this);
         NavigatableList list = new NavigatableList();
         list.addItem(new ScrollableMenuItem("Equip", () ->{
             System.out.println("equip pressed");
@@ -292,10 +304,74 @@ public class UIViewFactory {
         return null;
     }
 
+    public void createPauseMenu(){
+        ScrollableMenu menu = new ScrollableMenu(300,300);
+        NavigatableList list = new NavigatableList();
+        list.addItem(new ScrollableMenuItem("Save", ()->{
+            //add save stuff here
+        }));
+        list.addItem(new ScrollableMenuItem("Load", ()->{
+            //go to load menu
+            //im just assuming 3 save files, you can change this nbd
+            NavigatableList loadList = new NavigatableList();
+            loadList.addItem(new ScrollableMenuItem("Save 1", ()->{
+                //add load file 1 here
+            }));
+            loadList.addItem(new ScrollableMenuItem("Save 2", ()->{
+                //add load file 2 here
+            }));
+            loadList.addItem(new ScrollableMenuItem("Save 3", ()->{
+                //add load file 3 here
+            }));
+            loadList.addItem(new ScrollableMenuItem("Back", ()->{
+                menu.setList(list);
+            }));
+            menu.setList(loadList);
+        }));
+        list.addItem(new ScrollableMenuItem("Key Bindings", ()->{
+            //go to key binding menu
+            NavigatableList keyBindList = new NavigatableList();
+            keyBindList.addItem(new ScrollableMenuItem("Menu KeyBindings", ()->{
+                createKeyBindMenu(controller.getMenuState());
+            }));
+            keyBindList.addItem(new ScrollableMenuItem("Game KeyBindings", ()->{
+                createKeyBindMenu(controller.getPlayState());
+            }));
+            keyBindList.addItem(new ScrollableMenuItem("Dialogue KeyBindings", ()->{
+                createKeyBindMenu(controller.getDialogState());
+            }));
+            keyBindList.addItem(new ScrollableMenuItem("Back", ()->{
+                menu.setList(list);
+            }));
+            menu.setList(keyBindList);
 
-    public void createTradeView(Character npc, Character player, int bargainLevel){
+        }));
+        list.addItem(new ScrollableMenuItem("Exit to Main Menu", ()->{
+            //exit to main menu
+            //what all do i need to do here?
+            //dump things registered in the time models? (add clear functions to time models)
+            //switch view to main menu view
+        }));
+
+        menu.setList(list);
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu");
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+    }
+
+    public void createTradeView(NPC npc, Character player){
+        BuyableUIObjectCreationVisitor visitor = new BuyableUIObjectCreationVisitor(this, npc, player);
         npc.accept(visitor);
         NavigatableList npcList = visitor.getInventoryItems();
+
         player.accept(visitor);
         NavigatableList playerList = visitor.getInventoryItems();
 
@@ -345,7 +421,7 @@ public class UIViewFactory {
 
 
         view.addNavigatable(npcInv);
-        //view.addNavigatable(playerInv);
+        view.addNavigatable(playerInv);
 
 
         ViewTime.getInstance().register(()->{
@@ -354,7 +430,120 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
     }
 
+    //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
+    public void createBuyableItemMenu(NPC shopOwner, Character buyer, TakeableItem item){
+        NavigatableList list = new NavigatableList();
+        TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
+        list.addItem(new ScrollableMenuItem("Buy: " + item.getValue(), () ->{
+            System.out.println("equip pressed");
+            if(!buyer.getItemStorage().inventoryIsFull() && interactionStrategy.sell(item)){
+                shopOwner.getItemStorage().removeItem(item);
+                buyer.pickup(item);
+            }
+            System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
+            System.out.println("Shopper Bal: " + buyer.getItemStorage().getMoney().getValue());
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createTradeView(shopOwner, buyer);
+            },0);
 
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+            System.out.println("cancel pressed");
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createTradeView(shopOwner, buyer);
+            },0);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+
+    }
+
+//WHEN THE SHOPPER TRIES TO SELL TO THE SHOPKEEPER
+    public void createSellableItemMenu(NPC shopOwner, Character seller, TakeableItem item){
+        NavigatableList list = new NavigatableList();
+        TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
+        list.addItem(new ScrollableMenuItem("Sell: " + item.getValue(), () ->{
+            System.out.println("Trying to sell item");
+            if(!shopOwner.getItemStorage().inventoryIsFull() && interactionStrategy.buy(item)){
+                seller.getItemStorage().removeItem(item);
+                shopOwner.pickup(item);
+            }
+            System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
+            System.out.println("Shopper Bal: " + seller.getItemStorage().getMoney().getValue());
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createTradeView(shopOwner, seller);
+            },0);
+
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+            System.out.println("cancel pressed");
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createTradeView(shopOwner, seller);
+            },0);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+
+    }
+
+    public void createKeyBindMenu(ControllerState state){
+
+        ScrollableMenu menu = new ScrollableMenu(400,500);
+        NavigatableList list = new NavigatableList();
+
+        java.util.Map<ActionEnum, Integer> map = state.getMappings();
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            java.util.Map.Entry pair = (java.util.Map.Entry)it.next();
+            list.addItem(new ScrollableMenuItem(pair.getKey() + " ---> " + pair.getValue(), ()->{
+                //do something
+                SwappableView view = new SwappableView();
+                view.addDrawable(new VerticalCenterContainer(new HorizontalCenterContainer(new KeyBindView(40,200))));
+                ViewTime.getInstance().register(()->{
+                    vEngine.getManager().addView(view);
+                },0);
+                //controller.setMenuState(view.getMenuViewContainer());
+
+            }));
+        }
+        menu.setList(list);
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Rebind Keys");
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+
+    }
 
     public MainController getController() {
         return controller;

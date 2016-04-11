@@ -41,7 +41,8 @@ public class PlayState extends ControllerState {
         mappings.put(ActionEnum.ITEMINVENTORY, KeyEvent.VK_I);
         mappings.put(ActionEnum.STATS, KeyEvent.VK_K);
         mappings.put(ActionEnum.TRADE, KeyEvent.VK_T);
-        mappings.put(ActionEnum.ABILITYONE, KeyEvent.VK_L);
+        mappings.put(ActionEnum.ATTACK, KeyEvent.VK_L);
+        mappings.put(ActionEnum.ESCAPE, KeyEvent.VK_ESCAPE);
         this.setMappings(mappings);
     }
     @Override
@@ -84,22 +85,38 @@ public class PlayState extends ControllerState {
                 UIViewFactory.getInstance().createStatsView(avatar.getCharacter());
             },0);
         }, this.getjFrame(), this.getController()));
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.TRADE), ()->{
+            /* TODO: REMOVE ALL OF THIS SOON
+
+
+
+             */
             System.out.println("open trade menu");
             //TODO: THIS IS NOT PROGRAMING!
-            NPC c = new NPC(getAvatar().getCharacter().getActionHandler(), Direction.NORTH, new DialogInteractionStrategy(new ArrayList<String>()));
-            c.pickup(new ChestEquipableItem("NPC's Wares", null));
+            NPC c = new NPC(getAvatar().getCharacter().getActionHandler(), Direction.NORTH, new TradeInteractionStrategy());
+            c.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
             c.interact(getAvatar().getCharacter());
         }, this.getjFrame(), this.getController()));
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SAVE), ()->{
             System.out.println("Trying to Save");
             new SaveToXMLFile("save1.xml").saveGame();
         }, this.getjFrame(), this.getController()));
-        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ABILITYONE), ()->{
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ATTACK), ()->{
             System.out.println("use ability");
-            avatar.useAbility(5);
+            avatar.attack();
             //this.setContinuousCommandToExecute(()->avatar.useAbility(5));
+        }, this.getjFrame(), this.getController()));
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ESCAPE), ()->{
+            System.out.println("open pause menu hit");
+            ViewTime.getInstance().register(()->{
+                UIViewFactory.getInstance().createPauseMenu();
+            },0);
         }, this.getjFrame(), this.getController()));
     }
 

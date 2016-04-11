@@ -19,13 +19,14 @@ import java.util.ArrayList;
 public class AreaView extends JPanel {
 
 
-    //FOR TESTING ONLY
+
     private xySorted3DArray backingArray = new xySorted3DArray();
-    private Avatar avatar;
     private ViewObjectFactory factory;
+
+    private BackgroundDrawable background;
+
     public AreaView(Avatar avatar, Map map) {
         setDoubleBuffered(true);
-        this.avatar = avatar;
         this.factory = new PlainsViewObjectFactory(this, map);
         VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory);
         map.accept(voCreationVisitor);
@@ -97,6 +98,7 @@ public class AreaView extends JPanel {
 //        }
     }
 
+
     public void addViewObject(ViewObject vo) {
         backingArray.add(vo, vo.getPosition());
     }
@@ -114,9 +116,14 @@ public class AreaView extends JPanel {
         backingArray.conceal(p);
     }
 
+    public void setBackground(BackgroundDrawable background) {
+        this.background = background;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+        background.draw(g2d);
         backingArray.draw(g2d);
     }
 
@@ -193,8 +200,10 @@ public class AreaView extends JPanel {
             return cube.get(y).get(z).get(x);
         }
 
-        private void fit(int x, int y, int z) {
-
+        private void fit(int xReal, int yReal, int zReal) {
+            int x = xReal + 1;
+            int y = yReal + 1;
+            int z = zReal + 1;
             //add xzPlanes until the Rs line up
             for (; ySize <= y; ySize++) {
                 cube.add(xzPlane(ySize));

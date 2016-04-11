@@ -70,6 +70,13 @@ public class Position {
                 getZ() + other.getZ());
     }
 
+    public Position multiply(double factor) {
+        return  new Position(
+                getR()*factor,
+                getS()*factor,
+                getZ()*factor);
+    }
+
     @Override
     public String toString() {
         return r + ", " + s + ", " + z;

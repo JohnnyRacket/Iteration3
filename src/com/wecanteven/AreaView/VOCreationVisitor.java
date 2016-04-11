@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView;
 
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
+import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Entities.NPC;
@@ -47,7 +48,9 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitCharacter(Character c) {
         System.out.println("adding character to areaview");
-        areaView.addViewObject(factory.createSneak(currentPosition, c.getDirection(), c));
+        ViewObject avatar = factory.createSneak(currentPosition, c.getDirection(), c);
+        areaView.addViewObject(avatar);
+        areaView.setBackground(factory.createBackgroundDrawable(avatar));
 
     }
 

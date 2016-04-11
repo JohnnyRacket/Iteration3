@@ -1,15 +1,13 @@
 package com.wecanteven.AreaView.ViewObjects.Factories;
 
 import com.wecanteven.AreaView.AreaView;
+import com.wecanteven.AreaView.BackgroundDrawable;
 import com.wecanteven.AreaView.DynamicImages.SimpleDynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.DynamicImages.StartableDynamicImage;
 import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
-import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DestroyableViewObject;
-import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
-import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
-import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.VisibilitySourceViewObject;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.*;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
@@ -82,11 +80,12 @@ public abstract class ViewObjectFactory {
 
         FeetViewObject feet = new FeetViewObject(d, leftFoot, rightFoot);
         HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, hatArmor, hands, feet, jumpDetector);
-
+        HUDDecorator sneakWithHUD = new HUDDecorator(stationarySneak, subject.getStats(), hexDrawingStrategy);
         subject.attach(stationarySneak);
         subject.attach(body);
+        subject.getStats().attach(sneakWithHUD);
 
-        VisibilitySourceViewObject visibilitySourceViewObject = new VisibilitySourceViewObject(stationarySneak, subject, areaView, 3);
+        VisibilitySourceViewObject visibilitySourceViewObject = new VisibilitySourceViewObject(sneakWithHUD, subject, areaView, 3);
         subject.attach(visibilitySourceViewObject);
         //TEMPORARY TESTING WORKAROUND
         //TODO: make better
@@ -95,6 +94,10 @@ public abstract class ViewObjectFactory {
 
         return createMovingViewObject(subject, visibilitySourceViewObject);
 
+    }
+
+    public BackgroundDrawable createBackgroundDrawable(ViewObject centerTarget) {
+        return new BackgroundDrawable(factory.loadDynamicImage("Textures/DarkBlue.xml"), getDrawingStrategy(), centerTarget);
     }
 
     public DestroyableViewObject createOneShotItem(Position position, OneShot oneShot) {

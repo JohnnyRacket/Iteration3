@@ -1,6 +1,9 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.Abilities.Ability;
+import com.wecanteven.Models.Abilities.AbilityFactory;
+import com.wecanteven.Models.Abilities.HitBoxGenerator;
+import com.wecanteven.Models.Abilities.MeleeRangeHitBoxGenerator;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Takeable.*;
@@ -25,118 +28,107 @@ public class Character extends Entity {
     private ItemStorage itemStorage, abilityItemStorage;
     private int windUpTicks, coolDownTicks;
 
-
-    public Character(ActionHandler actionHandler, Direction direction){
+    public Character(ActionHandler actionHandler, Direction direction) {
         super(actionHandler, direction);
         occupation = new Smasher();
-        this.stats = new Stats(this);
         this.itemStorage = new ItemStorage(this, 5);
         windUpTicks = 0;
         coolDownTicks = 0;
     }
 
-    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats){
+    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats) {
         super(actionHandler, direction);
         this.occupation = occupation;
-        this.stats = stats;
+        setStats(stats);
         this.itemStorage = new ItemStorage(this, 5);
     }
 
-    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage){
+    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage) {
         super(actionHandler, direction);
-        this.stats = new Stats(this);
         this.occupation = occupation;
         this.itemStorage = itemStorage;
     }
-    public void attack(Direction d){}
-    public void useAbility(int index){
-        System.out.println("An ability was used");
-        Ability ability = new Ability(this);
-        ability.cast();
+
+    public void attack() {
+        System.out.println("The entity attacked");
+        AbilityFactory factory = new AbilityFactory();
+        Ability attack = factory.vendMeleeAttack(this);
+        attack.cast();
+    }
+
+    public void useAbility(int index) {
     }
 
     /**
      * Equipment
-     * */
-    public void equipItem(EquipableItem item){
+     */
+    public void equipItem(EquipableItem item) {
         itemStorage.equip(item);
     }
 
-    public void unequipItem(EquipableItem item){
+    public void unequipItem(EquipableItem item) {
         itemStorage.unequip(item);
     }
 
     /**
      * Inventory
-     * */
+     */
     public void removeFromInventory(TakeableItem item) {
         itemStorage.removeItem(item);
         drop(item);
     }
 
-    public void drop(TakeableItem item){
-        // TODO notify map that item was dropped
-
-        if(getActionHandler().drop(item, this.getLocation())){
+    public void drop(TakeableItem item) {
+        if (getActionHandler().drop(item, this.getLocation())) {
             itemStorage.removeItem(item);
         }
     }
+
     public void pickup(TakeableItem item) {
         itemStorage.addItem(item);
     }
 
-    private boolean equipAbility(String id){
+    private boolean equipAbility(String id) {
         return false;
     }
-    private boolean unequipAbility(String id){
+
+    private boolean unequipAbility(String id) {
         return false;
     }
 
     /**
      * Consumption
-     * */
-    public boolean consume(String id){
+     */
+    public boolean consume(String id) {
         return false;
     }
 
-    public Location getLocation(){
-        return location;
-    }
     @Override
-    public void levelUp(){
-        stats.addStats(occupation.getStatsAddable());
+    public void levelUp() {
+        getStats().addStats(occupation.getStatsAddable());
     }
-    public Occupation getOccupation() {return occupation; }
+
+    public Occupation getOccupation() {
+        return occupation;
+    }
 
     @Override
     public void accept(EntityVisitor v) {
         v.visitCharacter(this);
     }
 
-    public ItemStorage getItemStorage() {return itemStorage;}
-
-    public void cast(ArrayList<Location> locations, StatsAddable effect){
-        getActionHandler().useAbility(locations,effect);
+    public ItemStorage getItemStorage() {
+        return itemStorage;
     }
 
-    public void setWindUpTicks(int ticks){
-        this.windUpTicks = ticks;
-        if(ticks == 0){
-            setIsActive(false);
-            return;
-        }
-        setIsActive(true);
-        deIncrementTick();
-        notifyObservers();
+
+    public boolean buy(int value) {
+        return itemStorage.buy(value);
     }
-    public void setCoolDownTicks(int ticks){
-        this.coolDownTicks = ticks;
-        if(ticks == 0){
-            setIsActive(false);
-            return;
-        }
-        setIsActive(true);
-        deIncrementTick();
-        notifyObservers();
+
+    public void addMoney(int value) {
+        itemStorage.addMoney(new MoneyItem(value));
     }
+
+
 }

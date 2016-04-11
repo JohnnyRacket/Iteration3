@@ -4,6 +4,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
+import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
@@ -70,11 +71,43 @@ public abstract class HandState {
         rightHand.draw(g);
     }
 
-    public void drawLeftHand(Graphics2D g) {
-        leftHand.draw(g);
+    public void drawBackground(Graphics2D g) {
+        if (isInBackground(leftHand)) {
+            leftHand.draw(g);
+        }
+        if (isInBackground(rightHand)) {
+            rightHand.draw(g);
+        }
     }
 
-    public void drawRightHand(Graphics2D g) {
-        rightHand.draw(g);
+    public void drawForeground(Graphics2D g) {
+        if (!isInBackground(leftHand)) {
+            leftHand.draw(g);
+        }
+        if (!isInBackground(rightHand)) {
+            rightHand.draw(g);
+        }
+    }
+
+    public void addBackgroundToFogOfWar(FogOfWarViewObject fogOfWarViewObject) {
+        if (isInBackground(leftHand)) {
+            leftHand.addToFogOfWarViewObject(fogOfWarViewObject);
+        }
+        if (isInBackground(rightHand)) {
+            rightHand.addToFogOfWarViewObject(fogOfWarViewObject);
+        }
+    }
+
+    public void addForegroundToFogOfWar(FogOfWarViewObject fogOfWarViewObject) {
+        if (!isInBackground(leftHand)) {
+            leftHand.addToFogOfWarViewObject(fogOfWarViewObject);
+        }
+        if (!isInBackground(rightHand)) {
+            rightHand.addToFogOfWarViewObject(fogOfWarViewObject);
+        }
+    }
+
+    private boolean isInBackground(MicroPositionableViewObject hand) {
+        return hand.getY() >= 0;
     }
 }

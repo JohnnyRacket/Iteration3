@@ -7,6 +7,6 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
  */
 public class TakeableItemFactory {
     public TakeableItem vendTakeableItem(String name) {
-        return new TakeableItem(name);
+        return new TakeableItem(name, 10);
     }
 }
