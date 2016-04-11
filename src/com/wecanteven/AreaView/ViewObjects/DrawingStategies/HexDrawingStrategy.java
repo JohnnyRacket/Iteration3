@@ -5,6 +5,7 @@ import com.wecanteven.AreaView.DynamicImages.DynamicImage;
 import com.wecanteven.AreaView.DynamicImages.SimpleDynamicImage;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.MenuView.Drawable;
 import com.wecanteven.UtilityClasses.Config;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.awt.*;
 /**
  * Created by alexs on 3/29/2016.
  */
-public class HexDrawingStrategy implements DynamicImageDrawingStrategy, StringDrawingStrategy {
+public class HexDrawingStrategy implements DynamicImageDrawingStrategy, StringDrawingStrategy, MenuComponentDrawingStrategy {
     public static final int HEX_WIDTH = 56;
     public static final int HEX_LENGTH = 48;
     public static final int HEX_HEIGHT = 15;
@@ -44,5 +45,14 @@ public class HexDrawingStrategy implements DynamicImageDrawingStrategy, StringDr
     @Override
     public void draw(Graphics g, String text, Position position) {
 
+    }
+
+    @Override
+    public void draw(Graphics2D g, Drawable drawable, Position p) {
+        drawable.draw(g,
+                findX(p) - drawable.getWidth()/2 -findX(centerTarget.getPosition()) + Config.SCREEN_WIDTH/2,
+                findY(p) - drawable.getHeight()/2 -findY(centerTarget.getPosition()) + Config.SCREEN_HEIGHT/2,
+                Config.SCREEN_WIDTH,
+                Config.SCREEN_HEIGHT);
     }
 }
