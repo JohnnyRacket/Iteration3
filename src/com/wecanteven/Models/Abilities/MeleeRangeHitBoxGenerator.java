@@ -8,9 +8,6 @@ import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
-import javax.swing.*;
-import java.util.ArrayList;
-
 /**
  * Created by Brandon on 4/7/2016.
  */

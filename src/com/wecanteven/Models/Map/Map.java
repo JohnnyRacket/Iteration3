@@ -116,7 +116,16 @@ public class Map implements MapVisitable, ActionHandler {
             return true;
         }else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){
             //try to jump if you cant move
-            return move(entity, destination.add(Direction.UP.getCoords), movespeed);
+            //checks if you'll bump your head
+            Tile above = this.getTile(source.add(new Location(0,0,entity.getHeight())));
+            above.accept(visitor);
+            if(visitor.canMove()){
+                return move(entity, destination.add(Direction.UP.getCoords), movespeed);
+            }
+            else{
+                //you bumped your head and could not jump
+                return false;
+            }
       }else{
             //cant move or jump
             return false;
