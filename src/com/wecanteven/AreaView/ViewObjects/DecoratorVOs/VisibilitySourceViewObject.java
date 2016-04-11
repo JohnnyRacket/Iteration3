@@ -27,8 +27,6 @@ public class VisibilitySourceViewObject extends DecoratorViewObject implements O
         ViewTime.getInstance().register( () -> reveal(radius), 1000);
     }
 
-
-
     private void reveal(int radius) {
         for (int i = 0; i<= radius; i++) {
             HexRing visibleRing = new HexRing(i, position.getLocation());
