@@ -1,14 +1,13 @@
 package com.wecanteven.Visitors;
 
-import com.wecanteven.Models.Items.Takeable.Equipable.MeleeWeaponEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.RangedWeaponEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.*;
 
 /**
  * Created by adamfortier on 4/7/16.
  */
 public interface WeaponsVisitor {
-    public void visitRangedWeapon(RangedWeaponEquipableItem rangedWeapon);
-    public void visitMeleeWeaponEquipableItem(MeleeWeaponEquipableItem meleeWeapon);
+    public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon);
+    public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon);
+    public void visitOneHandedRangedWeapon(OneHandedRangedWeapon oneHandedRangedWeapon);
     public void visitWeapon(WeaponEquipableItem weapon);
 }

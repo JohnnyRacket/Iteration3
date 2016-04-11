@@ -37,13 +37,15 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
     @Override
     public void setPosition(Position p) {
         super.setPosition(p);
-        equipment.setPosition(p);
+        if(equipment != null)
+            equipment.setPosition(p);
     }
 
     @Override
     public void draw(Graphics2D g) {
         super.draw(g);
-        equipment.draw(g);
+        if(equipment != null)
+            equipment.draw(g);
     }
 
     @Override

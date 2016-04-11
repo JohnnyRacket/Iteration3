@@ -2,11 +2,11 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
+import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
-import com.wecanteven.Models.Items.Takeable.Equipable.MeleeWeaponEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.RangedWeaponEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
+import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
@@ -18,13 +18,19 @@ public class HandsViewObject implements ViewObject, Observer {
     private HandState handState;
     private Position position;
     private EquipmentSlot subject;
+    private ViewObjectFactory factory;
+    private Entity entity;
    // private Equipment --dont have it yet..
 
 
 
-    public HandsViewObject(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand, Direction direction, Position position, EquipmentSlot subject) {
+    public HandsViewObject(MicroPositionableViewObject leftHand,
+                           MicroPositionableViewObject rightHand, Direction direction,
+                           Position position, EquipmentSlot subject, ViewObjectFactory factory, Entity entity) {
         this.position = position;
         this.subject = subject;
+        this.factory = factory;
+        this.entity = entity;
         handState = new BrawlingState(direction, leftHand, rightHand);
     }
 
@@ -45,6 +51,8 @@ public class HandsViewObject implements ViewObject, Observer {
             handState.drawRightHand(graphic);
         }
     }
+
+
 
     @Override
     public Position getPosition() {
@@ -83,7 +91,7 @@ public class HandsViewObject implements ViewObject, Observer {
     }
 
     public void update() {
-        //TODO
+        subject.getItem();
     }
 
 
@@ -91,22 +99,26 @@ public class HandsViewObject implements ViewObject, Observer {
         this.handState = handState;
     }
 
-    private class HandsEquipListener implements WeaponsVisitor{
-
+    private class viewWeaponVisitor implements WeaponsVisitor{
 
         @Override
-        public void visitRangedWeapon(RangedWeaponEquipableItem rangedWeapon) {
-
+        public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {
+            swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), oneHandedWeapon.getName(), entity));
         }
 
         @Override
-        public void visitMeleeWeaponEquipableItem(MeleeWeaponEquipableItem meleeWeapon) {
+        public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon) {
+            handState.equip(oneHandedMeleeWeapon);
+        }
 
+        @Override
+        public void visitOneHandedRangedWeapon(OneHandedRangedWeapon oneHandedRangedWeapon) {
+            handState.equip(oneHandedRangedWeapon);
         }
 
         @Override
         public void visitWeapon(WeaponEquipableItem weapon) {
-
+            handState.equip(weapon);
         }
     }
 }
