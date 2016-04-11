@@ -91,7 +91,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         return isActive;
     }
 
-    //TODO: someone write the below shit
     @Override
     public Location getLocation() {
         return location;
