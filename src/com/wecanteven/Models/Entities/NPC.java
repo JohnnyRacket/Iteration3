@@ -16,14 +16,16 @@ public class NPC extends Character {
 
     private InteractionStrategy interaction;
 
-    public NPC(ActionHandler actionHandler, Direction direction, DialogInteractionStrategy interaction){
+    public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction){
         super(actionHandler, direction);
         this.interaction = interaction;
+        this.interaction.setOwner(this);
     }
 
-    public NPC(ActionHandler actionHandler, Direction direction, DialogInteractionStrategy interaction, Occupation occupation, ItemStorage itemStorage){
+    public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction, Occupation occupation, ItemStorage itemStorage){
         super(actionHandler, direction, occupation, itemStorage);
         this.interaction = interaction;
+        this.interaction.setOwner(this);
     }
 
     public void interact(Character c){
@@ -33,5 +35,9 @@ public class NPC extends Character {
     public void accept(EntityVisitor visitor) {
         System.out.println("Visiting NPC");
         visitor.visitNPC(this);
+    }
+
+    public InteractionStrategy getInteraction() {
+        return interaction;
     }
 }

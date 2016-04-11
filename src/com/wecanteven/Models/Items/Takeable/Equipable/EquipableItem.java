@@ -20,9 +20,8 @@ public abstract class EquipableItem extends TakeableItem {
 
     private StatsAddable stats;
 
-    public EquipableItem(String name, StatsAddable stats) {
-        super(name);
-
+    public EquipableItem(String name, int value, StatsAddable stats) {
+        super(name, value);
         this.stats = stats;
     }
 

@@ -8,8 +8,8 @@ import com.wecanteven.Models.Storage.ItemStorage.Equipment;
  */
 public class HeadEquipableItem extends EquipableItem
 {
-    public HeadEquipableItem(String name, StatsAddable stats) {
-        super(name, stats);
+    public HeadEquipableItem(String name, int value, StatsAddable stats) {
+        super(name, value, stats);
     }
 
     @Override

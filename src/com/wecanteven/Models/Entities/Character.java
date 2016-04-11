@@ -119,6 +119,15 @@ public class Character extends Entity {
         getActionHandler().useAbility(locations,effect);
     }
 
+    public boolean buy(int value) {
+        return itemStorage.buy(value);
+    }
+
+    public void addMoney(int value) {
+        itemStorage.addMoney(new MoneyItem(value));
+    }
+
+
     public void setWindUpTicks(int ticks){
         this.windUpTicks = ticks;
         if(ticks == 0){

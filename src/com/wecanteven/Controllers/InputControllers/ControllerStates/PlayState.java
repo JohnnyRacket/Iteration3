@@ -84,13 +84,23 @@ public class PlayState extends ControllerState {
                 UIViewFactory.getInstance().createStatsView(avatar.getCharacter());
             },0);
         }, this.getjFrame(), this.getController()));
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.TRADE), ()->{
+            /* TODO: REMOVE ALL OF THIS SOON
+
+
+
+             */
             System.out.println("open trade menu");
             //TODO: THIS IS NOT PROGRAMING!
-            NPC c = new NPC(getAvatar().getCharacter().getActionHandler(), Direction.NORTH, new DialogInteractionStrategy(new ArrayList<String>()));
-            c.pickup(new ChestEquipableItem("NPC's Wares", null));
+            NPC c = new NPC(getAvatar().getCharacter().getActionHandler(), Direction.NORTH, new TradeInteractionStrategy());
+            c.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
             c.interact(getAvatar().getCharacter());
         }, this.getjFrame(), this.getController()));
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SAVE), ()->{
             System.out.println("Trying to Save");
