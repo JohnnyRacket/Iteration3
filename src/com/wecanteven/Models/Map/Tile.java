@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Map;
 
+import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
@@ -8,7 +9,6 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Terrain.Terrain;
 import com.wecanteven.Models.ModelTime.Alertable;
 import com.wecanteven.Models.ModelTime.ModelTime;
-import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class Tile implements MapVisitable {
     private TileSlot<OneShot> oneShot = new TileSlot<>();
     private ArrayList<TakeableItem> takeableItems = new ArrayList<>();
     private TileSlot<Entity> entity = new TileSlot<>();
-    private ArrayList<StatsAddable> effects = new ArrayList<>();
+    private ArrayList<HitBox> hitBoxes = new ArrayList<>();
 
     private Terrain terrain;
 
@@ -62,13 +62,6 @@ public class Tile implements MapVisitable {
         this.takeableItems.add(takeableItem);
         return true;
     }
-    public boolean add(StatsAddable effect){
-        System.out.println("adding stats to the tile ");
-        if(hasEntity()){
-            getEntity().modifyStats(effect);
-        }
-        return this.effects.add(effect);
-    }
 
     public boolean remove(Entity entity) {
         if (!interactiveItem.isEmpty())
@@ -89,17 +82,11 @@ public class Tile implements MapVisitable {
         this.takeableItems.remove(takeableItem);
         return true;
     }
-    public boolean remove(StatsAddable effect){
-        return this.effects.remove(effect);
-    }
 
     public boolean hasEntity() {return !this.entity.isEmpty();}
     public boolean hasObstacle() { return !this.obstacle.isEmpty(); }
     public boolean hasInteractiveItem() {return !this.interactiveItem.isEmpty();}
     public boolean hasOneShot() { return !this.oneShot.isEmpty(); }
-    public boolean hasEffect(){
-        return !this.effects.isEmpty();
-    }
 
     public Obstacle getObstacle() {
         return obstacle.getToken();
@@ -121,9 +108,6 @@ public class Tile implements MapVisitable {
         return entity.getToken();
     }
 
-    public ArrayList<StatsAddable> getEffects(){
-        return getEffects();
-    }
 
     public Terrain getTerrain() {
         return terrain;
@@ -135,13 +119,35 @@ public class Tile implements MapVisitable {
 
     public void interact(Entity entity){
         entity.unlock();
-        effects.forEach( effect -> entity.modifyStats(effect));
+        hitBoxes.forEach( effect -> effect.interact(entity));
         terrain.interact(entity);
         if (!oneShot.isEmpty() )
             oneShot.getToken().interact(entity);
         if (!interactiveItem.isEmpty())
             interactiveItem.getToken().trigger();
     }
+
+
+
+    public boolean add(HitBox hitBox){
+        System.out.println("adding effects to the tile ");
+        if(hitBoxes.add(hitBox) && hasEntity()){
+           hitBox.interact(getEntity());
+            return true;
+        }
+        return false;
+    }
+    public boolean remove(HitBox hitBox){
+        return hitBoxes.remove(hitBox);
+    }
+    public ArrayList<HitBox> getEffects(){
+        return getEffects();
+    }
+    public boolean hasEffect(){
+        return !hitBoxes.isEmpty();
+    }
+
+
 
     /**
      * Created by John on 3/31/2016.

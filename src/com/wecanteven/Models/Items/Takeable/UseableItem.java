@@ -7,8 +7,8 @@ import com.wecanteven.Visitors.ItemVisitor;
  * Created by simonnea on 3/31/16.
  */
 public abstract class UseableItem extends TakeableItem {
-    public UseableItem(String name) {
-        super(name);
+    public UseableItem(String name, int value) {
+        super(name, value);
     }
 
     public abstract void use(Character character);

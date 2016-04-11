@@ -32,7 +32,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     private boolean isActive;
     private boolean lock;
 
-
     public Entity(ActionHandler actionHandler, Direction direction){
         this.actionHandler = actionHandler;
         this.direction = direction;
@@ -53,14 +52,12 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         die();
     }
 
-
-
     public boolean move(Direction d){
         int movementStat = getStats().getMovement();
         if(movementStat == 0 || isActive()){
             return false;
         }
-        if(this.getDirection() == d){
+        if(getDirection() == d){
             setDirection(d);
             Location destination = getLocation().add(d.getCoords);
             int moveTime = calculateMovementTicks(movementStat);
@@ -82,7 +79,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         return false;
     }
 
-
     public void die(){
         getStats().refreshStats();
         if(getStats().getLives() < 0){
@@ -95,16 +91,10 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         return isActive;
     }
 
-
-
-
-
-    //TODO: someone write the below shit
     @Override
     public Location getLocation() {
         return location;
     }
-
 
     @Override
     public int getMovingTicks() {
@@ -121,7 +111,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         this.movingTicks = movingTicks;
     }
     private void tickTicks(){
-        System.out.println(isActive());
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
                 deIncrementMovingTick();
@@ -220,7 +209,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         calculateActiveStatus();
     }
     private void calculateActiveStatus(){
-        System.out.println(getMovingTicks());
         if(getMovingTicks() <= 0){
             setIsActive(false);
         }
@@ -228,7 +216,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             setIsActive(true);
         }
     }
-
 
     protected void setIsActive(boolean isActive){
         if(!isLocked()){
@@ -239,5 +226,4 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         System.out.println("The Entity's stats have changed");
         this.stats.addStats(addable);
     }
-
 }

@@ -6,8 +6,8 @@ import com.wecanteven.Models.Stats.StatsAddable;
  * Created by simonnea on 3/31/16.
  */
 public class RangedWeaponEquipableItem extends WeaponEquipableItem {
-    public RangedWeaponEquipableItem(String name, StatsAddable stats) {
-        super(name, stats);
+    public RangedWeaponEquipableItem(String name, int value, StatsAddable stats) {
+        super(name, value, stats);
     }
 
     // Behaviors for ranged

@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Map;
 
+import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
@@ -52,6 +53,9 @@ public class Column {
     public boolean add(InteractiveItem interactiveItem, int z){
         return tiles.get(z).add(interactiveItem);
     }
+    public boolean add(HitBox hitBox, int z){
+        return tiles.get(z).add(hitBox);
+    }
 
     public boolean remove(Entity entity, int z){
         return tiles.get(z).remove(entity);
@@ -67,6 +71,9 @@ public class Column {
     }
     public boolean remove(InteractiveItem interactiveItem, int z){
         return tiles.get(z).remove(interactiveItem);
+    }
+    public boolean remove(HitBox hitBox, int z){
+        return tiles.get(z).remove(hitBox);
     }
 
     public void accept(ColumnVisitor visitor) {

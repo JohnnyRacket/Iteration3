@@ -27,6 +27,7 @@ public class StatsHUD extends Drawable implements Observer {
 
     public StatsHUD(Stats stats){
         this.stats = stats;
+        stats.attach(this);
         healthBar = new CircularHealthBar(180,180);
         healthBar.setCurrentColor(new Color(40,250,80));
         healthBar.setDepletedColor(new Color(20,140,40));
@@ -115,6 +116,7 @@ public class StatsHUD extends Drawable implements Observer {
         maxExp = 100; //TODO fix this
         expBar.setCurrentProgress((int)exp);
         expBar.setMaxProgress(100);
+        System.out.println("The stats hud was updated");
     }
 
     public Color getBgColor() {

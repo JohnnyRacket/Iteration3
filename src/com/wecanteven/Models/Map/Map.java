@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Map;
 
+import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
@@ -115,7 +116,16 @@ public class Map implements MapVisitable, ActionHandler {
             return true;
         }else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){
             //try to jump if you cant move
-            return move(entity, destination.add(Direction.UP.getCoords), movespeed);
+            //checks if you'll bump your head
+            Tile above = this.getTile(source.add(new Location(0,0,entity.getHeight())));
+            above.accept(visitor);
+            if(visitor.canMove()){
+                return move(entity, destination.add(Direction.UP.getCoords), movespeed);
+            }
+            else{
+                //you bumped your head and could not jump
+                return false;
+            }
       }else{
             //cant move or jump
             return false;
@@ -147,14 +157,14 @@ public class Map implements MapVisitable, ActionHandler {
         return true;
     }
 
-    @Override
-    public void useAbility(ArrayList<Location> locations, StatsAddable effect){
-        System.out.println("these are the number of locations "+ locations.size());
-        for(Location location : locations){
-            System.out.println("adding things again and again");
-            getTile(location).add(effect);
-        }
-    }
+//    @Override
+//    public void useAbility(ArrayList<Location> locations, StatsAddable effect){
+//        System.out.println("these are the number of locations "+ locations.size());
+//        for(Location location : locations){
+//            System.out.println("adding things again and again");
+//            getTile(location).add(effect);
+//        }
+//    }
 
     public Tile getTile(Location loc){
         return columns[loc.getR()][loc.getS()].getTile(loc.getZ());
@@ -200,6 +210,15 @@ public class Map implements MapVisitable, ActionHandler {
     public void death(Entity entity){
         remove(entity, entity.getLocation());
         System.out.println("An entity was removed from the map");
+    }
+
+
+    public boolean add(HitBox hitbox, Location loc){
+        return columns[loc.getR()][loc.getS()].add(hitbox, loc.getZ());
+    }
+
+    public boolean remove(HitBox hitbox, Location loc){
+        return columns[loc.getR()][loc.getS()].remove(hitbox, loc.getZ());
     }
 
 }

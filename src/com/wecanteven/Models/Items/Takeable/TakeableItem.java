@@ -10,9 +10,13 @@ import com.wecanteven.Visitors.ItemVisitor;
  */
 public class TakeableItem extends Item
 {
-    public TakeableItem(String name) {
+    private int value;
+    public TakeableItem(String name, int value) {
         super(name);
+        this.value = value;
     }
+
+    public int getValue() {return value;}
 
     public void interact(Character character) {
         character.pickup(this);
