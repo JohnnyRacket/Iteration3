@@ -2,6 +2,7 @@ package com.wecanteven.Models.Abilities;
 
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Skills.Skill;
 import com.wecanteven.Models.Stats.Stat;
 import com.wecanteven.UtilityClasses.Location;
 
@@ -21,5 +22,9 @@ public class Ability {
     }
     public void cast(){
         hitBoxGenerator.generate();
+    }
+
+    public void configure(Skill skill)  {
+        this.skill = skill.getSkillPoints();
     }
 }
