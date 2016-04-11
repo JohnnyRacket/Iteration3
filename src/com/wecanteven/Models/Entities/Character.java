@@ -113,28 +113,4 @@ public class Character extends Entity {
 
     public ItemStorage getItemStorage() {return itemStorage;}
 
-//    public void cast(ArrayList<Location> locations, StatsAddable effect){
-//        getActionHandler().useAbility(locations,effect);
-//    }
-
-//    public void setWindUpTicks(int ticks){
-//        this.windUpTicks = ticks;
-//        if(ticks == 0){
-//            setIsActive(false);
-//            return;
-//        }
-//        setIsActive(true);
-//        deIncrementTick();
-//        notifyObservers();
-//    }
-//    public void setCoolDownTicks(int ticks){
-//        this.coolDownTicks = ticks;
-//        if(ticks == 0){
-//            setIsActive(false);
-//            return;
-//        }
-//        setIsActive(true);
-//        deIncrementTick();
-//        notifyObservers();
-//    }
 }

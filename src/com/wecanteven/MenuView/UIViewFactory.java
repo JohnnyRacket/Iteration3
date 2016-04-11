@@ -1,6 +1,8 @@
 package com.wecanteven.MenuView;
 
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.Controllers.InputControllers.ActionEnum;
+import com.wecanteven.Controllers.InputControllers.ControllerStates.ControllerState;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.GameLaunchers.LoadGameLauncher;
 import com.wecanteven.GameLaunching.GameLaunchers.NewGameLauncher;
@@ -19,6 +21,7 @@ import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
@@ -27,6 +30,7 @@ import com.wecanteven.ViewEngine;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.Iterator;
 
 /**
  * Created by John on 3/31/2016.
@@ -292,6 +296,68 @@ public class UIViewFactory {
         return null;
     }
 
+    public void createPauseMenu(){
+        ScrollableMenu menu = new ScrollableMenu(300,300);
+        NavigatableList list = new NavigatableList();
+        list.addItem(new ScrollableMenuItem("Save", ()->{
+            //add save stuff here
+        }));
+        list.addItem(new ScrollableMenuItem("Load", ()->{
+            //go to load menu
+            //im just assuming 3 save files, you can change this nbd
+            NavigatableList loadList = new NavigatableList();
+            loadList.addItem(new ScrollableMenuItem("Save 1", ()->{
+                //add load file 1 here
+            }));
+            loadList.addItem(new ScrollableMenuItem("Save 2", ()->{
+                //add load file 2 here
+            }));
+            loadList.addItem(new ScrollableMenuItem("Save 3", ()->{
+                //add load file 3 here
+            }));
+            loadList.addItem(new ScrollableMenuItem("Back", ()->{
+                menu.setList(list);
+            }));
+            menu.setList(loadList);
+        }));
+        list.addItem(new ScrollableMenuItem("Key Bindings", ()->{
+            //go to key binding menu
+            NavigatableList keyBindList = new NavigatableList();
+            keyBindList.addItem(new ScrollableMenuItem("Menu KeyBindings", ()->{
+                createKeyBindMenu(controller.getMenuState());
+            }));
+            keyBindList.addItem(new ScrollableMenuItem("Game KeyBindings", ()->{
+                createKeyBindMenu(controller.getPlayState());
+            }));
+            keyBindList.addItem(new ScrollableMenuItem("Dialogue KeyBindings", ()->{
+                createKeyBindMenu(controller.getDialogState());
+            }));
+            keyBindList.addItem(new ScrollableMenuItem("Back", ()->{
+                menu.setList(list);
+            }));
+            menu.setList(keyBindList);
+
+        }));
+        list.addItem(new ScrollableMenuItem("Exit to Main Menu", ()->{
+            //exit to main menu
+            //what all do i need to do here?
+            //dump things registered in the time models? (add clear functions to time models)
+            //switch view to main menu view
+        }));
+
+        menu.setList(list);
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu");
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+    }
 
     public void createTradeView(Character npc, Character player, int bargainLevel){
         npc.accept(visitor);
@@ -354,7 +420,34 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
     }
 
+    public void createKeyBindMenu(ControllerState state){
 
+        ScrollableMenu menu = new ScrollableMenu(400,500);
+        NavigatableList list = new NavigatableList();
+
+        java.util.Map<ActionEnum, Integer> map = state.getMappings();
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            java.util.Map.Entry pair = (java.util.Map.Entry)it.next();
+            list.addItem(new ScrollableMenuItem(pair.getKey() + " ---> " + pair.getValue(), ()->{
+                //do something
+
+            }));
+        }
+        menu.setList(list);
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Rebind Keys");
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+
+    }
 
     public MainController getController() {
         return controller;

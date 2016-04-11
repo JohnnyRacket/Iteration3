@@ -12,7 +12,7 @@ import com.wecanteven.Models.Stats.StatsAddable;
  */
 public class AbilityFactory {
     public Ability vendMeleeAttack(Character caster) {
-        MeleeRangeHitBoxGenerator hitBox = new MeleeRangeHitBoxGenerator(caster,new StatsAddable(0,0,0,0,0,0,0,-5,0));
+        MeleeRangeHitBoxGenerator hitBox = new MeleeRangeHitBoxGenerator(caster,new StatsAddable(0,0,0,0,0,0,0,-1,0));
         return new Ability(caster,hitBox);
     }
 }
