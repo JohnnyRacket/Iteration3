@@ -25,7 +25,6 @@ public class Current extends Terrain {
         return direction;
     }
     public void interact(Entity entity){
-        System.out.println("The entity is in the current");
         entity.setDirection(direction);
         entity.move(direction);
     }

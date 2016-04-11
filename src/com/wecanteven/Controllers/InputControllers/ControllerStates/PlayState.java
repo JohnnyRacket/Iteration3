@@ -41,7 +41,7 @@ public class PlayState extends ControllerState {
         mappings.put(ActionEnum.ITEMINVENTORY, KeyEvent.VK_I);
         mappings.put(ActionEnum.STATS, KeyEvent.VK_K);
         mappings.put(ActionEnum.TRADE, KeyEvent.VK_T);
-        mappings.put(ActionEnum.ABILITYONE, KeyEvent.VK_L);
+        mappings.put(ActionEnum.ATTACK, KeyEvent.VK_L);
         this.setMappings(mappings);
     }
     @Override
@@ -96,9 +96,9 @@ public class PlayState extends ControllerState {
             System.out.println("Trying to Save");
             new SaveToXMLFile("save1.xml").saveGame();
         }, this.getjFrame(), this.getController()));
-        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ABILITYONE), ()->{
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ATTACK), ()->{
             System.out.println("use ability");
-            avatar.useAbility(5);
+            avatar.attack();
             //this.setContinuousCommandToExecute(()->avatar.useAbility(5));
         }, this.getjFrame(), this.getController()));
     }

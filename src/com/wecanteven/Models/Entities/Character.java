@@ -1,6 +1,9 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.Abilities.Ability;
+import com.wecanteven.Models.Abilities.AbilityFactory;
+import com.wecanteven.Models.Abilities.HitBoxGenerator;
+import com.wecanteven.Models.Abilities.MeleeRangeHitBoxGenerator;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Takeable.*;
@@ -25,7 +28,6 @@ public class Character extends Entity {
     private ItemStorage itemStorage, abilityItemStorage;
     private int windUpTicks, coolDownTicks;
 
-
     public Character(ActionHandler actionHandler, Direction direction){
         super(actionHandler, direction);
         occupation = new Smasher();
@@ -33,24 +35,25 @@ public class Character extends Entity {
         windUpTicks = 0;
         coolDownTicks = 0;
     }
-
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats){
         super(actionHandler, direction);
         this.occupation = occupation;
         setStats(stats);
         this.itemStorage = new ItemStorage(this, 5);
     }
-
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage){
         super(actionHandler, direction);
         this.occupation = occupation;
         this.itemStorage = itemStorage;
     }
-    public void attack(Direction d){}
+
+    public void attack(){
+        System.out.println("The entity attacked");
+        AbilityFactory factory = new AbilityFactory();
+        Ability attack = factory.vendMeleeAttack(this);
+        attack.cast();
+    }
     public void useAbility(int index){
-        System.out.println("An ability was used");
-        Ability ability = new Ability(this);
-        ability.cast();
     }
 
     /**
@@ -110,9 +113,9 @@ public class Character extends Entity {
 
     public ItemStorage getItemStorage() {return itemStorage;}
 
-    public void cast(ArrayList<Location> locations, StatsAddable effect){
-        getActionHandler().useAbility(locations,effect);
-    }
+//    public void cast(ArrayList<Location> locations, StatsAddable effect){
+//        getActionHandler().useAbility(locations,effect);
+//    }
 
 //    public void setWindUpTicks(int ticks){
 //        this.windUpTicks = ticks;

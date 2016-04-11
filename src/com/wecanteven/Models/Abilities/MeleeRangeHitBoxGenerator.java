@@ -1,6 +1,9 @@
 package com.wecanteven.Models.Abilities;
 
+import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.ModelTime.Alertable;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
@@ -11,21 +14,28 @@ import java.util.ArrayList;
 /**
  * Created by Brandon on 4/7/2016.
  */
-public class MeleeRangeHitBoxGenerator {
+public class MeleeRangeHitBoxGenerator implements HitBoxGenerator {
     private Character caster;
-    private ArrayList<Location> locations;
-    private StatsAddable effect;
+    private ActionHandler actionHandler;
+    HitBox hitbox;
 
-    public MeleeRangeHitBoxGenerator(Character caster){
+    public MeleeRangeHitBoxGenerator(Character caster,StatsAddable effect){
         this.caster = caster;
-        locations = new ArrayList();
-        effect = new StatsAddable(0,0,0,0,0,0,0,-5,0);
+        actionHandler = caster.getActionHandler();
+        hitbox = new HitBox(effect);
     }
     public void generate(){
-        locations = new ArrayList<>();
-        Location location = caster.getLocation();
-        Direction direction = caster.getDirection();
-        locations.add(0, location.add(direction.getCoords));
-        caster.cast(locations, effect);
+        System.out.println("The spell is occuring");
+        Direction casterDirection = caster.getDirection();
+        Location startLocation = caster.getLocation();
+        Location destination = startLocation.add(casterDirection.getCoords);
+        actionHandler.add(hitbox,destination);
+        ModelTime modelTime = ModelTime.getInstance();
+        modelTime.registerAlertable(new Alertable() {
+            @Override
+            public void alert() {
+                actionHandler.remove(hitbox,destination);
+            }
+        }, 1);
     }
 }

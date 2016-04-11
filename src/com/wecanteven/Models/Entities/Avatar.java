@@ -24,12 +24,11 @@ public class Avatar{
     public Avatar(Character avatar, ActionHandler actionHandler){
         this.avatar = avatar;
         state = new EntityState(avatar, this);
-        //this.setMovingTicks(10);
     }
     public boolean move(Direction d){
         return state.move(d);
     }
-    public void attack(Direction d){ state.attack(d);}
+    public void attack(){ state.attack();}
     public void useAbility(int index){state.useAbility(index);}
     public boolean equipItem(EquipableItem item){
         return false;
