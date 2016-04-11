@@ -29,7 +29,6 @@ public class Character extends Entity {
     public Character(ActionHandler actionHandler, Direction direction){
         super(actionHandler, direction);
         occupation = new Smasher();
-        this.stats = new Stats(this);
         this.itemStorage = new ItemStorage(this, 5);
         windUpTicks = 0;
         coolDownTicks = 0;
@@ -38,13 +37,12 @@ public class Character extends Entity {
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats){
         super(actionHandler, direction);
         this.occupation = occupation;
-        this.stats = stats;
+        setStats(stats);
         this.itemStorage = new ItemStorage(this, 5);
     }
 
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage){
         super(actionHandler, direction);
-        this.stats = new Stats(this);
         this.occupation = occupation;
         this.itemStorage = itemStorage;
     }
@@ -99,12 +97,9 @@ public class Character extends Entity {
         return false;
     }
 
-    public Location getLocation(){
-        return location;
-    }
     @Override
     public void levelUp(){
-        stats.addStats(occupation.getStatsAddable());
+        getStats().addStats(occupation.getStatsAddable());
     }
     public Occupation getOccupation() {return occupation; }
 
@@ -119,24 +114,24 @@ public class Character extends Entity {
         getActionHandler().useAbility(locations,effect);
     }
 
-    public void setWindUpTicks(int ticks){
-        this.windUpTicks = ticks;
-        if(ticks == 0){
-            setIsActive(false);
-            return;
-        }
-        setIsActive(true);
-        deIncrementTick();
-        notifyObservers();
-    }
-    public void setCoolDownTicks(int ticks){
-        this.coolDownTicks = ticks;
-        if(ticks == 0){
-            setIsActive(false);
-            return;
-        }
-        setIsActive(true);
-        deIncrementTick();
-        notifyObservers();
-    }
+//    public void setWindUpTicks(int ticks){
+//        this.windUpTicks = ticks;
+//        if(ticks == 0){
+//            setIsActive(false);
+//            return;
+//        }
+//        setIsActive(true);
+//        deIncrementTick();
+//        notifyObservers();
+//    }
+//    public void setCoolDownTicks(int ticks){
+//        this.coolDownTicks = ticks;
+//        if(ticks == 0){
+//            setIsActive(false);
+//            return;
+//        }
+//        setIsActive(true);
+//        deIncrementTick();
+//        notifyObservers();
+//    }
 }

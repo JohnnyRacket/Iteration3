@@ -181,6 +181,17 @@ public abstract class ViewObjectFactory {
         return mvo;
     }
 
+//    public HandState createOneHandedWeaponState(Position position, Direction direction, String weaponImagePath, Entity entity) {
+//        return new OneHandedWeaponState(direction, new MicroPositionableViewObject(createLeftHand(position)) ,createMicroPositionableViewObject(position, direction, weaponImagePath, entity));
+//    }
+
+    public MicroPositionableViewObject createMicroPositionableViewObject(Position position, Direction direction, String path, Entity entity) {
+        DirectionalViewObject directionalViewObject = createDirectional(position, entity, path);
+        entity.attach(directionalViewObject);
+        return new MicroPositionableViewObject(directionalViewObject);
+    }
+
+
     public HexDrawingStrategy getDrawingStrategy() {
         return hexDrawingStrategy;
     }

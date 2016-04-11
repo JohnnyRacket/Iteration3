@@ -1,7 +1,6 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.ActionHandler;
-import com.wecanteven.Models.ModelTime.Alertable;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
@@ -22,10 +21,10 @@ import java.util.ArrayList;
 public class Entity implements Moveable, Directional, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
     private ActionHandler actionHandler;
-    protected Stats stats;
+    private Stats stats;
     private int height = 3;
     private int jumpHeight;
-    protected Location location;
+    private Location location;
     private Direction direction;
     private CanMoveVisitor canMoveVisitor;
     private CanFallVisitor canFallVisitor;
@@ -37,6 +36,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     public Entity(ActionHandler actionHandler, Direction direction){
         this.actionHandler = actionHandler;
         this.direction = direction;
+        stats = new Stats(this);
         canMoveVisitor = new TerranianCanMoveVisitor();
         canMoveVisitor.setEntity(this);
         canFallVisitor = new TerranianCanFallVisitor();
@@ -56,37 +56,38 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
 
     public boolean move(Direction d){
-        int movementStat = this.getStats().getMovement();
-        if(movementStat == 0 || isActive){
+        int movementStat = getStats().getMovement();
+        if(movementStat == 0 || isActive()){
             return false;
         }
         if(this.getDirection() == d){
             setDirection(d);
-            //setMovingTicks(calculateMovementTicks(movementStat));
-            Location destination = location.add(d.getCoords);
-            return actionHandler.move(this,destination, calculateMovementTicks(movementStat));
+            Location destination = getLocation().add(d.getCoords);
+            int moveTime = calculateMovementTicks(movementStat);
+            return getActionHandler().move(this,destination,moveTime);
         }else{
-            this.setDirection(d);
+            setDirection(d);
             return false;
         }
     }
 
     public boolean fall(){
         if(!isActive()) {
-            if (location.getZ() == 1) {
+            if (getLocation().getZ() == 1) {
                 return false;
             }
-            return actionHandler.fall(this, this.getLocation().subtract(new Location(0, 0, 1)));
+            Location tileBelow = getLocation().subtract(new Location(0, 0, 1));
+            return getActionHandler().fall(this, tileBelow);
         }
         return false;
     }
 
 
     public void die(){
-        stats.refreshStats();
-        if(stats.getLives() < 0){
+        getStats().refreshStats();
+        if(getStats().getLives() < 0){
             System.out.println("The entity has died");
-            actionHandler.death(this);
+            getActionHandler().death(this);
             notifyObservers();
         }
     }
@@ -100,7 +101,6 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     //TODO: someone write the below shit
     @Override
-
     public Location getLocation() {
         return location;
     }
@@ -110,32 +110,31 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     public int getMovingTicks() {
         return movingTicks;
     }
-
-    public void setMovingTicks(int ticks) {
-        this.movingTicks = ticks;
-        if(ticks == 0){
-            setIsActive(false);
-            return;
-        }
-        setIsActive(true);
-        deIncrementTick();
+    public void updateMovingTicks(int ticks) {
+        setMovingTicks(ticks);
+        calculateActiveStatus();
+        tickTicks();
         notifyObservers();
     }
 
-    public int deIncrementTick(){
-        ModelTime.getInstance().registerAlertable(() -> {
-                if(movingTicks == 0){
-                    setIsActive(false);
-                    return;
-                }
-                movingTicks--;
-                deIncrementTick();
-        }, 1);
-        return movingTicks;
+    public void setMovingTicks(int movingTicks){
+        this.movingTicks = movingTicks;
     }
-
+    private void tickTicks(){
+        System.out.println(isActive());
+        if(isActive()){
+            ModelTime.getInstance().registerAlertable(() -> {
+                deIncrementMovingTick();
+                calculateActiveStatus();
+                tickTicks();
+            }, 1);
+        }
+    }
+    private void deIncrementMovingTick(){
+        movingTicks--;
+    }
     private int calculateMovementTicks(int movementStat){
-        return (30/movementStat)*10;
+        return (int) ((30D/movementStat)*10D);
     }
 
     public void setDirection(Direction direction) {
@@ -159,6 +158,9 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public Stats getStats(){
         return stats;
+    }
+    public void setStats(Stats stats){
+        this.stats = stats;
     }
 
     public void accept(EntityVisitor v) {
@@ -215,6 +217,10 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
     public void unlock(){
         lock = false;
+        calculateActiveStatus();
+    }
+    private void calculateActiveStatus(){
+        System.out.println(getMovingTicks());
         if(getMovingTicks() <= 0){
             setIsActive(false);
         }
@@ -222,6 +228,8 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             setIsActive(true);
         }
     }
+
+
     protected void setIsActive(boolean isActive){
         if(!isLocked()){
             this.isActive = isActive;

@@ -93,7 +93,6 @@ public class Map implements MapVisitable, ActionHandler {
             System.out.println("Out of Bounds");
             return false;
         }
-        //System.out.println("destination is : " + destination);
         //checks to see if anything is blocking your height when moving
         boolean canMove = true;
         for(int i = 0; i < entity.getHeight() && canMove; ++i){
@@ -110,12 +109,12 @@ public class Map implements MapVisitable, ActionHandler {
 
         if(canMove) {//move if you can
             entity.setLocation(destination);
-            entity.setMovingTicks(movespeed);
+            entity.updateMovingTicks(movespeed);
             remove(entity, source);
             add(entity, destination);
             return true;
         }else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){
-            //jump if you cant move
+            //try to jump if you cant move
             return move(entity, destination.add(Direction.UP.getCoords), movespeed);
       }else{
             //cant move or jump
