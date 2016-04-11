@@ -1,10 +1,9 @@
 package com.wecanteven.Models.Stats;
 
 import com.wecanteven.Models.Entities.Entity;
-import com.wecanteven.Observers.Observable;
+import com.wecanteven.Observers.ModelObservable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Visitors.StatsVisitor;
-import org.omg.CORBA.portable.ValueInputStream;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,7 +11,7 @@ import java.util.Iterator;
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Stats implements Observer, Observable{
+public class Stats implements Observer, ModelObservable {
     private PrimaryStat strength,agility,intellect, hardiness, experience, movement;
     private PrimaryStat lives, level;
     private PrimaryStat currentHealth,currentMana;
@@ -40,7 +39,7 @@ public class Stats implements Observer, Observable{
         this.movement = new PrimaryStat("Movement",movement);
 
         level = new LevelStat(experience);
-        level.attach(this);
+        level.modelAttach(this);
 
         maxHealth = new HealthStat(this.hardiness,level);
         maxMana = new ManaStat(this.intellect,level);
@@ -55,7 +54,7 @@ public class Stats implements Observer, Observable{
     public void update(){
         entity.levelUp();
         refreshStats();
-        notifyObservers();
+        modelNotifyObservers();
     }
 
     public void refreshStats(){
@@ -155,22 +154,12 @@ public class Stats implements Observer, Observable{
     }
 
     @Override
-    public ArrayList<Observer> getObservers() {
-        return null;
+    public ArrayList<Observer> getModelObservers() {
+        return observers;
     }
 
     @Override
-    public void attach(Observer o) {
-        observers.add(o);
-    }
-
-    @Override
-    public void dettach(Observer o) {
-        observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers() {
+    public void modelNotifyObservers() {
         Iterator<Observer> iter = observers.iterator();
         while(iter.hasNext()){
             iter.next().notify();

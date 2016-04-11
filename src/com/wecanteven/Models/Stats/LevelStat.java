@@ -1,6 +1,6 @@
 package com.wecanteven.Models.Stats;
 
-import com.wecanteven.Observers.ViewObservable;
+import com.wecanteven.Observers.ModelObservable;
 import com.wecanteven.Observers.Observer;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by Brandon on 4/1/2016.
  */
-public class LevelStat extends PrimaryStat implements Observer,ViewObservable {
+public class LevelStat extends PrimaryStat implements Observer, ModelObservable {
     private int level;              //used to check to see if the level changed after you gained xp
     private PrimaryStat experience;
 
@@ -17,7 +17,7 @@ public class LevelStat extends PrimaryStat implements Observer,ViewObservable {
         level = 1;
         observers = new ArrayList<>();
         this.experience = experience;
-        this.experience.attach(this);
+        this.experience.modelAttach(this);
         update();
     }
     public void update(){
@@ -29,17 +29,17 @@ public class LevelStat extends PrimaryStat implements Observer,ViewObservable {
             levelHasChanged = true;
         }
         if(levelHasChanged){
-            notifyObservers();
+            modelNotifyObservers();
         }
 
     }
 
     @Override
-    public ArrayList<Observer> getObservers() {
+    public ArrayList<Observer> getModelObservers() {
         return observers;
     }
     @Override
-    public void notifyObservers(){
+    public void modelNotifyObservers(){
         for(Observer stat: observers){
             stat.update();
         }

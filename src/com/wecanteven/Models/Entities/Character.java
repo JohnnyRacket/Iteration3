@@ -122,7 +122,7 @@ public class Character extends Entity {
 //        }
 //        setIsActive(true);
 //        deIncrementTick();
-//        notifyObservers();
+//        modelNotifyObservers();
 //    }
 //    public void setCoolDownTicks(int ticks){
 //        this.coolDownTicks = ticks;
@@ -132,6 +132,6 @@ public class Character extends Entity {
 //        }
 //        setIsActive(true);
 //        deIncrementTick();
-//        notifyObservers();
+//        modelNotifyObservers();
 //    }
 }
