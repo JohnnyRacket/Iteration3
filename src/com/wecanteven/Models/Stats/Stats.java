@@ -3,6 +3,7 @@ package com.wecanteven.Models.Stats;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Observers.ModelObservable;
 import com.wecanteven.Observers.Observer;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.Visitors.StatsVisitor;
 
 import java.util.ArrayList;
@@ -11,13 +12,14 @@ import java.util.Iterator;
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Stats implements Observer, ModelObservable {
+public class Stats implements Observer, ModelObservable, ViewObservable {
     private PrimaryStat strength,agility,intellect, hardiness, experience, movement;
     private PrimaryStat lives, level;
     private PrimaryStat currentHealth,currentMana;
     private Stat maxHealth,maxMana,offensiveRating,defensiveRating,armorRating;
     private Entity entity;
-    private ArrayList<Observer> observers = new ArrayList<>();
+    private ArrayList<Observer> modelObservers = new ArrayList<>();
+    private ArrayList<Observer> viewObservers = new ArrayList<>();
 
     public Stats(Entity entity){
         initStats(entity,1,1,1,1,30);
@@ -73,6 +75,8 @@ public class Stats implements Observer, ModelObservable {
         movement.add(statsAddable.getMovement());
         currentHealth.add(statsAddable.getHealth());
         currentMana.add(statsAddable.getMana());
+        notifyObservers();
+        modelNotifyObservers();
     }
 
     public void subtractStats(StatsAddable statsAddable){
@@ -85,6 +89,8 @@ public class Stats implements Observer, ModelObservable {
         movement.subtract(statsAddable.getMovement());
         currentHealth.subtract(statsAddable.getHealth());
         currentMana.subtract(statsAddable.getMana());
+        notifyObservers();
+        modelNotifyObservers();
     }
 
     //getters
@@ -155,15 +161,12 @@ public class Stats implements Observer, ModelObservable {
 
     @Override
     public ArrayList<Observer> getModelObservers() {
-        return observers;
+        return modelObservers;
     }
 
     @Override
-    public void modelNotifyObservers() {
-        Iterator<Observer> iter = observers.iterator();
-        while(iter.hasNext()){
-            iter.next().notify();
-        }
+    public ArrayList<Observer> getObservers() {
+        return viewObservers;
     }
 
     public void accept(StatsVisitor visitor) {
