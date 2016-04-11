@@ -105,11 +105,11 @@ public class StatsHUD extends Drawable implements Observer {
     public void update() {
         health = stats.getHealth();
         maxHealth = stats.getMaxHealth();
-        healthBar.setPercent((int)(health/maxHealth));
-
+        healthBar.setPercent((int)((health/maxHealth)*100f));
+        
         mana = stats.getMana();
         maxMana = stats.getMaxMana();
-        manaBar.setPercent((int)(mana/maxMana));
+        manaBar.setPercent((int)((mana/maxMana)*100f));
 
         exp = stats.getExperience();
         maxExp = 100; //TODO fix this
