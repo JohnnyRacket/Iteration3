@@ -10,14 +10,4 @@ public class OneHandedWeapon extends WeaponEquipableItem {
     public OneHandedWeapon(String name, int value, StatsAddable stats) {
         super(name, value, stats);
     }
-
-    @Override
-    public void equip(Equipment equipment) {
-        super.equip(equipment);
-    }
-
-    @Override
-    public void unequip(Equipment equipment) {
-        super.unequip(equipment);
-    }
 }

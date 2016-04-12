@@ -12,6 +12,7 @@ import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.DualWieldState;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandState;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.OneHandedWeaponState;
@@ -193,10 +194,26 @@ public abstract class ViewObjectFactory {
         return mvo;
     }
 
+
+    /*
+    *
+    *   Hand States
+    *
+     */
+
+
     public HandState createOneHandedWeaponState(Position position, Direction direction, EquipmentSlot slot, String weaponName, Entity entity) {
         return new OneHandedWeaponState(direction, createRightHandWeaponObject(position, direction, weaponName, slot, entity), this, entity);
     }
 
+    public HandState createDualWieldMeleeWeaponState(Position position, Direction direction, EquipmentSlot slot, String weaponName, Entity entity) {
+        return new DualWieldState(direction, createLeftHandWeapon(position, direction, weaponName, slot, entity), createRightHandWeaponObject(position, direction, weaponName, slot, entity), entity);
+    }
+
+
+    public MicroPositionableViewObject createLeftHandWeapon(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity) {
+        return new MicroPositionableViewObject(createEquipable(createSimpleLeftHand(position, slot, entity), createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity));
+    }
 
     public MicroPositionableViewObject createRightHandWeaponObject(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity) {
         return new MicroPositionableViewObject(createEquipable(createSimpleRightHand(position, slot, entity), createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity));

@@ -7,6 +7,8 @@ import com.wecanteven.Models.Items.Takeable.Equipable.*;
  */
 public interface WeaponsVisitor {
     public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon);
+    public void visitDualWieldWeapon();
+    public void visitDualWieldMeleeWeapon(DualWieldMeleeWeapon dualWieldMeleeWeapon);
     public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon);
     public void visitOneHandedRangedWeapon(OneHandedRangedWeapon oneHandedRangedWeapon);
     public void visitWeapon(WeaponEquipableItem weapon);

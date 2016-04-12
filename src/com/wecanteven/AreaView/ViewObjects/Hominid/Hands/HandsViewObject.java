@@ -109,6 +109,16 @@ public class HandsViewObject implements ViewObject, Observer {
         }
 
         @Override
+        public void visitDualWieldWeapon() {
+
+        }
+
+        @Override
+        public void visitDualWieldMeleeWeapon(DualWieldMeleeWeapon dualWieldMeleeWeapon) {
+            swapHandsState(factory.createDualWieldMeleeWeaponState(getPosition(), handState.getDirection(), subject ,dualWieldMeleeWeapon.getName(), entity));
+        }
+
+        @Override
         public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon) {
             swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), subject , oneHandedMeleeWeapon.getName(), entity));
             System.out.println("visitOneHandedMeleeWeapon method..");
