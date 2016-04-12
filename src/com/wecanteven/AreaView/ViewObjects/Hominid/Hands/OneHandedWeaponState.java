@@ -1,10 +1,12 @@
 package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
+import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandWalkingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandsFallingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandsYJumpingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.LimbStrategy;
+import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
@@ -23,8 +25,8 @@ public class OneHandedWeaponState extends HandState {
     private LimbStrategy jumpingStrategy;
     private LimbStrategy fallingStrategy;
 
-    public OneHandedWeaponState(Direction direction, MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
-        super(leftHand, rightHand);
+    public OneHandedWeaponState(Direction direction, MicroPositionableViewObject rightHand, ViewObjectFactory factory, Entity entity) {
+        super(factory.createSimpleLeftHand(rightHand.getPosition(), null, entity), rightHand);
         walkingStrategy = new HandWalkingStrategy(0.3, leftHand, rightHand);
         jumpingStrategy = new HandsYJumpingStrategy(height, 5, leftHand, rightHand);
         fallingStrategy = new HandsFallingStrategy(height, radius, leftHand, rightHand);

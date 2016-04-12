@@ -140,12 +140,12 @@ public abstract class ViewObjectFactory {
         return new MicroPositionableViewObject(rightFootDirectional);
     }
 
-    private ViewObject createSimpleRightHand(Position position, EquipmentSlot slot, Entity entity) {
-        return createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy), null, slot, entity);
+    private MicroPositionableViewObject createSimpleRightHand(Position position, EquipmentSlot slot, Entity entity) {
+        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy), null, slot, entity));
     }
 
-    private ViewObject createSimpleLeftHand(Position position, EquipmentSlot slot, Entity entity) {
-        return createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy), null, slot, entity);
+    public MicroPositionableViewObject createSimpleLeftHand(Position position, EquipmentSlot slot, Entity entity) {
+        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy), null, slot, entity));
     }
 //    private FeetViewObject createFeet(Position p, Direction d, String name) {
 //        FootViewObject leftFoot = createFoot(p, d, name + "/Left");
@@ -194,7 +194,7 @@ public abstract class ViewObjectFactory {
     }
 
     public HandState createOneHandedWeaponState(Position position, Direction direction, EquipmentSlot slot, String weaponName, Entity entity) {
-        return new OneHandedWeaponState(direction, new MicroPositionableViewObject(createSimpleLeftHand(position, null, entity)) , createRightHandWeaponObject(position, direction, weaponName, slot, entity));
+        return new OneHandedWeaponState(direction, createRightHandWeaponObject(position, direction, weaponName, slot, entity), this, entity);
     }
 
 
