@@ -6,10 +6,7 @@ import com.wecanteven.Controllers.InputControllers.ControllerStates.ControllerSt
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.GameLaunchers.LoadGameLauncher;
 import com.wecanteven.GameLaunching.GameLaunchers.NewGameLauncher;
-import com.wecanteven.MenuView.DrawableContainers.Decorators.AnimatedCollapseDecorator;
-import com.wecanteven.MenuView.DrawableContainers.Decorators.HorizontalCenterContainer;
-import com.wecanteven.MenuView.DrawableContainers.Decorators.TitleBarDecorator;
-import com.wecanteven.MenuView.DrawableContainers.Decorators.VerticalCenterContainer;
+import com.wecanteven.MenuView.DrawableContainers.Decorators.*;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
@@ -396,7 +393,8 @@ public class UIViewFactory {
         VerticalCenterContainer npcTradeTitle =
                 new VerticalCenterContainer(
                         new HorizontalCenterContainer(
-                                new TitleBarDecorator(npcInv, "NPC Inventory")
+                                new TitleBarDecorator(npcInv
+                                        , "NPC Inventory")
                         )
                 );
         columns.addDrawable(npcTradeTitle);
@@ -408,7 +406,9 @@ public class UIViewFactory {
                         )
                 );
 
+
         columns.addDrawable(playerTradeTitle);
+
 
         VerticalCenterContainer title =
                 new VerticalCenterContainer(
@@ -416,6 +416,7 @@ public class UIViewFactory {
                                 new TitleBarDecorator(columns, "Trade")
                         )
                 );
+
 
         view.addDrawable(title);
 
