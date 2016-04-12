@@ -29,9 +29,10 @@ public class DialogInteractionStrategy implements InteractionStrategy {
         return dialog.get(currentDialog++ % dialog.size());
     }
 
-    private ArrayList<String> dialog() {
+    public ArrayList<String> getDialog() {
         return dialog;
     }
+
 
     @Override
     public void interact(Character c) {

@@ -3,6 +3,9 @@ package com.wecanteven.SaveLoad.XMLProcessors;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
+import com.wecanteven.Models.Interactions.InteractionStrategy;
+import com.wecanteven.Models.Interactions.NoInteractionStrategy;
+import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Smasher;
@@ -12,6 +15,8 @@ import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import sun.print.SunMinMaxPage;
 
 import java.util.ArrayList;
@@ -30,7 +35,7 @@ public class EntityXMLProcessor extends XMLProcessor {
     }
 
     public static void parseEntity(Map map, Element el) {
-
+        System.out.println("Hopefully nothing tries to process an entity... It's not gonna happen");
     }
 
     public static void formatCharacter(Character e, String parent) {
@@ -49,10 +54,7 @@ public class EntityXMLProcessor extends XMLProcessor {
         );
         parseStats(c, sf.getElemenetById(el, "Stats", 0));
         c.getItemStorage();
-        System.out.println(c.getItemStorage());
-        System.out.println("Finisihing loading the Character");
         map.add(c, parseLocation(sf.getElemenetById(el, "Location", 0)));
-        System.out.println("Character Added to Map");
         return c;
     }
 
@@ -74,13 +76,14 @@ public class EntityXMLProcessor extends XMLProcessor {
         attr.add(sf.saveAttr("Height", npc.getHeight()));
         sf.appendObjectTo(parent, sf.createSaveElement("NPC",attr));
         formatLocation(sf, npc);
+        formatInteraction(npc.getInteraction());
 
     }
 
     public static NPC parseNPC(Map map, Element el) {
         NPC npc  = new NPC(map,
                 parseDirection(sf.getElemenetById(el, "Direction", 0)),
-                new DialogInteractionStrategy(new ArrayList<>()),
+                parseInteraction(sf.getElemenetById(el, "Interaction", 0)),
                 parseOccupation(sf.getStrAttr(el, "Occupation")),
                 StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0))
         );
@@ -152,5 +155,46 @@ public class EntityXMLProcessor extends XMLProcessor {
         }
     }
 
+    public static void formatInteraction(InteractionStrategy i) {
+        ArrayList<Attr> attr = new ArrayList<>();
+        attr.add(sf.saveAttr("type", i.getClass().getSimpleName()));
+        Element interactionSaveElement = sf.createSaveElement("Interaction",attr);
+
+        if(i instanceof DialogInteractionStrategy){
+            formatDialog(interactionSaveElement, (DialogInteractionStrategy) i);
+        }
+        sf.appendObjectToMostRecent(interactionSaveElement);
+    }
+
+    public static InteractionStrategy parseInteraction(Element el) {
+        if(el.getAttribute("type").equals("TradeInteractionStrategy")){
+            System.out.println("Loading Trader");
+            return new TradeInteractionStrategy();
+        }else if(el.getAttribute("type").equals("DialogInteractionStrategy")){
+            return new DialogInteractionStrategy(parseDialog(el));
+        }else {
+            return new NoInteractionStrategy();
+        }
+    }
+
+    public static void formatDialog(Element el, DialogInteractionStrategy interaction) {
+        ArrayList<String> dialog = interaction.getDialog();
+        for(int i = 0; i < dialog.size(); ++i){
+            Element dialogElement = sf.createSaveElement("Dialog",new ArrayList<>());
+            sf.appendTextNode(dialogElement, dialog.get(i));
+            el.appendChild(dialogElement);
+        }
+    }
+
+    public static ArrayList<String> parseDialog(Element el) {
+        ArrayList<String> dialog = new ArrayList<>();
+        NodeList dialogNode = sf.getElementsById(el, "Dialog");
+
+        for(int i = 0; i < dialogNode.getLength(); ++i){
+            dialog.add(((Element)dialogNode.item(i)).getTextContent());
+        }
+
+        return dialog;
+    }
 
 }

@@ -21,7 +21,6 @@ public class ItemXMLProcessor extends XMLProcessor {
     public static void formatItem(String type, Item i) {
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("name", i.getName()));
-        System.out.println("Adding item to most recent: " + type + ":" + i.getName());
         sf.appendObjectToMostRecent(sf.createSaveElement(type, attr));
     }
 

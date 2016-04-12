@@ -33,6 +33,7 @@ import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
+import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.ViewEngine;
 
 import javax.swing.*;
@@ -187,6 +188,7 @@ public class UIViewFactory {
         //make menu
         ScrollableMenu menu = new ScrollableMenu(400, 400);
         menu.setSelectedColor(Color.cyan);
+        menu.setBgColor(Config.TRANSMEDIUMGREY);
         //make menu list
         NavigatableList list = new NavigatableList();
         list.addItem(

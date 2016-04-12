@@ -15,7 +15,6 @@ public class StorageXMLProcessor extends XMLProcessor {
 
 
     public static void formatItemStorage(ItemStorage is) {
-        System.out.println("Formatting Item Storage");
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("maxInventoryCapacity", is.getMaxInventoryCapacity()));
         sf.appendObjectToMostRecent(sf.createSaveElement("ItemStorage",attr));
@@ -27,7 +26,6 @@ public class StorageXMLProcessor extends XMLProcessor {
     }
 
     public static void formatInvetory(Inventory i) {
-        System.out.println("Formatting Item Inventory");
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("maxInventoryCapacity", i.getMaxCapacity()));
         sf.appendObjectTo("ItemStorage", sf.createSaveElement("Inventory",attr));
@@ -38,7 +36,6 @@ public class StorageXMLProcessor extends XMLProcessor {
     }
 
     public static void formatEquipment(Equipment e) {
-        System.out.println("Formatting Item Equipment");
         ArrayList<Attr> attr = new ArrayList<>();
         sf.appendObjectTo("ItemStorage", sf.createSaveElement("Equipment",attr));
     }
@@ -48,7 +45,6 @@ public class StorageXMLProcessor extends XMLProcessor {
     }
 
     public static void formatItemSlot(int i) {
-        System.out.println("Formatting Item Slot");
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("position", i));
         sf.appendObjectTo("Inventory", sf.createSaveElement("ItemSlot",attr));

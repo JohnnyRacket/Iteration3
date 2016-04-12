@@ -37,7 +37,9 @@ public class TileXMLProcessor extends XMLProcessor {
         for(int r = 0; r < map.getrSize(); ++r) {
             for(int s = 0; s < map.getsSize(); ++s) {
                 map.setColumn(r, s, parseColumn(map, sf.getElemenetById("Column", width*r + s)));
-                if(map.getColumn(r, s) == null){ System.out.println("WTF COLUMN"); }
+                if(map.getColumn(r, s) == null){
+                    System.out.println("Error Column Parsing");
+                }
             }
         }
         return map;
