@@ -9,6 +9,7 @@ import com.wecanteven.GameLaunching.GameLaunchers.NewGameLauncher;
 import com.wecanteven.MenuView.DrawableContainers.Decorators.*;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
+import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.RowedCompositeContainer;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
@@ -23,6 +24,7 @@ import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.NPC;
+import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.InteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
@@ -549,7 +551,11 @@ public class UIViewFactory {
         chatOptions.addItem(new ScrollableMenuItem("Continue",()->{
             System.out.println("Continued");
             controller.popView();
-            npc.interact(player);
+            continueDialogView(npc, player, ((DialogInteractionStrategy)npc.getInteraction()).getNextDialog());
+        }));
+        chatOptions.addItem(new ScrollableMenuItem("Exit",()->{
+            System.out.println("Finished");
+            //TODO: How do I actually close the window -_-
         }));
 
         ScrollableMenu chatMenu = new ScrollableMenu(300,400);
@@ -561,13 +567,14 @@ public class UIViewFactory {
         ScrollableMenu conversationMenu = new ScrollableMenu(300,400);
         conversationMenu.setList(conversation);
 
-        ColumnatedCompositeContainer columns = new ColumnatedCompositeContainer();
-        columns.setWidth(400);
-        columns.setHeight(300);
-        columns.addDrawable(chatMenu);
-        columns.addDrawable(conversationMenu);
+        RowedCompositeContainer rows = new RowedCompositeContainer();
+        rows.setWidth(400);
+        rows.setHeight(300);
+        rows.addDrawable(conversationMenu);
+        rows.addDrawable(chatMenu);
 
-        HorizontalCenterContainer horiz = new HorizontalCenterContainer(columns);
+        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation");
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
 
@@ -581,6 +588,50 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
 
     }
+
+    public void continueDialogView(NPC npc, Character player, String dialog){
+
+        NavigatableList chatOptions = new NavigatableList();
+        chatOptions.addItem(new ScrollableMenuItem("Continue",()->{
+            System.out.println("Continued");
+            controller.popView();
+            continueDialogView(npc, player, ((DialogInteractionStrategy)npc.getInteraction()).getNextDialog());
+        }));
+        chatOptions.addItem(new ScrollableMenuItem("Exit",()->{
+            System.out.println("Finished");
+            //TODO: How do I actually close the window -_-
+        }));
+
+        ScrollableMenu chatMenu = new ScrollableMenu(300,400);
+        chatMenu.setList(chatOptions);
+
+        NavigatableList conversation = new NavigatableList();
+        conversation.addItem(new ScrollableMenuItem(dialog,null));
+
+        ScrollableMenu conversationMenu = new ScrollableMenu(300,400);
+        conversationMenu.setList(conversation);
+
+        RowedCompositeContainer rows = new RowedCompositeContainer();
+        rows.setWidth(400);
+        rows.setHeight(300);
+        rows.addDrawable(conversationMenu);
+        rows.addDrawable(chatMenu);
+
+        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation");
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        SwappableView view = new SwappableView();
+        view.addNavigatable(chatMenu);
+        view.addDrawable(vert);
+
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+
+    }
+
 
     public void createKeyBindMenu(ControllerState state){
 
