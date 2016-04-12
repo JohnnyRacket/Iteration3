@@ -31,7 +31,7 @@ public class TradeInteractionStrategy implements InteractionStrategy {
         //UIViewFactory.getInstance().createInventoryView(avatar.getCharacter());
         System.out.println("Starting Trade");
         ViewTime.getInstance().register(()->{
-            UIViewFactory.getInstance().createTradeView(owner, other);
+            UIViewFactory.getInstance().createTradeView(owner, other, true);
         },0);
     }
 

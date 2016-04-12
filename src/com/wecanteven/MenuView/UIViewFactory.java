@@ -367,7 +367,7 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
     }
 
-    public void createTradeView(NPC npc, Character player){
+    public void createTradeView(NPC npc, Character player, boolean active){
         BuyableUIObjectCreationVisitor visitor = new BuyableUIObjectCreationVisitor(this, npc, player);
         npc.accept(visitor);
         NavigatableList npcList = visitor.getInventoryItems();
@@ -404,7 +404,7 @@ public class UIViewFactory {
         VerticalCenterContainer playerTradeTitle =
                 new VerticalCenterContainer(
                         new HorizontalCenterContainer(
-                                new TitleBarDecorator(playerInv, "NPC Your Inventory")
+                                new TitleBarDecorator(playerInv, "Your Inventory")
                         )
                 );
 
@@ -420,14 +420,23 @@ public class UIViewFactory {
         view.addDrawable(title);
 
 
+
         view.addNavigatable(npcInv);
         view.addNavigatable(playerInv);
+
+
 
 
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
+
         controller.setMenuState(view.getMenuViewContainer());
+        //This ACTIVE boolean serves the purpose of knowing whether or not draw the selector in the buy window
+        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame John
+        if(!active) {
+            view.getMenuViewContainer().swap();
+        }
     }
 
     //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
@@ -444,7 +453,7 @@ public class UIViewFactory {
             System.out.println("Shopper Bal: " + buyer.getItemStorage().getMoney().getValue());
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createTradeView(shopOwner, buyer);
+                createTradeView(shopOwner, buyer, true);
             },0);
 
         }));
@@ -452,7 +461,7 @@ public class UIViewFactory {
             System.out.println("cancel pressed");
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createTradeView(shopOwner, buyer);
+                createTradeView(shopOwner, buyer, true);
             },0);
         }));
         ScrollableMenu menu = new ScrollableMenu(100,100);
@@ -484,7 +493,7 @@ public class UIViewFactory {
             System.out.println("Shopper Bal: " + seller.getItemStorage().getMoney().getValue());
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createTradeView(shopOwner, seller);
+                createTradeView(shopOwner, seller, false);
             },0);
 
         }));
@@ -492,7 +501,7 @@ public class UIViewFactory {
             System.out.println("cancel pressed");
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createTradeView(shopOwner, seller);
+                createTradeView(shopOwner, seller, false);
             },0);
         }));
         ScrollableMenu menu = new ScrollableMenu(100,100);

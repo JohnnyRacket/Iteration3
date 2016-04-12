@@ -97,6 +97,7 @@ public class PlayState extends ControllerState {
             //TODO: THIS IS NOT PROGRAMING!
             NPC c = new NPC(getAvatar().getCharacter().getActionHandler(), Direction.NORTH, new TradeInteractionStrategy());
             c.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
+            c.pickup(new ChestEquipableItem("Buyable Penis", 5, null));
             c.interact(getAvatar().getCharacter());
         }, this.getjFrame(), this.getController()));
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
