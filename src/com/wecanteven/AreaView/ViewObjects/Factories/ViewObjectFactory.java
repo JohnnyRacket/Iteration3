@@ -23,6 +23,7 @@ import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Directional;
@@ -96,11 +97,15 @@ public abstract class ViewObjectFactory {
 
     }
 
-    public SimpleViewObject createTakeableItem(Position position, String name) {
-        return new SimpleViewObject(position,
-                factory.loadDynamicImage("Items/" + name + "/" + name + ".xml"),
-                hexDrawingStrategy);
-
+    public DestroyableViewObject createTakeableItem(Position position, TakeableItem takeableItem) {
+        String name = takeableItem.getName();
+        DestroyableViewObject destroyableViewObject =  new DestroyableViewObject(
+                new StartableViewObject(position,
+                        factory.loadActiveDynamicImage("Items/" + name + "/" + name + ".xml"),
+                        hexDrawingStrategy),
+                takeableItem);
+        takeableItem.attach(destroyableViewObject);
+        return destroyableViewObject;
     }
 
     public BackgroundDrawable createBackgroundDrawable(ViewObject centerTarget) {

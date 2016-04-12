@@ -7,6 +7,7 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
 import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Map;
@@ -73,12 +74,12 @@ public class DopeAssLevelFactory extends LevelFactory{
         map.add(new TakeableItem("NPC Chest", 10), new Location(1, 2, 1));
         //"Creating an NPC and Giving him a chest Plate
         NPC npc = new NPC(map,Direction.SOUTH, new DialogInteractionStrategy(new ArrayList<>()));
-        WeaponEquipableItem i = new WeaponEquipableItem("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
+        OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
         npc.pickup(i);
         npc.equipItem(i);
         System.out.println(npc.getItemStorage().getEquipped().getChest().getItem());
 
-        WeaponEquipableItem katar = new WeaponEquipableItem("Katar", 50, new StatsAddable(1,1,1,1,1,1,1,1,1));
+        OneHandedMeleeWeapon katar = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(1,1,1,1,1,1,1,1,1));
         map.add(katar, new Location(0,0,1));
 
 
