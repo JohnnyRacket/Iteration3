@@ -180,6 +180,16 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     }
 
+    @Override
+    public void visitDualWieldWeapon() {
+
+    }
+
+    @Override
+    public void visitDualWieldMeleeWeapon(DualWieldMeleeWeapon dualWieldMeleeWeapon) {
+
+    }
+
     public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon) {
         visitTakeableItem(oneHandedMeleeWeapon);
     }
