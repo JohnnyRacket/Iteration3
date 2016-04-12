@@ -81,11 +81,6 @@ public class PlayState extends ControllerState {
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.INTERACT), ()->{
             avatar.interactWithTile();
         }, this.getjFrame(), this.getController()));
-
-        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SAVE), ()->{
-            System.out.println("Trying to Save");
-            new SaveToXMLFile("save1.xml").saveGame();
-        }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ATTACK), ()->{
             System.out.println("use ability");
             avatar.attack();
