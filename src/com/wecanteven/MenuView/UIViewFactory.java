@@ -457,8 +457,15 @@ public class UIViewFactory {
                 buyer.pickup(item);
                 createToast(5, "You've purchased a " + item.getName() + " for " + item.getValue() + " gold!");
             }else {
-                createToast(5, "You can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
-            }
+                //PLAYER CANT BUY IF HIS INVENTORY IS FULL
+                if(shopOwner.getItemStorage().inventoryIsFull()){
+                    createToast(5, "Your inventory is full!");
+
+                }else {
+                    //PLAYER CANT BUY IF HE DOESNT HAVE MONEY
+                    createToast(5, "You can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
+
+                }            }
             System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
             System.out.println("Shopper Bal: " + buyer.getItemStorage().getMoney().getValue());
             ViewTime.getInstance().register(() ->{
@@ -500,7 +507,14 @@ public class UIViewFactory {
                 shopOwner.pickup(item);
                 createToast(5, "You've sold a " + item.getName() + " for " + item.getValue() + " gold!");
             }else {
-                createToast(5, "The Shopkeeper can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
+                //SHOPOWNER CANT BUY IF HIS INVENTORY IS FULL
+                if(shopOwner.getItemStorage().inventoryIsFull()){
+                    createToast(5, "Shop Owner's inventory is full!");
+
+                }else {
+                    //SHOPOWNER CANT BUY IF HE DOESNT HAVE MONEY
+                    createToast(5, "The Shopkeeper can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
+                }
             }
             System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
             System.out.println("Shopper Bal: " + seller.getItemStorage().getMoney().getValue());
