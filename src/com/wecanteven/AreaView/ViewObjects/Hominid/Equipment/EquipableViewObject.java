@@ -58,15 +58,24 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
 
     @Override
     public void update() {
+        if(!hasSubject())
+            return;
         if (subject.hasItem()) {
             System.out.println("EQUIPING: " + subject.getItem().getName());
             equipment = factory.createEquipment(getPosition(),entitySubject, subject.getItem().getName());
         } else {
-            if(equipment != null) {
+            if(hasEquipment()) {
                 equipment = defaultEquipment;
                 defaultEquipment.setPosition(getPosition());
             }
         }
+    }
 
+    private boolean hasSubject() {
+        return subject != null;
+    }
+
+    private boolean hasEquipment() {
+        return equipment != null;
     }
 }

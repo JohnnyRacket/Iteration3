@@ -2,6 +2,6 @@
 <single_frame_animation>
   <x>20</x>
   <y>20</y>
-  <rootPath>Equipment/Weapons/Katar/</rootPath>
+  <rootPath>Equipment/Katar/</rootPath>
   <fileName>weapon_se.png</fileName>
 </single_frame_animation>

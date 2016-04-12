@@ -189,7 +189,7 @@ public abstract class ViewObjectFactory {
     }
 
     public HandState createOneHandedWeaponState(Position position, Direction direction, EquipmentSlot slot, String weaponName, Entity entity) {
-        return new OneHandedWeaponState(direction, new MicroPositionableViewObject(createSimpleLeftHand(position, slot, entity)) , createRightHandWeaponObject(position, direction, weaponName, slot, entity));
+        return new OneHandedWeaponState(direction, new MicroPositionableViewObject(createSimpleLeftHand(position, null, entity)) , createRightHandWeaponObject(position, direction, weaponName, slot, entity));
     }
 
 
