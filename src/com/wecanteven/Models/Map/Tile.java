@@ -6,11 +6,17 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.Models.Map.Terrain.Terrain;
 import com.wecanteven.Models.ModelTime.Alertable;
 import com.wecanteven.Models.ModelTime.ModelTime;
+import com.wecanteven.Observers.ModelObservable;
+import com.wecanteven.Observers.Observable;
+import com.wecanteven.Observers.Observer;
+import com.wecanteven.Visitors.AreaOfEffectVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 
+import java.awt.geom.Area;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +30,7 @@ public class Tile implements MapVisitable {
     private ArrayList<TakeableItem> takeableItems = new ArrayList<>();
     private TileSlot<Entity> entity = new TileSlot<>();
     private ArrayList<HitBox> hitBoxes = new ArrayList<>();
+    private ArrayList<AreaOfEffect> areasOfEffect = new ArrayList<>();
 
     private Terrain terrain;
 
@@ -31,10 +38,22 @@ public class Tile implements MapVisitable {
         this.terrain = terrain;
     }
 
+    // TODO make sure that entities on the tile before the aoe are registered
 
     @Override
     public void accept(MapVisitor visitor) {
         visitor.visitTile(this);
+    }
+
+    public boolean add(AreaOfEffect aoe) {
+        if (!areasOfEffect.contains(aoe)) {
+            aoe.setObserved(entity);
+            areasOfEffect.add(aoe);
+            entity.modelAttach(aoe);
+            return true;
+        }
+
+        return false;
     }
 
     public boolean add(Entity entity){
@@ -49,6 +68,7 @@ public class Tile implements MapVisitable {
             return false;
         }
     }
+
     public boolean add(OneShot oneShot){
         return this.oneShot.add(oneShot);
     }
@@ -58,9 +78,21 @@ public class Tile implements MapVisitable {
     public boolean add(InteractiveItem interactiveItem){
         return this.interactiveItem.add(interactiveItem);
     }
-    public boolean add(TakeableItem takeableItem){
-        this.takeableItems.add(takeableItem);
+    public boolean add(TakeableItem takeableItem) {
+        if (this.takeableItems.add(takeableItem)) {
+        }
+
+        //this.takeableItems.add(takeableItem);
         return true;
+    }
+
+    public boolean remove(AreaOfEffect aoe) {
+        if (areasOfEffect.contains(aoe)) {
+            areasOfEffect.remove(aoe);
+            entity.modelDettach(aoe);
+        }
+
+        return false;
     }
 
     public boolean remove(Entity entity) {
@@ -108,7 +140,6 @@ public class Tile implements MapVisitable {
         return entity.getToken();
     }
 
-
     public Terrain getTerrain() {
         return terrain;
     }
@@ -127,8 +158,6 @@ public class Tile implements MapVisitable {
             interactiveItem.getToken().trigger();
     }
 
-
-
     public boolean add(HitBox hitBox){
         System.out.println("adding effects to the tile ");
         if(hitBoxes.add(hitBox) && hasEntity()){
@@ -146,14 +175,21 @@ public class Tile implements MapVisitable {
     public boolean hasEffect(){
         return !hitBoxes.isEmpty();
     }
+    public boolean hasAoe() { return areasOfEffect.size() > 0;}
 
-
+    public void acceptAoeVisitor(AreaOfEffectVisitor visitor) {
+        for (AreaOfEffect aoe : areasOfEffect) {
+            aoe.accept(visitor);
+        }
+    }
 
     /**
      * Created by John on 3/31/2016.
      */
-    public class TileSlot<T> {
+    public class TileSlot<T> implements ModelObservable {
         private T t;
+
+        private ArrayList<Observer> observers = new ArrayList<>();
 
         public T getToken() {
             return t;
@@ -162,6 +198,7 @@ public class Tile implements MapVisitable {
         public boolean add(T t){
             if(this.isEmpty()){
                 this.t = t;
+                modelNotifyObservers();
                 return true;
             }else{
                 return false;
@@ -171,6 +208,7 @@ public class Tile implements MapVisitable {
         public boolean remove(T t){
             if(this.t == t){
                 this.t = null;
+                modelNotifyObservers();
                 return true;
             }else{
                 return false;
@@ -179,6 +217,32 @@ public class Tile implements MapVisitable {
 
         public boolean isEmpty(){
             return (this.t == null);
+        }
+
+        @Override
+        public ArrayList<Observer> getModelObservers() {
+            return observers;
+        }
+
+        @Override
+        public void modelAttach(Observer o) {
+            if (!observers.contains(o)) {
+                observers.add(o);
+            }
+        }
+
+        @Override
+        public void modelDettach(Observer o) {
+            if (observers.contains(o)) {
+                observers.remove(o);
+            }
+        }
+
+        @Override
+        public void modelNotifyObservers() {
+            for (Observer o : observers) {
+                o.update();
+            }
         }
     }
 }

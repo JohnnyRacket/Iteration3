@@ -6,6 +6,7 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.Visitors.ColumnVisitor;
 
@@ -38,6 +39,7 @@ public class Column {
         return z;
     }
 
+    public boolean add(AreaOfEffect aoe, int z) { return tiles.get(z).add(aoe); }
     public boolean add(Entity entity, int z){
         return tiles.get(z).add(entity);
     }

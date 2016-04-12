@@ -14,6 +14,9 @@ import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
+import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
+import com.wecanteven.Models.Map.Aoe.HealingAreaOfEffect;
+import com.wecanteven.Models.Map.Aoe.TickableAreaOfEffect;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.Models.Map.Terrain.Current;
@@ -25,7 +28,7 @@ import com.wecanteven.Visitors.*;
 /**
  * Created by alexs on 4/1/2016.
  */
-public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, WeaponsVisitor{
+public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, WeaponsVisitor {
     private ViewObjectFactory factory;
     private AreaView areaView;
     public VOCreationVisitor(AreaView areaView, ViewObjectFactory factory) {
@@ -80,12 +83,12 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-        areaView.addViewObject(factory.createTakeableItem(currentPosition, takeable.getName()));
+        areaView.addViewObject(factory.createTakeableItem(currentPosition, takeable));
     }
 
     @Override
     public void visitEquipableItem(EquipableItem equipable) {
-
+        visitTakeableItem(equipable);
     }
 
     @Override
@@ -131,6 +134,10 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
         for (TakeableItem takeableItem: tile.getTakeableItems()) {
             takeableItem.accept(this);
         }
+
+        if (tile.hasAoe()) {
+            tile.acceptAoeVisitor(this);
+        }
     }
 
 
@@ -156,11 +163,23 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
 
     @Override
-    public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {
-        visitTakeableItem(oneHandedWeapon);
+    public void visitAoe(AreaOfEffect aoe) { }
+
+    @Override
+    public void visitTickableAoe(TickableAreaOfEffect aoe) {
+
     }
 
     @Override
+    public void visitTickableHealAoe(HealingAreaOfEffect aoe) {
+        areaView.addViewObject(factory.createAoe(currentPosition));
+    }
+
+    @Override
+    public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {
+
+    }
+
     public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon) {
         visitTakeableItem(oneHandedMeleeWeapon);
     }
