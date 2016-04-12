@@ -545,6 +545,7 @@ public class UIViewFactory {
         }
     }
 
+    //Triggers initial animation dialog window - afterwards, continue is used.
     public void createDialogView(NPC npc, Character player, String dialog){
 
         NavigatableList chatOptions = new NavigatableList();
@@ -589,6 +590,7 @@ public class UIViewFactory {
 
     }
 
+    //Only called if there is multple dialog
     public void continueDialogView(NPC npc, Character player, String dialog){
 
         NavigatableList chatOptions = new NavigatableList();
