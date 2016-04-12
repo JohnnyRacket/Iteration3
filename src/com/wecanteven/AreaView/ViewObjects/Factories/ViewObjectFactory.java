@@ -94,6 +94,13 @@ public abstract class ViewObjectFactory {
 
     }
 
+    public SimpleViewObject createTakeableItem(Position position, String name) {
+        return new SimpleViewObject(position,
+                factory.loadDynamicImage("Items/" + name + "/" + name + ".xml"),
+                hexDrawingStrategy);
+
+    }
+
     public BackgroundDrawable createBackgroundDrawable(ViewObject centerTarget) {
         return new BackgroundDrawable(factory.loadDynamicImage("Textures/DarkBlue.xml"), getDrawingStrategy(), centerTarget);
     }

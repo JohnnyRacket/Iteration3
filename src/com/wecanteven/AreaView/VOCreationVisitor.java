@@ -12,6 +12,9 @@ import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
 import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.MeleeWeaponEquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.RangedWeaponEquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Map.Map;
@@ -20,15 +23,12 @@ import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.Map.Tile;
-import com.wecanteven.Visitors.EntityVisitor;
-import com.wecanteven.Visitors.ItemVisitor;
-import com.wecanteven.Visitors.MapVisitor;
-import com.wecanteven.Visitors.TerrainVisitor;
+import com.wecanteven.Visitors.*;
 
 /**
  * Created by alexs on 4/1/2016.
  */
-public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor{
+public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, WeaponsVisitor{
     private ViewObjectFactory factory;
     private AreaView areaView;
     public VOCreationVisitor(AreaView areaView, ViewObjectFactory factory) {
@@ -83,7 +83,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-
+        areaView.addViewObject(factory.createTakeableItem(currentPosition, takeable.getName()));
     }
 
     @Override
@@ -155,5 +155,20 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitCurrent(Current current) {
         areaView.addViewObject(factory.createWater(currentPosition));
+    }
+
+    @Override
+    public void visitRangedWeapon(RangedWeaponEquipableItem rangedWeapon) {
+        visitTakeableItem(rangedWeapon);
+    }
+
+    @Override
+    public void visitMeleeWeaponEquipableItem(MeleeWeaponEquipableItem meleeWeapon) {
+        visitTakeableItem(meleeWeapon);
+    }
+
+    @Override
+    public void visitWeapon(WeaponEquipableItem weapon) {
+        visitTakeableItem(weapon);
     }
 }
