@@ -1,7 +1,10 @@
 package com.wecanteven.Models.Map;
 
 import com.wecanteven.Models.Abilities.HitBox;
+import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Entities.NPC;
+import com.wecanteven.Models.Interactions.InteractionVisitor;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
@@ -14,8 +17,10 @@ import com.wecanteven.Observers.ModelObservable;
 import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Visitors.AreaOfEffectVisitor;
+import com.wecanteven.Visitors.EntityVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 
+import java.awt.*;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 
@@ -149,13 +154,26 @@ public class Tile implements MapVisitable {
     }
 
     public void interact(Entity entity){
+        //This interacts with tile you're on
         entity.unlock();
-        hitBoxes.forEach( effect -> effect.interact(entity));
+        hitBoxes.forEach(effect -> effect.interact(entity));
         terrain.interact(entity);
-        if (!oneShot.isEmpty() )
+        if (!oneShot.isEmpty()) {
             oneShot.getToken().interact(entity);
-        if (!interactiveItem.isEmpty())
+        }
+        if (!interactiveItem.isEmpty()){
             interactiveItem.getToken().trigger();
+        }
+
+    }
+
+    public void interact(Character character) {
+        if(hasEntity()) {
+            InteractionVisitor visitor = new InteractionVisitor(character);
+            getEntity().accept(visitor);
+        }else {
+            System.out.println("Didn't have a Entity to interact with");
+        }
     }
 
     public boolean add(HitBox hitBox){

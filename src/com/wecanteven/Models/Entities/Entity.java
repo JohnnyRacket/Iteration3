@@ -87,6 +87,8 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             notifyObservers();
         }
     }
+
+
     public boolean isActive(){
         return isActive;
     }
@@ -144,6 +146,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     public void levelUp(){
         stats.addStats(new StatsAddable(0,1,1,1,1,0,0,0,0));
     }
+
 
     public Stats getStats(){
         return stats;

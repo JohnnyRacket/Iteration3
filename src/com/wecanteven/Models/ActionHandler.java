@@ -1,6 +1,7 @@
 package com.wecanteven.Models;
 
 import com.wecanteven.Models.Abilities.HitBox;
+import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Stats.StatsAddable;
@@ -21,7 +22,7 @@ public interface ActionHandler {
     boolean drop(TakeableItem item, Location location);
     //void useAbility(ArrayList<Location> locations, StatsAddable effect);
     void death(Entity entity);
-
+    void interact(Character character, Location location);
     boolean add(HitBox hitBox, Location location);
     boolean remove(HitBox hitBox, Location location);
 }

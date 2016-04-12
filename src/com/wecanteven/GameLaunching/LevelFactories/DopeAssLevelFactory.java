@@ -3,6 +3,8 @@ package com.wecanteven.GameLaunching.LevelFactories;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
+import com.wecanteven.Models.Interactions.NoInteractionStrategy;
+import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
@@ -72,19 +74,17 @@ public class DopeAssLevelFactory extends LevelFactory{
 
     @Override
     public void populateMap(Map map) {
-        map.add(new TakeableItem("NPC Chest", 10), new Location(1, 2, 1));
-        //"Creating an NPC and Giving him a chest Plate
-        NPC npc = new NPC(map,Direction.SOUTH, new DialogInteractionStrategy(new ArrayList<>()));
-        OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
-        npc.pickup(i);
-        npc.equipItem(i);
-        System.out.println(npc.getItemStorage().getEquipped().getChest().getItem());
+
+        dialogNPC(map);
+        tradeNPC(map);
+        weaponNPC(map);
+
 
         OneHandedMeleeWeapon katar = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(1,1,1,1,1,1,1,1,1));
         map.add(katar, new Location(0,0,1));
 
 
-        map.add(npc,new Location(2,2,1));
+        map.add(new TakeableItem("NPC Chest", 10), new Location(1, 2, 1));
         map.add(new OneShot("Box", (entity) -> {}), new Location(3,3,1));
         map.add(new InteractiveItem("Button"), new Location(5,5,1));
         map.add(new Obstacle("Box"), new Location(8,2,1));
@@ -92,5 +92,34 @@ public class DopeAssLevelFactory extends LevelFactory{
 
         HealingAreaOfEffect aoe = new HealingAreaOfEffect(10);
         map.add(aoe, new Location(4,4,1));
+
+
     }
+
+    public void weaponNPC(Map map) {
+        //"Creating an NPC and Giving him a chest Plate
+        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy());
+        OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
+        npc.pickup(i);
+        npc.equipItem(i);
+        map.add(npc, new Location(2,2,1));
+    }
+
+    public void dialogNPC(Map map) {
+        ArrayList<String> dialog = new ArrayList<String>();
+        dialog.add("Hello Avatar");
+        dialog.add("You're an idiot and you're playing a dumb game");
+        dialog.add("GTFO");
+        NPC npc = new NPC(map, Direction.SOUTHWEST, new DialogInteractionStrategy(dialog));
+        map.add(npc, new Location(2,8,1));
+
+    }
+
+    public void tradeNPC(Map map) {
+        NPC npc = new NPC(map, Direction.SOUTHEAST, new TradeInteractionStrategy());
+        npc.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
+        npc.pickup(new ChestEquipableItem("Buyable Penis", 5, null));
+        map.add(npc, new Location(4, 5, 1));
+    }
+
 }

@@ -91,7 +91,6 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
         while(iter.hasNext()){
             TakeableItem item = iter.next();
             item.accept(this);
-            System.out.println(item.getName());
         }
     }
 
