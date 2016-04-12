@@ -135,7 +135,6 @@ public class HandsViewObject implements ViewObject, Observer {
         @Override
         public void visitWeapon(WeaponEquipableItem weapon) {
             handState.equip(weapon);
-            System.out.println("visitWeapon method...");
 
         }
     }

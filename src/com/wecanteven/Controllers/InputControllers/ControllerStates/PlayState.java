@@ -71,8 +71,6 @@ public class PlayState extends ControllerState {
             ViewTime.getInstance().register(()->{
                 UIViewFactory.getInstance().createInventoryView(avatar.getCharacter());
             },0);
-            //this.getController().setMenuState(view.getMenuViewContainer());
-            //this.getController().changeView(view);
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.STATS), ()->{
             System.out.println("open stats hit");

@@ -194,21 +194,7 @@ public class UIViewFactory {
                     template.launch();
             })
         );
-        list.addItem(
-                new ScrollableMenuItem("Load Game", () -> {
-                    System.out.println("Load Game was selected");
-                    //TODO: Be moved to a Load Screen - Give the player the option to choose a file and
-                    //TODO: create the Launcher and Loader from that file selection
-                    LoadGameLauncher loadGameLauncher = new LoadGameLauncher(controller, mEngine, vEngine);
-                    File file = new File(PATH + "save1.xml");
-                    LoadFromXMLFile loader = new LoadFromXMLFile(
-                            loadGameLauncher,
-                            file
-                    );
-                    loader.loadGame();
-                    loadGameLauncher.launch();
-            })
-        );
+        list.addItem(createLoadMenu(menu, list));
         list.addItem(new ScrollableMenuItem("Exit", () -> {System.out.println("test 2 selected");}));
         menu.setList(list);
         //make swappable view
@@ -407,24 +393,7 @@ public class UIViewFactory {
         list.addItem(new ScrollableMenuItem("Save", ()->{
             //add save stuff here
         }));
-        list.addItem(new ScrollableMenuItem("Load", ()->{
-            //go to load menu
-            //im just assuming 3 save files, you can change this nbd
-            NavigatableList loadList = new NavigatableList();
-            loadList.addItem(new ScrollableMenuItem("Save 1", ()->{
-                //add load file 1 here
-            }));
-            loadList.addItem(new ScrollableMenuItem("Save 2", ()->{
-                //add load file 2 here
-            }));
-            loadList.addItem(new ScrollableMenuItem("Save 3", ()->{
-                //add load file 3 here
-            }));
-            loadList.addItem(new ScrollableMenuItem("Back", ()->{
-                menu.setList(list);
-            }));
-            menu.setList(loadList);
-        }));
+        list.addItem(createLoadMenu(menu, list));
         list.addItem(new ScrollableMenuItem("Key Bindings", ()->{
             //go to key binding menu
             NavigatableList keyBindList = new NavigatableList();
@@ -556,7 +525,10 @@ public class UIViewFactory {
         }));
         chatOptions.addItem(new ScrollableMenuItem("Exit",()->{
             System.out.println("Finished");
-            //TODO: How do I actually close the window -_-
+            this.getController().setPlayState();
+            ViewTime.getInstance().register(()->{
+                this.getController().clearViews();
+            },0);
         }));
 
         ScrollableMenu chatMenu = new ScrollableMenu(300,400);
@@ -669,6 +641,34 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
 
     }
+
+    public ScrollableMenuItem createLoadMenu(ScrollableMenu menu, NavigatableList list){
+        return new ScrollableMenuItem("Load", ()->{
+            NavigatableList loadList = new NavigatableList();
+            loadList.addItem(new ScrollableMenuItem("Save 1", ()->{
+                System.out.println("Load Game was selected");
+                LoadGameLauncher loadGameLauncher = new LoadGameLauncher(controller, mEngine, vEngine);
+                File file = new File(PATH + "save1.xml");
+                LoadFromXMLFile loader = new LoadFromXMLFile(
+                        loadGameLauncher,
+                        file
+                );
+                loader.loadGame();
+                loadGameLauncher.launch();
+            }));
+            loadList.addItem(new ScrollableMenuItem("Save 2", ()->{
+                //add load file 2 here
+            }));
+            loadList.addItem(new ScrollableMenuItem("Save 3", ()->{
+                //add load file 3 here
+            }));
+            loadList.addItem(new ScrollableMenuItem("Back", ()->{
+                menu.setList(list);
+            }));
+            menu.setList(loadList);
+        });
+    }
+
 
     public MainController getController() {
         return controller;
