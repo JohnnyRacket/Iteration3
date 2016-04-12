@@ -78,6 +78,9 @@ public class DopeAssLevelFactory extends LevelFactory{
         npc.equipItem(i);
         System.out.println(npc.getItemStorage().getEquipped().getChest().getItem());
 
+        TakeableItem katar = new TakeableItem("Katar", 50);
+        map.add(katar, new Location(0,0,1));
+
 
         map.add(npc,new Location(2,2,1));
         map.add(new OneShot("Box", (entity) -> {}), new Location(3,3,1));
