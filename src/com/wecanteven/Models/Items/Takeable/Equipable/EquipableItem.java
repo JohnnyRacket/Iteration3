@@ -4,6 +4,7 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Models.Storage.ItemStorage.Equipment;
 import com.wecanteven.Visitors.ItemVisitor;
+import com.wecanteven.Visitors.WeaponsVisitor;
 
 /**
  * Created by simonnea on 3/31/16.
@@ -44,4 +45,6 @@ public abstract class EquipableItem extends TakeableItem {
     public void accept(ItemVisitor visitor){
         visitor.visitEquipableItem(this);
     }
+
+    public abstract void accept(WeaponsVisitor visitor);
 }

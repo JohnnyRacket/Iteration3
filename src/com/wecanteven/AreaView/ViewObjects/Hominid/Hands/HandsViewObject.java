@@ -20,6 +20,7 @@ public class HandsViewObject implements ViewObject, Observer {
     private EquipmentSlot subject;
     private ViewObjectFactory factory;
     private Entity entity;
+    private WeaponsVisitor weaponsVisitor = new ViewWeaponVisitor();
    // private Equipment --dont have it yet..
 
 
@@ -31,7 +32,12 @@ public class HandsViewObject implements ViewObject, Observer {
         this.subject = subject;
         this.factory = factory;
         this.entity = entity;
+        registerToSubject();
         handState = new BrawlingState(direction, leftHand, rightHand);
+    }
+
+    private void registerToSubject() {
+        subject.attach(this);
     }
 
     public void drawForeground(Graphics2D graphic) {
@@ -84,7 +90,9 @@ public class HandsViewObject implements ViewObject, Observer {
     }
 
     public void update() {
-        subject.getItem();
+        System.out.println("BLLLOOOOOOOOOOOPPPPP");
+        subject.getItem().accept(weaponsVisitor);
+
     }
 
 
@@ -92,26 +100,33 @@ public class HandsViewObject implements ViewObject, Observer {
         this.handState = handState;
     }
 
-    private class viewWeaponVisitor implements WeaponsVisitor{
+    private class ViewWeaponVisitor implements WeaponsVisitor{
 
         @Override
         public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {
-            swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), oneHandedWeapon.getName(), entity));
+            swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), subject ,oneHandedWeapon.getName(), entity));
+            System.out.println("visitOneHandedWeapon method...");
         }
 
         @Override
         public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon) {
-            handState.equip(oneHandedMeleeWeapon);
+            swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), subject , oneHandedMeleeWeapon.getName(), entity));
+            System.out.println("visitOneHandedMeleeWeapon method..");
+
         }
 
         @Override
         public void visitOneHandedRangedWeapon(OneHandedRangedWeapon oneHandedRangedWeapon) {
             handState.equip(oneHandedRangedWeapon);
+            System.out.println("visitOneHandedRangedWeapon method...");
+
         }
 
         @Override
         public void visitWeapon(WeaponEquipableItem weapon) {
             handState.equip(weapon);
+            System.out.println("visitWeapon method...");
+
         }
     }
 

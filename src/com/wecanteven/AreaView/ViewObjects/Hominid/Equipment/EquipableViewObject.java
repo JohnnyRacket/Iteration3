@@ -52,7 +52,8 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
     @Override
     public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
         super.addToFogOfWarViewObject(fogOfWarViewObject);
-        equipment.addToFogOfWarViewObject(fogOfWarViewObject);
+        if(equipment != null)
+            equipment.addToFogOfWarViewObject(fogOfWarViewObject);
     }
 
     @Override
@@ -61,8 +62,10 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
             System.out.println("EQUIPING: " + subject.getItem().getName());
             equipment = factory.createEquipment(getPosition(),entitySubject, subject.getItem().getName());
         } else {
-            equipment = defaultEquipment;
-            defaultEquipment.setPosition(getPosition());
+            if(equipment != null) {
+                equipment = defaultEquipment;
+                defaultEquipment.setPosition(getPosition());
+            }
         }
 
     }

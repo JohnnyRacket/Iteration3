@@ -181,8 +181,13 @@ public abstract class ViewObjectFactory {
         return mvo;
     }
 
-    public HandState createOneHandedWeaponState(Position position, Direction direction, String weaponImagePath, Entity entity) {
-        return null;//new OneHandedWeaponState(direction, new MicroPositionableViewObject(createLeftHand(position)) ,createMicroPositionableViewObject(position, direction, weaponImagePath, entity));
+    public HandState createOneHandedWeaponState(Position position, Direction direction, EquipmentSlot slot, String weaponName, Entity entity) {
+        return new OneHandedWeaponState(direction, new MicroPositionableViewObject(createSimpleLeftHand(position, slot, entity)) , createRightHandWeaponObject(position, direction, weaponName, slot, entity));
+    }
+
+
+    public MicroPositionableViewObject createRightHandWeaponObject(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity) {
+        return new MicroPositionableViewObject(createEquipable(createSimpleRightHand(position, slot, entity), createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity));
     }
 
     public MicroPositionableViewObject createMicroPositionableViewObject(Position position, Direction direction, String path, Entity entity) {
