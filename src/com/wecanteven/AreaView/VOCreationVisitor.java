@@ -11,10 +11,7 @@ import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
 import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.MeleeWeaponEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.RangedWeaponEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Map.Map;
@@ -157,14 +154,20 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
         areaView.addViewObject(factory.createWater(currentPosition));
     }
 
+
     @Override
-    public void visitRangedWeapon(RangedWeaponEquipableItem rangedWeapon) {
-        visitTakeableItem(rangedWeapon);
+    public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {
+        visitTakeableItem(oneHandedWeapon);
     }
 
     @Override
-    public void visitMeleeWeaponEquipableItem(MeleeWeaponEquipableItem meleeWeapon) {
-        visitTakeableItem(meleeWeapon);
+    public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon) {
+        visitTakeableItem(oneHandedMeleeWeapon);
+    }
+
+    @Override
+    public void visitOneHandedRangedWeapon(OneHandedRangedWeapon oneHandedRangedWeapon) {
+        visitTakeableItem(oneHandedRangedWeapon);
     }
 
     @Override
