@@ -40,7 +40,6 @@ public class MenuState extends ControllerState {
             this.setCommandToExecute(()->menus.down());
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SELECT), ()->{
-            System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
             this.setCommandToExecute(()->menus.select());
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.LEFT), ()->{

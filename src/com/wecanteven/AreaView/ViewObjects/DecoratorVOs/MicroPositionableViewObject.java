@@ -32,7 +32,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
 
 
 
-    public MicroPositionableViewObject(ViewObject viewObject) {
+    public  MicroPositionableViewObject(ViewObject viewObject) {
         super(viewObject);
         this.direction = Direction.SOUTH;
         this.position = viewObject.getPosition().copy();
@@ -63,6 +63,10 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         this.height = height;
         this.tangent = tangent;
         this.radius = radius;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
     public void setDirection(Direction direction) {

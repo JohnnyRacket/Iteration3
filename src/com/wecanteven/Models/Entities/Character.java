@@ -79,8 +79,6 @@ public class Character extends Entity {
     }
 
     public void drop(TakeableItem item) {
-        // TODO notify map that item was dropped
-
         if (getActionHandler().drop(item, this.getLocation())) {
             itemStorage.removeItem(item);
         }

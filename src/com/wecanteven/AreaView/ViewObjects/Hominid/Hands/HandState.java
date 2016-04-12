@@ -3,6 +3,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
+import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
 import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
@@ -17,6 +18,10 @@ public abstract class HandState {
     protected HandState(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
         this.leftHand = leftHand;
         this.rightHand = rightHand;
+    }
+
+    public Direction getDirection() {
+        return leftHand.getDirection();
     }
 
     public abstract void move(long duration);
@@ -57,7 +62,7 @@ public abstract class HandState {
     public void setRightHandDirection(Direction direction) {
         rightHand.setDirection(direction);
     }
-    public void equip(/*add weapon param model doesnt exist*/) {
+    public void equip(WeaponEquipableItem weapon) {
 
     }
 

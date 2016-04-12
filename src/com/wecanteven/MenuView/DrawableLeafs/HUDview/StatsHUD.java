@@ -107,7 +107,7 @@ public class StatsHUD extends Drawable implements Observer {
         health = stats.getHealth();
         maxHealth = stats.getMaxHealth();
         healthBar.setPercent((int)((health/maxHealth)*100f));
-        
+
         mana = stats.getMana();
         maxMana = stats.getMaxMana();
         manaBar.setPercent((int)((mana/maxMana)*100f));
