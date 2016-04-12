@@ -95,9 +95,13 @@ public class PlayState extends ControllerState {
              */
             System.out.println("open trade menu");
             //TODO: THIS IS NOT PROGRAMING!
-            NPC c = new NPC(getAvatar().getCharacter().getActionHandler(), Direction.NORTH, new TradeInteractionStrategy());
-            c.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
-            c.pickup(new ChestEquipableItem("Buyable Penis", 5, null));
+            ArrayList<String> dialog = new ArrayList<String>();
+            dialog.add("Hello Avatar");
+            dialog.add("You're an idiot and you're playing a dumb game");
+            dialog.add("GTFO");
+            NPC c = new NPC(getAvatar().getCharacter().getActionHandler(), Direction.NORTH, new DialogInteractionStrategy(dialog));
+            //c.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
+            //c.pickup(new ChestEquipableItem("Buyable Penis", 5, null));
             c.interact(getAvatar().getCharacter());
         }, this.getjFrame(), this.getController()));
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////

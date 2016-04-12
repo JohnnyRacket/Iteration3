@@ -301,7 +301,104 @@ public class UIViewFactory {
     public SwappableView createAbilityItemMenu(){
         return null;
     }
+    //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
+    public void createBuyableItemMenu(NPC shopOwner, Character buyer, TakeableItem item){
+        NavigatableList list = new NavigatableList();
+        TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
+        list.addItem(new ScrollableMenuItem("Buy: " + item.getValue() + " Gold", () ->{
+            System.out.println("equip pressed");
+            if(!buyer.getItemStorage().inventoryIsFull() && interactionStrategy.sell(item)){
+                shopOwner.getItemStorage().removeItem(item);
+                buyer.pickup(item);
+                createToast(5, "You've purchased a " + item.getName() + " for " + item.getValue() + " gold!");
+            }else {
+                //PLAYER CANT BUY IF HIS INVENTORY IS FULL
+                if(shopOwner.getItemStorage().inventoryIsFull()){
+                    createToast(5, "Your inventory is full!");
 
+                }else {
+                    //PLAYER CANT BUY IF HE DOESNT HAVE MONEY
+                    createToast(5, "You can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
+
+                }            }
+            System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
+            System.out.println("Shopper Bal: " + buyer.getItemStorage().getMoney().getValue());
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createTradeView(shopOwner, buyer, true);
+            },0);
+
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+            System.out.println("cancel pressed");
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createTradeView(shopOwner, buyer, true);
+            },0);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+
+    }
+    //WHEN THE SHOPPER TRIES TO SELL TO THE SHOPKEEPER
+    public void createSellableItemMenu(NPC shopOwner, Character seller, TakeableItem item){
+        NavigatableList list = new NavigatableList();
+        TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
+        list.addItem(new ScrollableMenuItem("Sell: " + item.getValue() + " Gold", () ->{
+            System.out.println("Trying to sell item");
+            if(!shopOwner.getItemStorage().inventoryIsFull() && interactionStrategy.buy(item)){
+                seller.getItemStorage().removeItem(item);
+                shopOwner.pickup(item);
+                createToast(5, "You've sold a " + item.getName() + " for " + item.getValue() + " gold!");
+            }else {
+                //SHOPOWNER CANT BUY IF HIS INVENTORY IS FULL
+                if(shopOwner.getItemStorage().inventoryIsFull()){
+                    createToast(5, "Shop Owner's inventory is full!");
+
+                }else {
+                    //SHOPOWNER CANT BUY IF HE DOESNT HAVE MONEY
+                    createToast(5, "The Shopkeeper can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
+                }
+            }
+            System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
+            System.out.println("Shopper Bal: " + seller.getItemStorage().getMoney().getValue());
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createTradeView(shopOwner, seller, false);
+            },0);
+
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+            System.out.println("cancel pressed");
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                createTradeView(shopOwner, seller, false);
+            },0);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(vert);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+
+    }
     public void createPauseMenu(){
         ScrollableMenu menu = new ScrollableMenu(300,300);
         NavigatableList list = new NavigatableList();
@@ -446,99 +543,38 @@ public class UIViewFactory {
         }
     }
 
-    //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
-    public void createBuyableItemMenu(NPC shopOwner, Character buyer, TakeableItem item){
-        NavigatableList list = new NavigatableList();
-        TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
-        list.addItem(new ScrollableMenuItem("Buy: " + item.getValue(), () ->{
-            System.out.println("equip pressed");
-            if(!buyer.getItemStorage().inventoryIsFull() && interactionStrategy.sell(item)){
-                shopOwner.getItemStorage().removeItem(item);
-                buyer.pickup(item);
-                createToast(5, "You've purchased a " + item.getName() + " for " + item.getValue() + " gold!");
-            }else {
-                //PLAYER CANT BUY IF HIS INVENTORY IS FULL
-                if(shopOwner.getItemStorage().inventoryIsFull()){
-                    createToast(5, "Your inventory is full!");
+    public void createDialogView(NPC npc, Character player, String dialog){
 
-                }else {
-                    //PLAYER CANT BUY IF HE DOESNT HAVE MONEY
-                    createToast(5, "You can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
-
-                }            }
-            System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
-            System.out.println("Shopper Bal: " + buyer.getItemStorage().getMoney().getValue());
-            ViewTime.getInstance().register(() ->{
-                controller.popView();
-                createTradeView(shopOwner, buyer, true);
-            },0);
-
+        NavigatableList chatOptions = new NavigatableList();
+        chatOptions.addItem(new ScrollableMenuItem("Continue",()->{
+            System.out.println("Continued");
+            controller.popView();
+            npc.interact(player);
         }));
-        list.addItem(new ScrollableMenuItem("Cancel", () ->{
-            System.out.println("cancel pressed");
-            ViewTime.getInstance().register(() ->{
-                controller.popView();
-                createTradeView(shopOwner, buyer, true);
-            },0);
-        }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
-        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+
+        ScrollableMenu chatMenu = new ScrollableMenu(300,400);
+        chatMenu.setList(chatOptions);
+
+        NavigatableList conversation = new NavigatableList();
+        conversation.addItem(new ScrollableMenuItem(dialog,null));
+
+        ScrollableMenu conversationMenu = new ScrollableMenu(300,400);
+        conversationMenu.setList(conversation);
+
+        ColumnatedCompositeContainer columns = new ColumnatedCompositeContainer();
+        columns.setWidth(400);
+        columns.setHeight(300);
+        columns.addDrawable(chatMenu);
+        columns.addDrawable(conversationMenu);
+
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(columns);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
 
-        menu.setList(list);
         SwappableView view = new SwappableView();
-        view.addNavigatable(menu);
-        view.addDrawable(vert);
-        ViewTime.getInstance().register(()->{
-            vEngine.getManager().addView(view);
-        },0);
-        controller.setMenuState(view.getMenuViewContainer());
+        view.addNavigatable(chatMenu);
+        view.addDrawable(anim);
 
-    }
-
-//WHEN THE SHOPPER TRIES TO SELL TO THE SHOPKEEPER
-    public void createSellableItemMenu(NPC shopOwner, Character seller, TakeableItem item){
-        NavigatableList list = new NavigatableList();
-        TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
-        list.addItem(new ScrollableMenuItem("Sell: " + item.getValue(), () ->{
-            System.out.println("Trying to sell item");
-            if(!shopOwner.getItemStorage().inventoryIsFull() && interactionStrategy.buy(item)){
-                seller.getItemStorage().removeItem(item);
-                shopOwner.pickup(item);
-                createToast(5, "You've sold a " + item.getName() + " for " + item.getValue() + " gold!");
-            }else {
-                //SHOPOWNER CANT BUY IF HIS INVENTORY IS FULL
-                if(shopOwner.getItemStorage().inventoryIsFull()){
-                    createToast(5, "Shop Owner's inventory is full!");
-
-                }else {
-                    //SHOPOWNER CANT BUY IF HE DOESNT HAVE MONEY
-                    createToast(5, "The Shopkeeper can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
-                }
-            }
-            System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
-            System.out.println("Shopper Bal: " + seller.getItemStorage().getMoney().getValue());
-            ViewTime.getInstance().register(() ->{
-                controller.popView();
-                createTradeView(shopOwner, seller, false);
-            },0);
-
-        }));
-        list.addItem(new ScrollableMenuItem("Cancel", () ->{
-            System.out.println("cancel pressed");
-            ViewTime.getInstance().register(() ->{
-                controller.popView();
-                createTradeView(shopOwner, seller, false);
-            },0);
-        }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
-        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
-        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
-
-        menu.setList(list);
-        SwappableView view = new SwappableView();
-        view.addNavigatable(menu);
-        view.addDrawable(vert);
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
