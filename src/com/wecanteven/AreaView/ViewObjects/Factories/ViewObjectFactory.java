@@ -228,4 +228,8 @@ public abstract class ViewObjectFactory {
     protected SimpleViewObject createSimpleViewObject(Position p, String path) {
         return new SimpleViewObject(p, factory.loadDynamicImage(path), hexDrawingStrategy);
     }
+
+    public SimpleViewObject createAoe(Position position) {
+        return createSimpleViewObject(position, "asf");
+    }
 }

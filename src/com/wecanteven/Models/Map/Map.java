@@ -7,6 +7,7 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
@@ -173,6 +174,10 @@ public class Map implements MapVisitable, ActionHandler {
     @Override
     public void accept(MapVisitor visitor) {
         visitor.visitMap(this);
+    }
+
+    public boolean add(AreaOfEffect aoe, Location loc) {
+        return columns[loc.getR()][loc.getS()].add(aoe, loc.getZ());
     }
 
     public boolean add(Entity entity, Location loc){

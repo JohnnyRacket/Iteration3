@@ -10,6 +10,7 @@ import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
 import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Map.Aoe.HealingAreaOfEffect;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
@@ -88,5 +89,8 @@ public class DopeAssLevelFactory extends LevelFactory{
         map.add(new InteractiveItem("Button"), new Location(5,5,1));
         map.add(new Obstacle("Box"), new Location(8,2,1));
         //npc.move(Direction.SOUTH);
+
+        HealingAreaOfEffect aoe = new HealingAreaOfEffect(10);
+        map.add(aoe, new Location(4,4,1));
     }
 }
