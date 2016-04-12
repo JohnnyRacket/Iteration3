@@ -15,6 +15,7 @@ import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
 
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
+import com.wecanteven.MenuView.DrawableLeafs.Toaster.Toast;
 import com.wecanteven.MenuView.UIObjectCreationVisitors.BuyableUIObjectCreationVisitor;
 import com.wecanteven.MenuView.UIObjectCreationVisitors.EquippableUIObjectCreationVisitor;
 import com.wecanteven.MenuView.UIObjectCreationVisitors.UIObjectCreationVisitor;
@@ -393,8 +394,10 @@ public class UIViewFactory {
         VerticalCenterContainer npcTradeTitle =
                 new VerticalCenterContainer(
                         new HorizontalCenterContainer(
-                                new TitleBarDecorator(npcInv
-                                        , "NPC Inventory")
+                                new TitleBarDecorator(
+                                        npcInv,
+                                        "Shopkeeper Gold: " + npc.getItemStorage().getMoney().getValue()
+                                )
                         )
                 );
         columns.addDrawable(npcTradeTitle);
@@ -402,7 +405,10 @@ public class UIViewFactory {
         VerticalCenterContainer playerTradeTitle =
                 new VerticalCenterContainer(
                         new HorizontalCenterContainer(
-                                new TitleBarDecorator(playerInv, "Your Inventory")
+                                new TitleBarDecorator(
+                                        playerInv,
+                                        "Your Gold: " + player.getItemStorage().getMoney().getValue()
+                                )
                         )
                 );
 
@@ -413,7 +419,7 @@ public class UIViewFactory {
         VerticalCenterContainer title =
                 new VerticalCenterContainer(
                         new HorizontalCenterContainer(
-                                new TitleBarDecorator(columns, "Trade")
+                                new TitleBarDecorator(columns, "Buy / Sell")
                         )
                 );
 
@@ -449,6 +455,9 @@ public class UIViewFactory {
             if(!buyer.getItemStorage().inventoryIsFull() && interactionStrategy.sell(item)){
                 shopOwner.getItemStorage().removeItem(item);
                 buyer.pickup(item);
+                createToast(5, "You've purchased a " + item.getName() + " for " + item.getValue() + " gold!");
+            }else {
+                createToast(5, "You can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
             }
             System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
             System.out.println("Shopper Bal: " + buyer.getItemStorage().getMoney().getValue());
@@ -489,6 +498,9 @@ public class UIViewFactory {
             if(!shopOwner.getItemStorage().inventoryIsFull() && interactionStrategy.buy(item)){
                 seller.getItemStorage().removeItem(item);
                 shopOwner.pickup(item);
+                createToast(5, "You've sold a " + item.getName() + " for " + item.getValue() + " gold!");
+            }else {
+                createToast(5, "The Shopkeeper can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
             }
             System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
             System.out.println("Shopper Bal: " + seller.getItemStorage().getMoney().getValue());
@@ -594,4 +606,11 @@ public class UIViewFactory {
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
     }
+
+    public void createToast(int dur, String msg) {
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addToast( new Toast(dur, msg));
+        },0);
+    }
+
 }

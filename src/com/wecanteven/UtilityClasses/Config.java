@@ -12,4 +12,5 @@ public class Config {
     public static int SCREEN_HEIGHT = 600;
     public static Color DARKGREY = new Color(40,40,40);
     public static Color MEDIUMGREY = new Color(80,80,80);
+    public static Color TRANSMEDIUMGREY = new Color(80, 80, 80, 157);
 }
