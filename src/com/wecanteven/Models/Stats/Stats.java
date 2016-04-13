@@ -59,6 +59,10 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         modelNotifyObservers();
     }
 
+    public boolean isDead(){
+        return getLives() <= 0;
+    }
+
     public void refreshStats(){
         currentHealth.setStat(maxHealth.getStat());
         currentMana.setStat(maxMana.getStat());

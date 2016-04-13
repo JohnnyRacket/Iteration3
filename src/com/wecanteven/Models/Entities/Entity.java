@@ -19,29 +19,30 @@ import java.util.ArrayList;
  */
 
 public class Entity implements Moveable, Directional, ViewObservable, Observer{
-    ArrayList<Observer> observers = new ArrayList<>();
+    private ArrayList<Observer> observers;
     private ActionHandler actionHandler;
     private Stats stats;
-    private int height = 3;
-    private int jumpHeight;
+    private int height, jumpHeight;
     private Location location;
     private Direction direction;
     private CanMoveVisitor canMoveVisitor;
     private CanFallVisitor canFallVisitor;
     private int movingTicks;
-    private boolean isActive;
-    private boolean lock;
+    private boolean lock, isActive;
 
     public Entity(ActionHandler actionHandler, Direction direction){
-        this.actionHandler = actionHandler;
-        this.direction = direction;
-        stats = new Stats(this);
-        canMoveVisitor = new TerranianCanMoveVisitor();
-        canMoveVisitor.setEntity(this);
-        canFallVisitor = new TerranianCanFallVisitor();
-        jumpHeight = 25;
-        movingTicks = 0;
-        isActive = false;
+        observers = new ArrayList<>();
+
+        setStats(new Stats(this));
+        setHeight(3);
+        setJumpHeight(25);
+
+        setActionHandler(actionHandler);
+        setDirection(direction);
+        setCanMoveVisitor(new TerranianCanMoveVisitor());
+        setCanFallVisitor(new TerranianCanFallVisitor());
+        setMovingTicks(0);
+        setIsActive(false);
     }
 
     @Override
@@ -81,7 +82,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public void die(){
         getStats().refreshStats();
-        if(getStats().getLives() < 0){
+        if(getStats().isDead()){
             System.out.println("The entity has died");
             getActionHandler().death(this);
             notifyObservers();
@@ -142,7 +143,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
 
     public void levelUp(){
-        stats.addStats(new StatsAddable(0,1,1,1,1,0,0,0,0));
+        getStats().addStats(new StatsAddable(0, 1, 1, 1, 1, 0, 0, 0, 0));
     }
 
     public Stats getStats(){
@@ -162,6 +163,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor) {
         this.canMoveVisitor = canMoveVisitor;
+        this.canMoveVisitor.setEntity(this);
     }
 
     public ActionHandler getActionHandler() {

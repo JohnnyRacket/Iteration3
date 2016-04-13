@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Map;
 
 import com.wecanteven.Models.Abilities.HitBox;
+import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
@@ -132,6 +133,53 @@ public class Map implements MapVisitable, ActionHandler {
             return false;
         }
     }
+
+    @Override
+    public boolean move(MovableHitBox hitBox, Location destination, int movespeed) {
+        Location source = hitBox.getLocation();
+        CanMoveVisitor visitor = hitBox.getCanMoveVisitor();
+
+        //checks if you are moving outside the bounds of the map
+        if(isOutOfBounds(destination)){
+            System.out.println("Out of Bounds");
+            return false;
+        }
+
+        Tile tile = getTile(destination);
+        tile.accept(visitor);
+        if(visitor.canMove()) {//move if you can
+            hitBox.setLocation(destination);
+            hitBox.updateMovingTicks(movespeed);
+            remove(hitBox, source);
+            add(hitBox, destination);
+            return true;
+        }
+        else{
+            //reached an entity/obstacle/wall
+            if(tile.hasEntity()){//moves one last space if it is an entity
+                hitBox.setLocation(destination);
+                hitBox.updateMovingTicks(movespeed);
+                remove(hitBox, source);
+                add(hitBox, destination);
+            }
+            System.out.println("can't move projectile");
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Tile getTile(int r, int s, int z) {
         return columns[r][s].getTile(z);
