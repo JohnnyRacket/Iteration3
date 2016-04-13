@@ -13,6 +13,8 @@ import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
 import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Aoe.HealingAreaOfEffect;
+import com.wecanteven.Models.Map.Aoe.InstaDeathAoe;
+import com.wecanteven.Models.Map.Aoe.TakeDamageAreaOfEffect;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
@@ -91,7 +93,13 @@ public class DopeAssLevelFactory extends LevelFactory{
         //npc.move(Direction.SOUTH);
 
         HealingAreaOfEffect aoe = new HealingAreaOfEffect(10);
-        map.add(aoe, new Location(5,6,1));
+        map.add(aoe, new Location(8,6,1));
+
+        TakeDamageAreaOfEffect dmgAoe = new TakeDamageAreaOfEffect(10);
+        map.add(dmgAoe, new Location(8,5,1));
+
+        InstaDeathAoe aoeDed = new InstaDeathAoe();
+        map.add(aoeDed, new Location(8,4,1));
 
 
     }

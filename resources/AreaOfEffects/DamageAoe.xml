@@ -3,5 +3,5 @@
     <x>20</x>
     <y>20</y>
     <rootPath>AreaOfEffects/</rootPath>
-    <fileName>HealAoe.png</fileName>
+    <fileName>DamageAoe.png</fileName>
 </single_frame_animation>

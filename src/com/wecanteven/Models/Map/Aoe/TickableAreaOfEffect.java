@@ -20,6 +20,7 @@ public abstract class TickableAreaOfEffect extends AreaOfEffect implements Ticka
     @Override
     public void tick() {
         if (entity != null) {
+            System.out.println("Tick apply");
             apply(entity);
         }
     }

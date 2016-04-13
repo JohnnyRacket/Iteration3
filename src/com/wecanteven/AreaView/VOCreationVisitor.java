@@ -14,10 +14,7 @@ import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
-import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
-import com.wecanteven.Models.Map.Aoe.HealingAreaOfEffect;
-import com.wecanteven.Models.Map.Aoe.TakeDamageAreaOfEffect;
-import com.wecanteven.Models.Map.Aoe.TickableAreaOfEffect;
+import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.Models.Map.Terrain.Current;
@@ -167,9 +164,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     public void visitAoe(AreaOfEffect aoe) { }
 
     @Override
-    public void visitTickableAoe(TickableAreaOfEffect aoe) {
-
-    }
+    public void visitTickableAoe(TickableAreaOfEffect aoe) { }
 
     @Override
     public void visitTickableHealAoe(HealingAreaOfEffect aoe) {
@@ -178,7 +173,15 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitTickableTakeDamageAoe(TakeDamageAreaOfEffect aoe) {
+        areaView.addViewObject(factory.createAoe(currentPosition, "DamageAoe"));
+    }
 
+    @Override
+    public void visitOneTimeAoe(OneTimeAreaOfEffect aoe) { }
+
+    @Override
+    public void visitInstaDeathAoe(InstaDeathAoe aoe) {
+        areaView.addViewObject(factory.createAoe(currentPosition, "InstaDeathAoe"));
     }
 
     @Override
