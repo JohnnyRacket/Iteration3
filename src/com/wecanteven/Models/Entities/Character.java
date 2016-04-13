@@ -47,6 +47,7 @@ public class Character extends Entity {
         super(actionHandler, direction);
         this.occupation = occupation;
         this.itemStorage = itemStorage;
+        getItemStorage().setOwner(this);
     }
 
     public void attack() {

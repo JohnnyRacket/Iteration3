@@ -16,7 +16,6 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.Models.Map.Aoe.HealingAreaOfEffect;
-import com.wecanteven.Models.Map.Aoe.TakeDamageAreaOfEffect;
 import com.wecanteven.Models.Map.Aoe.TickableAreaOfEffect;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
@@ -176,10 +175,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
         areaView.addViewObject(factory.createAoe(currentPosition, "HealAoe"));
     }
 
-    @Override
-    public void visitTickableTakeDamageAoe(TakeDamageAreaOfEffect aoe) {
-
-    }
 
     @Override
     public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {

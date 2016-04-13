@@ -38,7 +38,6 @@ public class ItemXMLProcessor extends XMLProcessor {
     }
 
     public static HeadEquipableItem parseHeadEquipableItem(Element el) {
-
         return (HeadEquipableItem) (new ItemMap()).getItemAsEquipable(sf.getStrAttr(el, "name"));
     }
 

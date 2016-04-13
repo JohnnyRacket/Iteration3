@@ -45,7 +45,7 @@ public class StorageXMLProcessor extends XMLProcessor {
             //process item
             TakeableItem item = ItemXMLProcessor.parseTakeableItem((Element)itemSlots.item(i).getChildNodes().item(1));
             System.out.println(item.getName());
-            is.addItem(item);
+            is.addItem(item, position);
         }
 
     }

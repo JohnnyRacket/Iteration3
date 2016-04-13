@@ -104,6 +104,7 @@ public class ItemStorage {
 
     public void equip(EquipableItem item) {
         if (equipped.equip(item))
+            System.out.println(item.getStats());
             owner.getStats().addStats(item.getStats());
     }
 

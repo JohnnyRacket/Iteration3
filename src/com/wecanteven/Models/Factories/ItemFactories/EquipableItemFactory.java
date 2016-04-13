@@ -4,38 +4,56 @@ import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Stats.StatsAddable;
 
 /**
- * Created by Cachorrita on 4/6/2016.
+ * Created by Cachorrita & Josh on 4/6/2016.
  */
 public class EquipableItemFactory {
-    public BootsEquipableItem vendMovementSpeedBoots(String name, int speedIncrease) {
-        return new BootsEquipableItem(name, 50, new StatsAddable(0,0,0,0,0,0,speedIncrease,0,0));
+
+    public BootsEquipableItem vendBoots(String name, int value, StatsAddable stats) {
+        return new BootsEquipableItem(name, value, stats);
     }
 
-    public BootsEquipableItem vendArmorBoots(String name, int armorIncrease) {
-        int newMovementSpeed = armorIncrease/4 * -1;
-
-        return new BootsEquipableItem(name, 25, new StatsAddable(0,0,0,0,armorIncrease,0,newMovementSpeed,0,0));
+    public ChestEquipableItem vendChestplate(String name, int value, StatsAddable stats) {
+        return new ChestEquipableItem(name, value, stats);
     }
 
-    public ChestEquipableItem vendChestplate(String name, int agilityIncrease) {
-        return new ChestEquipableItem(name, 30, new StatsAddable(0,0,agilityIncrease,0,0,0,0,0,0));
+    public DualWieldMeleeWeapon vendDualMeleeWeapon(String name, int value, StatsAddable stats) {
+        return new DualWieldMeleeWeapon(name, value, stats);
     }
 
-    public HeadEquipableItem vendIntellectCap(String name, int intellectIncrease) {
-        int newDefensive = intellectIncrease/3 * -1;
-
-        return new HeadEquipableItem(name, 15, new StatsAddable(0,0,newDefensive,intellectIncrease,0,0,0,0,0));
+    public DualWieldWeapon vendDualWieldWeapon(String name, int value, StatsAddable stats) {
+        return new DualWieldWeapon(name, value, stats);
     }
 
-    public HeadEquipableItem vendHelmet(String name, int defensiveIncrease) {
-        return new HeadEquipableItem(name, 14, new StatsAddable(0,0,defensiveIncrease,0,0,0,0,0,0));
+    public HeadEquipableItem vendHeadEquipableItem(String name, int value, StatsAddable stats) {
+        return new HeadEquipableItem(name, value, stats);
     }
 
-    public RangedWeaponEquipableItem vendDefaultRangedWeapon(String name) {
-        return new RangedWeaponEquipableItem(name, 100, new StatsAddable(0,0,0,0,0,0,0,0,0));
+    public MeleeWeaponEquipableItem vendMeleeWeaponEquipable(String name, int value, StatsAddable stats) {
+        return new MeleeWeaponEquipableItem(name, value, stats);
     }
 
-    public MeleeWeaponEquipableItem vendDefaultMeleeWeapon(String name) {
-        return new MeleeWeaponEquipableItem(name, 10, new StatsAddable(0,0,0,0,0,0,0,0,0));
+    public OneHandedMeleeWeapon vendOneHandedMeleeWeapon(String name, int value, StatsAddable stats) {
+        return new OneHandedMeleeWeapon(name, value, stats);
     }
+
+    public OneHandedRangedWeapon vendOneHandedRangedWeapon(String name, int value, StatsAddable stats) {
+        return new OneHandedRangedWeapon(name, value, stats);
+    }
+
+    public OneHandedWeapon vendOneHandedWeapon(String name, int value, StatsAddable stats) {
+        return new OneHandedWeapon(name, value, stats);
+    }
+
+    public RangedWeaponEquipableItem vendRangedWeaponEquipableItem(String name, int value, StatsAddable stats) {
+        return new RangedWeaponEquipableItem(name, value, stats);
+    }
+
+    public TwoHandedWeapon vendTwoHandedWeapon(String name, int value, StatsAddable stats) {
+        return new TwoHandedWeapon(name, value, stats);
+    }
+
+    public WeaponEquipableItem vendWeaponEquipableItem(String name, int value, StatsAddable stats) {
+        return new WeaponEquipableItem(name, value, stats);
+    }
+
 }
