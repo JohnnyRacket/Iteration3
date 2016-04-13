@@ -12,4 +12,6 @@ public interface AreaOfEffectVisitor {
     void visitTickableTakeDamageAoe(TakeDamageAreaOfEffect aoe);
     void visitOneTimeAoe(OneTimeAreaOfEffect aoe);
     void visitInstaDeathAoe(InstaDeathAoe aoe);
+    void visitCoolDownAoe(CoolDownAoE aoe);
+    void visitLevelUpAoe(LevelUpAoe aoe);
 }

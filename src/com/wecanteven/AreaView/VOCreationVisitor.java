@@ -185,6 +185,14 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     }
 
     @Override
+    public void visitCoolDownAoe(CoolDownAoE aoe) { }
+
+    @Override
+    public void visitLevelUpAoe(LevelUpAoe aoe) {
+        areaView.addViewObject(factory.createAoe(currentPosition, "LevelUpActive"));
+    }
+
+    @Override
     public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {
 
     }

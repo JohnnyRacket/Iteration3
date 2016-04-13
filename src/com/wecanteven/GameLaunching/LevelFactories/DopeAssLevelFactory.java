@@ -16,6 +16,7 @@ import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Aoe.HealingAreaOfEffect;
 import com.wecanteven.Models.Map.Aoe.InstaDeathAoe;
+import com.wecanteven.Models.Map.Aoe.LevelUpAoe;
 import com.wecanteven.Models.Map.Aoe.TakeDamageAreaOfEffect;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Current;
@@ -111,6 +112,9 @@ public class DopeAssLevelFactory extends LevelFactory{
 
         InstaDeathAoe aoeDed = new InstaDeathAoe();
         map.add(aoeDed, new Location(8,4,1));
+
+        LevelUpAoe aoeLvl = new LevelUpAoe(500, false);
+        map.add(aoeLvl, new Location(8,3,1));
 
 
     }
