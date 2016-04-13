@@ -10,6 +10,7 @@ import com.wecanteven.MenuView.DrawableContainers.Decorators.*;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.RowedCompositeContainer;
+import com.wecanteven.MenuView.DrawableLeafs.BackgroundImageDrawable;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
@@ -38,6 +39,7 @@ import com.wecanteven.ViewEngine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Iterator;
 
@@ -431,10 +433,20 @@ public class UIViewFactory {
         SwappableView view = new SwappableView();
         view.addNavigatable(menu);
         view.addDrawable(vert);
+        createGreyBackground();
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
         controller.setMenuState(view.getMenuViewContainer());
+    }
+    public void createGreyBackground(){
+        ViewTime.getInstance().register(()->{
+            BufferedImage bg = vEngine.getScreenShot();
+            SwappableView view = new SwappableView();
+            BackgroundImageDrawable background = new BackgroundImageDrawable(bg,vEngine);
+            view.addDrawable(background);
+            vEngine.getManager().addView(view);
+        },0);
     }
 
     public void createTradeView(NPC npc, Character player, boolean active){
