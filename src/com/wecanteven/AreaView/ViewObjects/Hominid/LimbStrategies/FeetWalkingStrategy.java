@@ -20,11 +20,20 @@ public class FeetWalkingStrategy extends LimbStrategy {
     public void complete() {
         leftFoot.setTangent(0);
         rightFoot.setTangent(0);
+        leftFoot.setHeight(0);
+        rightFoot.setHeight(0);
     }
 
     @Override
     public void animate(double percentage) {
-        leftFoot.setTangent(-maxTangent*Math.sin(percentage*2*Math.PI));
-        rightFoot.setTangent(-maxTangent*Math.sin(percentage*2*Math.PI));
+        double tangent = -maxTangent*Math.sin(percentage*2*Math.PI);
+
+        leftFoot.setTangent(tangent);
+        rightFoot.setTangent(tangent);
+
+        double height = Math.abs(Math.sin(percentage*2*Math.PI))/10;
+
+        leftFoot.setHeight(tangent < 0 ? height : 0);
+        rightFoot.setHeight(tangent > 0 ? height : 0);
     }
 }
