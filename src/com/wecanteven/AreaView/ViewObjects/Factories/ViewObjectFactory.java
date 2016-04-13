@@ -64,7 +64,7 @@ public abstract class ViewObjectFactory {
         EquipmentSlot hatSlot = subject.getItemStorage().getEquipped().getHead();
 
 
-        DirectionalViewObject body = createBody(p, subject, "Sneak");
+        SimpleViewObject body = new SimpleViewObject(p, factory.loadDynamicImage("Entities/Beans/Yellow.xml"), hexDrawingStrategy);
         EquipableViewObject bodyArmor = createEquipable(body, createNullViewObject(), chestSlot, subject);
         EquipableViewObject hatArmor = createEquipable(bodyArmor, createEquipment(p, subject, "Shaved"), hatSlot, subject);
 
@@ -85,7 +85,7 @@ public abstract class ViewObjectFactory {
         HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, hatArmor, hands, feet, jumpDetector);
         HUDDecorator sneakWithHUD = new HUDDecorator(stationarySneak, subject.getStats(), hexDrawingStrategy);
         subject.attach(stationarySneak);
-        subject.attach(body);
+        //subject.attach(body);
         subject.getStats().attach(sneakWithHUD);
 
         VisibilitySourceViewObject visibilitySourceViewObject = new VisibilitySourceViewObject(sneakWithHUD, subject, areaView, 5);
