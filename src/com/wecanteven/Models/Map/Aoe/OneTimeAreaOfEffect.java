@@ -9,14 +9,10 @@ import com.wecanteven.Visitors.AreaOfEffectVisitor;
  */
 public abstract class OneTimeAreaOfEffect extends AreaOfEffect {
     @Override
-    public void setObserved(Tile.TileSlot<Entity> observedSlot) {
-
-    }
+    public void setObserved(Tile.TileSlot<Entity> observedSlot) { }
 
     @Override
-    public void update() {
-
-    }
+    public void update() { }
 
     @Override
     public void accept(AreaOfEffectVisitor visitor) {

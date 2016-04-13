@@ -68,6 +68,16 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         }
     }
 
+    public boolean move(Location l) {
+        int movementStat = getStats().getMovement();
+        if(movementStat == 0 || isActive()){
+            return false;
+        }
+
+        int moveTime = calculateMovementTicks(movementStat);
+        return getActionHandler().move(this,l,moveTime);
+    }
+
     public boolean fall(){
         if(!isActive()) {
             if (getLocation().getZ() == 1) {
