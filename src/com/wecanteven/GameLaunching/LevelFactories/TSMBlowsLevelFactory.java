@@ -143,9 +143,23 @@ public class TSMBlowsLevelFactory extends LevelFactory {
         map.getTile(8,4,0).add(new Decal("Cactus1",.09,.2));
         map.getTile(6,3,1).add(new Decal("Cactus1", .3,0));
 
+        map.getTile(2,7,1).add(new Decal("DesertBump",.1,-.1));
+        map.getTile(5,5,1).add(new Decal("BigDesertBump", .1, -.15));
+        map.getTile(6,4,1).add(new Decal("DesertBump", -.1, -.25));
+
+        map.getTile(9,3,0).add(new Decal("BigDesertBump", -.1, 0));
+        map.getTile(8,3,0).add(new Decal("DesertBump", .25, -.1));
+
+
+        map.getTile(6,1,6).add(new Decal("SnowBump", -.1,.2));
+
         map.getTile(2,5,7).add(new Decal("TundraPineLong", 0,0));
         map.getTile(3,4,10).add(new Decal("TundraPineLong", 0,-.1));
         map.getTile(5,3,4).add(new Decal("TundraPineLong", .1,-.25));
+
+        map.getTile(9,4,0).add(new Decal("DirtBump", .5, -.5));
+        map.getTile(9,4,0).add(new Decal("DirtBump", 0, 0));
+        map.getTile(7,6,0).add(new Decal("DirtBump", .2, -.2));
 
         map.getTile(9,1,6).add(new Decal("TundraPineLong", 0.25, -.25));
         map.getTile(9,1,6).add(new Decal("TundraPineLong", -0.25, .25));
