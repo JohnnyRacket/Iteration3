@@ -14,4 +14,5 @@ public interface AreaOfEffectVisitor {
     void visitInstaDeathAoe(InstaDeathAoe aoe);
     void visitCoolDownAoe(CoolDownAoE aoe);
     void visitLevelUpAoe(LevelUpAoe aoe);
+    void visitTeleportAoe(TeleportAoe aoe);
 }

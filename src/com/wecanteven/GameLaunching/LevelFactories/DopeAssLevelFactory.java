@@ -18,10 +18,7 @@ import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
 import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
-import com.wecanteven.Models.Map.Aoe.HealingAreaOfEffect;
-import com.wecanteven.Models.Map.Aoe.InstaDeathAoe;
-import com.wecanteven.Models.Map.Aoe.LevelUpAoe;
-import com.wecanteven.Models.Map.Aoe.TakeDamageAreaOfEffect;
+import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
@@ -108,17 +105,20 @@ public class DopeAssLevelFactory extends LevelFactory{
         map.add(new ItemMap().getItemAsInteractive("Button"), new Location(5, 5, 1));
         map.add(new ItemMap().getItemAsObstacle("Box"), new Location(8,2,1));
 
-        HealingAreaOfEffect aoe = new HealingAreaOfEffect(10);
-        map.add(aoe, new Location(8,6,1));
+        //HealingAreaOfEffect aoe = new HealingAreaOfEffect(10);
+        //map.add(aoe, new Location(8,6,1));
 
-        TakeDamageAreaOfEffect dmgAoe = new TakeDamageAreaOfEffect(10);
-        map.add(dmgAoe, new Location(8,5,1));
+        //TakeDamageAreaOfEffect dmgAoe = new TakeDamageAreaOfEffect(10);
+        //map.add(dmgAoe, new Location(8,5,1));
 
-        InstaDeathAoe aoeDed = new InstaDeathAoe();
-        map.add(aoeDed, new Location(8,4,1));
+        //InstaDeathAoe aoeDed = new InstaDeathAoe();
+        //map.add(aoeDed, new Location(8,4,1));
 
-        LevelUpAoe aoeLvl = new LevelUpAoe(500, false);
-        map.add(aoeLvl, new Location(8,3,1));
+        //LevelUpAoe aoeLvl = new LevelUpAoe(500, false);
+        //map.add(aoeLvl, new Location(8,3,1));
+
+        //TeleportAoe aoe = new TeleportAoe(new Location(8,3,1));
+        //map.add(aoe, new Location(8,6,1));
 
 
     }
