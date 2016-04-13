@@ -255,7 +255,7 @@ public abstract class ViewObjectFactory {
         return new SimpleViewObject(p, factory.loadDynamicImage(path), hexDrawingStrategy);
     }
 
-    public SimpleViewObject createAoe(Position position) {
-        return createSimpleViewObject(position, "asf");
+    public SimpleViewObject createAoe(Position position, String name) {
+        return createSimpleViewObject(position, "AreaOfEffects/" + name + ".xml");
     }
 }

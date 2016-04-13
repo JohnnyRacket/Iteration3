@@ -3,6 +3,7 @@ package com.wecanteven;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.MenuView.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
+import com.wecanteven.UtilityClasses.Config;
 
 public class Main {
 
@@ -10,7 +11,7 @@ public class Main {
 
         System.out.println("hello world");
         ViewEngine engine = new ViewEngine();
-
+        engine.setBackground(Config.BACKGROUNDBLUE);
         UIViewFactory factory = UIViewFactory.getInstance();
         SwappableView view = factory.createMainMenuView();
         MainController controller = new MainController(engine);

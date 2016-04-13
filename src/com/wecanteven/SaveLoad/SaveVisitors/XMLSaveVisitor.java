@@ -98,12 +98,8 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     public void visitCharacter(Character e) {
         if(avatar.getCharacter() == e){
             //Save Avatar
-            System.out.println("Visiting Avarar: ");
-
             EntityXMLProcessor.formatAvatar(avatar);
         }else {
-            System.out.println("Visiting a non Avatar Char");
-            System.out.println(e.getClass());
             EntityXMLProcessor.formatCharacter(e, "Tile");
         }
         saveDirection(e.getDirection());

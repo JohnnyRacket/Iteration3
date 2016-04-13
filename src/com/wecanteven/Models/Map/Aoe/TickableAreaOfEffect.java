@@ -1,6 +1,5 @@
 package com.wecanteven.Models.Map.Aoe;
 
-import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Models.ModelTime.ModelTime;
@@ -21,6 +20,7 @@ public abstract class TickableAreaOfEffect extends AreaOfEffect implements Ticka
     @Override
     public void tick() {
         if (entity != null) {
+            System.out.println("Tick apply");
             apply(entity);
         }
     }

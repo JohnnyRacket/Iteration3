@@ -34,7 +34,6 @@ public class SaveToXMLFile implements SaveGame {
 
     @Override
     public void saveGame() {
-        System.out.println("Dispatching the SaveVisitor");
         avatar.accept(saveVisitor);
         map.accept(saveVisitor);
         saveFile.writeSaveFile();
