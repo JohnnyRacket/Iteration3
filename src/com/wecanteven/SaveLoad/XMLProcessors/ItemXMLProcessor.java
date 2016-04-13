@@ -9,6 +9,7 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
+import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.HeadEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
@@ -33,14 +34,20 @@ public class ItemXMLProcessor extends XMLProcessor {
         if(el.getTagName().equals("HeadEquipableItem")){
             System.out.println("Head Equipable Item Found");
             return parseHeadEquipableItem(el);
+        }else if(el.getTagName().equals("ChestEquipableItem")){
+            System.out.println("Head Equipable Item Found");
+            return parseChestEquipableItem(el);
         }
-        return new TakeableItem("LOL", 2);
+        return new TakeableItem(sf.getStrAttr(el, "name"), 2);
     }
 
     public static HeadEquipableItem parseHeadEquipableItem(Element el) {
         return (HeadEquipableItem) (new ItemMap()).getItemAsEquipable(sf.getStrAttr(el, "name"));
     }
 
+    public static ChestEquipableItem parseChestEquipableItem(Element el) {
+        return (ChestEquipableItem) (new ItemMap()).getItemAsEquipable(sf.getStrAttr(el, "name"));
+    }
 
 
 
