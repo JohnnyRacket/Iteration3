@@ -53,7 +53,6 @@ public class EntityXMLProcessor extends XMLProcessor {
                 StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0))
         );
         parseStats(c, sf.getElemenetById(el, "Stats", 0));
-        c.getItemStorage();
         map.add(c, parseLocation(sf.getElemenetById(el, "Location", 0)));
         return c;
     }

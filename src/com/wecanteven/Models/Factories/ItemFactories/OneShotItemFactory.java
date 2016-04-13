@@ -8,24 +8,14 @@ import com.wecanteven.Models.Stats.StatsAddable;
  */
 public class OneShotItemFactory {
 
-    public OneShot vendDefaultOneShot(String name) {
-        return new OneShot(name, (entity) -> {});
+    public OneShot vendOneShot(String name, StatsAddable stats) {
+        return new OneShot(name, (entity) -> {
+            entity.getStats().addStats(stats);
+        });
     }
 
-    public OneShot vendInstaDeathOneShot(String name) {
+    public OneShot vendDeathOneShot(String name) {
         return new OneShot(name, (entity) -> entity.die());
     }
 
-    public OneShot vendHealingOneShot(String name, int amount) {
-        return new OneShot(name,
-                // TODO semantically add more meaningful messages i.e. entity.increaseHealth( int )
-                (entity) -> entity.getStats().addStats(new StatsAddable(0,0,0,0,0,0,0,amount,0))
-        );
-    }
-
-    public OneShot vendManaRestoringOneShot(String name, int amount) {
-        return new OneShot (name,
-                (entity) -> entity.getStats().addStats(new StatsAddable(0,0,0,0,0,0,0,0,amount))
-        );
-    }
 }

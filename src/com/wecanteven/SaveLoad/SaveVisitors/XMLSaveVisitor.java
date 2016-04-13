@@ -49,6 +49,9 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitMap(Map map) {
+        System.out.println("");System.out.println("");System.out.println("");
+        System.out.println("Starting Save: ");
+
         TileXMLProcessor.formatMap(map);
         for(int r = 0; r < map.getrSize(); ++r){
             for(int s = 0; s < map.getsSize(); ++s){
@@ -106,6 +109,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitNPC(NPC npc) {
+        System.out.println("Saving NPC: ");
         EntityXMLProcessor.formatNPC(npc, "Tile");
         saveDirection(npc.getDirection());
         npc.getStats().accept(this);
@@ -135,6 +139,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         EquipableItem i;
         while(e.hasNext()){
             i = (EquipableItem)(e.next());
+            System.out.println("Saving Equipped Item: " + i.getName());
             i.accept(this);
         }
     }
@@ -146,6 +151,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         Tuple<TakeableItem, Integer> itemSlot;
         while(itemIter.hasNext()) {
             itemSlot = (Tuple)itemIter.next();
+            System.out.println(itemSlot.x.getName());
             StorageXMLProcessor.formatItemSlot(itemSlot.y);
             itemSlot.x.accept(this);
         }
