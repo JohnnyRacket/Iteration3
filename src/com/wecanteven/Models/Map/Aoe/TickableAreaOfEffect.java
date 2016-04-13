@@ -1,6 +1,5 @@
 package com.wecanteven.Models.Map.Aoe;
 
-import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Models.ModelTime.ModelTime;

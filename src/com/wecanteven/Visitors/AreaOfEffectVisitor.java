@@ -2,6 +2,7 @@ package com.wecanteven.Visitors;
 
 import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.Models.Map.Aoe.HealingAreaOfEffect;
+import com.wecanteven.Models.Map.Aoe.TakeDamageAreaOfEffect;
 import com.wecanteven.Models.Map.Aoe.TickableAreaOfEffect;
 
 /**
@@ -11,4 +12,5 @@ public interface AreaOfEffectVisitor {
     void visitAoe(AreaOfEffect aoe);
     void visitTickableAoe(TickableAreaOfEffect aoe);
     void visitTickableHealAoe(HealingAreaOfEffect aoe);
+    void visitTickableTakeDamageAoe(TakeDamageAreaOfEffect aoe);
 }

@@ -91,7 +91,7 @@ public class DopeAssLevelFactory extends LevelFactory{
         //npc.move(Direction.SOUTH);
 
         HealingAreaOfEffect aoe = new HealingAreaOfEffect(10);
-        map.add(aoe, new Location(4,4,1));
+        map.add(aoe, new Location(5,6,1));
 
 
     }
