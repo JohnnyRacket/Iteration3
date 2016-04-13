@@ -22,7 +22,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     private ArrayList<Observer> viewObservers = new ArrayList<>();
 
     public Stats(Entity entity){
-        initStats(entity,1,1,1,1,30);
+        initStats(entity,1,1,1,1,15);
     }
 
     public void initStats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement, int lives, int level){

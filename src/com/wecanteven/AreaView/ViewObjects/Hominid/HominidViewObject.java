@@ -22,6 +22,7 @@ public class HominidViewObject implements ViewObject, Observer{
     private Position position;
     private Direction direction;
     private ViewObject body;
+    private ViewObject head;
 
     private Directional directionSubject;
     private Moveable movingSubject;
@@ -35,12 +36,13 @@ public class HominidViewObject implements ViewObject, Observer{
 
     private Location lastLocation;
 
-    public HominidViewObject(Position position, Direction direction, Directional directionSubject, Moveable movingSubject, ViewObject body, HandsViewObject hands, FeetViewObject feet, JumpDetector jumpDetector) {
+    public HominidViewObject(Position position, Direction direction, Directional directionSubject, Moveable movingSubject, ViewObject body, ViewObject head, HandsViewObject hands, FeetViewObject feet, JumpDetector jumpDetector) {
         this.position = position;
         this.direction = direction;
         this.directionSubject = directionSubject;
         this.movingSubject = movingSubject;
         this.body = body;
+        this.head = head;
         this.hands = hands;
         this.feet = feet;
         this.lastLocation = movingSubject.getLocation();
@@ -63,17 +65,20 @@ public class HominidViewObject implements ViewObject, Observer{
         updateBodyPosition();
         updateHandsPosition();
         updateFeetPosition();
+        updateHeadPosition();
     }
 
     private void updateFeetPosition() {
         feet.setPosition(position);
     }
+    private void updateHeadPosition() { head.setPosition(position);}
 
     @Override
     public void draw(Graphics2D g) {
         hands.drawBackground(g);
         feet.draw(g);
         body.draw(g);
+        head.draw(g);
         hands.drawForeground(g);
     }
 
