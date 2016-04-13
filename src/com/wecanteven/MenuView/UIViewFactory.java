@@ -132,10 +132,10 @@ public class UIViewFactory {
         NavigatableList equiplist = visitor.getEquippedItems();
         //make menu
         NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
-        menu.setBgColor(new Color(90,70,50));
+        menu.setBgColor(Config.PAPYRUS);
 
         NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
-        equipMenu.setBgColor(new Color(60,50,60));
+        equipMenu.setBgColor(Config.BRIGHTPAPYRUS);
 
         //NavigatableList equiplist = new NavigatableList();
         //equiplist.addItem();
@@ -423,8 +423,10 @@ public class UIViewFactory {
 
         menu.setList(list);
         TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu");
-        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
+        RectangleShadowDecorator shadow = new RectangleShadowDecorator(title);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(shadow);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+
 
         SwappableView view = new SwappableView();
         view.addNavigatable(menu);
