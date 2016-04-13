@@ -108,6 +108,6 @@ public abstract class HandState {
     }
 
     private boolean isInBackground(MicroPositionableViewObject hand) {
-        return hand.getY() >= 0;
+        return hand.getY() > 0;
     }
 }

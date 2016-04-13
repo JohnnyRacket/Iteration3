@@ -78,8 +78,12 @@ public abstract class ViewObjectFactory {
 
         weaponSlot.attach(hands);
 
-        MicroPositionableViewObject leftFoot = createLeftFoot(p, d, subject);
-        MicroPositionableViewObject rightFoot = createRightFoot(p, d, subject);
+//        MicroPositionableViewObject leftFoot = createLeftFoot(p, d, subject);
+//        MicroPositionableViewObject rightFoot = createRightFoot(p, d, subject);
+
+        MicroPositionableViewObject leftFoot = createMicroPositionableViewObject(p, "Feet/Yellow/Foot.xml");
+        MicroPositionableViewObject rightFoot = createMicroPositionableViewObject(p, "Feet/Yellow/Foot.xml");
+
 
         FeetViewObject feet = new FeetViewObject(d, leftFoot, rightFoot);
         HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, hatArmor, hands, feet, jumpDetector);
@@ -151,11 +155,11 @@ public abstract class ViewObjectFactory {
     }
 
     private MicroPositionableViewObject createSimpleRightHand(Position position, EquipmentSlot slot, Entity entity) {
-        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy), null, slot, entity));
+        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/Yellow/hand.xml"), hexDrawingStrategy), null, slot, entity));
     }
 
     public MicroPositionableViewObject createSimpleLeftHand(Position position, EquipmentSlot slot, Entity entity) {
-        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/Human/hand.xml"), hexDrawingStrategy), null, slot, entity));
+        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/Yellow/hand.xml"), hexDrawingStrategy), null, slot, entity));
     }
 //    private FeetViewObject createFeet(Position p, Direction d, String name) {
 //        FootViewObject leftFoot = createFoot(p, d, name + "/Left");
@@ -228,10 +232,9 @@ public abstract class ViewObjectFactory {
         return new MicroPositionableViewObject(createEquipable(createSimpleRightHand(position, slot, entity), createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity));
     }
 
-    public MicroPositionableViewObject createMicroPositionableViewObject(Position position, Direction direction, String path, Entity entity) {
-        DirectionalViewObject directionalViewObject = createDirectional(position, entity, path);
-        entity.attach(directionalViewObject);
-        return new MicroPositionableViewObject(directionalViewObject);
+    public MicroPositionableViewObject createMicroPositionableViewObject(Position position, String path) {
+        SimpleViewObject simpleViewObject = createSimpleViewObject(position, path);
+        return new MicroPositionableViewObject(simpleViewObject);
     }
 
 
