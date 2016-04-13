@@ -48,8 +48,25 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     public ArrayList<Observer> getObservers() {
         return observers;
     }
+
+    @Override
+    public Location getLocation() {
+        return location;
+    }
+
+    @Override
+    public int getMovingTicks() {
+        return movingTicks;
+    }
+
+    @Override
+    public Direction getDirection() {
+        return direction;
+    }
+
+    @Override
     public void update(){
-        die();
+        checkForDeath();
     }
 
     public boolean move(Direction d){
@@ -89,29 +106,25 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         return false;
     }
 
-    public void die(){
+    public void checkForDeath(){
         getStats().refreshStats();
-        if(getStats().getLives() < 0){
-            System.out.println("The entity has died");
-            getActionHandler().death(this);
-            notifyObservers();
+        if(getStats().getLives() <= 0){
+            die();
         }
     }
 
+    public void die() {
+        System.out.println("The entity has died");
+        getActionHandler().death(this);
+        notifyObservers();
+    }
 
     public boolean isActive(){
         return isActive;
     }
 
-    @Override
-    public Location getLocation() {
-        return location;
-    }
 
-    @Override
-    public int getMovingTicks() {
-        return movingTicks;
-    }
+
     public void updateMovingTicks(int ticks) {
         setMovingTicks(ticks);
         calculateActiveStatus();
@@ -143,10 +156,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         notifyObservers();
     }
 
-    @Override
-    public Direction getDirection() {
-        return direction;
-    }
+
 
     public void setLocation(Location location) {
         this.location = location;
@@ -235,8 +245,23 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
             this.isActive = isActive;
         }
     }
+
     public void modifyStats(StatsAddable addable){
         System.out.println("The Entity's stats have changed");
         this.stats.addStats(addable);
+    }
+
+    public void takeDamage(int dmgAmount) {
+        getStats().takeDamage(dmgAmount);
+    }
+
+    public void healDamage(int healAmount) {
+        getStats().healDamage(healAmount);
+    }
+
+    public void loseLife() {
+        getStats().loseLife();
+
+        checkForDeath();
     }
 }

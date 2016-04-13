@@ -14,6 +14,8 @@ import com.wecanteven.Models.Items.Takeable.Equipable.DualWieldMeleeWeapon;
 import com.wecanteven.Models.Items.Takeable.Equipable.HeadEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
 import com.wecanteven.Models.Map.Map;
+import com.wecanteven.Models.Occupation.Smasher;
+import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
@@ -24,8 +26,8 @@ import com.wecanteven.ViewEngine;
  */
 public class NewGameLauncher extends GameLauncher {
 
-    private LevelFactory levelFactory = new TSMBlowsLevelFactory();
-
+    //private LevelFactory levelFactory = new TSMBlowsLevelFactory();
+    private LevelFactory levelFactory = new DopeAssLevelFactory();
 
     public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine){
         super(controller, modelEngine, viewEngine);
@@ -60,6 +62,10 @@ public class NewGameLauncher extends GameLauncher {
     @Override
     protected void createAvatar(String occupation){
         Character player = new Character(getMap(), Direction.SOUTH);
+
+        player.getStats().addStats(new StatsAddable(2, 100, 100, 100, 100, 0, 0, 0, 0));
+        player.getStats().refreshStats();
+
         player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.pickup(new OneHandedMeleeWeapon("Katar", 4, new StatsAddable(1,1,1,1,1,1,1,1,1)));
