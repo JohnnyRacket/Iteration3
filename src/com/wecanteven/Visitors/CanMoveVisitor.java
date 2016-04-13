@@ -22,7 +22,6 @@ public abstract class CanMoveVisitor implements MapVisitor, TerrainVisitor {
 
     }
 
-
     @Override
     public void visitTile(Tile tile) {
         setCanMove(true);

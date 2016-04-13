@@ -58,7 +58,7 @@ public class UIViewFactory {
 
     private static UIViewFactory ourInstance = new UIViewFactory();
 
-    private UIViewFactory(){};
+    private UIViewFactory(){}
 
     public static UIViewFactory getInstance(){return ourInstance;}
 
