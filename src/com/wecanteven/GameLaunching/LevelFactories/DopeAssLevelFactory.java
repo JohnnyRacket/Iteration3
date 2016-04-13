@@ -1,5 +1,9 @@
 package com.wecanteven.GameLaunching.LevelFactories;
 
+import com.wecanteven.AreaView.Biomes.Biome;
+import com.wecanteven.AreaView.Biomes.DefaultBiome;
+import com.wecanteven.AreaView.ViewObjects.Factories.PlainsFactory;
+import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
@@ -94,6 +98,11 @@ public class DopeAssLevelFactory extends LevelFactory{
         map.add(aoe, new Location(4,4,1));
 
 
+    }
+
+    @Override
+    public Biome createBiomes(ViewObjectFactory factory) {
+        return new DefaultBiome(new PlainsFactory(factory));
     }
 
     public void weaponNPC(Map map) {

@@ -19,6 +19,7 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.OneHandedWeaponState;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.*;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Models.Decals.Decal;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
@@ -87,7 +88,7 @@ public abstract class ViewObjectFactory {
         subject.attach(body);
         subject.getStats().attach(sneakWithHUD);
 
-        VisibilitySourceViewObject visibilitySourceViewObject = new VisibilitySourceViewObject(sneakWithHUD, subject, areaView, 3);
+        VisibilitySourceViewObject visibilitySourceViewObject = new VisibilitySourceViewObject(sneakWithHUD, subject, areaView, 5);
         subject.attach(visibilitySourceViewObject);
         //TEMPORARY TESTING WORKAROUND
         //TODO: make better
@@ -127,6 +128,14 @@ public abstract class ViewObjectFactory {
                 position,
                 factory.loadDynamicImage("Items/" + obstacle.getName() + "/" + obstacle.getName() + ".xml"),
                 hexDrawingStrategy);
+    }
+
+    public DecalViewObject createDecalViewObject(Position position, Decal decal, String resourcePath) {
+        return new DecalViewObject(
+                createSimpleViewObject(position, resourcePath),
+                decal.getR(),
+                decal.getS()
+        );
     }
 
     private MicroPositionableViewObject createLeftFoot(Position position, Direction direction, Entity entity) {

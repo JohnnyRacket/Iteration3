@@ -50,7 +50,7 @@ public class Map implements MapVisitable, ActionHandler {
         columns = new Column[rSize][sSize];
         for (int i = 0; i < rSize; i++) {
             for (int j = 0; j < sSize; j++) {
-                columns[i][j] = new Column();
+                columns[i][j] = new Column(zSize);
             }
         }
     }

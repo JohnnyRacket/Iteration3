@@ -4,6 +4,7 @@ import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
+import com.wecanteven.GameLaunching.LevelFactories.TSMBlowsLevelFactory;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.*;
@@ -23,11 +24,16 @@ import com.wecanteven.ViewEngine;
  */
 public class NewGameLauncher extends GameLauncher {
 
-    private LevelFactory levelFactory = new DopeAssLevelFactory();
+    private LevelFactory levelFactory = new TSMBlowsLevelFactory();
 
 
     public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine){
         super(controller, modelEngine, viewEngine);
+    }
+
+    @Override
+    LevelFactory getLevelFactory() {
+        return levelFactory;
     }
 
     /*
@@ -60,7 +66,7 @@ public class NewGameLauncher extends GameLauncher {
         player.pickup(new DualWieldMeleeWeapon("Katar", 5, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.getItemStorage().equip(new ChestEquipableItem("Mediocre Top", 3, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         setAvatar(new Avatar(player, getMap()));
-        getMap().add(player, new Location(6,6,1));
+        getMap().add(player, new Location(9,3,1));
         getController().setAvatar(getAvatar());
     }
 

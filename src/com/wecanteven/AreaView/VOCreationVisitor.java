@@ -1,7 +1,14 @@
 package com.wecanteven.AreaView;
 
+import com.wecanteven.AreaView.Biomes.Biome;
+import com.wecanteven.AreaView.ViewObjects.Factories.BiomeFactory;
+import com.wecanteven.AreaView.ViewObjects.Factories.PlainsFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Models.Decals.Decal;
+import com.wecanteven.Models.Decals.FlowerDecal;
+import com.wecanteven.Models.Decals.GroundDecal;
+import com.wecanteven.Models.Decals.TreeDecal;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Entities.NPC;
@@ -28,12 +35,18 @@ import com.wecanteven.Visitors.*;
 /**
  * Created by alexs on 4/1/2016.
  */
-public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, WeaponsVisitor {
+public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, WeaponsVisitor, DecalVisitor {
     private ViewObjectFactory factory;
     private AreaView areaView;
-    public VOCreationVisitor(AreaView areaView, ViewObjectFactory factory) {
+    private Biome biome;
+    private BiomeFactory currentBiomeFactory;
+
+    private boolean[][] foundTop;
+
+    public VOCreationVisitor(AreaView areaView, ViewObjectFactory factory, Biome biome) {
         this.areaView = areaView;
         this.factory = factory;
+        this.biome = biome;
     }
 
     private Position currentPosition;
@@ -106,12 +119,21 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     }
 
+    public void setBiomeFactory(BiomeFactory currentBiomeFactory) {
+        this.currentBiomeFactory = currentBiomeFactory;
+    }
+
     @Override
     public void visitMap(Map map) {
+
+        foundTop = new boolean[map.getrSize()][map.getsSize()];
+
         for (int i = 0; i < map.getrSize(); i++) {
             for (int j = 0; j < map.getsSize(); j++) {
-                for (int k = 0; k < map.getzSize(); k++) {
+                foundTop[i][j] = false;
+                for (int k = map.getzSize() - 1; k >= 0; k--) {
                     this.currentPosition = new Position(i, j, k);
+                    biome.changeFactory(currentPosition.getLocation(), this);
                     map.getTile(i, j, k).accept(this);
                 }
             }
@@ -135,6 +157,10 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
             takeableItem.accept(this);
         }
 
+        for (Decal decal: tile.getDecals()) {
+            decal.accept(this);
+        }
+
         if (tile.hasAoe()) {
             tile.acceptAoeVisitor(this);
         }
@@ -148,7 +174,12 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitGround(Ground ground) {
-        areaView.addViewObject(factory.createGround(currentPosition));
+        int r = currentPosition.getLocation().getR();
+        int s = currentPosition.getLocation().getS();
+
+
+        areaView.addViewObject( foundTop[r][s] ? currentBiomeFactory.createBelowGround(currentPosition) : currentBiomeFactory.createAboveGround(currentPosition));
+        foundTop[r][s] = true;
     }
 
     @Override
@@ -202,5 +233,20 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitWeapon(WeaponEquipableItem weapon) {
         visitTakeableItem(weapon);
+    }
+
+    @Override
+    public void visitFlowerDecal(FlowerDecal f) {
+
+    }
+
+    @Override
+    public void visitGroundDecal(GroundDecal g) {
+
+    }
+
+    @Override
+    public void visitTreeDecal(TreeDecal t) {
+        areaView.addViewObject(currentBiomeFactory.createTreeDecal(currentPosition, t));
     }
 }

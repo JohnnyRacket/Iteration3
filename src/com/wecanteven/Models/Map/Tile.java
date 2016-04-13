@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Map;
 
 import com.wecanteven.Models.Abilities.HitBox;
+import com.wecanteven.Models.Decals.Decal;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Entities.NPC;
@@ -36,6 +37,7 @@ public class Tile implements MapVisitable {
     private TileSlot<Entity> entity = new TileSlot<>();
     private ArrayList<HitBox> hitBoxes = new ArrayList<>();
     private ArrayList<AreaOfEffect> areasOfEffect = new ArrayList<>();
+    private ArrayList<Decal> decals = new ArrayList<>();
 
     private Terrain terrain;
 
@@ -184,12 +186,17 @@ public class Tile implements MapVisitable {
         }
         return false;
     }
+    public boolean add(Decal decal) {
+        decals.add(decal);
+        return true;
+    }
     public boolean remove(HitBox hitBox){
         return hitBoxes.remove(hitBox);
     }
     public ArrayList<HitBox> getEffects(){
         return getEffects();
     }
+    public ArrayList<Decal> getDecals() { return decals; }
     public boolean hasEffect(){
         return !hitBoxes.isEmpty();
     }
