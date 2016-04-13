@@ -165,6 +165,10 @@ public class Tile implements MapVisitable {
             interactiveItem.getToken().trigger();
         }
 
+        for (AreaOfEffect aoe : areasOfEffect) {
+            aoe.apply(entity);
+        }
+
     }
 
     public void interact(Character character) {
