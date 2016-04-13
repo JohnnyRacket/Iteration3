@@ -423,8 +423,8 @@ public class UIViewFactory {
 
         menu.setList(list);
         TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu");
-        RectangleShadowDecorator shadow = new RectangleShadowDecorator(title);
-        HorizontalCenterContainer horiz = new HorizontalCenterContainer(shadow);
+       // RectangleShadowDecorator shadow = new RectangleShadowDecorator(title);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
 
 

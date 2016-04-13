@@ -43,7 +43,7 @@ public class RectangleShadowDecorator extends DrawableDecorator {
         //topleft corner
         shadow = new GradientPaint(x-shadowSize,y-shadowSize,new Color(.2f,.2f,.2f,.0f),x,y,new Color(.2f,.2f,.2f,.3f));
         g2d.setPaint(shadow);
-        g2d.fillRect(x-shadowSize,y-shadowSize,shadowSize,shadowSize);
+        g2d.fillRect(x-shadowSize,y-shadowSize,shadowSize*4,shadowSize*4);
 
         super.draw(g2d, x, y, windowWidth, windowHeight);
     }
