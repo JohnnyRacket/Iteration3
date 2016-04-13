@@ -15,7 +15,7 @@ public class OneShotItemFactory {
     }
 
     public OneShot vendDeathOneShot(String name) {
-        return new OneShot(name, (entity) -> entity.die());
+        return new OneShot(name, (entity) -> entity.loseLife());
     }
 
 }

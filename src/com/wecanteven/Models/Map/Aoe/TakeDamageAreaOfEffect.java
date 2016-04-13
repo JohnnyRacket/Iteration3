@@ -16,6 +16,7 @@ public class TakeDamageAreaOfEffect extends TickableAreaOfEffect {
     @Override
     public void apply(Entity entity) {
         System.out.println("Entity took damage: " + damagePerTick);
+        entity.takeDamage(damagePerTick);
     }
 
     @Override
