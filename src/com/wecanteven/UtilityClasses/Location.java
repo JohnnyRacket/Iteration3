@@ -52,6 +52,16 @@ public class Location {
         return new Location(this.r - loc.getR(), this.s - loc.getS(), this.z - loc.getZ());
     }
 
+    public Location adjacent(Direction d) {
+        return add(d.getCoords);
+    }
+
+    public boolean equals(Location location) {
+        return location.getR() == r &&
+                location.getS() == s &&
+                location.getZ() == z;
+    }
+
     public String toString(){
         return ""+getR()+","+getS()+","+getZ();
     }

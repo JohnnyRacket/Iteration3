@@ -13,4 +13,5 @@ public class Config {
     public static Color DARKGREY = new Color(40,40,40);
     public static Color MEDIUMGREY = new Color(80,80,80);
     public static Color TRANSMEDIUMGREY = new Color(80, 80, 80, 157);
+    public static Color BACKGROUNDBLUE = new Color(67, 155, 252);
 }

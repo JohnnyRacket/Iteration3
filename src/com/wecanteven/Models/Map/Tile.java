@@ -1,7 +1,11 @@
 package com.wecanteven.Models.Map;
 
 import com.wecanteven.Models.Abilities.HitBox;
+import com.wecanteven.Models.Decals.Decal;
+import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Entities.NPC;
+import com.wecanteven.Models.Interactions.InteractionVisitor;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
@@ -14,8 +18,10 @@ import com.wecanteven.Observers.ModelObservable;
 import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Visitors.AreaOfEffectVisitor;
+import com.wecanteven.Visitors.EntityVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 
+import java.awt.*;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 
@@ -31,6 +37,7 @@ public class Tile implements MapVisitable {
     private TileSlot<Entity> entity = new TileSlot<>();
     private ArrayList<HitBox> hitBoxes = new ArrayList<>();
     private ArrayList<AreaOfEffect> areasOfEffect = new ArrayList<>();
+    private ArrayList<Decal> decals = new ArrayList<>();
 
     private Terrain terrain;
 
@@ -149,13 +156,30 @@ public class Tile implements MapVisitable {
     }
 
     public void interact(Entity entity){
+        //This interacts with tile you're on
         entity.unlock();
-        hitBoxes.forEach( effect -> effect.interact(entity));
+        hitBoxes.forEach(effect -> effect.interact(entity));
         terrain.interact(entity);
-        if (!oneShot.isEmpty() )
+        if (!oneShot.isEmpty()) {
             oneShot.getToken().interact(entity);
-        if (!interactiveItem.isEmpty())
+        }
+        if (!interactiveItem.isEmpty()){
             interactiveItem.getToken().trigger();
+        }
+
+        for (AreaOfEffect aoe : areasOfEffect) {
+            aoe.apply(entity);
+        }
+
+    }
+
+    public void interact(Character character) {
+        if(hasEntity()) {
+            InteractionVisitor visitor = new InteractionVisitor(character);
+            getEntity().accept(visitor);
+        }else {
+            System.out.println("Didn't have a Entity to interact with");
+        }
     }
 
     public boolean add(HitBox hitBox){
@@ -166,12 +190,17 @@ public class Tile implements MapVisitable {
         }
         return false;
     }
+    public boolean add(Decal decal) {
+        decals.add(decal);
+        return true;
+    }
     public boolean remove(HitBox hitBox){
         return hitBoxes.remove(hitBox);
     }
     public ArrayList<HitBox> getEffects(){
         return getEffects();
     }
+    public ArrayList<Decal> getDecals() { return decals; }
     public boolean hasEffect(){
         return !hitBoxes.isEmpty();
     }

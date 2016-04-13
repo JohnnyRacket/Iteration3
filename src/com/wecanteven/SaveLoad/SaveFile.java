@@ -58,7 +58,6 @@ public class SaveFile {
         mostRecentElement = root = doc.getDocumentElement();
         fileName = root.getAttribute("FileName");
         //-------------------------------------------//
-        System.out.println("Loading Save from File: " + fileName);
 
 
     }
@@ -140,7 +139,6 @@ public class SaveFile {
 
         // if the directory does not exist, create it
         if (!theDir.exists()) {
-            System.out.println("creating directory: " + PATH);
             boolean result = false;
 
             try{
@@ -236,6 +234,10 @@ public class SaveFile {
 
     public Element getRoot() {
         return root;
+    }
+
+    public void appendTextNode(Element el, String string) {
+        el.appendChild(doc.createTextNode(string));
     }
 
 

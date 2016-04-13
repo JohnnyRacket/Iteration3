@@ -47,6 +47,7 @@ public class Character extends Entity {
         super(actionHandler, direction);
         this.occupation = occupation;
         this.itemStorage = itemStorage;
+        getItemStorage().setOwner(this);
     }
 
     public void attack() {
@@ -86,6 +87,16 @@ public class Character extends Entity {
 
     public void pickup(TakeableItem item) {
         itemStorage.addItem(item);
+    }
+
+    public void interact() {
+        Location destination = getLocation().add(getDirection().getCoords);
+        getActionHandler().interact(this, destination);
+    }
+
+    public void interact(Character character) {
+        //Probably pointless in Character
+        System.out.println(getClass().getSimpleName() + " is interacting with " + character.getClass().getSimpleName());
     }
 
     private boolean equipAbility(String id) {

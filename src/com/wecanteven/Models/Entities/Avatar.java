@@ -47,7 +47,9 @@ public class Avatar{
     }
     public void drop(){}
     public void pickup(){}
-    public void interactWith(){}
+    public void interactWithTile(){
+        getCharacter().interact();
+    }
     public void mount(){
     }
     public void dismount(){

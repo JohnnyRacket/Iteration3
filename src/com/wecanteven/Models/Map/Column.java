@@ -21,11 +21,18 @@ public class Column {
     private ArrayList<Tile> tiles;
     private int z = 10;
     public Column(){
+        this(10);
+    }
+
+    public Column(int height){
+        z= height;
         tiles = new ArrayList<>();
         for (int i = 0; i < z; i++) {
             tiles.add(new Tile(new Air()));
         }
     }
+
+
     public Column(int z, ArrayList<Tile> tiles) {
         this.z = z;
         this.tiles = tiles;

@@ -2,6 +2,7 @@ package com.wecanteven.GameLaunching.GameLaunchers;
 
 
 import com.wecanteven.Controllers.InputControllers.MainController;
+import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Map.Map;
@@ -17,11 +18,34 @@ public class LoadGameLauncher extends GameLauncher {
     }
 
     @Override
+    void populateMap(Map map) {
+
+    }
+
+    @Override
+    void createAvatar(String occupation) {
+
+    }
+
+    @Override
+    void createMap() {
+
+    }
+
+    @Override
     public void launch(){
         initializeAreaView();
         initializeUIView();
 
     }
+
+    @Override
+    LevelFactory getLevelFactory() {
+        System.out.println("Alex doesnt really know what to put here");
+        (new Exception()).printStackTrace();
+        return null;
+    }
+
     //Load will call loadMap
     public void loadMap(Map map) {
         setMap(map);

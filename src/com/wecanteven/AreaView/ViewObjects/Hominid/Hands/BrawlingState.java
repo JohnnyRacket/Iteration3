@@ -13,10 +13,10 @@ import com.wecanteven.UtilityClasses.Location;
 public class BrawlingState extends HandState {
 
     private final double tangent = 0d;
-    private final double radius = 0.5d;
+    private final double radius = 0.55d;
     private final double leftAngle = Math.PI/2;
     private final double rightAngle = -leftAngle;
-    private final double height = 2d;
+    private final double height = 1.5d;
 
     private LimbStrategy walkingStrategy;
     private LimbStrategy jumpingStrategy;

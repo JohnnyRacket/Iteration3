@@ -28,6 +28,7 @@ public class NPC extends Character {
         this.interaction.setOwner(this);
     }
 
+    @Override
     public void interact(Character c){
         interaction.interact(c);
     }

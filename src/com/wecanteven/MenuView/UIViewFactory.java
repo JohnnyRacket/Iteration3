@@ -32,6 +32,8 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
+import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
+import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.ViewEngine;
 
 import javax.swing.*;
@@ -186,6 +188,7 @@ public class UIViewFactory {
         //make menu
         ScrollableMenu menu = new ScrollableMenu(400, 400);
         menu.setSelectedColor(Color.cyan);
+        menu.setBgColor(Config.TRANSMEDIUMGREY);
         //make menu list
         NavigatableList list = new NavigatableList();
         list.addItem(
@@ -194,21 +197,7 @@ public class UIViewFactory {
                     template.launch();
             })
         );
-        list.addItem(
-                new ScrollableMenuItem("Load Game", () -> {
-                    System.out.println("Load Game was selected");
-                    //TODO: Be moved to a Load Screen - Give the player the option to choose a file and
-                    //TODO: create the Launcher and Loader from that file selection
-                    LoadGameLauncher loadGameLauncher = new LoadGameLauncher(controller, mEngine, vEngine);
-                    File file = new File(PATH + "save1.xml");
-                    LoadFromXMLFile loader = new LoadFromXMLFile(
-                            loadGameLauncher,
-                            file
-                    );
-                    loader.loadGame();
-                    loadGameLauncher.launch();
-            })
-        );
+        list.addItem(createLoadMenu(menu, list));
         list.addItem(new ScrollableMenuItem("Exit", () -> {System.out.println("test 2 selected");}));
         menu.setList(list);
         //make swappable view
@@ -404,27 +393,8 @@ public class UIViewFactory {
     public void createPauseMenu(){
         ScrollableMenu menu = new ScrollableMenu(300,300);
         NavigatableList list = new NavigatableList();
-        list.addItem(new ScrollableMenuItem("Save", ()->{
-            //add save stuff here
-        }));
-        list.addItem(new ScrollableMenuItem("Load", ()->{
-            //go to load menu
-            //im just assuming 3 save files, you can change this nbd
-            NavigatableList loadList = new NavigatableList();
-            loadList.addItem(new ScrollableMenuItem("Save 1", ()->{
-                //add load file 1 here
-            }));
-            loadList.addItem(new ScrollableMenuItem("Save 2", ()->{
-                //add load file 2 here
-            }));
-            loadList.addItem(new ScrollableMenuItem("Save 3", ()->{
-                //add load file 3 here
-            }));
-            loadList.addItem(new ScrollableMenuItem("Back", ()->{
-                menu.setList(list);
-            }));
-            menu.setList(loadList);
-        }));
+        list.addItem(createSaveMenu(menu, list));
+        list.addItem(createLoadMenu(menu, list));
         list.addItem(new ScrollableMenuItem("Key Bindings", ()->{
             //go to key binding menu
             NavigatableList keyBindList = new NavigatableList();
@@ -447,6 +417,7 @@ public class UIViewFactory {
             //exit to main menu
             //what all do i need to do here?
             //dump things registered in the time models? (add clear functions to time models)
+            //Ask if user wants to save? <- Josh wants this ;)
             //switch view to main menu view
         }));
 
@@ -550,13 +521,11 @@ public class UIViewFactory {
 
         NavigatableList chatOptions = new NavigatableList();
         chatOptions.addItem(new ScrollableMenuItem("Continue",()->{
-            System.out.println("Continued");
             controller.popView();
             continueDialogView(npc, player, ((DialogInteractionStrategy)npc.getInteraction()).getNextDialog());
         }));
         chatOptions.addItem(new ScrollableMenuItem("Exit",()->{
-            System.out.println("Finished");
-            //TODO: How do I actually close the window -_-
+            exitMenu();
         }));
 
         ScrollableMenu chatMenu = new ScrollableMenu(300,400);
@@ -595,13 +564,11 @@ public class UIViewFactory {
 
         NavigatableList chatOptions = new NavigatableList();
         chatOptions.addItem(new ScrollableMenuItem("Continue",()->{
-            System.out.println("Continued");
             controller.popView();
             continueDialogView(npc, player, ((DialogInteractionStrategy)npc.getInteraction()).getNextDialog());
         }));
         chatOptions.addItem(new ScrollableMenuItem("Exit",()->{
-            System.out.println("Finished");
-            //TODO: How do I actually close the window -_-
+            exitMenu();
         }));
 
         ScrollableMenu chatMenu = new ScrollableMenu(300,400);
@@ -634,6 +601,78 @@ public class UIViewFactory {
 
     }
 
+
+
+    public ScrollableMenuItem createLoadMenu(ScrollableMenu menu, NavigatableList list){
+        return new ScrollableMenuItem("Load", ()->{
+            NavigatableList loadList = new NavigatableList();
+            loadList.addItem(new ScrollableMenuItem("Slot 1", ()->{
+                LoadGameLauncher loadGameLauncher = new LoadGameLauncher(controller, mEngine, vEngine);
+                File file = new File(PATH + "save1.xml");
+                LoadFromXMLFile loader = new LoadFromXMLFile(
+                        loadGameLauncher,
+                        file
+                );
+                loader.loadGame();
+                loadGameLauncher.launch();
+            }));
+            loadList.addItem(new ScrollableMenuItem("Slot 2", ()->{
+                LoadGameLauncher loadGameLauncher = new LoadGameLauncher(controller, mEngine, vEngine);
+                File file = new File(PATH + "save2.xml");
+                LoadFromXMLFile loader = new LoadFromXMLFile(
+                        loadGameLauncher,
+                        file
+                );
+                loader.loadGame();
+                loadGameLauncher.launch();
+            }));
+            loadList.addItem(new ScrollableMenuItem("Slot 3", ()->{
+                LoadGameLauncher loadGameLauncher = new LoadGameLauncher(controller, mEngine, vEngine);
+                File file = new File(PATH + "save3.xml");
+                LoadFromXMLFile loader = new LoadFromXMLFile(
+                    loadGameLauncher,
+                    file
+                );
+                loader.loadGame();
+                loadGameLauncher.launch();            }));
+            loadList.addItem(new ScrollableMenuItem("Back", ()->{
+                menu.setList(list);
+            }));
+            menu.setList(loadList);
+        });
+    }
+
+    public ScrollableMenuItem createSaveMenu(ScrollableMenu menu, NavigatableList list){
+        return new ScrollableMenuItem("Save", ()->{
+            NavigatableList loadList = new NavigatableList();
+            loadList.addItem(new ScrollableMenuItem("Slot 1", ()->{
+                System.out.println("Trying to Save");
+                new SaveToXMLFile("save1.xml").saveGame();
+                exitMenu();
+            }));
+            loadList.addItem(new ScrollableMenuItem("Slot 2", ()->{
+                System.out.println("Trying to Save");
+                new SaveToXMLFile("save2.xml").saveGame();
+                exitMenu();
+            }));
+            loadList.addItem(new ScrollableMenuItem("Slot 3", ()->{
+                System.out.println("Trying to Save");
+                new SaveToXMLFile("save3.xml").saveGame();
+                exitMenu();
+            }));
+            loadList.addItem(new ScrollableMenuItem("Back", ()->{
+                menu.setList(list);
+            }));
+            menu.setList(loadList);
+        });
+    }
+
+    public void exitMenu() {
+        this.getController().setPlayState();
+        ViewTime.getInstance().register(()->{
+            this.getController().clearViews();
+        },0);
+    }
 
     public void createKeyBindMenu(ControllerState state){
 

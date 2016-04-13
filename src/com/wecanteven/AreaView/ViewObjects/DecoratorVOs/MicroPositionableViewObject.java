@@ -17,9 +17,9 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     private Direction direction;
     private Position position;
     private Position offsetPosition;
-    private static final double HEX_WIDTH = 56d;
-    private static final double HEX_LENGTH = 48d;
-    private static final double HEX_HEIGHT = 15d;
+    private static final double HEX_WIDTH = 54d;
+    private static final double HEX_LENGTH = 43d;
+    private static final double HEX_HEIGHT = 19d;
 
     private double offsetAngle;
 

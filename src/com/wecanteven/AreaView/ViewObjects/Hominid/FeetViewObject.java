@@ -23,7 +23,7 @@ public class FeetViewObject implements ViewObject {
     private MicroPositionableViewObject rightFoot;
 
     private final double tangent = 0D;
-    private final double radius = 0.25d;
+    private final double radius = 0.15d;
     private final double leftAngle = Math.PI/2;
     private final double rightAngle = -leftAngle;
     private final double height = 0;
@@ -37,7 +37,7 @@ public class FeetViewObject implements ViewObject {
         this.leftFoot = leftFoot;
         this.rightFoot = rightFoot;
         changeDirection(direction);
-        walkingStrategy = new FeetWalkingStrategy(0.3, leftFoot, rightFoot);
+        walkingStrategy = new FeetWalkingStrategy(0.1, leftFoot, rightFoot);
         fallingStartegy = new FeetJumpingStrategy(height, 2, leftFoot, rightFoot);//new FeetFallingStrategy(height, 5, leftFoot, rightFoot);
         jumpingStrategy = new FeetJumpingStrategy(height, 2, leftFoot, rightFoot);
         this.leftFoot.setRadius(radius);

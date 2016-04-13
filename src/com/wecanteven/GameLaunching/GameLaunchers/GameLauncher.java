@@ -1,7 +1,10 @@
 package com.wecanteven.GameLaunching.GameLaunchers;
 
 import com.wecanteven.AreaView.AreaView;
+import com.wecanteven.AreaView.ViewObjects.Factories.PlainsViewObjectFactory;
+import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.Controllers.InputControllers.MainController;
+import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
@@ -30,14 +33,13 @@ public abstract class GameLauncher {
         this.viewEngine = viewEngine;
     }
 
-    public void launch(){
-        //Nothing Happens
-    }
-    protected void createMap(){}
+    abstract void launch();
+    abstract void createMap();
 
-    protected void createAvatar(String occupation){}
+    abstract void createAvatar(String occupation);
 
-    protected void populateMap(Map map) {}
+    abstract void populateMap(Map map);
+    abstract LevelFactory getLevelFactory();
 
 
 
@@ -46,7 +48,10 @@ public abstract class GameLauncher {
         getViewEngine().clear();
         getViewEngine().getManager().popView();
         //viewEngine.registerView(new AreaView(avatar,map));
-        getViewEngine().registerView(new AreaView(getAvatar(), getMap()));
+
+
+
+        getViewEngine().registerView(new AreaView(getMap(),getLevelFactory() ));
         getController().setPlayState();
     }
 

@@ -98,12 +98,8 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     public void visitCharacter(Character e) {
         if(avatar.getCharacter() == e){
             //Save Avatar
-            System.out.println("Visiting Avarar: ");
-
             EntityXMLProcessor.formatAvatar(avatar);
         }else {
-            System.out.println("Visiting a non Avatar Char");
-            System.out.println(e.getClass());
             EntityXMLProcessor.formatCharacter(e, "Tile");
         }
         saveDirection(e.getDirection());
@@ -163,49 +159,41 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitObstacle(Obstacle item) {
-        System.out.println("Found Item: " + item.getName());
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 
     @Override
     public void visitInteractiveItem(InteractiveItem item) {
-        System.out.println("Found Item: " + item.getName());
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 
     @Override
     public void visitOneShotItem(OneShot item) {
-        System.out.println("Found Item: " + item.getName());
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 
     @Override
     public void visitTakeableItem(TakeableItem item) {
-        System.out.println("Found Item: " + item.getName());
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 
     @Override
     public void visitEquipableItem(EquipableItem item) {
-        System.out.println("Found Item: " + item.getName());
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 
     @Override
     public void visitUseableItem(UseableItem item) {
-        System.out.println("Found Item: " + item.getName());
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 
     @Override
     public void visitAbilityItem(AbilityItem item) {
-        System.out.println("Found Item: " + item.getName());
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 
     @Override
     public void visitConsumableItem(ConsumeableItem item) {
-        System.out.println("Found Item: " + item.getName());
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 

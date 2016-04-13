@@ -3,6 +3,7 @@ package com.wecanteven.Models.Map;
 import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
@@ -50,7 +51,7 @@ public class Map implements MapVisitable, ActionHandler {
         columns = new Column[rSize][sSize];
         for (int i = 0; i < rSize; i++) {
             for (int j = 0; j < sSize; j++) {
-                columns[i][j] = new Column();
+                columns[i][j] = new Column(zSize);
             }
         }
     }
@@ -93,7 +94,6 @@ public class Map implements MapVisitable, ActionHandler {
 
         //checks if you are moving outside the bounds of the map
         if(isOutOfBounds(destination)){
-            System.out.println("Out of Bounds");
             return false;
         }
         //checks to see if anything is blocking your height when moving
@@ -204,6 +204,10 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean drop(TakeableItem item, Location location) {
         getTile(location).add(item);
         return true;
+    }
+    @Override
+    public void interact(Character interactor, Location destination) {
+        getTile(destination).interact(interactor);
     }
 
 //    @Override

@@ -42,33 +42,28 @@ public class PlayState extends ControllerState {
         mappings.put(ActionEnum.STATS, KeyEvent.VK_K);
         mappings.put(ActionEnum.TRADE, KeyEvent.VK_T);
         mappings.put(ActionEnum.ATTACK, KeyEvent.VK_L);
+        mappings.put(ActionEnum.INTERACT, KeyEvent.VK_ENTER);
         mappings.put(ActionEnum.ESCAPE, KeyEvent.VK_ESCAPE);
         this.setMappings(mappings);
     }
     @Override
     public void createKeybindings() {
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.NORTH), ()->{
-            System.out.println("move north hit");
             this.setContinuousCommandToExecute(()->avatar.move(Direction.NORTH));
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.NORTHEAST), ()->{
-            System.out.println("move northeast hit");
             this.setContinuousCommandToExecute(()->avatar.move(Direction.NORTHEAST));
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.NORTHWEST), ()->{
-            System.out.println("move northwest hit");
             this.setContinuousCommandToExecute(()->avatar.move(Direction.NORTHWEST));
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SOUTH), ()->{
-            System.out.println("move south hit");
             this.setContinuousCommandToExecute(()->avatar.move(Direction.SOUTH));
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SOUTHEAST), ()->{
-            System.out.println("move southeast hit");
             this.setContinuousCommandToExecute(()->avatar.move(Direction.SOUTHEAST));
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SOUTHWEST), ()->{
-            System.out.println("move southwest hit");
             this.setContinuousCommandToExecute(()->avatar.move(Direction.SOUTHWEST));
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ITEMINVENTORY), ()->{
@@ -76,8 +71,6 @@ public class PlayState extends ControllerState {
             ViewTime.getInstance().register(()->{
                 UIViewFactory.getInstance().createInventoryView(avatar.getCharacter());
             },0);
-            //this.getController().setMenuState(view.getMenuViewContainer());
-            //this.getController().changeView(view);
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.STATS), ()->{
             System.out.println("open stats hit");
@@ -85,32 +78,8 @@ public class PlayState extends ControllerState {
                 UIViewFactory.getInstance().createStatsView(avatar.getCharacter());
             },0);
         }, this.getjFrame(), this.getController()));
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.TRADE), ()->{
-            /* TODO: REMOVE ALL OF THIS SOON
-
-
-
-             */
-            System.out.println("open trade menu");
-            //TODO: THIS IS NOT PROGRAMING!
-            ArrayList<String> dialog = new ArrayList<String>();
-            dialog.add("Hello Avatar");
-            dialog.add("You're an idiot and you're playing a dumb game");
-            dialog.add("GTFO");
-            NPC c = new NPC(getAvatar().getCharacter().getActionHandler(), Direction.NORTH, new DialogInteractionStrategy(dialog));
-            //c.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
-            //c.pickup(new ChestEquipableItem("Buyable Penis", 5, null));
-            c.interact(getAvatar().getCharacter());
-        }, this.getjFrame(), this.getController()));
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SAVE), ()->{
-            System.out.println("Trying to Save");
-            new SaveToXMLFile("save1.xml").saveGame();
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.INTERACT), ()->{
+            avatar.interactWithTile();
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ATTACK), ()->{
             System.out.println("use ability");
