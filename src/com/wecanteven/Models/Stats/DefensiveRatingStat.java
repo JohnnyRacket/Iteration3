@@ -17,6 +17,6 @@ public class DefensiveRatingStat extends Stat implements Observer {
         update();
     }
     public void update(){
-        stat = (level.getStat() + agility.getStat());
+        stat = (int)((Math.pow((.25 * level.getStat()) + 1, 3) + agility.getStat()));
     }
 }

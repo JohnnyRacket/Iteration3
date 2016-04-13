@@ -63,9 +63,6 @@ public class NewGameLauncher extends GameLauncher {
     protected void createAvatar(String occupation){
         Character player = new Character(getMap(), Direction.SOUTH);
 
-        player.getStats().addStats(new StatsAddable(2, 100, 100, 100, 100, 0, 0, 0, 0));
-        player.getStats().refreshStats();
-
         player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.pickup(new OneHandedMeleeWeapon("Katar", 4, new StatsAddable(1,1,1,1,1,1,1,1,1)));
