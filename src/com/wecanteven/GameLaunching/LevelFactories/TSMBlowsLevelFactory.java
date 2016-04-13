@@ -4,7 +4,8 @@ import com.wecanteven.AreaView.Biomes.Biome;
 import com.wecanteven.AreaView.Biomes.CustomBiome;
 import com.wecanteven.AreaView.Biomes.DefaultBiome;
 import com.wecanteven.AreaView.ViewObjects.Factories.*;
-import com.wecanteven.Models.Decals.TreeDecal;
+import com.wecanteven.Models.Decals.Decal;
+import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
@@ -13,7 +14,6 @@ import com.wecanteven.UtilityClasses.HexLine;
 import com.wecanteven.UtilityClasses.Location;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by alexs on 4/12/2016.
@@ -116,31 +116,39 @@ public class TSMBlowsLevelFactory extends LevelFactory {
 
 
         //Decals
-        map.getTile(0,9,1).add(new TreeDecal(-0.1,-0.2));
-        map.getTile(1,9,0).add(new TreeDecal(0.1,-0.25));
+        map.getTile(0,9,1).add(new Decal("AutumnTreeTall", -0.1,-0.2));
+        map.getTile(1,9,0).add(new Decal("AutumnTreeTall", 0.1,-0.25));
 
-        map.getTile(0,8,2).add(new TreeDecal(-0.15, .2));
-        map.getTile(0,7,2).add(new TreeDecal(0.15, -.22));
-        map.getTile(1,7,2).add(new TreeDecal(-.11, -.2));
-        map.getTile(1,7,2).add(new TreeDecal(.2, .08));
-        map.getTile(2,6,2).add(new TreeDecal(-0.15, .2));
+        map.getTile(2,9,0).add(new Decal("StonePress", 0,0));
+        map.getTile(3,9,0).add(new Decal("StonePress", 0,0));
+        map.getTile(4,8,0).add(new Decal("StonePress", 0,0));
 
-        map.getTile(5,8,0).add(new TreeDecal(0.1, -0.01));
-        map.getTile(6,7,0).add(new TreeDecal(-0.1, -0.25));
-        map.getTile(5,7,0).add(new TreeDecal(0.03, -0.2));
+        map.getTile(0,10,1).add(new Obstacle("DirtRock"));
+        map.getTile(3,7,2).add(new Obstacle("StoneRock"));
+        map.getTile(8,5,1).add(new Obstacle("StoneRock"));
 
-        map.getTile(10,2,0).add(new TreeDecal(-.2,0));
-        map.getTile(10,3,0).add(new TreeDecal(.1,.2));
+        map.getTile(0,8,2).add(new Decal("PlainsTreeLong", -0.15, .2));
+        map.getTile(0,7,2).add(new Decal("PlainsTreeLong", 0.15, -.22));
+        map.getTile(1,7,2).add(new Decal("PlainsTreeLong", -.11, -.2));
+        map.getTile(1,7,2).add(new Decal("PlainsTreeLong", .2, .08));
+        map.getTile(2,6,2).add(new Decal("PlainsTreeLong", -0.15, .2));
 
-        map.getTile(8,4,0).add(new TreeDecal(.09,.2));
-        map.getTile(6,3,1).add(new TreeDecal(.3,0));
+        map.getTile(5,8,0).add(new Decal("AutumnTreeTall", 0.1, -0.01));
+        map.getTile(6,7,0).add(new Decal("AutumnTreeTall", -0.1, -0.25));
+        map.getTile(5,7,0).add(new Decal("AutumnTreeTall", 0.03, -0.2));
 
-        map.getTile(2,5,7).add(new TreeDecal(0,0));
-        map.getTile(3,4,10).add(new TreeDecal(0,-.1));
-        map.getTile(5,3,4).add(new TreeDecal(.1,-.25));
+        map.getTile(10,2,0).add(new Decal("TundraPineLong", -.2,0));
+        map.getTile(10,3,0).add(new Decal("TundraPineLong", .1,.2));
 
-        map.getTile(9,1,6).add(new TreeDecal(0.25, -.25));
-        map.getTile(9,1,6).add(new TreeDecal(-0.25, .25));
+        map.getTile(8,4,0).add(new Decal("Cactus1",.09,.2));
+        map.getTile(6,3,1).add(new Decal("Cactus1", .3,0));
+
+        map.getTile(2,5,7).add(new Decal("TundraPineLong", 0,0));
+        map.getTile(3,4,10).add(new Decal("TundraPineLong", 0,-.1));
+        map.getTile(5,3,4).add(new Decal("TundraPineLong", .1,-.25));
+
+        map.getTile(9,1,6).add(new Decal("TundraPineLong", 0.25, -.25));
+        map.getTile(9,1,6).add(new Decal("TundraPineLong", -0.25, .25));
 
         return map;
     }

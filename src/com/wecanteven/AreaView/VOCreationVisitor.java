@@ -2,13 +2,9 @@ package com.wecanteven.AreaView;
 
 import com.wecanteven.AreaView.Biomes.Biome;
 import com.wecanteven.AreaView.ViewObjects.Factories.BiomeFactory;
-import com.wecanteven.AreaView.ViewObjects.Factories.PlainsFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Decals.Decal;
-import com.wecanteven.Models.Decals.FlowerDecal;
-import com.wecanteven.Models.Decals.GroundDecal;
-import com.wecanteven.Models.Decals.TreeDecal;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Entities.NPC;
@@ -253,17 +249,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     }
 
     @Override
-    public void visitFlowerDecal(FlowerDecal f) {
-
-    }
-
-    @Override
-    public void visitGroundDecal(GroundDecal g) {
-
-    }
-
-    @Override
-    public void visitTreeDecal(TreeDecal t) {
-        areaView.addViewObject(currentBiomeFactory.createTreeDecal(currentPosition, t));
+    public void visitDecal(Decal d) {
+        areaView.addViewObject(factory.createDecalViewObject(currentPosition, d));
     }
 }

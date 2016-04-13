@@ -130,9 +130,9 @@ public abstract class ViewObjectFactory {
                 hexDrawingStrategy);
     }
 
-    public DecalViewObject createDecalViewObject(Position position, Decal decal, String resourcePath) {
+    public DecalViewObject createDecalViewObject(Position position, Decal decal) {
         return new DecalViewObject(
-                createSimpleViewObject(position, resourcePath),
+                createSimpleViewObject(position, "Decals/" + decal.getName() + ".xml"),
                 decal.getR(),
                 decal.getS()
         );
