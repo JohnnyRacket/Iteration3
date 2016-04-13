@@ -119,6 +119,10 @@ public class TSMBlowsLevelFactory extends LevelFactory {
         map.getTile(0,9,1).add(new Decal("AutumnTreeTall", -0.1,-0.2));
         map.getTile(1,9,0).add(new Decal("AutumnTreeTall", 0.1,-0.25));
 
+        map.getTile(1,10,0).add(new Decal("TallGrassFall", .1, -.3));
+        map.getTile(4,9,0).add(new Decal("TallGrassFall", .05, -.3));
+        map.getTile(5,7,0).add(new Decal("TallGrassFall", -.4, .2));
+
         map.getTile(2,9,0).add(new Decal("StonePress", 0,0));
         map.getTile(3,9,0).add(new Decal("StonePress", 0,0));
         map.getTile(4,8,0).add(new Decal("StonePress", 0,0));
@@ -132,6 +136,12 @@ public class TSMBlowsLevelFactory extends LevelFactory {
         map.getTile(1,7,2).add(new Decal("PlainsTreeLong", -.11, -.2));
         map.getTile(1,7,2).add(new Decal("PlainsTreeLong", .2, .08));
         map.getTile(2,6,2).add(new Decal("PlainsTreeLong", -0.15, .2));
+
+        map.getTile(0,8,2).add(new Decal("TallGrass",.2,.2));
+        map.getTile(1,6,2).add(new Decal("TallGrass",-.2,-.4));
+        map.getTile(2,6,2).add(new Decal("TallGrass",.3,-.3));
+        map.getTile(3,6,2).add(new Decal("TallGrass",0,-.1));
+
 
         map.getTile(5,8,0).add(new Decal("AutumnTreeTall", 0.1, -0.01));
         map.getTile(6,7,0).add(new Decal("AutumnTreeTall", -0.1, -0.25));
