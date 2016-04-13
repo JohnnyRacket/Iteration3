@@ -34,9 +34,10 @@ public class DopeAssLevelFactory extends LevelFactory{
 
     @Override
     public Map createMap() {
-        Map map = new Map(10,10,10);
-        for (int i = 0; i<10; i++) {
-            for (int j = 0; j<10; j++) {
+        int s = 25, r = 25;
+        Map map = new Map(s,r,10);
+        for (int i = 0; i<r; i++) {
+            for (int j = 0; j<r; j++) {
                 map.getTile(i, j, 0).setTerrain(
                         i + j < 15 ? new Ground() : new Current(Direction.NORTHEAST)
                 );
@@ -72,6 +73,15 @@ public class DopeAssLevelFactory extends LevelFactory{
 
             map.getTile(4,9,2).setTerrain(new Ground());
             map.getTile(4,9,3).setTerrain(new Ground());
+
+        }
+
+        for(int i = 0; i < s; ++i){
+            if(i > 12 || i < 7) {
+                for (int j = 0; j < r; ++j) {
+                    map.getTile(i, j, 0).setTerrain(new Ground());
+                }
+            }
         }
         return map;
     }
