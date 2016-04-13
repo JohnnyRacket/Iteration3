@@ -1,13 +1,18 @@
 package com.wecanteven.SaveLoad.XMLProcessors;
 
+import com.wecanteven.Models.Factories.ItemFactories.EquipableItemFactory;
 import com.wecanteven.Models.Factories.ItemFactories.InteractiveItemFactory;
 import com.wecanteven.Models.Factories.ItemFactories.ObstacleItemFactory;
 import com.wecanteven.Models.Factories.ItemFactories.OneShotItemFactory;
+import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
+import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.HeadEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Items.Takeable.UseableItem;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 
@@ -25,8 +30,22 @@ public class ItemXMLProcessor extends XMLProcessor {
     }
 
     public static TakeableItem parseTakeableItem(Element el) {
-        return null;
+        if(el.getTagName().equals("HeadEquipableItem")){
+            System.out.println("Head Equipable Item Found");
+            return parseHeadEquipableItem(el);
+        }
+        return new TakeableItem("LOL", 2);
     }
+
+    public static HeadEquipableItem parseHeadEquipableItem(Element el) {
+
+        return (HeadEquipableItem) (new ItemMap()).getItemAsEquipable(sf.getStrAttr(el, "name"));
+    }
+
+
+
+
+
     public static Obstacle parseObstacleItem(Element el) {
         return new ObstacleItemFactory().vendObstacleItem(el.getAttribute("name"));
     }

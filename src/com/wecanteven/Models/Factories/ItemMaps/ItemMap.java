@@ -26,7 +26,7 @@ public class ItemMap {
 
     private HashSet<String> usedNames;
 
-    private ItemMap() {
+    public ItemMap() {
         ObstacleMap = new HashMap<>();
         OneShotItemMap = new HashMap<>();
         InteractiveitemMap = new HashMap<>();
@@ -84,6 +84,10 @@ public class ItemMap {
 
     private void initializeEquipable() {
         EquipableItemFactory factory = new EquipableItemFactory();
+
+        EquipableItemMap.put("Top Hat", () -> factory.vendHelmet("Top Hat", 30));
+        EquipableItemMap.put("THE GAME CRASHER", () -> factory.vendHelmet("THE GAME CRASHER", 130));
+
 
         //Boots
         EquipableItemMap.put("Super speed boots", () -> factory.vendMovementSpeedBoots("Super speed boots", 60));
