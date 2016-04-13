@@ -46,13 +46,13 @@ public class ItemXMLProcessor extends XMLProcessor {
 
 
     public static Obstacle parseObstacleItem(Element el) {
-        return new ObstacleItemFactory().vendObstacleItem(el.getAttribute("name"));
+        return new ItemMap().getItemAsObstacle(sf.getStrAttr(el, "name"));
     }
     public static InteractiveItem parseInteractiveItem(Element el) {
-        return new InteractiveItem(el.getAttribute("name"));
+        return new ItemMap().getItemAsInteractive(el.getAttribute("name"));
     }
     public static OneShot parseOneShotItem(Element el) {
-        return new OneShotItemFactory().vendDefaultOneShot(el.getAttribute("name"));
+        return new ItemMap().getItemAsOneShot(sf.getStrAttr(el, "name"));
     }
 
 

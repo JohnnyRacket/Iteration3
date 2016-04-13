@@ -58,8 +58,9 @@ public class ItemMap {
     private void initializeObstacle() {
         ObstacleItemFactory factory = new ObstacleItemFactory();
 
-        ObstacleMap.put("Big ass rock", () -> factory.vendObstacleItem("Big ass rock"));
-        ObstacleMap.put("Unbreakable Crate", () -> factory.vendObstacleItem("Unbreakable Crate"));
+        ObstacleMap.put("Crate", () -> factory.vendObstacleItem("Crate"));
+        ObstacleMap.put("Box", () -> factory.vendObstacleItem("Box"));
+
 
         usedNames.addAll(ObstacleMap.keySet());
     }
@@ -67,6 +68,8 @@ public class ItemMap {
     private void initializeOneShot() {
         OneShotItemFactory factory = new OneShotItemFactory();
 
+        OneShotItemMap.put("Box",
+                () -> factory.vendOneShot("Box", new StatsAddable(0,0,0,0,0,0,0,0,0)));
         OneShotItemMap.put("Minor Health Orb",
                 () -> factory.vendOneShot("Minor Health Orb", new StatsAddable(0,0,0,0,0,0,0,5,0)));
         OneShotItemMap.put("Minor Mana Orb",
@@ -82,6 +85,7 @@ public class ItemMap {
     private void initializeInteractive() {
         InteractiveItemFactory factory = new InteractiveItemFactory();
 
+        InteractiveitemMap.put("Button", () -> factory.vendDefaultInteractiveItem("Button"));
         InteractiveitemMap.put("Box", () -> factory.vendDefaultInteractiveItem("Box"));
 
         usedNames.addAll(InteractiveitemMap.keySet());
@@ -94,35 +98,6 @@ public class ItemMap {
         EquipableItemMap.put("THE GAME CRASHER", () -> factory.vendHeadEquipableItem("THE GAME CRASHER", 1000, new StatsAddable(2,0,0,0,0,0,0,0,0)));
         EquipableItemMap.put("Katar", () -> factory.vendOneHandedMeleeWeapon("Katar", 50,  new StatsAddable(0,0,0,0,0,0,0,4,0)));
 
-
-        //Boots
-        EquipableItemMap.put("Super speed boots", () -> factory.vendBoots("Super speed boots", 60, new StatsAddable(0,0,0,0,0,0,0,0,0)));
-        EquipableItemMap.put("Armor boots", () -> factory.vendBoots("Armor boots", 20, new StatsAddable(0,0,0,0,0,0,0,0,0)));
-
-        //Chest
-        EquipableItemMap.put("Dank chestplate", () -> factory.vendChestplate("Dank chestplate", 10, new StatsAddable(0,0,0,0,0,0,0,0,0)));
-        EquipableItemMap.put("Derp chestplace", () -> factory.vendChestplate("Derp chestplate", 30, new StatsAddable(0,0,0,0,0,0,0,0,0)));
-
-        //Head
-        EquipableItemMap.put("Put your smart cap on", () -> factory.vendHeadEquipableItem("Put your smart cap on", 20, new StatsAddable(0,0,0,0,0,0,0,0,0)));
-        EquipableItemMap.put("Smash me on the head hat", () -> factory.vendHeadEquipableItem("Smash me on the head hat", 15, new StatsAddable(0,0,0,0,0,0,0,0,0)));
-
-        //Weapon
-
-        // TODO need 3 one handed, 3 two handed, 3 brawler
-
-        //Melee
-        //EquipableItemMap.put("", () -> {});
-        //EquipableItemMap.put("", () -> {});
-
-        //Ranged
-        //EquipableItemMap.put("", () -> {});
-        //EquipableItemMap.put("", () -> {});
-
-        //Staff
-        //EquipableItemMap.put("", () -> {});
-        //EquipableItemMap.put("", () -> {});
-        //EquipableItemMap.put("", () -> {});
 
         usedNames.addAll(EquipableItemMap.keySet());
     }
