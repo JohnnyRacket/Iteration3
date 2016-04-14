@@ -17,9 +17,9 @@ public class BackgroundImageDrawable extends Drawable {
     private int xOld;
     private int yOld;
 
-    public BackgroundImageDrawable(BufferedImage image, ViewEngine viewEngine){
-        this.image = image;
+    public BackgroundImageDrawable( ViewEngine viewEngine){
         this.viewEngine = viewEngine;
+        image = viewEngine.getScreenShot();
     }
     @Override
     public void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight) {
