@@ -36,7 +36,7 @@ public class AnimatedCollapseDecorator extends DrawableDecorator {
     private void openDraw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight){
         if(currentHeight < properHeight){
             this.getDrawable().setHeight(currentHeight);
-            currentHeight +=50;
+            currentHeight +=properHeight/4;
         }else{
             setHeight(properHeight);
             opening = false;
@@ -47,7 +47,7 @@ public class AnimatedCollapseDecorator extends DrawableDecorator {
     private void closeDraw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight){
         if(currentHeight > 0){
             this.getDrawable().setHeight(currentHeight);
-            currentHeight -=50;
+            currentHeight -=properHeight/4;
         }else{
             setHeight(0);
             closing = false;

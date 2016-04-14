@@ -27,7 +27,7 @@ public class Main {
         //testing view manager here
         engine.getManager().addView(view);
 
-        ModelTime.getInstance().registerTickable(controller);
+        ModelTime.getInstance().registerUnstoppable(controller);
         //engine.setVisible(true);
         ModelEngine mEngine = new ModelEngine();
 

@@ -15,6 +15,10 @@ public class TeleportAoe extends OneTimeAreaOfEffect {
         this.destination = destination;
     }
 
+    public Location getDestination() {
+        return destination;
+    }
+
     @Override
     public void apply(Entity entity) {
         entity.move(destination);

@@ -15,7 +15,7 @@ public class ProjectileHitBoxGenerator implements HitBoxGenerator {
 
     public ProjectileHitBoxGenerator(Character caster,StatsAddable effect){
         this.caster = caster;
-        hitbox = new MovableHitBox("Range",caster.getLocation(),effect,caster.getActionHandler());
+        hitbox = new MovableHitBox("WaterBolt",caster.getLocation(),effect,caster.getActionHandler());
     }
     public void generate(){
         int distance = 3;

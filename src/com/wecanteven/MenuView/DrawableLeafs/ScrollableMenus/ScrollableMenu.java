@@ -10,7 +10,7 @@ import java.util.Iterator;
 /**
  * Created by John on 3/31/2016.
  */
-public class ScrollableMenu extends Drawable implements Navigatable {
+public class ScrollableMenu extends Drawable implements Navigatable, NavigatableListHolder {
 
     private int itemHeight;
     private NavigatableList list;
@@ -65,6 +65,9 @@ public class ScrollableMenu extends Drawable implements Navigatable {
         NavigatableList tmpList = list.clone();
         Iterator<SelectableItem> iter = tmpList.getIterator();
         while (iter.hasNext()) {
+            if(offsetY - y + itemHeight > this.getHeight()){
+                return;
+            }
             if (index == list.getCurrentIndex() && active) {
                 SelectableItem current = iter.next();
                 g2d.setColor(selectedColor);
@@ -75,10 +78,7 @@ public class ScrollableMenu extends Drawable implements Navigatable {
                 current.draw(g2d, offsetX + calculatedPadding / 2, offsetY + calculatedPadding/2, this.getWidth() - calculatedPadding, itemHeight);
             }
             offsetY += itemHeight;
-            if(offsetY - y > this.getHeight() - 20){
-                System.out.println(offsetY +  " / " + this.getHeight());
-                return;
-            }
+
             index++;
         }
     }

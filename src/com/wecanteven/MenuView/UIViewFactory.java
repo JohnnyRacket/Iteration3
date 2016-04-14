@@ -10,10 +10,12 @@ import com.wecanteven.MenuView.DrawableContainers.Decorators.*;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.RowedCompositeContainer;
+import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 import com.wecanteven.MenuView.DrawableLeafs.BackgroundImageDrawable;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
 
+import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.BiNavigatableGridWithCenterTitle;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
 import com.wecanteven.MenuView.DrawableLeafs.Toaster.Toast;
@@ -27,6 +29,7 @@ import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
@@ -102,14 +105,14 @@ public class UIViewFactory {
         columns.addDrawable(menu);
         columns.addDrawable(skillMenu);
 
-        TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats");
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats", Config.TEAL);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
-        //AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
 
         SwappableView view = new SwappableView();
         view.addNavigatable(skillMenu);
-        view.addDrawable(vert);
+        view.addDrawable(anim);
 
         ViewTime.getInstance().register(()->{
             createGreyBackground();
@@ -124,15 +127,16 @@ public class UIViewFactory {
 
     public void createInventoryView(Character character){
 
-        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this);
+        NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
+        NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
+
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this, menu, equipMenu);
         character.accept(visitor);
         NavigatableList list = visitor.getInventoryItems();
         NavigatableList equiplist = visitor.getEquippedItems();
         //make menu
-        NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
         menu.setBgColor(Config.PAPYRUS);
 
-        NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
         equipMenu.setBgColor(Config.DARKPAPYRUS);
 
         //NavigatableList equiplist = new NavigatableList();
@@ -150,14 +154,14 @@ public class UIViewFactory {
         columns.addDrawable(menu);
         columns.addDrawable(equipMenu);
 
-        TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment");
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment", Config.TEAL);
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
-        //AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
+        AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
 //        view.addDrawable(vertCenter);
 
 
-        view.addDrawable(vertCenter);
+        view.addDrawable(animation);
         view.addNavigatable(menu);
         view.addNavigatable(equipMenu);
         //return created swappable view
@@ -202,7 +206,7 @@ public class UIViewFactory {
         //make swappable view
         SwappableView view = new SwappableView();
         //add decorators to center the menu
-        TitleBarDecorator title = new TitleBarDecorator(menu,"Main Menu");
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Can Periwinkle Even", Config.CINNIBAR);
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
         view.addDrawable(vertCenter);
@@ -211,73 +215,92 @@ public class UIViewFactory {
         return view;
     }
 
-    public void createEquippableItemMenu(Character character, EquipableItem item){
-        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this);
+    public void createEquippableItemMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, EquipableItem item){
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this,invHolder,eqHolder);
         NavigatableList list = new NavigatableList();
+        MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Equip", () ->{
             System.out.println("equip pressed");
             character.equipItem(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createInventoryView(avatar.getCharacter());
+                //createInventoryView(avatar.getCharacter());
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventoryItems());
+                eqHolder.setList(visitor.getEquippedItems());
             },0);
 
+            controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Drop", () ->{
             System.out.println("drop pressed");
             character.drop(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createInventoryView(avatar.getCharacter());
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventoryItems());
+                eqHolder.setList(visitor.getEquippedItems());
             },0);
+            controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
             System.out.println("cancel pressed");
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createInventoryView(avatar.getCharacter());
+
             },0);
+            controller.setMenuState(container);
         }));
         ScrollableMenu menu = new ScrollableMenu(100,100);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
-
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        menu.setBgColor(Config.CINNIBAR);
         menu.setList(list);
         SwappableView view = new SwappableView();
         view.addNavigatable(menu);
-        view.addDrawable(vert);
+        view.addDrawable(anim);
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
         controller.setMenuState(view.getMenuViewContainer());
 
     }
-    public void createEquippedItemMenu(Character character, EquipableItem item){
+    public void createEquippedItemMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, EquipableItem item){
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this, invHolder, eqHolder);
         NavigatableList list = new NavigatableList();
+        MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Unequip", () ->{
             System.out.println("unequip pressed");
             character.unequipItem(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createInventoryView(avatar.getCharacter());
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventoryItems());
+                eqHolder.setList(visitor.getEquippedItems());
             },0);
-
+            controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
             System.out.println("cancel pressed");
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createInventoryView(avatar.getCharacter());
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventoryItems());
+                eqHolder.setList(visitor.getEquippedItems());
             },0);
+            controller.setMenuState(container);
         }));
         ScrollableMenu menu = new ScrollableMenu(100,70);
+        menu.setBgColor(Config.CINNIBAR);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
 
         menu.setList(list);
         SwappableView view = new SwappableView();
         view.addNavigatable(menu);
-        view.addDrawable(vert);
+        view.addDrawable(anim);
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
@@ -391,6 +414,7 @@ public class UIViewFactory {
 
     }
     public void createPauseMenu(){
+        pauseGame();
         ScrollableMenu menu = new ScrollableMenu(300,300);
         NavigatableList list = new NavigatableList();
         list.addItem(createSaveMenu(menu, list));
@@ -422,19 +446,21 @@ public class UIViewFactory {
         }));
 
         menu.setList(list);
-        TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu");
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu", Config.CINNIBAR);
        // RectangleShadowDecorator shadow = new RectangleShadowDecorator(title);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
 
 
         SwappableView view = new SwappableView();
         view.addNavigatable(menu);
-        view.addDrawable(vert);
+        view.addDrawable(anim);
         ViewTime.getInstance().register(()->{
             createGreyBackground();
             vEngine.getManager().addView(view);
         },0);
+
         controller.setMenuState(view.getMenuViewContainer());
     }
     public void createGreyBackground(){
@@ -454,75 +480,33 @@ public class UIViewFactory {
 
         //make menu
         NavigatableGrid npcInv = new NavigatableGrid(250, 400, 5, 5);
-        npcInv.setBgColor(new Color(90,70,50));
-
         NavigatableGrid playerInv = new NavigatableGrid(250, 400, 5, 5);
-        playerInv.setBgColor(new Color(90,70,70));
 
         npcInv.setList(npcList);
         playerInv.setList(playerList);
         //make swappable view
-        SwappableView view = new SwappableView();
-        //add decorators to center the menu
-        ColumnatedCompositeContainer columns  = new ColumnatedCompositeContainer();
-        columns.setHeight(400);
-        columns.setWidth(700);
-
-
-
-        VerticalCenterContainer npcTradeTitle =
-                new VerticalCenterContainer(
-                        new HorizontalCenterContainer(
-                                new TitleBarDecorator(
-                                        npcInv,
-                                        "Shopkeeper Gold: " + npc.getItemStorage().getMoney().getValue()
-                                )
-                        )
-                );
-        columns.addDrawable(npcTradeTitle);
-
-        VerticalCenterContainer playerTradeTitle =
-                new VerticalCenterContainer(
-                        new HorizontalCenterContainer(
-                                new TitleBarDecorator(
-                                        playerInv,
-                                        "Your Gold: " + player.getItemStorage().getMoney().getValue()
-                                )
-                        )
+        BiNavigatableGridWithCenterTitle tradeWindow =
+                new BiNavigatableGridWithCenterTitle(npcInv, playerInv,
+                        "Buy / Sell",
+                        "Shopkeeper Gold: " + npc.getItemStorage().getMoney().getValue(),
+                        "Your Gold: " + player.getItemStorage().getMoney().getValue(),
+                        Config.MEDIUMGREY, Config.TEAL, Config.TRANSMEDIUMGREY
                 );
 
 
-        columns.addDrawable(playerTradeTitle);
-
-
-        VerticalCenterContainer title =
-                new VerticalCenterContainer(
-                        new HorizontalCenterContainer(
-                                new TitleBarDecorator(columns, "Buy / Sell")
-                        )
-                );
-
-
-        view.addDrawable(title);
 
 
 
-        view.addNavigatable(npcInv);
-        view.addNavigatable(playerInv);
-
-
-
-
-        ViewTime.getInstance().register(()->{
-            vEngine.getManager().addView(view);
-        },0);
-
-        controller.setMenuState(view.getMenuViewContainer());
-        //This ACTIVE boolean serves the purpose of knowing whether or not draw the selector in the buy window
-        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame John
-        if(!active) {
-            view.getMenuViewContainer().swap();
-        }
+//        ViewTime.getInstance().register(()->{
+//            vEngine.getManager().addView(view);
+//        },0);
+//
+//        controller.setMenuState(view.getMenuViewContainer());
+//        //This ACTIVE boolean serves the purpose of knowing whether or not draw the selector in the buy window
+//        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame John
+//        if(!active) {
+//            view.getMenuViewContainer().swap();
+//        }
     }
 
     //Triggers initial animation dialog window - afterwards, continue is used.
@@ -552,7 +536,7 @@ public class UIViewFactory {
         rows.addDrawable(conversationMenu);
         rows.addDrawable(chatMenu);
 
-        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation");
+        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation", Config.TEAL);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
@@ -595,7 +579,7 @@ public class UIViewFactory {
         rows.addDrawable(conversationMenu);
         rows.addDrawable(chatMenu);
 
-        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation");
+        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation", Config.TEAL);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
 
@@ -681,10 +665,12 @@ public class UIViewFactory {
     }
 
     public void exitMenu() {
+        resumeGame();
         this.getController().setPlayState();
         ViewTime.getInstance().register(()->{
             this.getController().clearViews();
         },0);
+
     }
 
     public void createKeyBindMenu(ControllerState state){
@@ -708,7 +694,7 @@ public class UIViewFactory {
             }));
         }
         menu.setList(list);
-        TitleBarDecorator title = new TitleBarDecorator(menu,"Rebind Keys");
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Rebind Keys", Config.TEAL);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
 
@@ -766,6 +752,16 @@ public class UIViewFactory {
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addToast( new Toast(dur, msg));
         },0);
+    }
+
+    public void pauseGame(){
+        ModelTime.getInstance().pause();
+        ViewTime.getInstance().pause();
+    }
+
+    public void resumeGame(){
+        ModelTime.getInstance().resume();
+        ViewTime.getInstance().resume();
     }
 
 }

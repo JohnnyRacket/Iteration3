@@ -1,5 +1,6 @@
 package com.wecanteven.MenuView;
 
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.MenuView.DrawableLeafs.Toaster.Toast;
 import com.wecanteven.MenuView.DrawableLeafs.Toaster.Toaster;
 
@@ -46,15 +47,24 @@ public class ViewManager {
         viewStack.push(view);
     }
 
-    public void popView(){
-        viewStack.pop();
+    public void popView() {
+        SwappableView view = viewStack.peek();
+        view.closeDrawables();
+        ViewTime.getInstance().register(() -> {
+            viewStack.remove(view);
+        }, 200);
     }
 
     public void addToast(Toast toast) { toaster.addToast(toast); }
 
     public void clear(){
-        while(!viewStack.empty()){
-            viewStack.pop();
+        Iterator<SwappableView> iter =  viewStack.iterator();
+        while(iter.hasNext()){
+            SwappableView view = iter.next();
+            view.closeDrawables();
+            ViewTime.getInstance().register(()->{
+                viewStack.remove(view);
+            },200);
         }
     }
 

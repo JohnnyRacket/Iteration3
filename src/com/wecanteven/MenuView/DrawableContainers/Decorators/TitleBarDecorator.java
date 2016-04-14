@@ -21,10 +21,16 @@ public class TitleBarDecorator extends DrawableDecorator {
         this.setHeight(d.getHeight());
         //d.setHeight(d.getHeight()-50);
     }
+    public TitleBarDecorator(Drawable d, String title, Color bgColor) {
+        super(d);
+        this.title = title;
+        this.setHeight(d.getHeight());
+        this.bgColor = bgColor;
+    }
 
     @Override
     public void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight) {
-        g2d.setColor(Config.TEAL);
+        g2d.setColor(bgColor);
         g2d.fillRect(x,y,(this.getDrawable().getWidth()),50);
         g2d.setColor(textColor);
         g2d.setFont(new Font("Helvetica",1,20));

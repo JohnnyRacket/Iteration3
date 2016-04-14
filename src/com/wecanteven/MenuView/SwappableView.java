@@ -39,4 +39,12 @@ public class SwappableView {
         return this.menus;
     }
 
+    public void closeDrawables(){
+        Iterator<Drawable> iter = drawables.iterator();
+        while(iter.hasNext()){
+            Drawable current = iter.next();
+            current.closeWindowAction();
+        }
+    }
+
 }

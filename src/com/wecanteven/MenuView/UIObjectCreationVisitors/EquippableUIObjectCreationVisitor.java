@@ -1,7 +1,9 @@
 package com.wecanteven.MenuView.UIObjectCreationVisitors;
 
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
+import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
+import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableListHolder;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.SelectableItem;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Character;
@@ -36,9 +38,17 @@ public class EquippableUIObjectCreationVisitor implements ItemStorageVisitor, It
     private UIViewFactory factory;
     private Character character;
     private boolean inInv = true;
+    private NavigatableListHolder invHolder;
+    private NavigatableListHolder eqHolder;
 
     public EquippableUIObjectCreationVisitor(UIViewFactory factory){
         this.factory = factory;
+    }
+
+    public EquippableUIObjectCreationVisitor(UIViewFactory factory, NavigatableListHolder invHolder, NavigatableListHolder eqHolder){
+        this.factory = factory;
+        this.invHolder = invHolder;
+        this.eqHolder = eqHolder;
     }
 
     public NavigatableList getInventoryItems (){
@@ -123,12 +133,12 @@ public class EquippableUIObjectCreationVisitor implements ItemStorageVisitor, It
         if(inInv) {
             inventoryItems.addItem(new GridItem(equipable.getName(), () -> {
                 System.out.println("select hit on equppable item");
-                factory.createEquippableItemMenu(character, equipable);
+                factory.createEquippableItemMenu(character, invHolder, eqHolder, equipable);
             }));
         }else{
             equippedItems.addItem(new GridItem(equipable.getName(), () -> {
                 System.out.println("select hit on equpped item");
-                factory.createEquippedItemMenu(character, equipable);
+                factory.createEquippedItemMenu(character, invHolder, eqHolder, equipable);
             }));
         }
     }

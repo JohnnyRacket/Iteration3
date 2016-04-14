@@ -14,7 +14,7 @@ public class MeleeRangeHitBoxGenerator implements HitBoxGenerator {
 
     public MeleeRangeHitBoxGenerator(Character caster,StatsAddable effect){
         this.caster = caster;
-        hitbox = new HitBox("Melee",caster.getLocation(),effect,caster.getActionHandler());
+        hitbox = new HitBox("Punch",caster.getLocation(),effect,caster.getActionHandler());
     }
     public void generate(){
         int duration = 1;

@@ -5,6 +5,7 @@ import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
+import com.wecanteven.Models.ModelTime.ModelTime;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -56,6 +57,8 @@ public class MenuState extends ControllerState {
             System.out.println("esc hit");
             this.getController().setPlayState();
             ViewTime.getInstance().register(()->{
+                ViewTime.getInstance().resume();
+                ModelTime.getInstance().resume();
                 this.getController().clearViews();
             },0);
         }, this.getjFrame(), this.getController()));
