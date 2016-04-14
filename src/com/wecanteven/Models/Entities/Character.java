@@ -51,10 +51,12 @@ public class Character extends Entity {
     }
 
     public void attack() {
-        System.out.println("The entity attacked");
-        AbilityFactory factory = new AbilityFactory();
-        Ability attack = factory.vendMeleeAttack(this);
-        attack.cast();
+        if(!isActive()){
+            System.out.println("The entity attacked");
+            AbilityFactory factory = new AbilityFactory();
+            Ability attack = factory.vendRangedAttack(this);
+            attack.cast();
+        }
     }
 
     public void useAbility(int index) {

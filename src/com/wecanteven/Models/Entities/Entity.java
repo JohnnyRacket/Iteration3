@@ -15,32 +15,33 @@ import java.util.ArrayList;
  * Created by Brandon on 3/31/2016.
  */
 
-public class Entity implements Moveable, Directional, Destroyable, ViewObservable, Observer{
-    ArrayList<Observer> observers = new ArrayList<>();
+public class Entity implements Moveable, Directional,Destroyable, ViewObservable, Observer{
+    private ArrayList<Observer> observers;
     private ActionHandler actionHandler;
     private Stats stats;
-    private int height = 3;
-    private int jumpHeight;
+    private int height, jumpHeight;
     private Location location;
     private Direction direction;
     private CanMoveVisitor canMoveVisitor;
     private CanFallVisitor canFallVisitor;
     private int movingTicks;
-    private boolean isActive;
-    private boolean lock;
+    private boolean lock, isActive;
 
     private boolean isDestroyed = false;
 
     public Entity(ActionHandler actionHandler, Direction direction){
-        this.actionHandler = actionHandler;
-        this.direction = direction;
-        stats = new Stats(this);
-        canMoveVisitor = new TerranianCanMoveVisitor();
-        canMoveVisitor.setEntity(this);
-        canFallVisitor = new TerranianCanFallVisitor();
-        jumpHeight = 25;
-        movingTicks = 0;
-        isActive = false;
+        observers = new ArrayList<>();
+
+        setStats(new Stats(this));
+        setHeight(3);
+        setJumpHeight(25);
+
+        setActionHandler(actionHandler);
+        setDirection(direction);
+        setCanMoveVisitor(new TerranianCanMoveVisitor());
+        setCanFallVisitor(new TerranianCanFallVisitor());
+        setMovingTicks(0);
+        setIsActive(false);
     }
 
     @Override
@@ -65,7 +66,8 @@ public class Entity implements Moveable, Directional, Destroyable, ViewObservabl
 
     @Override
     public void update(){
-        checkForDeath();
+        System.out.println("crazy shit is happening");
+        loseLife();
     }
 
     public boolean move(Direction d){
@@ -96,27 +98,19 @@ public class Entity implements Moveable, Directional, Destroyable, ViewObservabl
 
     public boolean fall(){
         if(!isActive()) {
-            if (getLocation().getZ() == 1) {
-                return false;
-            }
             Location tileBelow = getLocation().subtract(new Location(0, 0, 1));
             return getActionHandler().fall(this, tileBelow);
         }
         return false;
     }
 
-    public void checkForDeath(){
+    public void loseLife(){
+        getActionHandler().death(this);
+        setLocation(new Location(3, 9, 1));
+        notifyObservers();
         getStats().refreshStats();
-        if(getStats().getLives() <= 0){
-            die();
-        }
     }
 
-    public void die() {
-        System.out.println("The entity has died");
-        getActionHandler().death(this);
-        notifyObservers();
-    }
 
     public boolean isActive(){
         return isActive;
@@ -163,7 +157,7 @@ public class Entity implements Moveable, Directional, Destroyable, ViewObservabl
     }
 
     public void levelUp(){
-        stats.addStats(new StatsAddable(0,1,1,1,1,0,0,0,0));
+        getStats().addStats(new StatsAddable(0, 1, 1, 1, 1, 0, 0, 0, 0));
     }
 
 
@@ -184,6 +178,7 @@ public class Entity implements Moveable, Directional, Destroyable, ViewObservabl
 
     public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor) {
         this.canMoveVisitor = canMoveVisitor;
+        this.canMoveVisitor.setEntity(this);
     }
 
     public ActionHandler getActionHandler() {
@@ -264,11 +259,11 @@ public class Entity implements Moveable, Directional, Destroyable, ViewObservabl
         getStats().healDamage(healAmount);
     }
 
-    public void loseLife() {
-        System.out.println("Entity Lost a life");
-        getStats().loseLife();
-        isDestroyed = true;
-        checkForDeath();
-        notifyObservers();
-    }
+//    public void loseLife() {
+//        System.out.println("Entity Lost a life");
+//        getStats().loseLife();
+//        isDestroyed = true;
+//        ForDeath();
+//        notifyObservers();
+//    }
 }

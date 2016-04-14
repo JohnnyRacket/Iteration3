@@ -59,6 +59,9 @@ public class NewGameLauncher extends GameLauncher {
         setAvatar(new Avatar(player, getMap()));
         getMap().add(player, new Location(3,9,1));
         getController().setAvatar(getAvatar());
+
+        Character npc1 = new Character(getMap(), Direction.SOUTH);
+        getMap().add(npc1,new Location(2,9,5));
     }
 
     @Override

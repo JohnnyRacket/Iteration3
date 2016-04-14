@@ -15,4 +15,8 @@ public class AbilityFactory {
         MeleeRangeHitBoxGenerator hitBox = new MeleeRangeHitBoxGenerator(caster,new StatsAddable(0,0,0,0,0,0,0,-1,0));
         return new Ability(caster,hitBox);
     }
+    public Ability vendRangedAttack(Character caster) {
+        ProjectileHitBoxGenerator hitBox = new ProjectileHitBoxGenerator(caster,new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        return new Ability(caster,hitBox);
+    }
 }
