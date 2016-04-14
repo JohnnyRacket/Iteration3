@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Abilities;
 
+import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Location;
@@ -13,6 +14,7 @@ public class MovableHitBox extends HitBox{
     private CanMoveVisitor canMoveVisitor;
     private int movingTicks;
     private boolean isActive;
+    private ActionHandler actionHandler;
 
     public MovableHitBox(String name, Location source, StatsAddable effect){
         super(name,source,effect);
@@ -35,13 +37,16 @@ public class MovableHitBox extends HitBox{
         return isActive;
     }
     public void setMovingTicks(int movingTicks){
+        System.out.println("the moving ticks were set to: " + movingTicks);
+        setIsActive(true);
         this.movingTicks = movingTicks;
     }
     public int getMovingTicks() {
         return movingTicks;
     }
     public void updateMovingTicks(int ticks) {
-        setMovingTicks(ticks);
+        System.out.println("the number of ticks to kill him is: " +ticks);
+        setMovingTicks(calculateMovementTicks(ticks));
         calculateActiveStatus();
         tickTicks();
         //notifyObservers();
@@ -50,6 +55,7 @@ public class MovableHitBox extends HitBox{
     private void tickTicks(){
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
+                System.out.println("the projectile is on the move");
                 deIncrementMovingTick();
                 calculateActiveStatus();
                 tickTicks();
@@ -59,8 +65,8 @@ public class MovableHitBox extends HitBox{
     private void deIncrementMovingTick(){
         movingTicks--;
     }
-    private int calculateMovementTicks(int movementStat){
-        return (int) ((30D/movementStat)*10D);
+    private int calculateMovementTicks(int movementSpeed){
+        return (int) ((30D/movementSpeed)*10);
     }
 
     private void calculateActiveStatus(){
@@ -70,5 +76,8 @@ public class MovableHitBox extends HitBox{
         else{
             setIsActive(true);
         }
+    }
+    public void setActionHandler(ActionHandler actionHandler){
+        this.actionHandler = actionHandler;
     }
 }

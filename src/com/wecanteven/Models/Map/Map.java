@@ -57,10 +57,7 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     private boolean isOutOfBounds(Location location){
-        if( location.getR() < 0 ||
-            location.getS() < 0 ||
-            location.getZ() < 0 ||
-            location.getR() > getrSize()-1 ||
+        if( location.getR() > getrSize()-1 ||
             location.getZ() > getzSize()-1 ||
             location.getS() > getsSize()-1){
             return true;
@@ -73,8 +70,12 @@ public class Map implements MapVisitable, ActionHandler {
         CanFallVisitor visitor = entity.getCanFallVisitor();
         getTile(destination).accept(visitor);
         int tilesCount = 0;
-        while(visitor.isCanMove() && destination.getZ() > 0){
+        while(visitor.isCanMove()){
             destination.setZ(destination.getZ()-1);
+            if(destination.getZ() <0){
+                entity.loseLife();
+                return false;
+            }
             getTile(destination).accept(visitor);
             tilesCount++;
         }
@@ -135,7 +136,7 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
-    public boolean move(MovableHitBox hitBox, Location destination, int movespeed) {
+    public boolean move(MovableHitBox hitBox, Location destination, int moveSpeed) {
         Location source = hitBox.getLocation();
         CanMoveVisitor visitor = hitBox.getCanMoveVisitor();
 
@@ -149,16 +150,16 @@ public class Map implements MapVisitable, ActionHandler {
         tile.accept(visitor);
         if(visitor.canMove()) {//move if you can
             hitBox.setLocation(destination);
-            hitBox.updateMovingTicks(movespeed);
+            hitBox.updateMovingTicks(moveSpeed);
             remove(hitBox, source);
             add(hitBox, destination);
             return true;
         }
         else{
             //reached an entity/obstacle/wall
-            if(tile.hasEntity()){//moves one last space if it is an entity
+            if(tile.hasEntity()){//hits the entity if there is one
                 hitBox.setLocation(destination);
-                hitBox.updateMovingTicks(movespeed);
+                hitBox.updateMovingTicks(moveSpeed);
                 remove(hitBox, source);
                 add(hitBox, destination);
             }

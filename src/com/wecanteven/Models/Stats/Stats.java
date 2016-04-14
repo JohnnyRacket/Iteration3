@@ -65,6 +65,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void refreshStats(){
+        System.out.println("the entity healed: "+maxHealth.getStat());
         currentHealth.setStat(maxHealth.getStat());
         currentMana.setStat(maxMana.getStat());
     }
@@ -81,7 +82,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         currentHealth.add(statsAddable.getHealth());
         currentMana.add(statsAddable.getMana());
         notifyObservers();
-        modelNotifyObservers();
+        //modelNotifyObservers();
     }
 
     public void subtractStats(StatsAddable statsAddable){
@@ -95,7 +96,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         currentHealth.subtract(statsAddable.getHealth());
         currentMana.subtract(statsAddable.getMana());
         notifyObservers();
-        modelNotifyObservers();
+        //modelNotifyObservers();
     }
 
     public void takeDamage(int damage) {
@@ -112,7 +113,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         }
 
         notifyObservers();
-        modelNotifyObservers();
+        //modelNotifyObservers();
     }
 
     public void healDamage(int heal) {
@@ -124,7 +125,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         }
 
         notifyObservers();
-        modelNotifyObservers();
+        //modelNotifyObservers();
     }
 
     public void consumeMana(int amount) {
@@ -135,7 +136,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
             currentMana.setStat(0);
 
         notifyObservers();
-        modelNotifyObservers();
+        //modelNotifyObservers();
     }
 
     public void restoreMana(int amount) {
@@ -146,14 +147,14 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
             currentMana.setStat(getMaxMana());
 
         notifyObservers();
-        modelNotifyObservers();
+        //modelNotifyObservers();
     }
 
     public void loseLife() {
         lives.subtract(1);
 
         notifyObservers();
-        modelNotifyObservers();
+       // modelNotifyObservers();
     }
 
     //getters

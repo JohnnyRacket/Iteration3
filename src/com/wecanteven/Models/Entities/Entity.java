@@ -34,7 +34,7 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
 
         setStats(new Stats(this));
         setHeight(3);
-        setJumpHeight(25);
+        setJumpHeight(2);
 
         setActionHandler(actionHandler);
         setDirection(direction);
@@ -66,7 +66,8 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
 
     @Override
     public void update(){
-        checkForDeath();
+        System.out.println("crazy shit is happening");
+        loseLife();
     }
 
     public boolean move(Direction d){
@@ -97,27 +98,20 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
 
     public boolean fall(){
         if(!isActive()) {
-            if (getLocation().getZ() == 1) {
-                return false;
-            }
             Location tileBelow = getLocation().subtract(new Location(0, 0, 1));
             return getActionHandler().fall(this, tileBelow);
         }
         return false;
     }
 
-    public void checkForDeath(){
+    public void loseLife(){
+        actionHandler.death(this);
+        setLocation(new Location(3, 9, 1));
+        notifyObservers();
         getStats().refreshStats();
-        if(getStats().isDead()){
-            die();
-        }
+
     }
 
-    public void die() {
-        System.out.println("The entity has died");
-        getActionHandler().death(this);
-        notifyObservers();
-    }
 
     public boolean isActive(){
         return isActive;
@@ -266,11 +260,11 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
         getStats().healDamage(healAmount);
     }
 
-    public void loseLife() {
-        System.out.println("Entity Lost a life");
-        getStats().loseLife();
-        isDestroyed = true;
-        checkForDeath();
-        notifyObservers();
-    }
+//    public void loseLife() {
+//        System.out.println("Entity Lost a life");
+//        getStats().loseLife();
+//        isDestroyed = true;
+//        ForDeath();
+//        notifyObservers();
+//    }
 }
