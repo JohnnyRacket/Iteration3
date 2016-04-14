@@ -57,7 +57,6 @@ public class MovableHitBox extends HitBox{
         return isActive;
     }
     public void setMovingTicks(int movingTicks){
-        System.out.println("the moving ticks were set to: " + movingTicks);
         setIsActive(true);
         this.movingTicks = movingTicks;
     }
@@ -74,7 +73,6 @@ public class MovableHitBox extends HitBox{
     private void tickTicks(){
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
-                System.out.println("the projectile is on the move");
                 deIncrementMovingTick();
                 calculateActiveStatus();
                 tickTicks();

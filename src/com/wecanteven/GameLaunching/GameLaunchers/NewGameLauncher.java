@@ -26,8 +26,8 @@ import com.wecanteven.ViewEngine;
  */
 public class NewGameLauncher extends GameLauncher {
 
-    private LevelFactory levelFactory = new TSMBlowsLevelFactory();
-    //private LevelFactory levelFactory = new DopeAssLevelFactory();
+    //private LevelFactory levelFactory = new TSMBlowsLevelFactory();
+    private LevelFactory levelFactory = new DopeAssLevelFactory();
 
     public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine){
         super(controller, modelEngine, viewEngine);
