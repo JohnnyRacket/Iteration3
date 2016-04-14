@@ -13,11 +13,11 @@ import java.util.HashMap;
 /**
  * Created by John on 3/31/2016.
  */
-public class MenuState extends ControllerState {
+public class MainMenuState extends ControllerState {
 
     private MenuViewContainer menus;
 
-    public MenuState(JFrame jFrame, MainController controller){
+    public MainMenuState(JFrame jFrame, MainController controller){
         super(jFrame, controller);
         HashMap<ActionEnum, Integer> mappings = new HashMap<>();
         mappings.put(ActionEnum.UP,KeyEvent.VK_UP);
@@ -52,13 +52,6 @@ public class MenuState extends ControllerState {
             this.setCommandToExecute(()->menus.swap());
         }, this.getjFrame(), this.getController()));
 
-        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ESCAPE), ()->{
-            System.out.println("esc hit");
-            this.getController().setPlayState();
-            ViewTime.getInstance().register(()->{
-                this.getController().clearViews();
-            },0);
-        }, this.getjFrame(), this.getController()));
 
     }
 

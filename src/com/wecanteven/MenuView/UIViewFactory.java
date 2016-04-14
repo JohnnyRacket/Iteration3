@@ -195,16 +195,17 @@ public class UIViewFactory {
             })
         );
         list.addItem(createLoadMenu(menu, list));
-        list.addItem(new ScrollableMenuItem("Exit", () -> {System.out.println("test 2 selected");}));
+        list.addItem(new ScrollableMenuItem("Exit", () -> {System.exit(0);}));
         menu.setList(list);
         //make swappable view
         SwappableView view = new SwappableView();
         //add decorators to center the menu
-        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(menu);
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Main Menu");
+        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
         view.addDrawable(vertCenter);
         view.addNavigatable(menu);
-        //return created swappable view
+
         return view;
     }
 
