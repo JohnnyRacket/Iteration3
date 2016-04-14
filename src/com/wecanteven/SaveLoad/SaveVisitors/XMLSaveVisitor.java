@@ -1,5 +1,6 @@
 package com.wecanteven.SaveLoad.SaveVisitors;
 
+import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
@@ -41,6 +42,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     SaveFile save;
     //this is hacky as hell - @TODO: Fix this later
     private Avatar avatar;
+    private LevelFactory levelFactory;
 
     public XMLSaveVisitor(SaveFile save) {
 
@@ -201,5 +203,13 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         EntityXMLProcessor.formatDirection(direction);
     }
 
+
+    public LevelFactory getLevelFactory() {
+        return levelFactory;
+    }
+
+    public void setLevelFactory(LevelFactory levelFactory) {
+        this.levelFactory = levelFactory;
+    }
 }
 
