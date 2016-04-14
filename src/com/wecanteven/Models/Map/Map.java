@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Created by John on 3/31/2016.
  */
 public class Map implements MapVisitable, ActionHandler {
-
+    private String name;
     private Column[][] columns;
     private int rSize;
     private int sSize;
@@ -230,4 +230,11 @@ public class Map implements MapVisitable, ActionHandler {
         return columns[loc.getR()][loc.getS()].remove(hitbox, loc.getZ());
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

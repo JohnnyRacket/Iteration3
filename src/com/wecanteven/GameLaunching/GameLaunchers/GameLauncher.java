@@ -26,6 +26,7 @@ public abstract class GameLauncher {
     private MainController controller;
     private ModelEngine modelEngine;
     private ViewEngine viewEngine;
+    private LevelFactory levelFactory;
 
     public GameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine) {
         this.controller = controller;
@@ -39,8 +40,10 @@ public abstract class GameLauncher {
     abstract void createAvatar(String occupation);
 
     abstract void populateMap(Map map);
-    abstract LevelFactory getLevelFactory();
-
+    public LevelFactory getLevelFactory() {return levelFactory; }
+    public void setLevelFactory(LevelFactory levelFactory){
+        this.levelFactory = levelFactory;
+    }
 
 
 
@@ -51,7 +54,7 @@ public abstract class GameLauncher {
 
 
 
-        getViewEngine().registerView(new AreaView(getMap(),getLevelFactory() ));
+        getViewEngine().registerView(new AreaView(getMap(), getLevelFactory() ));
         getController().setPlayState();
     }
 

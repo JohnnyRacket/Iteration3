@@ -1,6 +1,8 @@
 package com.wecanteven.SaveLoad.Load;
 
 import com.wecanteven.GameLaunching.GameLaunchers.LoadGameLauncher;
+import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
+import com.wecanteven.GameLaunching.LevelFactories.LevelFactoryFactory;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
@@ -36,6 +38,7 @@ public class LoadFromXMLFile implements LoadGame {
     @Override
     public void loadGame() {
         loadSaveFile();
+        launcher.setLevelFactory(loadLevelFactory());
         launcher.loadMap(getMap());
         launcher.loadAvatar(getAvatar());
 
@@ -43,6 +46,7 @@ public class LoadFromXMLFile implements LoadGame {
     }
 
     public void loadSaveFile() {
+
         map = loadMap();
         avatar = loadAvatar();
 
@@ -56,6 +60,9 @@ public class LoadFromXMLFile implements LoadGame {
         return EntityXMLProcessor.parseAvatar(map, saveFile.getElemenetById("Avatar", 0));
     }
 
+    public LevelFactory loadLevelFactory() {
+        return (new LevelFactoryFactory()).vendLevelFactory(saveFile.getElemenetById("Map", 0).getAttribute("name"));
+    }
 
     public Avatar getAvatar() {
         return avatar;

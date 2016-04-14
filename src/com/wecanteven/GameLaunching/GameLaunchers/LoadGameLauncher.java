@@ -2,7 +2,9 @@ package com.wecanteven.GameLaunching.GameLaunchers;
 
 
 import com.wecanteven.Controllers.InputControllers.MainController;
+import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
+import com.wecanteven.GameLaunching.LevelFactories.TSMBlowsLevelFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Map.Map;
@@ -37,13 +39,6 @@ public class LoadGameLauncher extends GameLauncher {
         initializeAreaView();
         initializeUIView();
 
-    }
-
-    @Override
-    LevelFactory getLevelFactory() {
-        System.out.println("Alex doesnt really know what to put here");
-        (new Exception()).printStackTrace();
-        return null;
     }
 
     //Load will call loadMap
