@@ -380,7 +380,7 @@ public abstract class ViewObjectFactory {
         return new NullViewObject(new Position(0,0,0));
     }
 
-    protected SimpleViewObject createSimpleViewObject(Position p, String path) {
+    public SimpleViewObject createSimpleViewObject(Position p, String path) {
         return new SimpleViewObject(p, factory.loadDynamicImage(path), hexDrawingStrategy);
     }
 
