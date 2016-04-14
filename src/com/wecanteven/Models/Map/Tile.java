@@ -24,6 +24,7 @@ import com.wecanteven.Visitors.MapVisitor;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by John on 3/31/2016.
@@ -206,10 +207,8 @@ public class Tile implements MapVisitable {
     }
     public boolean hasAoe() { return areasOfEffect.size() > 0;}
 
-    public void acceptAoeVisitor(AreaOfEffectVisitor visitor) {
-        for (AreaOfEffect aoe : areasOfEffect) {
-            aoe.accept(visitor);
-        }
+    public Iterator<AreaOfEffect> getAreasOfEffect() {
+        return areasOfEffect.iterator();
     }
 
     /**

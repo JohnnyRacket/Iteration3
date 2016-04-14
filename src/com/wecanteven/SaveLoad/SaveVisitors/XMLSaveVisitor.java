@@ -60,6 +60,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         }
     }
 
+    @Override
     public void visitColumn(Column column) {
         TileXMLProcessor.formatColumn(column);
         for(int z  = 0; z < column.getZ(); ++z){
@@ -67,6 +68,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         }
 
     }
+
     @Override
     public void visitTile(Tile tile) {
         TileXMLProcessor.formatTile(tile);
@@ -82,8 +84,12 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         }
         if(tile.hasEntity()){tile.getEntity().accept(this);}
 
-    }
+        Iterator<AreaOfEffect> iter = tile.getAreasOfEffect();
 
+        while (iter.hasNext()) {
+            iter.next().accept(this);
+        }
+    }
 
     @Override
     public void visitAvatar(Avatar e) {
@@ -117,7 +123,6 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         npc.getStats().accept(this);
         npc.getItemStorage().accept(this);
     }
-
 
     @Override
     public void visitStats(Stats stats) {
