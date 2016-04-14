@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Abilities;
 
+import com.wecanteven.AreaView.VOCreationVisitor;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.ModelTime.Alertable;
@@ -15,7 +16,7 @@ public class HitBox {
     private StatsAddable effect;
     private Location location;
     private ActionHandler actionHandler;
-
+    static VOCreationVisitor voCreationVisitor;
     public HitBox(String name,Location location, StatsAddable effect, ActionHandler actionHandler){
         setName(name);
         setLocation(location);
@@ -26,11 +27,13 @@ public class HitBox {
     public void addToMap(int duration, Location destination){
         HitBox hitBox = this;
         actionHandler.add(hitBox,destination);
+        setLocation(destination);
+        accept(voCreationVisitor);
         ModelTime modelTime = ModelTime.getInstance();
         modelTime.registerAlertable(new Alertable() {
             @Override
             public void alert() {
-                actionHandler.remove(hitBox,destination);
+                actionHandler.remove(hitBox, destination);
             }
         }, 1);
     }
@@ -38,7 +41,6 @@ public class HitBox {
     public void interact(Entity entity){
         entity.modifyStats(effect);
     }
-
     public void setName(String name){
         this.name = name;
     }
@@ -64,4 +66,11 @@ public class HitBox {
     public ActionHandler getActionHandler(){
         return actionHandler;
     }
+    static public void setVOCreationVisitor(VOCreationVisitor visitor){
+        voCreationVisitor = visitor;
+    }
+    public void accept(VOCreationVisitor visitor) {
+        visitor.visitHitBox(this);
+    }
+
 }

@@ -2,23 +2,17 @@ package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.AbilityFactory;
-import com.wecanteven.Models.Abilities.HitBoxGenerator;
-import com.wecanteven.Models.Abilities.MeleeRangeHitBoxGenerator;
 import com.wecanteven.Models.ActionHandler;
-import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
-import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.EntityVisitor;
-import com.wecanteven.Visitors.ItemStorageVisitor;
 
-import java.util.ArrayList;
 
 /**
  * Created by Brandon on 3/31/2016.
@@ -54,7 +48,7 @@ public class Character extends Entity {
         if(!isActive()){
             System.out.println("The entity attacked");
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendRangedAttack(this);
+            Ability attack = factory.vendMeleeAttack(this);
             attack.cast();
         }
     }
