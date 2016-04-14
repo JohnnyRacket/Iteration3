@@ -51,6 +51,7 @@ public class MenuState extends ControllerState {
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SWAPVIEW), ()->{
             this.setCommandToExecute(()->menus.swap());
         }, this.getjFrame(), this.getController()));
+
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ESCAPE), ()->{
             System.out.println("esc hit");
             this.getController().setPlayState();

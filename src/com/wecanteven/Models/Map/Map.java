@@ -83,7 +83,7 @@ public class Map implements MapVisitable, ActionHandler {
             tilesCount++;
         }
         if(tilesCount > 0) {
-            destination.setZ(destination.getZ()+1);
+            destination.setZ(destination.getZ() + 1);
             return move(entity, destination, 2*tilesCount);
         }
         else{
@@ -282,7 +282,11 @@ public class Map implements MapVisitable, ActionHandler {
 
 
     public boolean add(HitBox hitbox, Location loc){
-        return columns[loc.getR()][loc.getS()].add(hitbox, loc.getZ());
+        if(columns[loc.getR()][loc.getS()].add(hitbox, loc.getZ())){
+            hitbox.setLocation(loc);
+            return true;
+        }
+        return false;
     }
 
     public boolean remove(HitBox hitbox, Location loc){

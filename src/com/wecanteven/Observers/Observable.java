@@ -7,6 +7,8 @@ import java.util.ArrayList;
 /**
  * Created by Alex on 3/31/2016.
  */
+
+@Deprecated
 public interface Observable {
     ArrayList<Observer> getObservers();
     default void attach(Observer o) {

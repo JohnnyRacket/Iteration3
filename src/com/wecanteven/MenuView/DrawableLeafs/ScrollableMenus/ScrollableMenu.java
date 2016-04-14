@@ -10,7 +10,7 @@ import java.util.Iterator;
 /**
  * Created by John on 3/31/2016.
  */
-public class ScrollableMenu extends Drawable implements Navigatable {
+public class ScrollableMenu extends Drawable implements Navigatable, NavigatableListHolder {
 
     private int itemHeight;
     private NavigatableList list;

@@ -32,6 +32,9 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
         this.subject = subject;
         this.entitySubject = entitySubject;
         this.factory = factory;
+
+        //Attach this to subject
+        subject.attach(this);
         update();
     }
 

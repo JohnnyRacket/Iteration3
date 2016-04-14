@@ -6,6 +6,7 @@ import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Observer;
@@ -36,18 +37,19 @@ public class HominidViewObject implements ViewObject, Observer{
 
     private Location lastLocation;
 
-    public HominidViewObject(Position position, Direction direction, Directional directionSubject, Moveable movingSubject, ViewObject body, ViewObject head, HandsViewObject hands, FeetViewObject feet, JumpDetector jumpDetector) {
+    public HominidViewObject(Position position, Entity entity, ViewObject body, ViewObject head, HandsViewObject hands, FeetViewObject feet, JumpDetector jumpDetector) {
         this.position = position;
-        this.direction = direction;
-        this.directionSubject = directionSubject;
-        this.movingSubject = movingSubject;
+        this.directionSubject = entity;
+        this.movingSubject = entity;
         this.body = body;
         this.head = head;
         this.hands = hands;
         this.feet = feet;
         this.lastLocation = movingSubject.getLocation();
-
         this.jumpDetector = jumpDetector;
+
+        entity.attach(this);
+        update();
     }
 
     @Override

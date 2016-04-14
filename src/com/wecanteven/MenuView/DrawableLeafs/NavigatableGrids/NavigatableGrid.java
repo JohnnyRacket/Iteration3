@@ -2,6 +2,7 @@ package com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids;
 
 import com.wecanteven.MenuView.Drawable;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
+import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableListHolder;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.ScrollableMenuItem;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.SelectableItem;
 import com.wecanteven.MenuView.Navigatable;
@@ -12,12 +13,13 @@ import java.util.Iterator;
 /**
  * Created by John on 4/1/2016.
  */
-public class NavigatableGrid extends Drawable implements Navigatable {
+public class NavigatableGrid extends Drawable implements Navigatable, NavigatableListHolder {
 
     private NavigatableList list = new NavigatableList();
     private int cols;
     private int rows;
     private Color bgColor;
+    private Color activeColor;
     private boolean active = false;
 
     public NavigatableGrid(int width, int height, int cols, int rows){
@@ -26,6 +28,7 @@ public class NavigatableGrid extends Drawable implements Navigatable {
         this.cols = cols;
         this.rows = rows;
     }
+
 
     @Override
     public void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight) {
