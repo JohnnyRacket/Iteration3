@@ -2,6 +2,7 @@ package com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus;
 
 import com.wecanteven.MenuView.Drawable;
 import com.wecanteven.MenuView.Navigatable;
+import com.wecanteven.UtilityClasses.Config;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -27,7 +28,7 @@ public class ScrollableMenu extends Drawable implements Navigatable {
     public ScrollableMenu(){
         //this.setBackground(new Color(0,0,0,0));
         this.setSelectedColor(new Color(255,255,255,80));
-        this.setBgColor(new Color (150,150,150));
+        this.setBgColor(Config.PAPYRUS);
         this.setPadding(10);
         this.setItemHeight(30);
     }

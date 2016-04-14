@@ -14,4 +14,7 @@ public class Config {
     public static Color MEDIUMGREY = new Color(80,80,80);
     public static Color TRANSMEDIUMGREY = new Color(80, 80, 80, 157);
     public static Color BACKGROUNDBLUE = new Color(67, 155, 252);
+    public static Color TEAL = new Color(18, 185,200);
+    public static Color PAPYRUS = new Color(200, 184, 130);
+    public static Color DARKPAPYRUS = new Color(184, 152, 98);
 }

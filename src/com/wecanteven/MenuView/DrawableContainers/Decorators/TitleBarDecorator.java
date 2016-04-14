@@ -24,7 +24,7 @@ public class TitleBarDecorator extends DrawableDecorator {
 
     @Override
     public void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight) {
-        g2d.setColor(bgColor);
+        g2d.setColor(Config.TEAL);
         g2d.fillRect(x,y,(this.getDrawable().getWidth()),50);
         g2d.setColor(textColor);
         g2d.setFont(new Font("Helvetica",1,20));
@@ -32,6 +32,12 @@ public class TitleBarDecorator extends DrawableDecorator {
         g2d.drawString(title,x + this.getDrawable().getWidth()/2 - metrics.stringWidth(title)/2,y+30);
         //this.getDrawable().setHeight(this.getHeight()-50);
         super.draw(g2d,x,y+50, windowWidth, windowHeight);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        GradientPaint shadow = new GradientPaint(0,y+50,new Color(.2f,.2f,.2f,.3f),0,y+58,new Color(.2f,.2f,.2f,.0f));
+        //g2d.setColor(new Color(.1f,.1f,.1f,.3f));
+        g2d.setPaint(shadow);
+        g2d.fillRect(x,y+50,(this.getDrawable().getWidth()),8);
+
     }
 
     @Override

@@ -4,15 +4,11 @@ import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
-import com.wecanteven.Observers.Directional;
-import com.wecanteven.Observers.Moveable;
-import com.wecanteven.Observers.ViewObservable;
-import com.wecanteven.Observers.Observer;
+import com.wecanteven.Observers.*;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.*;
 
-import javax.security.auth.Destroyable;
 import java.util.ArrayList;
 
 /**
@@ -51,8 +47,25 @@ public class Entity implements Moveable, Directional, Destroyable, ViewObservabl
     public ArrayList<Observer> getObservers() {
         return observers;
     }
+
+    @Override
+    public Location getLocation() {
+        return location;
+    }
+
+    @Override
+    public int getMovingTicks() {
+        return movingTicks;
+    }
+
+    @Override
+    public Direction getDirection() {
+        return direction;
+    }
+
+    @Override
     public void update(){
-        die();
+        checkForDeath();
     }
 
     public boolean move(Direction d){
@@ -92,29 +105,25 @@ public class Entity implements Moveable, Directional, Destroyable, ViewObservabl
         return false;
     }
 
-    public void die(){
+    public void checkForDeath(){
         getStats().refreshStats();
-        if(getStats().getLives() < 0){
-            System.out.println("The entity has died");
-            getActionHandler().death(this);
-            notifyObservers();
+        if(getStats().getLives() <= 0){
+            die();
         }
     }
 
+    public void die() {
+        System.out.println("The entity has died");
+        getActionHandler().death(this);
+        notifyObservers();
+    }
 
     public boolean isActive(){
         return isActive;
     }
 
-    @Override
-    public Location getLocation() {
-        return location;
-    }
 
-    @Override
-    public int getMovingTicks() {
-        return movingTicks;
-    }
+
     public void updateMovingTicks(int ticks) {
         setMovingTicks(ticks);
         calculateActiveStatus();
@@ -146,10 +155,7 @@ public class Entity implements Moveable, Directional, Destroyable, ViewObservabl
         notifyObservers();
     }
 
-    @Override
-    public Direction getDirection() {
-        return direction;
-    }
+
 
     public void setLocation(Location location) {
         this.location = location;
@@ -238,13 +244,30 @@ public class Entity implements Moveable, Directional, Destroyable, ViewObservabl
             this.isActive = isActive;
         }
     }
+
     public void modifyStats(StatsAddable addable){
         System.out.println("The Entity's stats have changed");
         this.stats.addStats(addable);
     }
 
+
     @Override
     public boolean isDestroyed() {
         return isDestroyed;
+    }
+
+    public void takeDamage(int dmgAmount) {
+        getStats().takeDamage(dmgAmount);
+    }
+
+    public void healDamage(int healAmount) {
+        getStats().healDamage(healAmount);
+    }
+
+    public void loseLife() {
+        getStats().loseLife();
+
+        checkForDeath();
+
     }
 }

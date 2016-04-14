@@ -53,6 +53,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         currentMana = new PrimaryStat("Mana",maxMana.getStat());
         lives = new LivesStat(currentHealth,entity);
     }
+
     public void update(){
         entity.levelUp();
         refreshStats();
@@ -65,7 +66,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void addStats(StatsAddable statsAddable){
-        System.out.println("The entities Stats were modified");
+        System.out.println("The entities Stats were modified" + statsAddable.getHealth());
         lives.add(statsAddable.getLives());
         strength.add(statsAddable.getStrength());
         agility.add(statsAddable.getAgility());
@@ -89,6 +90,64 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         movement.subtract(statsAddable.getMovement());
         currentHealth.subtract(statsAddable.getHealth());
         currentMana.subtract(statsAddable.getMana());
+        notifyObservers();
+        modelNotifyObservers();
+    }
+
+    public void takeDamage(int damage) {
+        if (damage > 0)
+            currentHealth.subtract(damage);
+
+        if (getHealth() <= 0) {
+            loseLife();
+            if (getLives() > 0)
+                currentHealth.setStat(maxHealth.getStat());
+        } else {
+            if (getHealth() > getMaxHealth())
+                currentHealth.setStat(getMaxHealth());
+        }
+
+        notifyObservers();
+        modelNotifyObservers();
+    }
+
+    public void healDamage(int heal) {
+        if (heal > 0)
+            currentHealth.add(heal);
+
+        if (getHealth() > getMaxHealth()) {
+            currentHealth.setStat(getMaxHealth());
+        }
+
+        notifyObservers();
+        modelNotifyObservers();
+    }
+
+    public void consumeMana(int amount) {
+        if (amount > 0)
+            currentMana.subtract(amount);
+
+        if (getMana() <= 0)
+            currentMana.setStat(0);
+
+        notifyObservers();
+        modelNotifyObservers();
+    }
+
+    public void restoreMana(int amount) {
+        if (amount > 0)
+            currentMana.add(amount);
+
+        if (getMana() > getMaxMana())
+            currentMana.setStat(getMaxMana());
+
+        notifyObservers();
+        modelNotifyObservers();
+    }
+
+    public void loseLife() {
+        lives.subtract(1);
+
         notifyObservers();
         modelNotifyObservers();
     }
