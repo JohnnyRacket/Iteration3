@@ -20,6 +20,7 @@ public class LivesStat extends PrimaryStat implements Observer {
         update();
     }
     public void update(){
+        System.out.println("health: " +health.getStat());
         if(health.getStat() <= 0){
             System.out.println("The Entity has died");
             stat--;

@@ -10,8 +10,6 @@ import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.ModelTime.Tickable;
 import com.wecanteven.ViewEngine;
 
-import javax.swing.*;
-
 /**
  * Created by John on 3/31/2016.
  */

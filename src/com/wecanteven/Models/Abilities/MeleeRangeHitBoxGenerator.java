@@ -13,26 +13,18 @@ import com.wecanteven.UtilityClasses.Location;
  */
 public class MeleeRangeHitBoxGenerator implements HitBoxGenerator {
     private Character caster;
-    private ActionHandler actionHandler;
     HitBox hitbox;
 
     public MeleeRangeHitBoxGenerator(Character caster,StatsAddable effect){
         this.caster = caster;
-        actionHandler = caster.getActionHandler();
-        hitbox = new HitBox(effect);
+        hitbox = new HitBox("Melee",caster.getLocation(),effect,caster.getActionHandler());
     }
     public void generate(){
+        int duration = 1;
         System.out.println("The spell is occuring");
         Direction casterDirection = caster.getDirection();
         Location startLocation = caster.getLocation();
         Location destination = startLocation.add(casterDirection.getCoords);
-        actionHandler.add(hitbox,destination);
-        ModelTime modelTime = ModelTime.getInstance();
-        modelTime.registerAlertable(new Alertable() {
-            @Override
-            public void alert() {
-                actionHandler.remove(hitbox,destination);
-            }
-        }, 1);
+        hitbox.addToMap(duration,destination);
     }
 }

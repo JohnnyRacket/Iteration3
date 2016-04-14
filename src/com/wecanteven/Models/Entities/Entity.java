@@ -4,10 +4,7 @@ import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
-import com.wecanteven.Observers.Directional;
-import com.wecanteven.Observers.Moveable;
-import com.wecanteven.Observers.ViewObservable;
-import com.wecanteven.Observers.Observer;
+import com.wecanteven.Observers.*;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.*;
@@ -18,30 +15,33 @@ import java.util.ArrayList;
  * Created by Brandon on 3/31/2016.
  */
 
-public class Entity implements Moveable, Directional, ViewObservable, Observer{
-    ArrayList<Observer> observers = new ArrayList<>();
+public class Entity implements Moveable, Directional,Destroyable, ViewObservable, Observer{
+    private ArrayList<Observer> observers;
     private ActionHandler actionHandler;
     private Stats stats;
-    private int height = 3;
-    private int jumpHeight;
+    private int height, jumpHeight;
     private Location location;
     private Direction direction;
     private CanMoveVisitor canMoveVisitor;
     private CanFallVisitor canFallVisitor;
     private int movingTicks;
-    private boolean isActive;
-    private boolean lock;
+    private boolean lock, isActive;
+
+    private boolean isDestroyed = false;
 
     public Entity(ActionHandler actionHandler, Direction direction){
-        this.actionHandler = actionHandler;
-        this.direction = direction;
-        stats = new Stats(this);
-        canMoveVisitor = new TerranianCanMoveVisitor();
-        canMoveVisitor.setEntity(this);
-        canFallVisitor = new TerranianCanFallVisitor();
-        jumpHeight = 25;
-        movingTicks = 0;
-        isActive = false;
+        observers = new ArrayList<>();
+
+        setStats(new Stats(this));
+        setHeight(3);
+        setJumpHeight(25);
+
+        setActionHandler(actionHandler);
+        setDirection(direction);
+        setCanMoveVisitor(new TerranianCanMoveVisitor());
+        setCanFallVisitor(new TerranianCanFallVisitor());
+        setMovingTicks(0);
+        setIsActive(false);
     }
 
     @Override
@@ -66,7 +66,8 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     @Override
     public void update(){
-        checkForDeath();
+        System.out.println("crazy shit is happening");
+        loseLife();
     }
 
     public boolean move(Direction d){
@@ -97,27 +98,19 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public boolean fall(){
         if(!isActive()) {
-            if (getLocation().getZ() == 1) {
-                return false;
-            }
             Location tileBelow = getLocation().subtract(new Location(0, 0, 1));
             return getActionHandler().fall(this, tileBelow);
         }
         return false;
     }
 
-    public void checkForDeath(){
+    public void loseLife(){
+        getActionHandler().death(this);
+        setLocation(new Location(3, 9, 1));
+        notifyObservers();
         getStats().refreshStats();
-        if(getStats().getLives() <= 0){
-            die();
-        }
     }
 
-    public void die() {
-        System.out.println("The entity has died");
-        getActionHandler().death(this);
-        notifyObservers();
-    }
 
     public boolean isActive(){
         return isActive;
@@ -164,7 +157,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
 
     public void levelUp(){
-        stats.addStats(new StatsAddable(0,1,1,1,1,0,0,0,0));
+        getStats().addStats(new StatsAddable(0, 1, 1, 1, 1, 0, 0, 0, 0));
     }
 
 
@@ -185,6 +178,7 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
 
     public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor) {
         this.canMoveVisitor = canMoveVisitor;
+        this.canMoveVisitor.setEntity(this);
     }
 
     public ActionHandler getActionHandler() {
@@ -251,6 +245,12 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         this.stats.addStats(addable);
     }
 
+
+    @Override
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
     public void takeDamage(int dmgAmount) {
         getStats().takeDamage(dmgAmount);
     }
@@ -259,9 +259,11 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         getStats().healDamage(healAmount);
     }
 
-    public void loseLife() {
-        getStats().loseLife();
-
-        checkForDeath();
-    }
+//    public void loseLife() {
+//        System.out.println("Entity Lost a life");
+//        getStats().loseLife();
+//        isDestroyed = true;
+//        ForDeath();
+//        notifyObservers();
+//    }
 }

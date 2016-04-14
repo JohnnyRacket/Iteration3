@@ -23,6 +23,7 @@ public class TileXMLProcessor extends XMLProcessor {
 
     public static void formatMap(Map map) {
         ArrayList<Attr> attr = new ArrayList<>();
+        attr.add(sf.saveAttr("name", map.getName()));
         attr.add(sf.saveAttr("r", map.getrSize()));
         attr.add(sf.saveAttr("s", map.getsSize()));
         attr.add(sf.saveAttr("z", map.getzSize()));
@@ -33,6 +34,7 @@ public class TileXMLProcessor extends XMLProcessor {
 
     public static Map parseMap(Element el) {
         Map map = new Map(sf.getIntAttr(el, "r"), sf.getIntAttr(el, "s"), sf.getIntAttr(el, "z"));
+        map.setName(sf.getStrAttr(el, "name"));
         int width = map.getrSize();
         for(int r = 0; r < map.getrSize(); ++r) {
             for(int s = 0; s < map.getsSize(); ++s) {
