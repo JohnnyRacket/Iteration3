@@ -112,11 +112,11 @@ public class DopeAssLevelFactory extends LevelFactory{
         TakeDamageAreaOfEffect dmgAoe = new TakeDamageAreaOfEffect(1);
         map.add(dmgAoe, new Location(8,5,1));
 
-        //InstaDeathAoe aoeDed = new InstaDeathAoe();
-        //map.add(aoeDed, new Location(8,4,1));
+        InstaDeathAoe aoeDed = new InstaDeathAoe();
+        map.add(aoeDed, new Location(8,4,1));
 
-        //LevelUpAoe aoeLvl = new LevelUpAoe(500, false);
-        //map.add(aoeLvl, new Location(8,3,1));
+        LevelUpAoe aoeLvl = new LevelUpAoe(500, false);
+        map.add(aoeLvl, new Location(8,3,1));
 
         //TeleportAoe aoe = new TeleportAoe(new Location(8,3,1));
         //map.add(aoe, new Location(8,6,1));

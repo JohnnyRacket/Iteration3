@@ -29,6 +29,8 @@ import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Visitors.*;
 
+import java.util.Iterator;
+
 /**
  * Created by alexs on 4/1/2016.
  */
@@ -177,8 +179,10 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
             decal.accept(this);
         }
 
-        if (tile.hasAoe()) {
-            tile.acceptAoeVisitor(this);
+        Iterator<AreaOfEffect> iter = tile.getAreasOfEffect();
+
+        while (iter.hasNext()) {
+            iter.next().accept(this);
         }
     }
 
