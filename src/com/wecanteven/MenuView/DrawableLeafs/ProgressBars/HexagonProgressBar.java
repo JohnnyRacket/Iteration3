@@ -41,7 +41,7 @@ public class HexagonProgressBar extends Drawable {
         hex.addPoint((int)right.getX() + x,(int)right.getY() + y);
         hex.addPoint((int)left.getX() + x,(int)left.getY() + y);
 
-        g2d.setColor(Config.DARKGOLD);
+        g2d.setColor(borderColor);
         g2d.fillPolygon(hex);
 
 
@@ -52,7 +52,7 @@ public class HexagonProgressBar extends Drawable {
         hex.addPoint((int)right.getX() + x - borderSize,(int)right.getY() + y - borderSize);
         hex.addPoint((int)left.getX() + x + borderSize,(int)left.getY() + y - borderSize);
 
-        g2d.setColor(new Color(40,250,80));
+        g2d.setColor(currentColor);
         g2d.fillPolygon(hex);
 
 

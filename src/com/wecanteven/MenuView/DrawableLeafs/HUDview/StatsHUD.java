@@ -23,7 +23,7 @@ public class StatsHUD extends Drawable implements Observer {
     private Stats stats;
 
     private Color bgColor = Color.GRAY;
-    private CircularHealthBar healthBar, manaBar;
+    private HexagonProgressBar healthBar, manaBar;
     private  AnimatedChangeProgressBar expBar;
     private BufferedImage stoneTexture;
     private TexturePaint texture;
@@ -32,24 +32,24 @@ public class StatsHUD extends Drawable implements Observer {
     public StatsHUD(Stats stats){
         this.stats = stats;
         stats.attach(this);
-        healthBar = new CircularHealthBar(180,180);
+        healthBar = new HexagonProgressBar(150,70);
         healthBar.setCurrentColor(new Color(40,250,80));
         healthBar.setDepletedColor(new Color(20,140,40));
-        healthBar.setBorderSize(0);
-        healthBar.setBorderColor(Config.GOLD);
+        healthBar.setBorderSize(6);
+        healthBar.setBorderColor(Config.MEDIUMGREY);
         //healthBar.setBorderWidth(8);
-        manaBar = new CircularHealthBar(180,180);
+        manaBar = new HexagonProgressBar(150,70);
         manaBar.setCurrentColor(new Color(10,120,255));
         manaBar.setDepletedColor(new Color(10,70,175));
-        manaBar.setBorderSize(0);
-        manaBar.setBorderColor(Config.GOLD);
+        manaBar.setBorderSize(6);
+        manaBar.setBorderColor(Config.MEDIUMGREY);
 
         expBar = new AnimatedChangeProgressBar(200,50);
         expBar.setCurrentColor(new Color(230,170,50));
         expBar.setDepletedColor(new Color(150,100,25));
-        expBar.setBorderWidth(0);
+        expBar.setBorderWidth(12);
         expBar.setWidth(320);
-        expBar.setBorderColor(Config.GOLD);
+        expBar.setBorderColor(Config.MEDIUMGREY);
 //        try {
 
 //            stoneTexture = ImageIO.read(new File("resources/textures/stone.png"));
@@ -103,8 +103,7 @@ public class StatsHUD extends Drawable implements Observer {
 //        g2d.fillPolygon(new int[]{0,0,97,290},new int[]{0,163,163,0},4);
 //        g2d.fillPolygon(new int[]{windowWidth,windowWidth,windowWidth - 97, windowWidth - 290},new int[]{0,163,163,0},4);
 
-
-        expBar.draw(g2d,x+240,0,windowWidth,windowHeight);
+      //  expBar.draw(g2d,x+240,0,windowWidth,windowHeight);
 //
 //        healthBar.draw(g2d,10,10,windowWidth,windowHeight);
 //
@@ -134,13 +133,12 @@ public class StatsHUD extends Drawable implements Observer {
 //
 //        g2d.setColor(new Color(230, 176, 49));
 //        g2d.fill(areaTest);
-        System.out.println(x);
-        HexagonProgressBar hex = new HexagonProgressBar(150,70);
-        HexagonProgressBar hex2 = new HexagonProgressBar(150,70);
-        hex.draw(g2d,x,y,windowWidth,windowHeight);
-        hex2.draw(g2d,x + 500,y,windowWidth, windowHeight);
-
-
+        //System.out.println(x);
+//
+//        healthBar.draw(g2d,x,y,windowWidth,windowHeight);
+//        manaBar.draw(g2d,x + 500,y,windowWidth, windowHeight);
+//
+//
 
         g2d.setRenderingHints(rhreset);
 
@@ -150,11 +148,11 @@ public class StatsHUD extends Drawable implements Observer {
     public void update() {
         health = stats.getHealth();
         maxHealth = stats.getMaxHealth();
-        healthBar.setPercent((int)((health/maxHealth)*100f));
+        //healthBar.setPercent((int)((health/maxHealth)*100f));
 
         mana = stats.getMana();
         maxMana = stats.getMaxMana();
-        manaBar.setPercent((int)((mana/maxMana)*100f));
+        //manaBar.setPercent((int)((mana/maxMana)*100f));
 
         exp = stats.getExperience();
         maxExp = 100; //TODO fix this
