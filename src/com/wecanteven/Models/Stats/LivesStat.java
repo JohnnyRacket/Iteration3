@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class LivesStat extends PrimaryStat implements Observer {
     private PrimaryStat health;
-
+    private Entity ownerOfLives;
     public LivesStat(PrimaryStat health,Entity entity){
         super("Lives",3);
         observers = new ArrayList<>();

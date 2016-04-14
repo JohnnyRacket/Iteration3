@@ -2,8 +2,11 @@ package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.AvatarStates.AvatarState;
+import com.wecanteven.Models.Entities.AvatarStates.DeadState;
 import com.wecanteven.Models.Entities.AvatarStates.EntityState;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
+import com.wecanteven.Models.Map.Map;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
@@ -18,11 +21,14 @@ import java.util.ArrayList;
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Avatar{
+public class Avatar implements Observer{
     Character avatar;
     AvatarState state;
-    public Avatar(Character avatar, ActionHandler actionHandler){
+    Map map;
+    public Avatar(Character avatar, Map map){
         this.avatar = avatar;
+        this.map = map;
+        avatar.modelAttach(this);
         state = new EntityState(avatar, this);
     }
     public boolean move(Direction d){
@@ -62,6 +68,15 @@ public class Avatar{
         visitor.visitAvatar(this);
     }
 
-
-
+    @Override
+    public void update() {
+        if (avatar.isDestroyed()) {
+            this.state = new DeadState();
+            ModelTime.getInstance().registerAlertable( () -> {
+                avatar.setDestroyed(false);
+                map.add(avatar, new Location(13,13,19));
+                this.state = new EntityState(avatar, this);
+            }, 45);
+        }
+    }
 }

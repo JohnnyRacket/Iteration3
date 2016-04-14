@@ -4,12 +4,22 @@ import com.wecanteven.AreaView.Biomes.Biome;
 import com.wecanteven.AreaView.Biomes.DefaultBiome;
 import com.wecanteven.AreaView.ViewObjects.Factories.PlainsFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
+import com.wecanteven.Models.Entities.NPC;
+import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
+import com.wecanteven.Models.Interactions.NoInteractionStrategy;
+import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
+import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
+import com.wecanteven.Models.Map.Aoe.TakeDamageAreaOfEffect;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
+import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.*;
+
+import java.util.ArrayList;
 
 /**
  * Created by alexs on 4/14/2016.
@@ -154,11 +164,40 @@ public class DemoLevelFactory extends LevelFactory {
 
     @Override
     public void populateMap(Map map) {
-
+        weaponNPC(map);
+        dialogNPC(map);
+        tradeNPC(map);
+        map.getTile(10,10,2).add(new TakeDamageAreaOfEffect(1));
     }
 
     @Override
     public Biome createBiomes(ViewObjectFactory factory) {
         return new DefaultBiome(new PlainsFactory(factory));
+    }
+
+    public void weaponNPC(Map map) {
+        //"Creating an NPC and Giving him a chest Plate
+        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy());
+        OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
+        npc.pickup(i);
+        npc.equipItem(i);
+        map.add(npc, new Location(7,3,15));
+    }
+
+    public void dialogNPC(Map map) {
+        ArrayList<String> dialog = new ArrayList<String>();
+        dialog.add("Hello Avatar");
+        dialog.add("You're an idiot and you're playing a dumb game");
+        dialog.add("GTFO");
+        NPC npc = new NPC(map, Direction.SOUTHWEST, new DialogInteractionStrategy(dialog));
+        map.add(npc, new Location(9,8,2));
+
+    }
+
+    public void tradeNPC(Map map) {
+        NPC npc = new NPC(map, Direction.SOUTHEAST, new TradeInteractionStrategy());
+        npc.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
+        npc.pickup(new ChestEquipableItem("Buyable Penis", 5, null));
+        map.add(npc, new Location(6, 2, 15));
     }
 }
