@@ -1,9 +1,12 @@
 package com.wecanteven.AreaView;
 
 import com.wecanteven.AreaView.Biomes.Biome;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.Factories.BiomeFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Models.Abilities.HitBox;
+import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.Decals.Decal;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
@@ -29,7 +32,7 @@ import com.wecanteven.Visitors.*;
 /**
  * Created by alexs on 4/1/2016.
  */
-public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, WeaponsVisitor, DecalVisitor {
+public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, WeaponsVisitor, DecalVisitor,MovableHitBoxVisitor,HitBoxVisitor {
     private ViewObjectFactory factory;
     private AreaView areaView;
     private Biome biome;
@@ -41,10 +44,25 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
         this.areaView = areaView;
         this.factory = factory;
         this.biome = biome;
+        visitFutureObjects();
     }
 
     private Position currentPosition;
+    private void visitFutureObjects(){
+        HitBox.setVOCreationVisitor(this);
+    }
 
+    @Override
+    public void visitHitBox(HitBox hitBox){
+        areaView.addViewObject(factory.createSimpleViewObject(hitBox.getLocation().toPosition(),"Decals/Cactus1.xml"));
+    }
+    @Override
+    public void visitMovableHitBox(MovableHitBox hitBox){
+        ViewObject vo = factory.createSimpleViewObject(hitBox.getLocation().toPosition(),"Decals/Cactus1.xml");
+        MovingViewObject viewObject = factory.createMovingViewObject(hitBox,vo);
+        hitBox.attach(viewObject);
+        areaView.addViewObject(viewObject);
+    }
 
     @Override
     public void visitEntity(Entity e) {
@@ -55,7 +73,9 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitCharacter(Character c) {
         System.out.println("adding character to areaview");
-        ViewObject avatar = factory.createSneak(currentPosition, c.getDirection(), c);
+        ViewObject avatar = factory.createBaseHominoid(currentPosition, c, "Pink", "Connery");
+        factory.makeLightSource(avatar, 5, c);
+        factory.setCenter(avatar);
         areaView.addViewObject(avatar);
         areaView.setBackground(factory.createBackgroundDrawable(avatar));
 
@@ -64,7 +84,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitNPC(NPC c) {
         System.out.println("adding character to areaview");
-        areaView.addViewObject(factory.createSneak(currentPosition, c.getDirection(), c));
+        areaView.addViewObject(factory.createBaseHominoid(currentPosition, c, "Yellow", "TestFace"));
 
     }
 

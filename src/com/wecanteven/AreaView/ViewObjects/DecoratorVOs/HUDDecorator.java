@@ -25,6 +25,8 @@ public class HUDDecorator extends DecoratorViewObject implements Observer{
         this.subject = subject;
         healthBar = new AnimatedChangeProgressBar(60, 15);
         this.drawingStrategy = drawingStrategy;
+
+        subject.attach(this);
         update();
     }
 

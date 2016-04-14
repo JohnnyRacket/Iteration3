@@ -29,6 +29,9 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Directional;
+import com.wecanteven.Observers.Moveable;
+import com.wecanteven.Observers.Positionable;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
@@ -56,63 +59,167 @@ public abstract class ViewObjectFactory {
     public abstract ViewObject createGround(Position p);
     public abstract ViewObject createWater(Position p);
 
-
-
-    public ViewObject createSneak(Position p, Direction d, Character subject) {
-        EquipmentSlot chestSlot = subject.getItemStorage().getEquipped().getChest();
-        EquipmentSlot weaponSlot = subject.getItemStorage().getEquipped().getWeapon();
-        EquipmentSlot hatSlot = subject.getItemStorage().getEquipped().getHead();
-
-
-        SimpleViewObject body = new SimpleViewObject(p, factory.loadDynamicImage("Entities/Beans/Light Blue.xml"), hexDrawingStrategy);
-        EquipableViewObject bodyArmor = createEquipable(body, createNullViewObject(), chestSlot, subject);
-
-
-        DirectionalViewObject face = createDirectional(p, subject, "Face/TestFace/");
-        subject.attach(face);
-        EquipableViewObject hatArmor = createEquipable(face, createEquipment(p, subject, "Shaved"), hatSlot, subject);
-
-        chestSlot.attach(bodyArmor);
-        hatSlot.attach(hatArmor);
-
-
-        MicroPositionableViewObject leftHand = createHand(p, weaponSlot, subject, "Light Blue");
-        MicroPositionableViewObject rightHand = createHand(p, weaponSlot, subject, "Light Blue");
-        HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p, weaponSlot, this, subject);
-
-        weaponSlot.attach(hands);
-
-//        MicroPositionableViewObject leftFoot = createLeftFoot(p, d, subject);
-//        MicroPositionableViewObject rightFoot = createRightFoot(p, d, subject);
-
-        MicroPositionableViewObject leftFoot = createMicroPositionableViewObject(p, "Feet/Light Blue/Foot.xml");
-        MicroPositionableViewObject rightFoot = createMicroPositionableViewObject(p, "Feet/Light Blue/Foot.xml");
-
-
-        FeetViewObject feet = new FeetViewObject(d, leftFoot, rightFoot);
-        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, bodyArmor, hatArmor, hands, feet, jumpDetector);
-        HUDDecorator sneakWithHUD = new HUDDecorator(stationarySneak, subject.getStats(), hexDrawingStrategy);
-        subject.attach(stationarySneak);
-        //subject.attach(body);
-        subject.getStats().attach(sneakWithHUD);
-
-        VisibilitySourceViewObject visibilitySourceViewObject = new VisibilitySourceViewObject(sneakWithHUD, subject, areaView, 5);
-        subject.attach(visibilitySourceViewObject);
-
-        StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
-        DestroyableViewObject destroyableViewObject = new DestroyableViewObject(
-                visibilitySourceViewObject,
-                startableViewObject,
-                subject);
-
-        //TEMPORARY TESTING WORKAROUND
-        //TODO: make better
-        hexDrawingStrategy.setCenterTarget(stationarySneak);
-
-
-        return createMovingViewObject(subject, destroyableViewObject);
-
+    public void setCenter(ViewObject center) {
+        hexDrawingStrategy.setCenterTarget(center);
     }
+
+//    public ViewObject createSneak(Position p, Direction d, Character subject) {
+////        EquipmentSlot chestSlot = subject.getItemStorage().getEquipped().getChest();
+////        EquipmentSlot weaponSlot = subject.getItemStorage().getEquipped().getWeapon();
+////        EquipmentSlot hatSlot = subject.getItemStorage().getEquipped().getHead();
+////
+////
+////        SimpleViewObject body = new SimpleViewObject(p, factory.loadDynamicImage("Entities/Beans/Light Blue.xml"), hexDrawingStrategy);
+////        EquipableViewObject bodyArmor = createEquipable(body, createNullViewObject(), chestSlot, subject);
+////
+////
+////        DirectionalViewObject face = createDirectional(p, subject, "Face/TestFace/");
+////        subject.attach(face);
+////        EquipableViewObject hatArmor = createEquipable(face, createEquipment(p, subject, "Shaved"), hatSlot, subject);
+////
+////        chestSlot.attach(bodyArmor);
+////        hatSlot.attach(hatArmor);
+////
+////
+////        MicroPositionableViewObject leftHand = createHand(p, weaponSlot, subject, "Light Blue");
+////        MicroPositionableViewObject rightHand = createHand(p, weaponSlot, subject, "Light Blue");
+////        HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p, weaponSlot, this, subject);
+////
+////        weaponSlot.attach(hands);
+////
+//////        MicroPositionableViewObject leftFoot = createLeftFoot(p, d, subject);
+//////        MicroPositionableViewObject rightFoot = createRightFoot(p, d, subject);
+////
+////        MicroPositionableViewObject leftFoot = createMicroPositionableViewObject(p, "Feet/Light Blue/Foot.xml");
+////        MicroPositionableViewObject rightFoot = createMicroPositionableViewObject(p, "Feet/Light Blue/Foot.xml");
+////
+////
+////        FeetViewObject feet = new FeetViewObject(d, leftFoot, rightFoot);
+////        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, bodyArmor, hatArmor, hands, feet, jumpDetector);
+////        HUDDecorator sneakWithHUD = new HUDDecorator(stationarySneak, subject.getStats(), hexDrawingStrategy);
+////        subject.attach(stationarySneak);
+////        //subject.attach(body);
+////        subject.getStats().attach(sneakWithHUD);
+////
+////        VisibilitySourceViewObject visibilitySourceViewObject = new VisibilitySourceViewObject(sneakWithHUD, subject, areaView, 5);
+////        subject.attach(visibilitySourceViewObject);
+////
+////        StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
+////        DestroyableViewObject destroyableViewObject = new DestroyableViewObject(
+////                visibilitySourceViewObject,
+////                startableViewObject,
+////                subject,
+////                areaView,
+////                800);
+////        subject.attach(destroyableViewObject);
+////
+////        //TEMPORARY TESTING WORKAROUND
+////        //TODO: make better
+////        hexDrawingStrategy.setCenterTarget(stationarySneak);
+////
+////
+////        return createMovingViewObject(subject, destroyableViewObject);
+//    }
+
+    //This method is OG
+    public ViewObject createBaseHominoid(Position p, Character character, String color, String face) {
+        EquipmentSlot chestSlot = character.getItemStorage().getEquipped().getChest();
+        EquipmentSlot weaponSlot = character.getItemStorage().getEquipped().getWeapon();
+        EquipmentSlot hatSlot = character.getItemStorage().getEquipped().getHead();
+
+        //Create the body and decorate it with body armor
+        SimpleViewObject body = new SimpleViewObject(p,
+                factory.loadDynamicImage("Entities/Beans/" + color + ".xml"),
+                hexDrawingStrategy);
+        EquipableViewObject bodyArmor = createEquipable(body, createNullViewObject(), chestSlot, character);
+
+        //Create the face and decorate it with a hat
+        DirectionalViewObject head = createDirectional(p, character, "Face/" + face + "/");
+        EquipableViewObject hatArmor = createEquipable(
+                head,
+                createEquipment(p, character, "Shaved"),
+                hatSlot,
+                character);
+
+        //Create a pair of hands
+        MicroPositionableViewObject leftHand = createHand(p, weaponSlot, character, color);
+        MicroPositionableViewObject rightHand = createHand(p, weaponSlot, character, color);
+        HandsViewObject hands = new HandsViewObject(leftHand, rightHand,
+                Direction.SOUTH, p,
+                weaponSlot, this,
+                character);
+
+        //Create some feet
+        MicroPositionableViewObject leftFoot = createMicroPositionableViewObject(p,
+                        "Feet/" + color + "/Foot.xml");
+        MicroPositionableViewObject rightFoot = createMicroPositionableViewObject(p,
+                "Feet/" + color + "/Foot.xml");
+        FeetViewObject feet = new FeetViewObject(Direction.SOUTH, leftFoot, rightFoot);
+
+        //Finnally create the Hominoid
+        HominidViewObject hominoid = new  HominidViewObject(
+                p,
+                character,
+                bodyArmor,
+                hatArmor,
+                hands,
+                feet,
+                jumpDetector);
+
+        //And give him a HUD
+        HUDDecorator homioidWithHUD = new HUDDecorator(
+                hominoid,
+                character.getStats(),
+                hexDrawingStrategy);
+
+        //Now give him a death animation
+        StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
+        DestroyableViewObject hominoidWithHUDThatIsDestroyable = new DestroyableViewObject(
+                homioidWithHUD,
+                startableViewObject,
+                character,
+                areaView,
+                800);
+
+        //Finally return a moving avatar
+        return createMovingViewObject(character, hominoidWithHUDThatIsDestroyable);
+    }
+
+    public <T extends Positionable & ViewObservable> void makeLightSource(ViewObject v, int radius, T subject) {
+        new VisibilitySourceViewObject(v, subject, areaView, radius);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public DestroyableViewObject createTakeableItem(Position position, TakeableItem takeableItem) {
         String name = takeableItem.getName();
@@ -123,8 +230,9 @@ public abstract class ViewObjectFactory {
                 new StartableViewObject(position,
                         factory.loadActiveDynamicImage("Items/" + name + "/" + name + ".xml"),
                         hexDrawingStrategy),
-                takeableItem);
-        takeableItem.attach(destroyableViewObject);
+                takeableItem,
+                areaView,
+                100);
         return destroyableViewObject;
     }
 
@@ -136,8 +244,7 @@ public abstract class ViewObjectFactory {
         StartableDynamicImage animation = factory.loadActiveDynamicImage("Items/" + oneShot.getName() + "/" + oneShot.getName() + ".xml");
 
         StartableViewObject internalVO = new StartableViewObject(position, animation, hexDrawingStrategy);
-        DestroyableViewObject destroyableVO = new DestroyableViewObject(internalVO, internalVO, oneShot);
-        oneShot.attach(destroyableVO);
+        DestroyableViewObject destroyableVO = new DestroyableViewObject(internalVO, internalVO, oneShot, areaView, 1000);
         return destroyableVO;
     }
 
@@ -160,12 +267,14 @@ public abstract class ViewObjectFactory {
         );
     }
 
+    @Deprecated
     private MicroPositionableViewObject createLeftFoot(Position position, Direction direction, Entity entity) {
         DirectionalViewObject leftFootDirectional = createDirectional(position, entity, "Feet/Brown/Left/");
         entity.attach(leftFootDirectional);
         return new MicroPositionableViewObject(leftFootDirectional);
     }
 
+    @Deprecated
     private MicroPositionableViewObject createRightFoot(Position position, Direction direction, Entity entity) {
         DirectionalViewObject rightFootDirectional = createDirectional(position, entity, "Feet/Brown/Right/");
         entity.attach(rightFootDirectional);
@@ -201,7 +310,7 @@ public abstract class ViewObjectFactory {
         return directionalViewObject;
     }
 
-    private DirectionalViewObject createBody(Position p, Directional d, String entityName) {
+    private <T extends  Directional & ViewObservable> DirectionalViewObject createBody(Position p, T d, String entityName) {
         return createDirectional(p, d, "Entities/" +  entityName + "/");
     }
 
@@ -209,7 +318,7 @@ public abstract class ViewObjectFactory {
         return new FogOfWarViewObject(p);
     }
 
-    private DirectionalViewObject createDirectional(Position p, Directional d, String path) {
+    private <T extends Directional & ViewObservable> DirectionalViewObject createDirectional(Position p, T d, String path) {
         SimpleDynamicImage bodyNorth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "north.xml");
         SimpleDynamicImage bodySouth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "south.xml");
         SimpleDynamicImage bodyNorthEast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northeast.xml");
@@ -219,9 +328,8 @@ public abstract class ViewObjectFactory {
         return new DirectionalViewObject(p, d, hexDrawingStrategy, bodyNorth, bodySouth, bodyNorthEast, bodyNorthWest, bodySoutheast, bodySouthWest);
     }
 
-    private MovingViewObject createMovingViewObject(Entity subject, ViewObject child) {
+    public <T extends Moveable & ViewObservable> MovingViewObject createMovingViewObject(T subject, ViewObject child) {
         MovingViewObject mvo = new  MovingViewObject(child, subject, areaView, jumpDetector);
-        subject.attach(mvo);
         return mvo;
     }
 
@@ -272,7 +380,7 @@ public abstract class ViewObjectFactory {
         return new NullViewObject(new Position(0,0,0));
     }
 
-    protected SimpleViewObject createSimpleViewObject(Position p, String path) {
+    public SimpleViewObject createSimpleViewObject(Position p, String path) {
         return new SimpleViewObject(p, factory.loadDynamicImage(path), hexDrawingStrategy);
     }
 

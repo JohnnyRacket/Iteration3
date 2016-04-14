@@ -82,7 +82,6 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         currentHealth.add(statsAddable.getHealth());
         currentMana.add(statsAddable.getMana());
         notifyObservers();
-        //modelNotifyObservers();
     }
 
     public void subtractStats(StatsAddable statsAddable){
@@ -96,7 +95,6 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         currentHealth.subtract(statsAddable.getHealth());
         currentMana.subtract(statsAddable.getMana());
         notifyObservers();
-        //modelNotifyObservers();
     }
 
     public void takeDamage(int damage) {
