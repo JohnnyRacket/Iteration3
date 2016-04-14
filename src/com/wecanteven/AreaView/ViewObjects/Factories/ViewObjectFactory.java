@@ -151,9 +151,9 @@ public abstract class ViewObjectFactory {
 
         //Create some feet
         MicroPositionableViewObject leftFoot = createMicroPositionableViewObject(p,
-                        "Feet/Light Blue/Foot.xml");
+                        "Feet/" + color + "/Foot.xml");
         MicroPositionableViewObject rightFoot = createMicroPositionableViewObject(p,
-                "Feet/Light Blue/Foot.xml");
+                "Feet/" + color + "/Foot.xml");
         FeetViewObject feet = new FeetViewObject(Direction.SOUTH, leftFoot, rightFoot);
 
         //Finnally create the Hominoid
