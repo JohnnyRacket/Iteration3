@@ -64,7 +64,7 @@ public abstract class ViewObjectFactory {
         EquipmentSlot hatSlot = subject.getItemStorage().getEquipped().getHead();
 
 
-        SimpleViewObject body = new SimpleViewObject(p, factory.loadDynamicImage("Entities/Beans/Yellow.xml"), hexDrawingStrategy);
+        SimpleViewObject body = new SimpleViewObject(p, factory.loadDynamicImage("Entities/Beans/Light Blue.xml"), hexDrawingStrategy);
         EquipableViewObject bodyArmor = createEquipable(body, createNullViewObject(), chestSlot, subject);
 
 
@@ -76,8 +76,8 @@ public abstract class ViewObjectFactory {
         hatSlot.attach(hatArmor);
 
 
-        MicroPositionableViewObject leftHand = new MicroPositionableViewObject(createSimpleLeftHand(p, weaponSlot, subject));
-        MicroPositionableViewObject rightHand = new MicroPositionableViewObject(createSimpleRightHand(p, weaponSlot, subject));
+        MicroPositionableViewObject leftHand = createHand(p, weaponSlot, subject, "Light Blue");
+        MicroPositionableViewObject rightHand = createHand(p, weaponSlot, subject, "Light Blue");
         HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p, weaponSlot, this, subject);
 
         weaponSlot.attach(hands);
@@ -85,8 +85,8 @@ public abstract class ViewObjectFactory {
 //        MicroPositionableViewObject leftFoot = createLeftFoot(p, d, subject);
 //        MicroPositionableViewObject rightFoot = createRightFoot(p, d, subject);
 
-        MicroPositionableViewObject leftFoot = createMicroPositionableViewObject(p, "Feet/Yellow/Foot.xml");
-        MicroPositionableViewObject rightFoot = createMicroPositionableViewObject(p, "Feet/Yellow/Foot.xml");
+        MicroPositionableViewObject leftFoot = createMicroPositionableViewObject(p, "Feet/Light Blue/Foot.xml");
+        MicroPositionableViewObject rightFoot = createMicroPositionableViewObject(p, "Feet/Light Blue/Foot.xml");
 
 
         FeetViewObject feet = new FeetViewObject(d, leftFoot, rightFoot);
@@ -98,6 +98,13 @@ public abstract class ViewObjectFactory {
 
         VisibilitySourceViewObject visibilitySourceViewObject = new VisibilitySourceViewObject(sneakWithHUD, subject, areaView, 5);
         subject.attach(visibilitySourceViewObject);
+
+        StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
+        DestroyableViewObject destroyableViewObject = new DestroyableViewObject(
+                visibilitySourceViewObject,
+                startableViewObject,
+                subject);
+
         //TEMPORARY TESTING WORKAROUND
         //TODO: make better
         hexDrawingStrategy.setCenterTarget(stationarySneak);
@@ -110,6 +117,9 @@ public abstract class ViewObjectFactory {
     public DestroyableViewObject createTakeableItem(Position position, TakeableItem takeableItem) {
         String name = takeableItem.getName();
         DestroyableViewObject destroyableViewObject =  new DestroyableViewObject(
+                new SimpleViewObject(position,
+                        factory.loadDynamicImage("Items/" + name + "/" + name + ".xml"),
+                        hexDrawingStrategy),
                 new StartableViewObject(position,
                         factory.loadActiveDynamicImage("Items/" + name + "/" + name + ".xml"),
                         hexDrawingStrategy),
@@ -126,9 +136,13 @@ public abstract class ViewObjectFactory {
         StartableDynamicImage animation = factory.loadActiveDynamicImage("Items/" + oneShot.getName() + "/" + oneShot.getName() + ".xml");
 
         StartableViewObject internalVO = new StartableViewObject(position, animation, hexDrawingStrategy);
-        DestroyableViewObject destroyableVO = new DestroyableViewObject(internalVO, oneShot);
+        DestroyableViewObject destroyableVO = new DestroyableViewObject(internalVO, internalVO, oneShot);
         oneShot.attach(destroyableVO);
         return destroyableVO;
+    }
+
+    private MicroPositionableViewObject createHand(Position position, EquipmentSlot slot, Entity entity, String color) {
+        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), null, slot, entity));
     }
 
     public SimpleViewObject createObstacle(Position position, Obstacle obstacle) {

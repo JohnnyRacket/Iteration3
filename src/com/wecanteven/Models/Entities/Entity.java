@@ -12,13 +12,14 @@ import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.*;
 
+import javax.security.auth.Destroyable;
 import java.util.ArrayList;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
 
-public class Entity implements Moveable, Directional, ViewObservable, Observer{
+public class Entity implements Moveable, Directional, Destroyable, ViewObservable, Observer{
     ArrayList<Observer> observers = new ArrayList<>();
     private ActionHandler actionHandler;
     private Stats stats;
@@ -31,6 +32,8 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     private int movingTicks;
     private boolean isActive;
     private boolean lock;
+
+    private boolean isDestroyed = false;
 
     public Entity(ActionHandler actionHandler, Direction direction){
         this.actionHandler = actionHandler;
@@ -238,5 +241,10 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     public void modifyStats(StatsAddable addable){
         System.out.println("The Entity's stats have changed");
         this.stats.addStats(addable);
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return isDestroyed;
     }
 }
