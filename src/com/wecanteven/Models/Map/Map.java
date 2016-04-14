@@ -57,7 +57,10 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     private boolean isOutOfBounds(Location location){
-        if( location.getR() > getrSize()-1 ||
+        if( location.getR() < 0 ||
+            location.getZ() < 0 ||
+            location.getS() < 0 ||
+            location.getR() > getrSize()-1 ||
             location.getZ() > getzSize()-1 ||
             location.getS() > getsSize()-1){
             return true;
@@ -120,9 +123,15 @@ public class Map implements MapVisitable, ActionHandler {
         }else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){
             //try to jump if you cant move
             //checks if you'll bump your head
-            Tile above = this.getTile(source.add(new Location(0,0,entity.getHeight())));
-            above.accept(visitor);
-            if(visitor.canMove()){
+            int count = 1;
+            boolean bumpHead = true;
+            for(int i = 0; i <entity.getHeight() && bumpHead;i++){
+                Tile above = this.getTile(destination.subtract(entity.getDirection().getCoords).add(new Location(0,0,count)));
+                above.accept(visitor);
+                bumpHead = bumpHead & visitor.canMove();
+                count++;
+            }
+            if(bumpHead){
                 return move(entity, destination.add(Direction.UP.getCoords), movespeed);
             }
             else{
@@ -149,6 +158,7 @@ public class Map implements MapVisitable, ActionHandler {
         Tile tile = getTile(destination);
         tile.accept(visitor);
         if(visitor.canMove()) {//move if you can
+            remove(hitBox,hitBox.getLocation());
             hitBox.setLocation(destination);
             hitBox.updateMovingTicks(moveSpeed);
             remove(hitBox, source);

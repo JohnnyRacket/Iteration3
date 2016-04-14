@@ -15,12 +15,16 @@ public class ProjectileHitBoxGenerator implements HitBoxGenerator {
 
     public ProjectileHitBoxGenerator(Character caster,StatsAddable effect){
         this.caster = caster;
-        hitbox = new MovableHitBox("Range",caster.getLocation(),effect);
-        hitbox.setActionHandler(caster.getActionHandler());
+        hitbox = new MovableHitBox("Range",caster.getLocation(),effect,caster.getActionHandler());
     }
     public void generate(){
+        int distance = 3;
+        int speed = 30;
         Direction direction = caster.getDirection();
-        Location destination = hitbox.getLocation().add(direction.getCoords);
-        System.out.println("stopped");
+        Location destination = hitbox.getLocation();
+        for(int i = 0; i < distance; i++){
+            destination = destination.add(direction.getCoords);
+        }
+        hitbox.addToMap(distance,speed,direction);
     }
 }

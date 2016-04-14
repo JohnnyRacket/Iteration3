@@ -28,6 +28,7 @@ public class PrimaryStat extends Stat implements ModelObservable{
     }
 
     public void subtract(int subtractable){
+        if(subtractable == 0) return;
         stat -= subtractable;
         modelNotifyObservers();
 

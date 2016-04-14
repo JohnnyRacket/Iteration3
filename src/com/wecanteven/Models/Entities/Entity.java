@@ -34,7 +34,7 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
 
         setStats(new Stats(this));
         setHeight(3);
-        setJumpHeight(2);
+        setJumpHeight(25);
 
         setActionHandler(actionHandler);
         setDirection(direction);
@@ -105,11 +105,10 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
     }
 
     public void loseLife(){
-        actionHandler.death(this);
+        getActionHandler().death(this);
         setLocation(new Location(3, 9, 1));
         notifyObservers();
         getStats().refreshStats();
-
     }
 
 
