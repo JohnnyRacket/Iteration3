@@ -41,6 +41,7 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
         this.jumpDetector = jumpDetector;
 
         subject.attach(this);
+        update();
     }
 
 

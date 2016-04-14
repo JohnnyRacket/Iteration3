@@ -69,6 +69,9 @@ public class HitBox {
     static public void setVOCreationVisitor(VOCreationVisitor visitor){
         voCreationVisitor = visitor;
     }
+    public VOCreationVisitor getVoCreationVisitor(){
+        return voCreationVisitor;
+    }
     public void accept(VOCreationVisitor visitor) {
         visitor.visitHitBox(this);
     }
