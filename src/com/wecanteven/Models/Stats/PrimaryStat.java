@@ -22,17 +22,15 @@ public class PrimaryStat extends Stat implements ModelObservable{
     }
 
     public void add(int addable){
-        if(addable >= 0){
-            stat += addable;
-            modelNotifyObservers();
-        }
+        stat += addable;
+        modelNotifyObservers();
+
     }
 
     public void subtract(int subtractable){
-        if(subtractable >=0){
-            stat -= subtractable;
-            modelNotifyObservers();
-        }
+        stat -= subtractable;
+        modelNotifyObservers();
+
     }
 
     @Override

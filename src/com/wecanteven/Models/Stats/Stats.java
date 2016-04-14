@@ -22,7 +22,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     private ArrayList<Observer> viewObservers = new ArrayList<>();
 
     public Stats(Entity entity){
-        initStats(entity,100,100,100,100,15);
+        initStats(entity,1,1,1,1,30);
     }
 
     public void initStats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement, int lives, int level){
@@ -70,7 +70,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void addStats(StatsAddable statsAddable){
-        System.out.println("The entities Stats were modified");
+        System.out.println("The entities Stats were modified" + statsAddable.getHealth());
         lives.add(statsAddable.getLives());
         strength.add(statsAddable.getStrength());
         agility.add(statsAddable.getAgility());

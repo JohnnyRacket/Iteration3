@@ -4,10 +4,7 @@ import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
-import com.wecanteven.Observers.Directional;
-import com.wecanteven.Observers.Moveable;
-import com.wecanteven.Observers.ViewObservable;
-import com.wecanteven.Observers.Observer;
+import com.wecanteven.Observers.*;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.*;
@@ -18,7 +15,7 @@ import java.util.ArrayList;
  * Created by Brandon on 3/31/2016.
  */
 
-public class Entity implements Moveable, Directional, ViewObservable, Observer{
+public class Entity implements Moveable, Directional,Destroyable, ViewObservable, Observer{
     private ArrayList<Observer> observers;
     private ActionHandler actionHandler;
     private Stats stats;
@@ -29,6 +26,8 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     private CanFallVisitor canFallVisitor;
     private int movingTicks;
     private boolean lock, isActive;
+
+    private boolean isDestroyed = false;
 
     public Entity(ActionHandler actionHandler, Direction direction){
         observers = new ArrayList<>();
@@ -253,6 +252,12 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
         this.stats.addStats(addable);
     }
 
+
+    @Override
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
     public void takeDamage(int dmgAmount) {
         getStats().takeDamage(dmgAmount);
     }
@@ -262,8 +267,10 @@ public class Entity implements Moveable, Directional, ViewObservable, Observer{
     }
 
     public void loseLife() {
+        System.out.println("Entity Lost a life");
         getStats().loseLife();
-
+        isDestroyed = true;
         checkForDeath();
+        notifyObservers();
     }
 }
