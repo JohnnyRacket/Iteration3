@@ -100,7 +100,6 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
                 deIncrementMovingTick();
                 calculateActiveStatus();
                 tickTicks();
-                System.out.println("The projectile is moving");
             }, 1);
         }
     }

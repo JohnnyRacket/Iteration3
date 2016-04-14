@@ -35,6 +35,8 @@ import com.wecanteven.Observers.Positionable;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Direction;
 
+import java.awt.*;
+
 /**
  * Created by Alex on 3/31/2016.
  */
@@ -171,7 +173,9 @@ public abstract class ViewObjectFactory {
         HUDDecorator homioidWithHUD = new HUDDecorator(
                 hominoid,
                 character.getStats(),
-                hexDrawingStrategy);
+                hexDrawingStrategy,
+                this,
+                areaView);
 
         //Now give him a death animation
         StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
@@ -399,5 +403,9 @@ public abstract class ViewObjectFactory {
         StartableViewObject hitBoxVO = createStartableViewObject(p, path);
         hitBoxVO.start(300);
         return hitBoxVO;
+    }
+
+    public ViewObject createFloatingTextViewObject(Position position, String text, long duration, Color color, double distance) {
+        return new FloatingTextViewObject(position, text, distance, duration, color, hexDrawingStrategy);
     }
 }
