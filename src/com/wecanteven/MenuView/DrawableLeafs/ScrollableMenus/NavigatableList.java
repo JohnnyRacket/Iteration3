@@ -19,7 +19,9 @@ public class NavigatableList{
 
     //Public api
     public void select(){
-        list.get(currentIndex).select();
+        if(list.size() > 0) {
+            list.get(currentIndex).select();
+        }
     }
 
     public void addItem(SelectableItem item){

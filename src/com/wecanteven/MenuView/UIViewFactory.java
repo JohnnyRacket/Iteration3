@@ -29,6 +29,7 @@ import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
@@ -107,11 +108,11 @@ public class UIViewFactory {
         TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats", Config.TEAL);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
-        //AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
 
         SwappableView view = new SwappableView();
         view.addNavigatable(skillMenu);
-        view.addDrawable(vert);
+        view.addDrawable(anim);
 
         ViewTime.getInstance().register(()->{
             createGreyBackground();
@@ -156,11 +157,11 @@ public class UIViewFactory {
         TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment", Config.TEAL);
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
-        //AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
+        AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
 //        view.addDrawable(vertCenter);
 
 
-        view.addDrawable(vertCenter);
+        view.addDrawable(animation);
         view.addNavigatable(menu);
         view.addNavigatable(equipMenu);
         //return created swappable view
@@ -253,11 +254,12 @@ public class UIViewFactory {
         ScrollableMenu menu = new ScrollableMenu(100,100);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
-
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        menu.setBgColor(Config.CINNIBAR);
         menu.setList(list);
         SwappableView view = new SwappableView();
         view.addNavigatable(menu);
-        view.addDrawable(vert);
+        view.addDrawable(anim);
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
@@ -290,13 +292,15 @@ public class UIViewFactory {
             controller.setMenuState(container);
         }));
         ScrollableMenu menu = new ScrollableMenu(100,70);
+        menu.setBgColor(Config.CINNIBAR);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
 
         menu.setList(list);
         SwappableView view = new SwappableView();
         view.addNavigatable(menu);
-        view.addDrawable(vert);
+        view.addDrawable(anim);
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
@@ -410,6 +414,7 @@ public class UIViewFactory {
 
     }
     public void createPauseMenu(){
+        pauseGame();
         ScrollableMenu menu = new ScrollableMenu(300,300);
         NavigatableList list = new NavigatableList();
         list.addItem(createSaveMenu(menu, list));
@@ -445,15 +450,17 @@ public class UIViewFactory {
        // RectangleShadowDecorator shadow = new RectangleShadowDecorator(title);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
 
 
         SwappableView view = new SwappableView();
         view.addNavigatable(menu);
-        view.addDrawable(vert);
+        view.addDrawable(anim);
         ViewTime.getInstance().register(()->{
             createGreyBackground();
             vEngine.getManager().addView(view);
         },0);
+
         controller.setMenuState(view.getMenuViewContainer());
     }
     public void createGreyBackground(){
@@ -658,10 +665,12 @@ public class UIViewFactory {
     }
 
     public void exitMenu() {
+        resumeGame();
         this.getController().setPlayState();
         ViewTime.getInstance().register(()->{
             this.getController().clearViews();
         },0);
+
     }
 
     public void createKeyBindMenu(ControllerState state){
@@ -743,6 +752,16 @@ public class UIViewFactory {
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addToast( new Toast(dur, msg));
         },0);
+    }
+
+    public void pauseGame(){
+        ModelTime.getInstance().pause();
+        ViewTime.getInstance().pause();
+    }
+
+    public void resumeGame(){
+        ModelTime.getInstance().resume();
+        ViewTime.getInstance().resume();
     }
 
 }

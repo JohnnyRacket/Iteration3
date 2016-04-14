@@ -46,6 +46,9 @@ public class NavigatableGrid extends Drawable implements Navigatable, Navigatabl
         NavigatableList tmpList = list.clone();
         Iterator<SelectableItem> iter = tmpList.getIterator();
         while (iter.hasNext()) {
+            if(offsetY-y+itemHeight > this.getHeight()){
+                return;
+            }
             if (index == list.getCurrentIndex() && active) {
                 //System.out.println(list.getCurrentIndex());
                 SelectableItem current = iter.next();
@@ -65,6 +68,7 @@ public class NavigatableGrid extends Drawable implements Navigatable, Navigatabl
             }else{
                 offsetX += itemWidth;
             }
+
 
 
         }

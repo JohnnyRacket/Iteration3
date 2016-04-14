@@ -10,10 +10,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Created by Alex on 3/31/2016.
  */
 public class ViewTime {
+
+    private boolean paused = false;
+
     private CopyOnWriteArrayList<Tuple<vCommand, Long>> staging = new CopyOnWriteArrayList<>();
     private PriorityQueue<Tuple<vCommand, Long>> executables = new PriorityQueue<>(
             (Tuple<vCommand, Long> o1, Tuple<vCommand, Long> o2) ->  (int)(o1.y - o2.y)
     );
+
+    private CopyOnWriteArrayList<Tuple<vCommand, Long>> stagingCopy;
+    private PriorityQueue<Tuple<vCommand, Long>> executablesCopy;
 
     private long currentTime;
 
@@ -28,6 +34,7 @@ public class ViewTime {
         while (readyToExecute()) {
             executables.poll().x.execute();
         }
+
     }
 
     public boolean readyToExecute() {
@@ -56,6 +63,27 @@ public class ViewTime {
 
     private ViewTime() {
         currentTime = System.currentTimeMillis();
+    }
+
+    public void pause(){
+        System.out.println("PAUSING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        if(!paused) {
+            paused = true;
+            stagingCopy = staging;
+            staging = new CopyOnWriteArrayList<>();
+            executablesCopy = executables;
+            executables = new PriorityQueue<>(
+                    (Tuple<vCommand, Long> o1, Tuple<vCommand, Long> o2) ->  (int)(o1.y - o2.y)
+            );
+        }
+    }
+    public void resume(){
+        System.out.println("RESUMING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        if(paused) {
+            paused = false;
+            staging = stagingCopy;
+            executables = executablesCopy;
+        }
     }
 
 }
