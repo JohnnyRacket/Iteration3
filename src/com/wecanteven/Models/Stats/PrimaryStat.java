@@ -22,9 +22,9 @@ public class PrimaryStat extends Stat implements ModelObservable{
     }
 
     public void add(int addable){
+        if(addable == 0) return;
         stat += addable;
         modelNotifyObservers();
-
     }
 
     public void subtract(int subtractable){

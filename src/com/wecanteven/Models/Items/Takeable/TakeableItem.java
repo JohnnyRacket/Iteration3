@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by simonnea on 3/31/16.
  */
-public class TakeableItem extends Item implements Destroyable, Observable{
+public class TakeableItem extends Item implements Destroyable, ViewObservable{
     private ArrayList<Observer> observers = new ArrayList<>();
 
     private int value;

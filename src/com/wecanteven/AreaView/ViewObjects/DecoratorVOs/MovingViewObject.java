@@ -7,6 +7,7 @@ import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Observer;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.UtilityClasses.Direction;
 
@@ -31,13 +32,15 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     private JumpDetector jumpDetector;
 
 
-    public MovingViewObject(ViewObject child, Moveable subject, AreaView areaView, JumpDetector jumpDetector) {
+    public <T extends Moveable & ViewObservable> MovingViewObject(ViewObject child, T subject, AreaView areaView, JumpDetector jumpDetector) {
         super(child);
         this.subject = subject;
         this.areaView = areaView;
         this.source = child.getPosition();
         this.destination = child.getPosition();
         this.jumpDetector = jumpDetector;
+
+        subject.attach(this);
     }
 
 

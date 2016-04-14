@@ -4,6 +4,7 @@ import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Observers.Destroyable;
 import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.Visitors.ItemVisitor;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by simonnea on 3/31/16.
  */
-public class OneShot extends Item implements Destroyable, Observable{
+public class OneShot extends Item implements Destroyable, ViewObservable{
     private ArrayList<Observer> observers = new ArrayList<>();
 
     private boolean isDestroyed = false;

@@ -19,7 +19,7 @@ public class MeleeRangeHitBoxGenerator implements HitBoxGenerator {
     public MeleeRangeHitBoxGenerator(Character caster,StatsAddable effect){
         this.caster = caster;
         actionHandler = caster.getActionHandler();
-        hitbox = new HitBox(effect);
+        hitbox = new HitBox("Melee",caster.getLocation(),effect);
     }
     public void generate(){
         System.out.println("The spell is occuring");

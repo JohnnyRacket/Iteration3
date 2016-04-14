@@ -5,7 +5,9 @@ import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.DynamicImageDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
 import com.wecanteven.Observers.Directional;
+import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Directionalizable;
 
 import java.awt.*;
@@ -32,15 +34,15 @@ public class DirectionalViewObject extends LeafViewObject implements Directional
         subject.getDirection().setDirectionOf(this);
     }
 
-    public DirectionalViewObject(Position position,
-                                 Directional subject,
-                                 DynamicImageDrawingStrategy drawingStrategy,
-                                 SimpleDynamicImage north,
-                                 SimpleDynamicImage south,
-                                 SimpleDynamicImage northeast,
-                                 SimpleDynamicImage northwest,
-                                 SimpleDynamicImage southeast,
-                                 SimpleDynamicImage southwest) {
+    public <T extends Directional & ViewObservable> DirectionalViewObject(Position position,
+                                                                          T subject,
+                                                                          DynamicImageDrawingStrategy drawingStrategy,
+                                                                          SimpleDynamicImage north,
+                                                                          SimpleDynamicImage south,
+                                                                          SimpleDynamicImage northeast,
+                                                                          SimpleDynamicImage northwest,
+                                                                          SimpleDynamicImage southeast,
+                                                                          SimpleDynamicImage southwest) {
         super(position);
         this.drawingStrategy = drawingStrategy;
         this.subject = subject;
@@ -50,6 +52,9 @@ public class DirectionalViewObject extends LeafViewObject implements Directional
         this.northwest = northwest;
         this.southeast = southeast;
         this.southwest = southwest;
+
+        //Attach to the observer
+        subject.attach(this);
         update();
     }
 
