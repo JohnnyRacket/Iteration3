@@ -19,4 +19,5 @@ public class Config {
     public static Color DARKPAPYRUS = new Color(184, 152, 98);
     public static Color GOLD = new Color(227, 185, 92);
     public static Color DARKGOLD = new Color(178, 147, 78);
+    public static Color CINNIBAR = new Color(231, 76, 60);
 }

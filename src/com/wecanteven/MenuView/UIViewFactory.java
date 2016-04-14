@@ -14,6 +14,7 @@ import com.wecanteven.MenuView.DrawableLeafs.BackgroundImageDrawable;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
 
+import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.BiNavigatableGridWithCenterTitle;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
 import com.wecanteven.MenuView.DrawableLeafs.Toaster.Toast;
@@ -124,12 +125,12 @@ public class UIViewFactory {
 
     public void createInventoryView(Character character){
 
-        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this);
+        NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this, menu);
         character.accept(visitor);
         NavigatableList list = visitor.getInventoryItems();
         NavigatableList equiplist = visitor.getEquippedItems();
         //make menu
-        NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
         menu.setBgColor(Config.PAPYRUS);
 
         NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
@@ -202,7 +203,7 @@ public class UIViewFactory {
         //make swappable view
         SwappableView view = new SwappableView();
         //add decorators to center the menu
-        TitleBarDecorator title = new TitleBarDecorator(menu,"Main Menu");
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Can Periwinkle Even", Config.CINNIBAR);
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
         view.addDrawable(vertCenter);
@@ -211,15 +212,17 @@ public class UIViewFactory {
         return view;
     }
 
-    public void createEquippableItemMenu(Character character, EquipableItem item){
-        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this);
+    public void createEquippableItemMenu(Character character, NavigatableListHolder holder, EquipableItem item){
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this,holder);
         NavigatableList list = new NavigatableList();
         list.addItem(new ScrollableMenuItem("Equip", () ->{
             System.out.println("equip pressed");
             character.equipItem(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createInventoryView(avatar.getCharacter());
+                //createInventoryView(avatar.getCharacter());
+                visitor.visitCharacter(character);
+                holder.setList(visitor.getInventoryItems());
             },0);
 
         }));
@@ -454,75 +457,33 @@ public class UIViewFactory {
 
         //make menu
         NavigatableGrid npcInv = new NavigatableGrid(250, 400, 5, 5);
-        npcInv.setBgColor(new Color(90,70,50));
-
         NavigatableGrid playerInv = new NavigatableGrid(250, 400, 5, 5);
-        playerInv.setBgColor(new Color(90,70,70));
 
         npcInv.setList(npcList);
         playerInv.setList(playerList);
         //make swappable view
-        SwappableView view = new SwappableView();
-        //add decorators to center the menu
-        ColumnatedCompositeContainer columns  = new ColumnatedCompositeContainer();
-        columns.setHeight(400);
-        columns.setWidth(700);
-
-
-
-        VerticalCenterContainer npcTradeTitle =
-                new VerticalCenterContainer(
-                        new HorizontalCenterContainer(
-                                new TitleBarDecorator(
-                                        npcInv,
-                                        "Shopkeeper Gold: " + npc.getItemStorage().getMoney().getValue()
-                                )
-                        )
-                );
-        columns.addDrawable(npcTradeTitle);
-
-        VerticalCenterContainer playerTradeTitle =
-                new VerticalCenterContainer(
-                        new HorizontalCenterContainer(
-                                new TitleBarDecorator(
-                                        playerInv,
-                                        "Your Gold: " + player.getItemStorage().getMoney().getValue()
-                                )
-                        )
+        BiNavigatableGridWithCenterTitle tradeWindow =
+                new BiNavigatableGridWithCenterTitle(npcInv, playerInv,
+                        "Buy / Sell",
+                        "Shopkeeper Gold: " + npc.getItemStorage().getMoney().getValue(),
+                        "Your Gold: " + player.getItemStorage().getMoney().getValue(),
+                        Config.MEDIUMGREY, Config.TEAL, Config.TRANSMEDIUMGREY
                 );
 
 
-        columns.addDrawable(playerTradeTitle);
-
-
-        VerticalCenterContainer title =
-                new VerticalCenterContainer(
-                        new HorizontalCenterContainer(
-                                new TitleBarDecorator(columns, "Buy / Sell")
-                        )
-                );
-
-
-        view.addDrawable(title);
 
 
 
-        view.addNavigatable(npcInv);
-        view.addNavigatable(playerInv);
-
-
-
-
-        ViewTime.getInstance().register(()->{
-            vEngine.getManager().addView(view);
-        },0);
-
-        controller.setMenuState(view.getMenuViewContainer());
-        //This ACTIVE boolean serves the purpose of knowing whether or not draw the selector in the buy window
-        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame John
-        if(!active) {
-            view.getMenuViewContainer().swap();
-        }
+//        ViewTime.getInstance().register(()->{
+//            vEngine.getManager().addView(view);
+//        },0);
+//
+//        controller.setMenuState(view.getMenuViewContainer());
+//        //This ACTIVE boolean serves the purpose of knowing whether or not draw the selector in the buy window
+//        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame John
+//        if(!active) {
+//            view.getMenuViewContainer().swap();
+//        }
     }
 
     //Triggers initial animation dialog window - afterwards, continue is used.
