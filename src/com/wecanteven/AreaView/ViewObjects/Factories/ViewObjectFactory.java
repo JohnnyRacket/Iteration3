@@ -104,6 +104,7 @@ public abstract class ViewObjectFactory {
                 visibilitySourceViewObject,
                 startableViewObject,
                 subject);
+        subject.attach(destroyableViewObject);
 
         //TEMPORARY TESTING WORKAROUND
         //TODO: make better

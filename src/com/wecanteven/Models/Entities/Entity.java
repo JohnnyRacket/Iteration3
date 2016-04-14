@@ -65,7 +65,10 @@ public class Entity implements Moveable, Directional, Destroyable, ViewObservabl
 
     @Override
     public void update(){
+        isDestroyed = true;
+        notifyObservers();
         checkForDeath();
+
     }
 
     public boolean move(Direction d){
