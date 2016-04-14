@@ -2,6 +2,8 @@ package com.wecanteven.GameLaunching.GameLaunchers;
 
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
+import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
+import com.wecanteven.GameLaunching.LevelFactories.TSMBlowsLevelFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
@@ -20,6 +22,8 @@ import com.wecanteven.ViewEngine;
  */
 public class NewGameLauncher extends GameLauncher {
 
+    private LevelFactory levelFactory = new TSMBlowsLevelFactory();
+    //private LevelFactory levelFactory = new DopeAssLevelFactory();
 
     public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine){
         super(controller, modelEngine, viewEngine);

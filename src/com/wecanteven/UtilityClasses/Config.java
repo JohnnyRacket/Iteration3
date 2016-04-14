@@ -17,4 +17,6 @@ public class Config {
     public static Color TEAL = new Color(18, 185,200);
     public static Color PAPYRUS = new Color(200, 184, 130);
     public static Color DARKPAPYRUS = new Color(184, 152, 98);
+    public static Color GOLD = new Color(227, 185, 92);
+    public static Color DARKGOLD = new Color(178, 147, 78);
 }
