@@ -110,7 +110,7 @@ public abstract class ViewObjectFactory {
         hexDrawingStrategy.setCenterTarget(stationarySneak);
 
 
-        return createMovingViewObject(subject, visibilitySourceViewObject);
+        return createMovingViewObject(subject, destroyableViewObject);
 
     }
 

@@ -265,9 +265,10 @@ public class Entity implements Moveable, Directional, Destroyable, ViewObservabl
     }
 
     public void loseLife() {
+        System.out.println("Entity Lost a life");
         getStats().loseLife();
-
+        isDestroyed = true;
         checkForDeath();
-
+        notifyObservers();
     }
 }
