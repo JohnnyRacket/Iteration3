@@ -18,6 +18,10 @@ public abstract class CoolDownAoE extends OneTimeAreaOfEffect implements Alertab
         this.onCooldown = onCooldown;
     }
 
+    public int getCoolDownTicks() {
+        return coolDownTicks;
+    }
+
     @Override
     public void setObserved(Tile.TileSlot<Entity> observedSlot) { }
 

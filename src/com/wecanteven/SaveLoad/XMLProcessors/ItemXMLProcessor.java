@@ -1,19 +1,13 @@
 package com.wecanteven.SaveLoad.XMLProcessors;
 
-import com.wecanteven.Models.Factories.ItemFactories.EquipableItemFactory;
-import com.wecanteven.Models.Factories.ItemFactories.InteractiveItemFactory;
-import com.wecanteven.Models.Factories.ItemFactories.ObstacleItemFactory;
-import com.wecanteven.Models.Factories.ItemFactories.OneShotItemFactory;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.HeadEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
-import com.wecanteven.Models.Items.Takeable.UseableItem;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 

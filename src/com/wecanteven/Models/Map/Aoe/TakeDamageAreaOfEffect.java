@@ -13,6 +13,10 @@ public class TakeDamageAreaOfEffect extends TickableAreaOfEffect {
         this.damagePerTick = damage;
     }
 
+    public int getDamagePerTick() {
+        return damagePerTick;
+    }
+
     @Override
     public void apply(Entity entity) {
         System.out.println("Entity took damage: " + damagePerTick);
