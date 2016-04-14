@@ -110,8 +110,9 @@ public class UIViewFactory {
         SwappableView view = new SwappableView();
         view.addNavigatable(skillMenu);
         view.addDrawable(vert);
-        createGreyBackground();
+
         ViewTime.getInstance().register(()->{
+            createGreyBackground();
             vEngine.getManager().addView(view);
         },0);
         controller.setMenuState(view.getMenuViewContainer());
@@ -160,8 +161,8 @@ public class UIViewFactory {
         view.addNavigatable(menu);
         view.addNavigatable(equipMenu);
         //return created swappable view
-        createGreyBackground();
         ViewTime.getInstance().register(()->{
+            createGreyBackground();
             vEngine.getManager().addView(view);
         },0);
         controller.setMenuState(view.getMenuViewContainer());
@@ -169,11 +170,12 @@ public class UIViewFactory {
 
     public void createHUDView(Character character){
         StatsHUD statsHUD = new StatsHUD(character.getStats());
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(statsHUD);
         statsHUD.setHeight(150);
         statsHUD.setWidth(300);
         statsHUD.setBgColor(new Color(.5f,.5f,.5f,.5f));
         SwappableView view = new SwappableView();
-        view.addDrawable(statsHUD);
+        view.addDrawable(horiz);
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addPermView(view);
         },0);
@@ -428,19 +430,17 @@ public class UIViewFactory {
         SwappableView view = new SwappableView();
         view.addNavigatable(menu);
         view.addDrawable(vert);
-        createGreyBackground();
         ViewTime.getInstance().register(()->{
+            createGreyBackground();
             vEngine.getManager().addView(view);
         },0);
         controller.setMenuState(view.getMenuViewContainer());
     }
     public void createGreyBackground(){
-        ViewTime.getInstance().register(()->{
             SwappableView view = new SwappableView();
             BackgroundImageDrawable background = new BackgroundImageDrawable(vEngine);
             view.addDrawable(background);
             vEngine.getManager().addView(view);
-        },0);
     }
 
     public void createTradeView(NPC npc, Character player, boolean active){
@@ -623,6 +623,7 @@ public class UIViewFactory {
                 );
                 loader.loadGame();
                 loadGameLauncher.launch();
+                exitMenu();
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 2", ()->{
                 LoadGameLauncher loadGameLauncher = new LoadGameLauncher(controller, mEngine, vEngine);
@@ -633,6 +634,7 @@ public class UIViewFactory {
                 );
                 loader.loadGame();
                 loadGameLauncher.launch();
+                exitMenu();
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 3", ()->{
                 LoadGameLauncher loadGameLauncher = new LoadGameLauncher(controller, mEngine, vEngine);
@@ -642,7 +644,9 @@ public class UIViewFactory {
                     file
                 );
                 loader.loadGame();
-                loadGameLauncher.launch();            }));
+                loadGameLauncher.launch();
+                exitMenu();
+            }));
             loadList.addItem(new ScrollableMenuItem("Back", ()->{
                 menu.setList(list);
             }));

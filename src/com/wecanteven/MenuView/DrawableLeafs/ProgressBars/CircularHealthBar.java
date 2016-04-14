@@ -29,7 +29,11 @@ public class CircularHealthBar extends Drawable {
 
         //border
         g2d.setColor(borderColor);
+        Color[] colors = {new Color(.2f,.2f,.2f,1f), new Color(.2f,.2f,.2f,0f)};
+        RadialGradientPaint p =
+                new RadialGradientPaint((float)x + width/2,(float)y+height/2,(float) radius + borderSize, new float[]{.3f,.5f}, colors);
         Arc2D border = new Arc2D.Double( x - borderSize/2, y - borderSize/2, radius + borderSize, radius + borderSize,0, 360, Arc2D.OPEN);
+        //g2d.setPaint(p);
         g2d.fill(border);
 
         //background color
