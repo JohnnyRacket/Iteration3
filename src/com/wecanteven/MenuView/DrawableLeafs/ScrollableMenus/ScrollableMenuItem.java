@@ -1,6 +1,7 @@
 package com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus;
 
 import com.wecanteven.MenuView.Drawable;
+import com.wecanteven.UtilityClasses.Config;
 
 import java.awt.*;
 
@@ -15,7 +16,7 @@ public class ScrollableMenuItem extends SelectableItem{
     public ScrollableMenuItem(String name, SelectableMenuItemCommand command){
         this.setName(name);
         this.setCommand(command);
-        this.setTextColor(Color.BLACK);
+        this.setTextColor(Config.DARKGREY);
     }
     public ScrollableMenuItem(String name, SelectableMenuItemCommand command, Color textColor){
         this(name, command);

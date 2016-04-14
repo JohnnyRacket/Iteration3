@@ -10,26 +10,23 @@ import com.wecanteven.MenuView.DrawableContainers.Decorators.*;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.RowedCompositeContainer;
+import com.wecanteven.MenuView.DrawableLeafs.BackgroundImageDrawable;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
-import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
 
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
 import com.wecanteven.MenuView.DrawableLeafs.Toaster.Toast;
 import com.wecanteven.MenuView.UIObjectCreationVisitors.BuyableUIObjectCreationVisitor;
 import com.wecanteven.MenuView.UIObjectCreationVisitors.EquippableUIObjectCreationVisitor;
-import com.wecanteven.MenuView.UIObjectCreationVisitors.UIObjectCreationVisitor;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
-import com.wecanteven.Models.Interactions.InteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
-import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
@@ -108,12 +105,12 @@ public class UIViewFactory {
         TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats");
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
-        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        //AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
 
         SwappableView view = new SwappableView();
         view.addNavigatable(skillMenu);
-        view.addDrawable(anim);
-
+        view.addDrawable(vert);
+        createGreyBackground();
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
@@ -135,7 +132,7 @@ public class UIViewFactory {
         menu.setBgColor(Config.PAPYRUS);
 
         NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
-        equipMenu.setBgColor(Config.BRIGHTPAPYRUS);
+        equipMenu.setBgColor(Config.DARKPAPYRUS);
 
         //NavigatableList equiplist = new NavigatableList();
         //equiplist.addItem();
@@ -163,7 +160,7 @@ public class UIViewFactory {
         view.addNavigatable(menu);
         view.addNavigatable(equipMenu);
         //return created swappable view
-
+        createGreyBackground();
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
@@ -431,10 +428,19 @@ public class UIViewFactory {
         SwappableView view = new SwappableView();
         view.addNavigatable(menu);
         view.addDrawable(vert);
+        createGreyBackground();
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
         controller.setMenuState(view.getMenuViewContainer());
+    }
+    public void createGreyBackground(){
+        ViewTime.getInstance().register(()->{
+            SwappableView view = new SwappableView();
+            BackgroundImageDrawable background = new BackgroundImageDrawable(vEngine);
+            view.addDrawable(background);
+            vEngine.getManager().addView(view);
+        },0);
     }
 
     public void createTradeView(NPC npc, Character player, boolean active){

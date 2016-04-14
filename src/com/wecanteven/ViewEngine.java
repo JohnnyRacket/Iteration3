@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
 
 /**
  * Created by alexs on 3/29/2016.
@@ -107,5 +108,18 @@ public class ViewEngine extends JFrame implements Runnable{
 
     public void setManager(ViewManager manager) {
         this.manager = manager;
+    }
+
+    public BufferedImage getScreenShot() {
+        Component component = target;
+        BufferedImage image = new BufferedImage(
+                component.getWidth(),
+                component.getHeight(),
+                BufferedImage.TYPE_BYTE_GRAY
+        );
+        // call the Component's paint method, using
+        // the Graphics object of the image.
+        component.paint( image.getGraphics() ); // alternately use .printAll(..)
+        return image;
     }
 }
