@@ -29,6 +29,7 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Directional;
+import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Positionable;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Direction;
@@ -327,7 +328,7 @@ public abstract class ViewObjectFactory {
         return new DirectionalViewObject(p, d, hexDrawingStrategy, bodyNorth, bodySouth, bodyNorthEast, bodyNorthWest, bodySoutheast, bodySouthWest);
     }
 
-    private MovingViewObject createMovingViewObject(Entity subject, ViewObject child) {
+    public <T extends Moveable & ViewObservable> MovingViewObject createMovingViewObject(T subject, ViewObject child) {
         MovingViewObject mvo = new  MovingViewObject(child, subject, areaView, jumpDetector);
         return mvo;
     }
