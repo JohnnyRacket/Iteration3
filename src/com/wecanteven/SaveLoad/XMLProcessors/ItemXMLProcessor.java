@@ -43,9 +43,6 @@ public class ItemXMLProcessor extends XMLProcessor {
         return (ChestEquipableItem) (new ItemMap()).getItemAsEquipable(sf.getStrAttr(el, "name"));
     }
 
-
-
-
     public static Obstacle parseObstacleItem(Element el) {
         return new ItemMap().getItemAsObstacle(sf.getStrAttr(el, "name"));
     }

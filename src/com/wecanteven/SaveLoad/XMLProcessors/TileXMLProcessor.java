@@ -11,6 +11,7 @@ import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.UtilityClasses.Direction;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.lang.reflect.Array;
@@ -111,6 +112,14 @@ public class TileXMLProcessor extends XMLProcessor {
         if(NPC != null) {
             t.add(EntityXMLProcessor.parseNPC(map, NPC));
         }
+
+        NodeList aoes = sf.getElementsById(el, "AreaOfEffect");
+        for (int i = 0; i < aoes.getLength(); i++) {
+            Node cur = aoes.item(i);
+
+            t.add(AOEXMLProcessor.parseAoe((Element)cur));
+        }
+
         return t;
     }
 
