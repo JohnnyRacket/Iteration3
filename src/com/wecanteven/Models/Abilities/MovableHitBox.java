@@ -4,6 +4,7 @@ import com.wecanteven.AreaView.VOCreationVisitor;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.StatsAddable;
+import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Observers.ViewObservable;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by Brandon on 4/11/2016.
  */
-public class MovableHitBox extends HitBox implements Moveable, ViewObservable {
+public class MovableHitBox extends HitBox implements Moveable, ViewObservable, Directional {
     private CanMoveVisitor canMoveVisitor;
     private int movingTicks;
     private boolean isActive;
@@ -76,6 +77,12 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable {
         this.movingTicks = movingTicks;
         notifyObservers();
     }
+
+    @Override
+    public Direction getDirection() {
+        return direction;
+    }
+
     @Override
     public int getMovingTicks() {
         return movingTicks;

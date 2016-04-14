@@ -54,11 +54,13 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitHitBox(HitBox hitBox){
-        areaView.addViewObject(factory.createSimpleViewObject(hitBox.getLocation().toPosition(),"Decals/Cactus1.xml"));
+        areaView.addViewObject(factory.createHitBox(hitBox));
+
+        //areaView.addViewObject(factory.createSimpleViewObject(hitBox.getLocation().toPosition(),"Decals/Cactus1.xml"));
     }
     @Override
     public void visitMovableHitBox(MovableHitBox hitBox){
-        ViewObject vo = factory.createSimpleViewObject(hitBox.getLocation().toPosition(),"Decals/Cactus1.xml");
+        ViewObject vo = factory.createDirectional(hitBox.getLocation().toPosition(), hitBox, "Effects/WaterBolt/");
         MovingViewObject viewObject = factory.createMovingViewObject(hitBox,vo);
         hitBox.attach(viewObject);
         areaView.addViewObject(viewObject);

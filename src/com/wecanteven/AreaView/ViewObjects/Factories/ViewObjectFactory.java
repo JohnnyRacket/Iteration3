@@ -19,6 +19,7 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.OneHandedWeaponState;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.*;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Decals.Decal;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
@@ -318,7 +319,7 @@ public abstract class ViewObjectFactory {
         return new FogOfWarViewObject(p);
     }
 
-    private <T extends Directional & ViewObservable> DirectionalViewObject createDirectional(Position p, T d, String path) {
+    public <T extends Directional & ViewObservable> DirectionalViewObject createDirectional(Position p, T d, String path) {
         SimpleDynamicImage bodyNorth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "north.xml");
         SimpleDynamicImage bodySouth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "south.xml");
         SimpleDynamicImage bodyNorthEast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northeast.xml");
@@ -339,7 +340,6 @@ public abstract class ViewObjectFactory {
     *   Hand States
     *
      */
-
 
     public HandState createOneHandedWeaponState(Position position, Direction direction, EquipmentSlot slot, String weaponName, Entity entity) {
         return new OneHandedWeaponState(direction, createRightHandWeaponObject(position, direction, weaponName, slot, entity), this, entity);
@@ -386,5 +386,18 @@ public abstract class ViewObjectFactory {
 
     public SimpleViewObject createAoe(Position position, String name) {
         return createSimpleViewObject(position, "AreaOfEffects/" + name + ".xml");
+    }
+
+    public StartableViewObject createStartableViewObject(Position p, String path) {
+        StartableDynamicImage startableDynamicImage = factory.loadActiveDynamicImage(path);
+        return new StartableViewObject(p, startableDynamicImage, hexDrawingStrategy);
+    }
+
+    public ViewObject createHitBox(HitBox hitBox) {
+        String path = "Effects/" + hitBox.getName() + "/" + hitBox.getName() + ".xml";
+        Position p = hitBox.getLocation().toPosition();
+        StartableViewObject hitBoxVO = createStartableViewObject(p, path);
+        hitBoxVO.start(300);
+        return hitBoxVO;
     }
 }
