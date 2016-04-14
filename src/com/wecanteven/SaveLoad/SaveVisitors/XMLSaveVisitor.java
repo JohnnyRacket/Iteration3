@@ -14,6 +14,7 @@ import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
+import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
@@ -23,10 +24,7 @@ import com.wecanteven.Models.Storage.ItemStorage.Equipment;
 import com.wecanteven.Models.Storage.ItemStorage.Inventory;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.SaveLoad.SaveFile;
-import com.wecanteven.SaveLoad.XMLProcessors.EntityXMLProcessor;
-import com.wecanteven.SaveLoad.XMLProcessors.ItemXMLProcessor;
-import com.wecanteven.SaveLoad.XMLProcessors.StorageXMLProcessor;
-import com.wecanteven.SaveLoad.XMLProcessors.TileXMLProcessor;
+import com.wecanteven.SaveLoad.XMLProcessors.*;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Tuple;
 import com.wecanteven.Visitors.*;
@@ -37,7 +35,7 @@ import java.util.Iterator;
 /**
  * Created by Joshua Kegley on 4/4/2016.
  */
-public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor, EntityVisitor, StatsVisitor, ItemStorageVisitor, ItemVisitor{
+public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor, EntityVisitor, StatsVisitor, ItemStorageVisitor, ItemVisitor, AreaOfEffectVisitor{
 
     SaveFile save;
     //this is hacky as hell - @TODO: Fix this later
@@ -72,6 +70,8 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     @Override
     public void visitTile(Tile tile) {
         TileXMLProcessor.formatTile(tile);
+
+        //TODO nice to have, change this to grab the item iterator so that we can avoid the conditional logic
         if(tile.hasObstacle()) {tile.getObstacle().accept(this);}
         if(tile.hasInteractiveItem()) {tile.getInteractiveItem().accept(this);}
         if(tile.hasOneShot()) {tile.getOneShot().accept(this);}
@@ -203,6 +203,50 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         EntityXMLProcessor.formatDirection(direction);
     }
 
+    @Override
+    public void visitAoe(AreaOfEffect aoe) {
+        AOEXMLProcessor.formatAoe(aoe);
+    }
+
+    @Override
+    public void visitTickableAoe(TickableAreaOfEffect aoe) {
+        AOEXMLProcessor.formatAoe(aoe);
+    }
+
+    @Override
+    public void visitOneTimeAoe(OneTimeAreaOfEffect aoe) {
+        AOEXMLProcessor.formatAoe(aoe);
+    }
+
+    @Override
+    public void visitTickableHealAoe(HealingAreaOfEffect aoe) {
+        AOEXMLProcessor.formatHealingAreaOfEffect(aoe);
+    }
+
+    @Override
+    public void visitTickableTakeDamageAoe(TakeDamageAreaOfEffect aoe) {
+        AOEXMLProcessor.formatTakeDamageAreaOfEffect(aoe);
+    }
+
+    @Override
+    public void visitInstaDeathAoe(InstaDeathAoe aoe) {
+        AOEXMLProcessor.formatAoe(aoe);
+    }
+
+    @Override
+    public void visitCoolDownAoe(CoolDownAoE aoe) {
+        AOEXMLProcessor.formatCooldownAoe(aoe);
+    }
+
+    @Override
+    public void visitLevelUpAoe(LevelUpAoe aoe) {
+        AOEXMLProcessor.formatCooldownAoe(aoe);
+    }
+
+    @Override
+    public void visitTeleportAoe(TeleportAoe aoe) {
+        AOEXMLProcessor.formatTeleportAoe(aoe);
+    }
 
     public LevelFactory getLevelFactory() {
         return levelFactory;
