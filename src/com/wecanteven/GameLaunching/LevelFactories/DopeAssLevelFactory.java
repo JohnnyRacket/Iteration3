@@ -38,6 +38,7 @@ public class DopeAssLevelFactory extends LevelFactory{
     public Map createMap() {
         int s = 25, r = 25;
         Map map = new Map(s,r,10);
+        map.setName(this.getClass().getSimpleName());
         for (int i = 0; i<r; i++) {
             for (int j = 0; j<r; j++) {
                 map.getTile(i, j, 0).setTerrain(

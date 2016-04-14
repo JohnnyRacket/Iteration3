@@ -3,6 +3,7 @@ package com.wecanteven.Models.Abilities;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.StatsAddable;
+import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanMoveVisitor;
 import com.wecanteven.Visitors.TerranianCanMoveVisitor;
@@ -14,13 +15,32 @@ public class MovableHitBox extends HitBox{
     private CanMoveVisitor canMoveVisitor;
     private int movingTicks;
     private boolean isActive;
-    private ActionHandler actionHandler;
+    private Direction direction;
+    private int speed,distance;
+    private int count = 0;
+    private boolean canMove = true;
 
-    public MovableHitBox(String name, Location source, StatsAddable effect){
-        super(name,source,effect);
+    public MovableHitBox(String name, Location source, StatsAddable effect, ActionHandler actionHandler){
+        super(name,source,effect,actionHandler);
         setCanMoveVisitor(new TerranianCanMoveVisitor());
         setMovingTicks(0);
         setIsActive(false);
+    }
+
+    public void addToMap(int distance, int speed, Direction direction){
+        this.distance = distance;
+        this.direction = direction;
+        this.speed = speed;
+        move(getLocation().add(direction.getCoords),speed);
+    }
+    private void move(Location destination,int speed){
+                if(count >= distance && canMove){
+                    getActionHandler().remove(this,getLocation());
+                    return;
+                }
+        canMove = getActionHandler().move(this,destination,speed);
+        count++;
+
     }
 
     public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor){
@@ -37,7 +57,6 @@ public class MovableHitBox extends HitBox{
         return isActive;
     }
     public void setMovingTicks(int movingTicks){
-        System.out.println("the moving ticks were set to: " + movingTicks);
         setIsActive(true);
         this.movingTicks = movingTicks;
     }
@@ -45,7 +64,6 @@ public class MovableHitBox extends HitBox{
         return movingTicks;
     }
     public void updateMovingTicks(int ticks) {
-        System.out.println("the number of ticks to kill him is: " +ticks);
         setMovingTicks(calculateMovementTicks(ticks));
         calculateActiveStatus();
         tickTicks();
@@ -55,7 +73,6 @@ public class MovableHitBox extends HitBox{
     private void tickTicks(){
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
-                System.out.println("the projectile is on the move");
                 deIncrementMovingTick();
                 calculateActiveStatus();
                 tickTicks();
@@ -72,12 +89,10 @@ public class MovableHitBox extends HitBox{
     private void calculateActiveStatus(){
         if(getMovingTicks() <= 0){
             setIsActive(false);
+            move(getLocation().add(direction.getCoords),speed);
         }
         else{
             setIsActive(true);
         }
-    }
-    public void setActionHandler(ActionHandler actionHandler){
-        this.actionHandler = actionHandler;
     }
 }

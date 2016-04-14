@@ -15,7 +15,7 @@ public class Main {
         UIViewFactory factory = UIViewFactory.getInstance();
         SwappableView view = factory.createMainMenuView();
         MainController controller = new MainController(engine);
-        controller.setMenuState(view.getMenuViewContainer());
+        controller.setMainMenuState(view.getMenuViewContainer());
 
 
         //adapter

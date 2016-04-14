@@ -1,6 +1,9 @@
 package com.wecanteven.Models.Abilities;
 
+import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.ModelTime.Alertable;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Location;
 
@@ -11,11 +14,25 @@ public class HitBox {
     private String name;
     private StatsAddable effect;
     private Location location;
+    private ActionHandler actionHandler;
 
-    public HitBox(String name,Location location, StatsAddable effect){
+    public HitBox(String name,Location location, StatsAddable effect, ActionHandler actionHandler){
         setName(name);
         setLocation(location);
         setEffect(effect);
+        setActionHandler(actionHandler);
+    }
+
+    public void addToMap(int duration, Location destination){
+        HitBox hitBox = this;
+        actionHandler.add(hitBox,destination);
+        ModelTime modelTime = ModelTime.getInstance();
+        modelTime.registerAlertable(new Alertable() {
+            @Override
+            public void alert() {
+                actionHandler.remove(hitBox,destination);
+            }
+        }, 1);
     }
 
     public void interact(Entity entity){
@@ -31,6 +48,9 @@ public class HitBox {
     public void setEffect(StatsAddable effect){
         this.effect = effect;
     }
+    public void setActionHandler(ActionHandler actionHandler){
+        this.actionHandler = actionHandler;
+    }
 
     public String getName(){
         return name;
@@ -40,5 +60,8 @@ public class HitBox {
     }
     public StatsAddable getEffect(){
         return effect;
+    }
+    public ActionHandler getActionHandler(){
+        return actionHandler;
     }
 }

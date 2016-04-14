@@ -1,11 +1,9 @@
 package com.wecanteven.GameLaunching.GameLaunchers;
 
-import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.TSMBlowsLevelFactory;
-import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
@@ -14,8 +12,6 @@ import com.wecanteven.Models.Items.Takeable.Equipable.DualWieldMeleeWeapon;
 import com.wecanteven.Models.Items.Takeable.Equipable.HeadEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
 import com.wecanteven.Models.Map.Map;
-import com.wecanteven.Models.Occupation.Smasher;
-import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
@@ -26,16 +22,12 @@ import com.wecanteven.ViewEngine;
  */
 public class NewGameLauncher extends GameLauncher {
 
-    //private LevelFactory levelFactory = new TSMBlowsLevelFactory();
-    private LevelFactory levelFactory = new DopeAssLevelFactory();
+    private LevelFactory levelFactory = new TSMBlowsLevelFactory();
+    //private LevelFactory levelFactory = new DopeAssLevelFactory();
 
     public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine){
         super(controller, modelEngine, viewEngine);
-    }
-
-    @Override
-    LevelFactory getLevelFactory() {
-        return levelFactory;
+        setLevelFactory(new DopeAssLevelFactory());
     }
 
     /*
@@ -56,7 +48,7 @@ public class NewGameLauncher extends GameLauncher {
 
     @Override
     protected void createMap(){
-        setMap(levelFactory.createMap());
+        setMap(getLevelFactory().createMap());
     }
 
     @Override
@@ -78,7 +70,7 @@ public class NewGameLauncher extends GameLauncher {
 
     @Override
     protected void populateMap(Map map){
-        levelFactory.populateMap(map);
+        getLevelFactory().populateMap(map);
     }
 
 }

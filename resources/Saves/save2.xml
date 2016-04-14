@@ -1,155 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<SaveFile FileName="save1.xml">
-    <Map r="10" s="10" z="10">
+<SaveFile FileName="save2.xml">
+    <Map name="TSMBlowsLevelFactory" r="10" s="10" z="10">
         <Column z="10">
             <Tile terrain="Ground"/>
             <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air">
-                <TakeableItem name="LOL"/>
-            </Tile>
             <Tile terrain="Air"/>
             <Tile terrain="Air"/>
             <Tile terrain="Air"/>
@@ -354,6 +208,150 @@
         <Column z="10">
             <Tile terrain="Ground"/>
             <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
             <Tile terrain="Ground"/>
             <Tile terrain="Air"/>
             <Tile terrain="Air"/>
@@ -383,6 +381,150 @@
             <Tile terrain="Air"/>
             <Tile terrain="Air"/>
             <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+            <Tile terrain="Air"/>
+        </Column>
+        <Column z="10">
+            <Tile terrain="Ground"/>
+            <Tile terrain="Ground"/>
+            <Tile terrain="Ground"/>
+            <Tile terrain="Ground"/>
+            <Tile terrain="Ground"/>
+            <Tile terrain="Ground"/>
+            <Tile terrain="Ground"/>
             <Tile terrain="Air"/>
             <Tile terrain="Air"/>
             <Tile terrain="Air"/>
@@ -392,8 +534,8 @@
             <Tile terrain="Air">
                 <Avatar>
                     <Character Height="3" Occupation="Smasher">
-                        <Location r="3" s="2" z="1"/>
-                        <Direction enum="1"/>
+                        <Location r="4" s="4" z="1"/>
+                        <Direction enum="3"/>
                         <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="1"/>
                         <ItemStorage maxInventoryCapacity="5">
                             <Inventory maxInventoryCapacity="5">
@@ -409,150 +551,6 @@
                     </Character>
                 </Avatar>
             </Tile>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Ground"/>
-            <Tile terrain="Ground"/>
-            <Tile terrain="Ground"/>
-            <Tile terrain="Ground"/>
-            <Tile terrain="Ground"/>
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-            <Tile terrain="Air"/>
-        </Column>
-        <Column z="10">
-            <Tile terrain="Ground"/>
-            <Tile terrain="Air"/>
             <Tile terrain="Air"/>
             <Tile terrain="Air"/>
             <Tile terrain="Air"/>

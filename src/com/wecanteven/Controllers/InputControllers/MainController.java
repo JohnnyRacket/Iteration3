@@ -1,16 +1,11 @@
 package com.wecanteven.Controllers.InputControllers;
 
-import com.wecanteven.Controllers.InputControllers.ControllerStates.ControllerState;
-import com.wecanteven.Controllers.InputControllers.ControllerStates.DialogState;
-import com.wecanteven.Controllers.InputControllers.ControllerStates.MenuState;
-import com.wecanteven.Controllers.InputControllers.ControllerStates.PlayState;
+import com.wecanteven.Controllers.InputControllers.ControllerStates.*;
 import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 import com.wecanteven.MenuView.SwappableView;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.ModelTime.Tickable;
 import com.wecanteven.ViewEngine;
-
-import javax.swing.*;
 
 /**
  * Created by John on 3/31/2016.
@@ -20,13 +15,14 @@ public class MainController implements Tickable{
     private ControllerState state;
     private Avatar avatar;
     private ViewEngine viewEngine;
-
+    private MainMenuState mainMenuState;
     private MenuState menuState;
     private PlayState playState;
     private DialogState dialogState;
 
     public MainController(ViewEngine window){
         this.viewEngine = window;
+        mainMenuState = new MainMenuState(window, this);
         menuState = new MenuState(window, this);
         playState = new PlayState(window, this);
         dialogState = new DialogState(window, this);
@@ -35,6 +31,7 @@ public class MainController implements Tickable{
     public MainController(ViewEngine window,Avatar avatar){
         this.avatar = avatar;
         this.viewEngine = window;
+        mainMenuState = new MainMenuState(window, this);
         menuState = new MenuState(window, this);
         playState = new PlayState(window, this);
         dialogState = new DialogState(window, this);
@@ -46,6 +43,15 @@ public class MainController implements Tickable{
             menuState.setMenus(null);
             System.out.println("bloopey");
         }
+    }
+
+    public void setMainMenuState(MenuViewContainer menuViewContainer){
+        removeState();
+        mainMenuState.setCommandToExecute(null);
+        mainMenuState.setMenus(menuViewContainer);
+        mainMenuState.createKeybindings();
+        this.state = mainMenuState;
+
     }
 
     public void setMenuState(MenuViewContainer menuViewContainer){
