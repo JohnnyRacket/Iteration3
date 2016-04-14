@@ -103,7 +103,8 @@ public abstract class ViewObjectFactory {
         DestroyableViewObject destroyableViewObject = new DestroyableViewObject(
                 visibilitySourceViewObject,
                 startableViewObject,
-                subject);
+                subject,
+                800);
         subject.attach(destroyableViewObject);
 
         //TEMPORARY TESTING WORKAROUND
@@ -124,7 +125,8 @@ public abstract class ViewObjectFactory {
                 new StartableViewObject(position,
                         factory.loadActiveDynamicImage("Items/" + name + "/" + name + ".xml"),
                         hexDrawingStrategy),
-                takeableItem);
+                takeableItem,
+                100);
         takeableItem.attach(destroyableViewObject);
         return destroyableViewObject;
     }
@@ -137,7 +139,7 @@ public abstract class ViewObjectFactory {
         StartableDynamicImage animation = factory.loadActiveDynamicImage("Items/" + oneShot.getName() + "/" + oneShot.getName() + ".xml");
 
         StartableViewObject internalVO = new StartableViewObject(position, animation, hexDrawingStrategy);
-        DestroyableViewObject destroyableVO = new DestroyableViewObject(internalVO, internalVO, oneShot);
+        DestroyableViewObject destroyableVO = new DestroyableViewObject(internalVO, internalVO, oneShot, 1000);
         oneShot.attach(destroyableVO);
         return destroyableVO;
     }

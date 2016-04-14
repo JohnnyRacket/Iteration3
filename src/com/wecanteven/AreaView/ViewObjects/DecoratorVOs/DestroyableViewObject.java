@@ -16,25 +16,27 @@ public class DestroyableViewObject extends DecoratorViewObject implements Observ
     private StartableViewObject destoyedViewObject;
     private ViewObject child;
     private ViewObject activeChild;
-    public DestroyableViewObject(ViewObject child, StartableViewObject destoyedViewObject, Destroyable subject) {
+    private long duration;
+    public DestroyableViewObject(ViewObject child, StartableViewObject destoyedViewObject, Destroyable subject, long duration) {
         super(child);
         this.child = child;
         this.destoyedViewObject = destoyedViewObject;
         this.subject = subject;
         this.activeChild = this.child;
+        this.duration = duration;
     }
 
     @Override
     public void setPosition(Position p) {
         super.setPosition(p);
-        destoyedViewObject.setPosition(p);
+        //destoyedViewObject.setPosition(p);
     }
 
     @Override
     public void update() {
         if (subject.isDestroyed()) {
-            destoyedViewObject.start(1000);
-            activeChild = destoyedViewObject;
+            destoyedViewObject.setPosition(getPosition());
+            destoyedViewObject.start(duration);
         }
     }
 

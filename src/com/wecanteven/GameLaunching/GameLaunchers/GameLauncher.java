@@ -51,7 +51,7 @@ public abstract class GameLauncher {
 
 
 
-        getViewEngine().registerView(new AreaView(getMap(),getLevelFactory() ));
+        getViewEngine().registerView(new AreaView(getMap(), getLevelFactory() ));
         getController().setPlayState();
     }
 
