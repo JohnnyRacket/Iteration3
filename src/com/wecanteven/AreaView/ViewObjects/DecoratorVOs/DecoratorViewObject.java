@@ -39,4 +39,8 @@ public abstract class DecoratorViewObject implements ViewObject{
     public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
         child.addToFogOfWarViewObject(fogOfWarViewObject);
     }
+    @Override
+    public boolean equals(Object o) {
+        return child.equals(o) || super.equals(o);
+    }
 }

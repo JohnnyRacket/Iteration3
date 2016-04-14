@@ -4,10 +4,12 @@ import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.StartableViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Observers.Destroyable;
 import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Observers.ViewObservable;
+import com.wecanteven.UtilityClasses.FilledHex;
 
 import java.awt.*;
 import java.awt.geom.Area;
@@ -46,6 +48,20 @@ public class DestroyableViewObject extends DecoratorViewObject implements Observ
             destoyedViewObject.setPosition(getPosition());
             areaView.addViewObject(destoyedViewObject, getPosition());
             destoyedViewObject.start(duration);
+
+
+            reallyRemove(ViewTime.getInstance().getCurrentTime());
+            //areaView.removeViewObject(getChild(), getPosition());
+        }
+    }
+
+    private void reallyRemove(long startTime) {
+        (new FilledHex(getPosition().getLocation(),2)).iterator().forEachRemaining( (location) -> {
+            areaView.removeViewObject(this, location.toPosition());
+        });
+
+        if (ViewTime.getInstance().getCurrentTime() < startTime + 1000 ) {
+            ViewTime.getInstance().register( () -> reallyRemove(startTime), 30);
         }
     }
 
