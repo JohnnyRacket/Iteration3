@@ -152,6 +152,7 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
 
 
     public void setLocation(Location location) {
+        System.out.println("Im @ " + location);
         this.location = location;
         notifyObservers();
     }
