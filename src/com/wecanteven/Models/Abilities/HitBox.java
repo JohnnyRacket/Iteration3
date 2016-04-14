@@ -6,22 +6,26 @@ import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.ModelTime.Alertable;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.StatsAddable;
+import com.wecanteven.Observers.Destroyable;
 import com.wecanteven.UtilityClasses.Location;
 
 /**
  * Created by Brandon on 4/11/2016.
  */
-public class HitBox {
+public class HitBox implements Destroyable{
     private String name;
     private StatsAddable effect;
     private Location location;
     private ActionHandler actionHandler;
     static VOCreationVisitor voCreationVisitor;
+    private boolean isDestroyed;
+
     public HitBox(String name,Location location, StatsAddable effect, ActionHandler actionHandler){
         setName(name);
         setLocation(location);
         setEffect(effect);
         setActionHandler(actionHandler);
+        setIsDestroyed(false);
     }
 
     public void addToMap(int duration, Location destination){
@@ -34,6 +38,7 @@ public class HitBox {
             @Override
             public void alert() {
                 actionHandler.remove(hitBox, destination);
+                setIsDestroyed(true);
             }
         }, 1);
     }
@@ -53,6 +58,12 @@ public class HitBox {
     public void setActionHandler(ActionHandler actionHandler){
         this.actionHandler = actionHandler;
     }
+    public void setIsDestroyed(boolean destroyed){
+        isDestroyed = destroyed;
+    }
+    static public void setVOCreationVisitor(VOCreationVisitor visitor){
+        voCreationVisitor = visitor;
+    }
 
     public String getName(){
         return name;
@@ -66,14 +77,14 @@ public class HitBox {
     public ActionHandler getActionHandler(){
         return actionHandler;
     }
-    static public void setVOCreationVisitor(VOCreationVisitor visitor){
-        voCreationVisitor = visitor;
-    }
+
     public VOCreationVisitor getVoCreationVisitor(){
         return voCreationVisitor;
     }
     public void accept(VOCreationVisitor visitor) {
         visitor.visitHitBox(this);
     }
-
+    public boolean isDestroyed(){
+        return isDestroyed;
+    }
 }

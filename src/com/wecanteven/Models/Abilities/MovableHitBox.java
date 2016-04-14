@@ -84,7 +84,6 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable {
         setMovingTicks(calculateMovementTicks(ticks));
         calculateActiveStatus();
         tickTicks();
-        //notifyObservers();
     }
 
     private void tickTicks(){

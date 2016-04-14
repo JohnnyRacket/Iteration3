@@ -10,13 +10,10 @@ import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
-import com.wecanteven.Models.Map.Terrain.Air;
-import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanFallVisitor;
 import com.wecanteven.Visitors.CanMoveVisitor;
-import com.wecanteven.Visitors.ColumnVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
