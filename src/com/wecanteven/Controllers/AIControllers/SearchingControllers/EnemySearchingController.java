@@ -43,7 +43,7 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitEnemy(Enemy enemy) {
-        
+
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.wecanteven.MenuView.DrawableContainers.Decorators.*;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.ColumnatedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleColumnsContainer;
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.RowedCompositeContainer;
+import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 import com.wecanteven.MenuView.DrawableLeafs.BackgroundImageDrawable;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
@@ -126,14 +127,15 @@ public class UIViewFactory {
     public void createInventoryView(Character character){
 
         NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
-        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this, menu);
+        NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
+
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this, menu, equipMenu);
         character.accept(visitor);
         NavigatableList list = visitor.getInventoryItems();
         NavigatableList equiplist = visitor.getEquippedItems();
         //make menu
         menu.setBgColor(Config.PAPYRUS);
 
-        NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
         equipMenu.setBgColor(Config.DARKPAPYRUS);
 
         //NavigatableList equiplist = new NavigatableList();
@@ -212,9 +214,10 @@ public class UIViewFactory {
         return view;
     }
 
-    public void createEquippableItemMenu(Character character, NavigatableListHolder holder, EquipableItem item){
-        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this,holder);
+    public void createEquippableItemMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, EquipableItem item){
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this,invHolder,eqHolder);
         NavigatableList list = new NavigatableList();
+        MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Equip", () ->{
             System.out.println("equip pressed");
             character.equipItem(item);
@@ -222,24 +225,30 @@ public class UIViewFactory {
                 controller.popView();
                 //createInventoryView(avatar.getCharacter());
                 visitor.visitCharacter(character);
-                holder.setList(visitor.getInventoryItems());
+                invHolder.setList(visitor.getInventoryItems());
+                eqHolder.setList(visitor.getEquippedItems());
             },0);
 
+            controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Drop", () ->{
             System.out.println("drop pressed");
             character.drop(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createInventoryView(avatar.getCharacter());
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventoryItems());
+                eqHolder.setList(visitor.getEquippedItems());
             },0);
+            controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
             System.out.println("cancel pressed");
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createInventoryView(avatar.getCharacter());
+
             },0);
+            controller.setMenuState(container);
         }));
         ScrollableMenu menu = new ScrollableMenu(100,100);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
@@ -255,23 +264,30 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
 
     }
-    public void createEquippedItemMenu(Character character, EquipableItem item){
+    public void createEquippedItemMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, EquipableItem item){
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this, invHolder, eqHolder);
         NavigatableList list = new NavigatableList();
+        MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Unequip", () ->{
             System.out.println("unequip pressed");
             character.unequipItem(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createInventoryView(avatar.getCharacter());
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventoryItems());
+                eqHolder.setList(visitor.getEquippedItems());
             },0);
-
+            controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
             System.out.println("cancel pressed");
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createInventoryView(avatar.getCharacter());
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventoryItems());
+                eqHolder.setList(visitor.getEquippedItems());
             },0);
+            controller.setMenuState(container);
         }));
         ScrollableMenu menu = new ScrollableMenu(100,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
