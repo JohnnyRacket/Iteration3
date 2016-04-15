@@ -50,8 +50,8 @@ public class DestroyableViewObject extends DecoratorViewObject implements Observ
             destoyedViewObject.start(duration);
 
 
-            reallyRemove(ViewTime.getInstance().getCurrentTime());
-            //areaView.removeViewObject(getChild(), getPosition());
+            //reallyRemove(ViewTime.getInstance().getCurrentTime());
+            areaView.removeViewObject(getChild(), getPosition());
         }
     }
 

@@ -3,13 +3,16 @@ package com.wecanteven.AreaView.ViewObjects.DecoratorVOs;
 import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.Tiles.TileViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Location;
 
 import java.awt.*;
 
@@ -31,6 +34,9 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
 
     private JumpDetector jumpDetector;
 
+    private TileViewObject owner;
+
+    private Position realPosition;
 
     public <T extends Moveable & ViewObservable> MovingViewObject(ViewObject child, T subject, AreaView areaView, JumpDetector jumpDetector) {
         super(child);
@@ -38,12 +44,19 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
         this.areaView = areaView;
         this.source = child.getPosition();
         this.destination = child.getPosition();
+        this.realPosition = child.getPosition();
         this.jumpDetector = jumpDetector;
 
+        owner = areaView.getTileViewObject(source);
         subject.attach(this);
         update();
     }
 
+
+    @Override
+    public Position getPosition() {
+        return realPosition;
+    }
 
     public Position calculateCurrentPosition() {
         long t = viewTime.getCurrentTime();
@@ -109,13 +122,10 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     }
 
     private void swap() {
-        try {
-            areaView.removeViewObject(this, source);
-            areaView.addViewObject(this, destination);
-        } catch (Exception e) {
-            areaView.addViewObject(this, source);
-        }
-
+        owner.remove(this);
+        areaView.addViewObject(this, destination);
+        owner = areaView.getTileViewObject(destination);
+        realPosition = destination;
     }
 
     private boolean shouldSwapNow() {

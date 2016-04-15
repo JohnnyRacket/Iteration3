@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView;
 
 import com.wecanteven.AreaView.Biomes.Biome;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DestroyableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.Factories.BiomeFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
@@ -62,9 +63,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     }
     @Override
     public void visitMovableHitBox(MovableHitBox hitBox){
-        ViewObject vo = factory.createDirectional(hitBox.getLocation().toPosition(), hitBox, "Effects/WaterBolt/");
-        MovingViewObject viewObject = factory.createMovingViewObject(hitBox,vo);
-        areaView.addViewObject(viewObject);
+        areaView.addViewObject(factory.createRangedEffect(hitBox));
     }
 
     @Override
