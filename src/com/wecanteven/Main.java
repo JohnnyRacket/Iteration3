@@ -13,19 +13,8 @@ public class Main {
         ViewEngine engine = new ViewEngine();
         engine.setBackground(Config.BACKGROUNDBLUE);
         UIViewFactory factory = UIViewFactory.getInstance();
-        SwappableView view = factory.createMainMenuView();
         MainController controller = new MainController(engine);
-        controller.setMainMenuState(view.getMenuViewContainer());
 
-
-        //adapter
-        SwingToDrawableAdapter adapter = new SwingToDrawableAdapter();
-//        ViewManager composer = new ViewManager();
-//        composer.addView(view);
-//        adapter.setAdaptee(composer);
-
-        //testing view manager here
-        engine.getManager().addView(view);
 
         ModelTime.getInstance().registerUnstoppable(controller);
         //engine.setVisible(true);
@@ -35,6 +24,8 @@ public class Main {
         factory.setController(controller);
         factory.setmEngine(mEngine);
         factory.setvEngine(engine);
+
+        factory.createMainMenuView();
 
         engine.start();
         mEngine.start();
