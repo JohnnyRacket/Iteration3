@@ -66,7 +66,7 @@ public class ViewTime {
     }
 
     public void pause(){
-        System.out.println("PAUSING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("PAUSING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         if(!paused) {
             paused = true;
             stagingCopy = staging;
