@@ -1,4 +1,4 @@
-package com.wecanteven.AreaView.ViewObjects;
+package com.wecanteven.AreaView.ViewObjects.Parallel;
 
 import com.wecanteven.AreaView.DynamicImages.DarkDynamicImage;
 import com.wecanteven.AreaView.DynamicImages.DynamicImage;
@@ -6,8 +6,6 @@ import com.wecanteven.AreaView.DynamicImages.SimpleDynamicImage;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.DynamicImageDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.LeafViewObject;
-import com.wecanteven.UtilityClasses.Tuple;
-import javafx.geometry.Pos;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,9 +14,9 @@ import java.util.Iterator;
 /**
  * Created by alexs on 4/9/2016.
  */
-public class FogOfWarViewObject extends LeafViewObject {
+public abstract class ParallelViewObject extends LeafViewObject {
     private ArrayList<CachedImage> cachedImages = new ArrayList<>();
-    public FogOfWarViewObject(Position p) {
+    public ParallelViewObject(Position p) {
         super(p);
     }
 
@@ -30,20 +28,22 @@ public class FogOfWarViewObject extends LeafViewObject {
 
     public void add(SimpleDynamicImage image, Position p, DynamicImageDrawingStrategy drawingStrategy) {
 
-        cachedImages.add(new CachedImage(new DarkDynamicImage(image), p, drawingStrategy));
+        cachedImages.add(new CachedImage(convert(image), p, drawingStrategy));
     }
+
+    protected abstract DynamicImage convert(SimpleDynamicImage image);
 
     public Iterator<CachedImage> iterator() {
         return cachedImages.iterator();
     }
 
-    public void append(FogOfWarViewObject viewObject) {
+    public void append(ParallelViewObject viewObject) {
         viewObject.iterator().forEachRemaining( (tuple) ->  cachedImages.add(tuple) );
     }
 
     @Override
-    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
-        fogOfWarViewObject.append(this);
+    public void addToFogOfWarViewObject(ParallelViewObject parallelViewObject) {
+        parallelViewObject.append(this);
     }
 
     private class CachedImage {

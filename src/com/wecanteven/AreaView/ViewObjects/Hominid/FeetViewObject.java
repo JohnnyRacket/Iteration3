@@ -2,14 +2,11 @@ package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
-import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.FeetFallingStrategy;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.FeetJumpingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.FeetWalkingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.LimbStrategy;
-import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
-import com.wecanteven.Observers.Observable;
 import com.wecanteven.UtilityClasses.Direction;
 
 import java.awt.*;
@@ -90,8 +87,8 @@ public class FeetViewObject implements ViewObject {
     }
 
     @Override
-    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
-        leftFoot.addToFogOfWarViewObject(fogOfWarViewObject);
-        rightFoot.addToFogOfWarViewObject(fogOfWarViewObject);
+    public void addToFogOfWarViewObject(ParallelViewObject parallelViewObject) {
+        leftFoot.addToFogOfWarViewObject(parallelViewObject);
+        rightFoot.addToFogOfWarViewObject(parallelViewObject);
     }
 }

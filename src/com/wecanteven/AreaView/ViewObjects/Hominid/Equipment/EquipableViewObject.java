@@ -3,15 +3,11 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Equipment;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DecoratorViewObject;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
-import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
-import com.wecanteven.AreaView.ViewObjects.LeafVOs.NullViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
-import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Observer;
-import com.wecanteven.UtilityClasses.Direction;
 
 import java.awt.*;
 
@@ -53,10 +49,10 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
     }
 
     @Override
-    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
-        super.addToFogOfWarViewObject(fogOfWarViewObject);
+    public void addToFogOfWarViewObject(ParallelViewObject parallelViewObject) {
+        super.addToFogOfWarViewObject(parallelViewObject);
         if(equipment != null)
-            equipment.addToFogOfWarViewObject(fogOfWarViewObject);
+            equipment.addToFogOfWarViewObject(parallelViewObject);
     }
 
     @Override

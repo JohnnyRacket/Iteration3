@@ -1,10 +1,10 @@
 package com.wecanteven.AreaView.ViewObjects.Tiles;
 
 
-import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.DarkenedViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.GrayscaleViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
-import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.AreaView.Position;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class TileViewObject implements ViewObject {
     private Location location;
     private ArrayList<ViewObject> children = new ArrayList<>();
-    private TileState state = new UnknownState();
+    private TileState state = new ReadyState();
 
     public TileViewObject(Location location) {
         this.location = location;
@@ -69,8 +69,8 @@ public class TileViewObject implements ViewObject {
     }
 
     @Override
-    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
-        children.forEach( (child) -> child.addToFogOfWarViewObject(fogOfWarViewObject));
+    public void addToFogOfWarViewObject(ParallelViewObject parallelViewObject) {
+        children.forEach( (child) -> child.addToFogOfWarViewObject(parallelViewObject));
     }
 
     private interface TileState {
@@ -79,13 +79,13 @@ public class TileViewObject implements ViewObject {
         void conceal();
     }
     private class NonvisibleState implements TileState {
-        private FogOfWarViewObject fogOfWarViewObject = new FogOfWarViewObject(getPosition());
+        private ParallelViewObject parallelViewObject = new DarkenedViewObject(getPosition());
         public NonvisibleState() {
-            children.forEach( (child) -> child.addToFogOfWarViewObject(fogOfWarViewObject));
+            children.forEach( (child) -> child.addToFogOfWarViewObject(parallelViewObject));
         }
         @Override
         public void draw(Graphics2D g) {
-            fogOfWarViewObject.draw(g);
+            parallelViewObject.draw(g);
         }
 
         @Override
@@ -118,9 +118,14 @@ public class TileViewObject implements ViewObject {
     }
 
     private class UnknownState implements TileState {
+        private ParallelViewObject parallelViewObject = new GrayscaleViewObject(getPosition());
+        public UnknownState() {
+            children.forEach( (child) -> child.addToFogOfWarViewObject(parallelViewObject));
+        }
+
         @Override
         public void draw(Graphics2D g) {
-            //TODO: fill in
+            parallelViewObject.draw(g);
         }
         @Override
         public void reveal() {
@@ -130,6 +135,26 @@ public class TileViewObject implements ViewObject {
         @Override
         public void conceal() {
 
+        }
+    }
+
+    public class ReadyState implements TileState {
+        @Override
+        public void draw(Graphics2D g) {
+            state = new UnknownState();
+            state.draw(g);
+        }
+
+        @Override
+        public void reveal() {
+            state = new UnknownState();
+            state.reveal();
+        }
+
+        @Override
+        public void conceal() {
+            state = new UnknownState();
+            state.conceal();
         }
     }
 }

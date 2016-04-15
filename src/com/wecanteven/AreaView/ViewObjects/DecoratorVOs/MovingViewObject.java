@@ -109,8 +109,13 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     }
 
     private void swap() {
-        areaView.removeViewObject(this, source);
-        areaView.addViewObject(this, destination);
+        try {
+            areaView.removeViewObject(this, source);
+            areaView.addViewObject(this, destination);
+        } catch (Exception e) {
+            areaView.addViewObject(this, source);
+        }
+
     }
 
     private boolean shouldSwapNow() {
