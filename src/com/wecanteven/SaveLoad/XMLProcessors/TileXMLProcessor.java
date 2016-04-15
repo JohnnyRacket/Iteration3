@@ -1,5 +1,6 @@
 package com.wecanteven.SaveLoad.XMLProcessors;
 
+import com.wecanteven.GameLaunching.LevelFactories.LevelFactoryFactory;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
@@ -9,6 +10,7 @@ import com.wecanteven.Models.Map.Terrain.Terrain;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Location;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -34,16 +36,14 @@ public class TileXMLProcessor extends XMLProcessor {
     }
 
     public static Map parseMap(Element el) {
-        Map map = new Map(sf.getIntAttr(el, "r"), sf.getIntAttr(el, "s"), sf.getIntAttr(el, "z"));
+        Map map = (new LevelFactoryFactory().vendLevelFactory(sf.getStrAttr(el, "name"))).createMap();
         map.setName(sf.getStrAttr(el, "name"));
-        int width = map.getrSize();
-        for(int r = 0; r < map.getrSize(); ++r) {
-            for(int s = 0; s < map.getsSize(); ++s) {
-                map.setColumn(r, s, parseColumn(map, sf.getElemenetById("Column", width*r + s)));
-                if(map.getColumn(r, s) == null){
-                    System.out.println("Error Column Parsing");
-                }
-            }
+        NodeList tiles = sf.getElementsById("Tile");
+        for(int i = 0; i < tiles.getLength(); ++i) {
+            Element tile =  (Element)tiles.item(i);
+            System.out.println("r:" + sf.getIntAttr(tile, "r")  + " s:" + sf.getIntAttr(tile, "s")  + "  z:" + sf.getIntAttr(tile, "z"));
+            Column column = map.getColumn(sf.getIntAttr(tile, "r"), sf.getIntAttr(tile, "s"));
+            column.setTile(parseTile(map, tile), sf.getIntAttr(tile, "z"));
         }
         return map;
     }
@@ -65,8 +65,12 @@ public class TileXMLProcessor extends XMLProcessor {
     }
 
 
-    public static void formatTile(Tile tile) {
+    public static void formatTile(Tile tile, Location location) {
         ArrayList<Attr> attr = new ArrayList<>();
+        attr.add(sf.saveAttr("r", location.getR()));
+        attr.add(sf.saveAttr("s", location.getS()));
+        attr.add(sf.saveAttr("z", location.getZ()));
+
         attr.add(sf.saveAttr("terrain", tile.getTerrain().getTerrain()));
         sf.appendObjectTo("Column", sf.createSaveElement("Tile",attr));
         if(tile.getTerrain().getTerrain() == "Current"){

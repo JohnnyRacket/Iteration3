@@ -22,7 +22,7 @@ public class Toast extends Drawable {
 
     @Override
     public void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight) {
-        g2d.setFont(new Font("Helvetica",1,12));
+        g2d.setFont(new Font("Helvetica",1,20));
 
         FontMetrics metrics = g2d.getFontMetrics();
         setWidth(metrics.stringWidth(getMsg()) + 50);
@@ -31,7 +31,7 @@ public class Toast extends Drawable {
         g2d.fillRect(x + (windowWidth/2 - getWidth()/2), windowHeight - windowHeight/4, (getWidth()),50);
 
         g2d.setColor(Color.white);
-        g2d.drawString(getMsg(), x + (windowWidth/2 - metrics.stringWidth(msg)/2), (windowHeight - windowHeight/4) + (28));
+        g2d.drawString(getMsg(), x + (windowWidth/2 - metrics.stringWidth(msg)/2), (windowHeight - windowHeight/4) + (30));
 
     }
 

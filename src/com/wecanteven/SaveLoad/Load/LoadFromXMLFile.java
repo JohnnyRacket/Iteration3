@@ -41,6 +41,7 @@ public class LoadFromXMLFile implements LoadGame {
         launcher.setLevelFactory(loadLevelFactory());
         launcher.loadMap(getMap());
         launcher.loadAvatar(getAvatar());
+        System.out.println("Finished Load");
 
 
     }

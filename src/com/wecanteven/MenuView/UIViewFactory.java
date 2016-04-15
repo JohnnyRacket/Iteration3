@@ -198,6 +198,7 @@ public class UIViewFactory {
                 new ScrollableMenuItem("New Game", () -> {
                     NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine);
                     template.launch();
+                    resumeGame();
             })
         );
         list.addItem(createLoadMenu(menu, list));
@@ -450,8 +451,6 @@ public class UIViewFactory {
             //dump things registered in the time models? (add clear functions to time models)
             //Ask if user wants to save? <- Josh wants this ;)
             //switch view to main menu view
-            ViewTime.getInstance().reset();
-            ModelTime.getInstance().reset();
             ViewTime.getInstance().register(()->{
                 createMainMenuView();
             },0);
@@ -504,10 +503,6 @@ public class UIViewFactory {
                         "Your Gold: " + player.getItemStorage().getMoney().getValue(),
                         Config.MEDIUMGREY, Config.TEAL, Config.TRANSMEDIUMGREY
                 );
-
-
-
-
 
 //        ViewTime.getInstance().register(()->{
 //            vEngine.getManager().addView(view);
@@ -620,6 +615,7 @@ public class UIViewFactory {
                 );
                 loader.loadGame();
                 loadGameLauncher.launch();
+                resumeGame();
                 exitMenu();
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 2", ()->{
@@ -631,6 +627,7 @@ public class UIViewFactory {
                 );
                 loader.loadGame();
                 loadGameLauncher.launch();
+                resumeGame();
                 exitMenu();
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 3", ()->{
@@ -642,6 +639,7 @@ public class UIViewFactory {
                 );
                 loader.loadGame();
                 loadGameLauncher.launch();
+                resumeGame();
                 exitMenu();
             }));
             loadList.addItem(new ScrollableMenuItem("Back", ()->{
@@ -658,16 +656,19 @@ public class UIViewFactory {
                 System.out.println("Trying to Save");
                 new SaveToXMLFile("save1.xml").saveGame();
                 exitMenu();
+                createToast(5, "Successful save to Slot 1");
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 2", ()->{
                 System.out.println("Trying to Save");
                 new SaveToXMLFile("save2.xml").saveGame();
                 exitMenu();
+                createToast(5, "Successful save to Slot 2");
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 3", ()->{
                 System.out.println("Trying to Save");
                 new SaveToXMLFile("save3.xml").saveGame();
                 exitMenu();
+                createToast(5, "Successful save to Slot 3");
             }));
             loadList.addItem(new ScrollableMenuItem("Back", ()->{
                 menu.setList(list);
@@ -774,6 +775,11 @@ public class UIViewFactory {
     public void resumeGame(){
         ModelTime.getInstance().resume();
         ViewTime.getInstance().resume();
+    }
+
+    public void resetGame() {
+        ModelTime.getInstance().reset();
+        ViewTime.getInstance().reset();
     }
 
 }

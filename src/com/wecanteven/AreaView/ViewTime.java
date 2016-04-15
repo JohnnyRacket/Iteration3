@@ -78,8 +78,8 @@ public class ViewTime {
         }
     }
     public void resume(){
-        System.out.println("RESUMING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         if(paused) {
+            System.out.println("RESUMING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             paused = false;
             staging = stagingCopy;
             executables = executablesCopy;

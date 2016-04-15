@@ -201,6 +201,16 @@ public class Tile implements MapVisitable {
     }
     public boolean hasAoe() { return areasOfEffect.size() > 0;}
 
+    public boolean isEmpty() {
+
+        if(obstacle.isEmpty() && interactiveItem.isEmpty() &&
+                oneShot.isEmpty() && takeableItems.isEmpty() &&
+                entity.isEmpty() && areasOfEffect.isEmpty() && decals.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
     public Iterator<AreaOfEffect> getAreasOfEffect() {
         return areasOfEffect.iterator();
     }
