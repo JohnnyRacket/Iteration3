@@ -1,8 +1,11 @@
 package com.wecanteven.Models.BuffManager;
 
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.ModelTime.ModelTime;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,27 +25,31 @@ public class BuffManager {
         buff.setOwner(this);
     }
 
-    public void addUninterruptable(Buff buff) {
+    void addUninterruptable(Buff buff) {
         buffList.add(buff);
     }
 
-    public void addInterruptable(InterruptableBuff buff) {
+    void addInterruptable(InterruptableBuff buff) {
         interruptables.add(buff);
     }
 
-    public void apply(BuffApply buff) {
+    void addTickable(TickableBuff buff) {
+        buffList.add(buff);
+    }
+
+    void apply(BuffApply buff) {
         buff.apply(owner);
     }
 
-    public void unapply(BuffUnapply debuff) {
+    void unapply(BuffUnapply debuff) {
         debuff.apply(owner);
     }
 
-    public void notifyExpired(Buff buff) {
+    void notifyExpired(Buff buff) {
         buffList.remove(buff);
     }
 
-    public void notifyInterruptedExpired(InterruptableBuff buff) {
+    void notifyInterruptedExpired(InterruptableBuff buff) {
         interruptables.remove(buff);
     }
 
@@ -50,5 +57,26 @@ public class BuffManager {
         for (InterruptableBuff ib: interruptables) {
             ib.interrupt();
         }
+    }
+
+    public void clearAll() {
+        Iterator<Buff> iter = getIterator();
+
+        while (iter.hasNext()) {
+            Buff buff = iter.next();
+            buff.debuff();
+            buff.disable();
+        }
+    }
+
+    public Iterator<Buff> getIterator() {
+        List<Buff> allBuffs = new ArrayList<>();
+
+        allBuffs.addAll(buffList);
+        allBuffs.addAll(interruptables);
+
+        allBuffs.sort((Buff o1, Buff o2) -> o1.getName().compareTo(o2.getName()));
+
+        return allBuffs.iterator();
     }
 }

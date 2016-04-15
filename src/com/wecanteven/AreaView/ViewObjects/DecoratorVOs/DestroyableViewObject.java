@@ -6,13 +6,9 @@ import com.wecanteven.AreaView.ViewObjects.LeafVOs.StartableViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Observers.Destroyable;
-import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.FilledHex;
-
-import java.awt.*;
-import java.awt.geom.Area;
 
 /**
  * Created by Alex on 4/7/2016.
