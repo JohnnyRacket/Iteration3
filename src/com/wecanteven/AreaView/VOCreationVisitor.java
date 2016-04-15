@@ -156,8 +156,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
         }
     }
 
-
-
     @Override
     public void visitTile(Tile tile) {
         if (tile.hasEntity() ) {
@@ -209,7 +207,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     public void visitCurrent(Current current) {
         areaView.addViewObject(factory.createWater(currentPosition));
     }
-
 
     @Override
     public void visitAoe(AreaOfEffect aoe) { }
