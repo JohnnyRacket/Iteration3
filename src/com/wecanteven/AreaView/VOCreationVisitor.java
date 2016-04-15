@@ -64,7 +64,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     public void visitMovableHitBox(MovableHitBox hitBox){
         ViewObject vo = factory.createDirectional(hitBox.getLocation().toPosition(), hitBox, "Effects/WaterBolt/");
         MovingViewObject viewObject = factory.createMovingViewObject(hitBox,vo);
-        hitBox.attach(viewObject);
         areaView.addViewObject(viewObject);
     }
 
@@ -143,7 +142,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitMap(Map map) {
-
         foundTop = new boolean[map.getrSize()][map.getsSize()];
 
         for (int i = 0; i < map.getrSize(); i++) {
