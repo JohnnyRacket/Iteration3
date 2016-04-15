@@ -1,7 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.DecoratorVOs;
 
 import com.wecanteven.AreaView.Position;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 
 import java.awt.*;
@@ -36,8 +36,8 @@ public abstract class DecoratorViewObject implements ViewObject{
     }
 
     @Override
-    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
-        child.addToFogOfWarViewObject(fogOfWarViewObject);
+    public void addToFogOfWarViewObject(ParallelViewObject parallelViewObject) {
+        child.addToFogOfWarViewObject(parallelViewObject);
     }
     @Override
     public boolean equals(Object o) {

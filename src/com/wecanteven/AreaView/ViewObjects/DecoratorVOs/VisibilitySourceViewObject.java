@@ -28,18 +28,23 @@ public class VisibilitySourceViewObject extends DecoratorViewObject implements O
         ViewTime.getInstance().register( () -> reveal(radius), 1000);
     }
 
+    private void conceal(int radius) {
+        for (int i = 0; i < radius; i++) {
+            HexRing darkRing = new HexRing(i + 1, position.getLocation());
+            darkRing.iterator().forEachRemaining( (location ->  area.conceal(location.toPosition())));
+        }
+
+    }
     private void reveal(int radius) {
         for (int i = 0; i<= radius; i++) {
             HexRing visibleRing = new HexRing(i, position.getLocation());
             visibleRing.iterator().forEachRemaining( (location ->  area.reveal(location.toPosition())));
-
-            HexRing darkRing = new HexRing(i + 1, position.getLocation());
-            darkRing.iterator().forEachRemaining( (location ->  area.conceal(location.toPosition())));
         }
     }
 
     @Override
     public void update() {
+        conceal(radius);
         this.position = subject.getLocation().toPosition();
         reveal(radius);
     }

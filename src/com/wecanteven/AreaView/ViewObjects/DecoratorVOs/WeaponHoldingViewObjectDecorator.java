@@ -1,7 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.DecoratorVOs;
 
 
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.NullViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Observers.Directional;
@@ -26,8 +26,8 @@ public class WeaponHoldingViewObjectDecorator extends DecoratorViewObject {
     }
 
     @Override
-    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
-        super.addToFogOfWarViewObject(fogOfWarViewObject);
-        weapon.addToFogOfWarViewObject(fogOfWarViewObject);
+    public void addToFogOfWarViewObject(ParallelViewObject parallelViewObject) {
+        super.addToFogOfWarViewObject(parallelViewObject);
+        weapon.addToFogOfWarViewObject(parallelViewObject);
     }
 }

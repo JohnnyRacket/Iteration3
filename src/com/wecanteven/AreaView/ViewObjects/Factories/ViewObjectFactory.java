@@ -9,7 +9,8 @@ import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.*;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.DarkenedViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.DualWieldState;
@@ -327,8 +328,8 @@ public abstract class ViewObjectFactory {
         return createDirectional(p, d, "Entities/" +  entityName + "/");
     }
 
-    public FogOfWarViewObject createFogOfWarViewObject(Position p) {
-        return new FogOfWarViewObject(p);
+    public ParallelViewObject createFogOfWarViewObject(Position p) {
+        return new DarkenedViewObject(p);
     }
 
     public <T extends Directional & ViewObservable> DirectionalViewObject createDirectional(Position p, T d, String path) {
