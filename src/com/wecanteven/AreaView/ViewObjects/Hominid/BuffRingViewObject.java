@@ -36,6 +36,7 @@ public class BuffRingViewObject implements ViewObject{
         names.add("Red");
         names.add("Red");
         addBuffs(names);
+        adjustBuffs();
     }
 
     @Override
@@ -56,11 +57,11 @@ public class BuffRingViewObject implements ViewObject{
         for (Pair pair : buffs) {
             pair.buff.setOffsetAngle(pair.offset + percentage*Math.PI*2 + TEMP_OFFSET);
         }
+        ViewTime.getInstance().register( this::adjustBuffs, 20);
     }
 
     @Override
     public void draw(Graphics2D g) {
-        adjustBuffs();
         for (Pair pair: buffs) {
             pair.buff.draw(g);
         }

@@ -1,5 +1,6 @@
 package com.wecanteven.AreaView;
 
+import com.sun.glass.ui.View;
 import com.wecanteven.AreaView.Biomes.Biome;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DestroyableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
@@ -63,6 +64,8 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     }
     @Override
     public void visitMovableHitBox(MovableHitBox hitBox){
+        ViewObject mvo = factory.createRangedEffect(hitBox);
+        System.out.println("Craeted range hitbox @" + mvo.getPosition());
         areaView.addViewObject(factory.createRangedEffect(hitBox));
     }
 
@@ -244,7 +247,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitTeleportAoe(TeleportAoe aoe) {
-        areaView.addViewObject(factory.createAoe(currentPosition, "LevelUpInactive"));
+        areaView.addViewObject(factory.createAoe(currentPosition, "TeleportAoe"));
     }
 
     @Override

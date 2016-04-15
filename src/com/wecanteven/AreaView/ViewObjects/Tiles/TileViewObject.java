@@ -51,7 +51,7 @@ public class TileViewObject implements ViewObject {
 
     public boolean decoraterRemove(ViewObject toRemove) {
         for (int i = children.size() - 1; i>=0; i--) {
-            if (children.get(i).equals(toRemove) ) {
+            if (toRemove.equals(children.get(i)) ) {
                 children.remove(children.get(i));
                 return true;
             }

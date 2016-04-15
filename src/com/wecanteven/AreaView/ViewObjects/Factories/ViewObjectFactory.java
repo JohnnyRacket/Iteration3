@@ -195,7 +195,7 @@ public abstract class ViewObjectFactory {
         StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
 
         //And return the new destroyable VO
-        return new DestroyableViewObject(
+        DestroyableViewObject destroyableViewObject = new DestroyableViewObject(
                 moivingHominoidWithHUD,
                 startableViewObject,
                 character,
@@ -203,6 +203,7 @@ public abstract class ViewObjectFactory {
                 800);
 
         //Finally return a moving avatar
+        return hominoid;
     }
 
     public <T extends Positionable & ViewObservable> void makeLightSource(ViewObject v, int radius, T subject) {

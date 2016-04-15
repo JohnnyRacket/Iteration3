@@ -64,4 +64,8 @@ public class ModelTime implements Tickable {
         System.out.println("RESUMING MODEL~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         paused = false;
     }
+    public void reset(){
+        alertables = new CopyOnWriteArrayList<>();
+        tickables = new CopyOnWriteArrayList<>();
+    }
 }

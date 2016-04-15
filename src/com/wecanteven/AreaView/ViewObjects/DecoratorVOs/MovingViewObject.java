@@ -122,9 +122,13 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     }
 
     private void swap() {
+        System.out.println("Removing from: " + owner.getPosition());
         owner.remove(this);
+        System.out.println("Adding to: " + destination);
+
         areaView.addViewObject(this, destination);
         owner = areaView.getTileViewObject(destination);
+        System.out.println("Owner is: " + owner.getPosition());
         realPosition = destination;
     }
 
@@ -137,6 +141,7 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     public void update() {
         if (hasStateChange()) {
             updateState();
+            System.out.println("Going from: " + source + " to " + destination);
             adjustPosition(endTime);
             reposition();
         }

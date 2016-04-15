@@ -66,7 +66,7 @@ public class ViewTime {
     }
 
     public void pause(){
-        System.out.println("PAUSING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("PAUSING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         if(!paused) {
             paused = true;
             stagingCopy = staging;
@@ -78,12 +78,19 @@ public class ViewTime {
         }
     }
     public void resume(){
-        System.out.println("RESUMING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("RESUMING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         if(paused) {
             paused = false;
             staging = stagingCopy;
             executables = executablesCopy;
         }
+    }
+
+    public void reset(){
+        staging = new CopyOnWriteArrayList<>();
+        executables = new PriorityQueue<>(
+                (Tuple<vCommand, Long> o1, Tuple<vCommand, Long> o2) ->  (int)(o1.y - o2.y)
+        );
     }
 
 }

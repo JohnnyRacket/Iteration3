@@ -48,6 +48,5 @@ public class LoadGameLauncher extends GameLauncher {
 
     public void loadAvatar(Avatar avatar){
         setAvatar(avatar);
-        getController().setAvatar(avatar);
     }
 }

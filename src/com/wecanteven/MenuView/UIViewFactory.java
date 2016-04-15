@@ -187,7 +187,7 @@ public class UIViewFactory {
     public void createAbilityView(){
 
     }
-    public SwappableView createMainMenuView(){
+    public void createMainMenuView(){
         //make menu
         ScrollableMenu menu = new ScrollableMenu(400, 400);
         menu.setSelectedColor(Color.cyan);
@@ -212,7 +212,14 @@ public class UIViewFactory {
         view.addDrawable(vertCenter);
         view.addNavigatable(menu);
 
-        return view;
+        controller.setMainMenuState(view.getMenuViewContainer());
+
+        ViewTime.getInstance().register(()->{
+            this.getController().clearViews();
+            this.getvEngine().clear();
+            vEngine.getManager().addView(view);
+        },0);
+
     }
 
     public void createEquippableItemMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, EquipableItem item){
@@ -443,6 +450,11 @@ public class UIViewFactory {
             //dump things registered in the time models? (add clear functions to time models)
             //Ask if user wants to save? <- Josh wants this ;)
             //switch view to main menu view
+            ViewTime.getInstance().reset();
+            ModelTime.getInstance().reset();
+            ViewTime.getInstance().register(()->{
+                createMainMenuView();
+            },0);
         }));
 
         menu.setList(list);

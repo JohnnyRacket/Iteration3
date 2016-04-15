@@ -240,7 +240,7 @@ public class AreaView extends JPanel {
                 for (int j = 0; j < ySize; j++) {
                     ArrayList<ArrayList<TileViewObject>> xzPlane = cube.get(j);
                     for (int k = 0; k< zSize; k++) {
-                        xzPlane.get(k).add(new TileViewObject(new Location(xSize, j, k)));
+                        xzPlane.get(k).add(new TileViewObject(convertToLocation(xSize, j, k)));
                     }
                 }
             }
@@ -252,7 +252,7 @@ public class AreaView extends JPanel {
         private ArrayList<TileViewObject> xRow(int y, int z) {
             ArrayList<TileViewObject> xRow = new ArrayList<>();
             for (int i = 0; i< xSize; i++) {
-                xRow.add(new TileViewObject(new Location(i, y, z)));
+                xRow.add(new TileViewObject(convertToLocation(i, y, z)));
             }
             return xRow;
         }
@@ -268,6 +268,15 @@ public class AreaView extends JPanel {
         private int convertToX(Position p) {
             return p.getLocation().getR();
         }
+
+        private Location convertToLocation(int x, int y, int z) {
+            return new Location(
+                    x,
+                    (y-x)/2,
+                    z
+            );
+        }
+
         private int convertToY(Position p) {
             return p.getLocation().getR() + p.getLocation().getS()*2;
         }
