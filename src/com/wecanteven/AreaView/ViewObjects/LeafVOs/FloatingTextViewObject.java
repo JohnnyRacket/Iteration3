@@ -2,11 +2,10 @@ package com.wecanteven.AreaView.ViewObjects.LeafVOs;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.StringDrawingStrategy;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewTime;
 
 import java.awt.*;
-import java.awt.image.VolatileImage;
 
 /**
  * Created by alexs on 4/14/2016.
@@ -50,7 +49,7 @@ public class FloatingTextViewObject extends LeafViewObject{
     }
 
     @Override
-    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
+    public void addToFogOfWarViewObject(ParallelViewObject parallelViewObject) {
         //We dont add to fog of war
     }
 

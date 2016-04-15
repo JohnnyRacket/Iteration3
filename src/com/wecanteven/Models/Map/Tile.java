@@ -12,18 +12,13 @@ import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.Models.Map.Terrain.Terrain;
-import com.wecanteven.Models.ModelTime.Alertable;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Observers.ModelObservable;
-import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
-import com.wecanteven.Visitors.AreaOfEffectVisitor;
-import com.wecanteven.Visitors.EntityVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 
-import java.awt.*;
-import java.awt.geom.Area;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by John on 3/31/2016.
@@ -206,10 +201,8 @@ public class Tile implements MapVisitable {
     }
     public boolean hasAoe() { return areasOfEffect.size() > 0;}
 
-    public void acceptAoeVisitor(AreaOfEffectVisitor visitor) {
-        for (AreaOfEffect aoe : areasOfEffect) {
-            aoe.accept(visitor);
-        }
+    public Iterator<AreaOfEffect> getAreasOfEffect() {
+        return areasOfEffect.iterator();
     }
 
     /**

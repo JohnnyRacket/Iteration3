@@ -9,7 +9,8 @@ import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.*;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.DarkenedViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.DualWieldState;
@@ -177,17 +178,25 @@ public abstract class ViewObjectFactory {
                 this,
                 areaView);
 
+
+
+
+        //Make a moving view object
+        MovingViewObject moivingHominoidWithHUD = createMovingViewObject(character, homioidWithHUD);
+
+
         //Now give him a death animation
         StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
-        DestroyableViewObject hominoidWithHUDThatIsDestroyable = new DestroyableViewObject(
-                homioidWithHUD,
+
+        //And return the new destroyable VO
+        return new DestroyableViewObject(
+                moivingHominoidWithHUD,
                 startableViewObject,
                 character,
                 areaView,
                 800);
 
         //Finally return a moving avatar
-        return createMovingViewObject(character, hominoidWithHUDThatIsDestroyable);
     }
 
     public <T extends Positionable & ViewObservable> void makeLightSource(ViewObject v, int radius, T subject) {
@@ -319,8 +328,8 @@ public abstract class ViewObjectFactory {
         return createDirectional(p, d, "Entities/" +  entityName + "/");
     }
 
-    public FogOfWarViewObject createFogOfWarViewObject(Position p) {
-        return new FogOfWarViewObject(p);
+    public ParallelViewObject createFogOfWarViewObject(Position p) {
+        return new DarkenedViewObject(p);
     }
 
     public <T extends Directional & ViewObservable> DirectionalViewObject createDirectional(Position p, T d, String path) {

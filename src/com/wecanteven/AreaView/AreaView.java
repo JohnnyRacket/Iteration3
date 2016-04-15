@@ -158,6 +158,11 @@ public class AreaView extends JPanel {
             int x = convertToX(p);
             int y = convertToY(p);
             int z = convertToZ(p);
+            try {
+                get(x, y, z);
+            } catch (IndexOutOfBoundsException e) {
+                return;
+            }
             get(x, y, z).remove(vo);
         }
 

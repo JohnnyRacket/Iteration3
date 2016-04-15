@@ -2,7 +2,6 @@ package com.wecanteven.Models.Storage.ItemStorage;
 
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
-import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 
 import java.util.ArrayList;
@@ -107,7 +106,7 @@ public class HominidEquipment extends Equipment {
         return equippedItemList.iterator();
     }
 
-    public class HominindEquipmentSlot  <T extends EquipableItem> implements Observable, EquipmentSlot{
+    public class HominindEquipmentSlot  <T extends EquipableItem> implements EquipmentSlot{
         private ArrayList<Observer> observers = new ArrayList<>();
         T currentlyEquipped;
         boolean equip(T item) {

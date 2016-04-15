@@ -15,8 +15,19 @@ import java.util.ArrayList;
  * Created by Brandon on 3/31/2016.
  */
 
-public class Entity implements Moveable, Directional,Destroyable, ViewObservable, Observer{
-    private ArrayList<Observer> observers;
+public class Entity implements Moveable, Directional,Destroyable, ModelObservable, ViewObservable, Observer{
+    private ArrayList<Observer> observers = new ArrayList<>();
+    private ArrayList<Observer> modelObservers = new ArrayList<>();
+
+    @Override
+    public ArrayList<Observer> getModelObservers() {
+        return modelObservers;
+    }
+
+    public void setModelObservers(ArrayList<Observer> modelObservers) {
+        this.modelObservers = modelObservers;
+    }
+
     private ActionHandler actionHandler;
     private Stats stats;
     private int height, jumpHeight;
@@ -30,7 +41,7 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
     private boolean isDestroyed = false;
 
     public Entity(ActionHandler actionHandler, Direction direction){
-        observers = new ArrayList<>();
+
 
         setStats(new Stats(this));
         setHeight(3);
@@ -105,9 +116,12 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
     }
 
     public void loseLife(){
-        getActionHandler().death(this);
-        setLocation(new Location(3, 9, 1));
+
+        //setLocation(new Location(3, 9, 1));
+        isDestroyed = true;
         notifyObservers();
+        modelNotifyObservers();
+        getActionHandler().death(this);
         getStats().refreshStats();
     }
 
@@ -152,6 +166,7 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
 
 
     public void setLocation(Location location) {
+        System.out.println("Im @ " + location);
         this.location = location;
         notifyObservers();
     }
@@ -249,6 +264,10 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
     @Override
     public boolean isDestroyed() {
         return isDestroyed;
+    }
+
+    public void setDestroyed(boolean isDestroyed) {
+        this.isDestroyed = isDestroyed;
     }
 
     public void takeDamage(int dmgAmount) {

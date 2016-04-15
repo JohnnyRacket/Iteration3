@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public class MovableHitBox extends HitBox implements Moveable, ViewObservable, Directional {
     private CanMoveVisitor canMoveVisitor;
-    private int movingTicks;
+    private int movingTicks=0;
     private boolean isActive;
     private Direction direction;
     private int speed,distance;
@@ -33,7 +33,6 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
         observers = new ArrayList<>();
 
         setCanMoveVisitor(new TerranianCanMoveVisitor());
-        setMovingTicks(0);
         setIsActive(false);
     }
 

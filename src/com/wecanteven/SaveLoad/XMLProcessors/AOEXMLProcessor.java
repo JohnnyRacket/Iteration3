@@ -3,6 +3,7 @@ package com.wecanteven.SaveLoad.XMLProcessors;
 import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.UtilityClasses.Location;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,5 +76,53 @@ public class AOEXMLProcessor extends XMLProcessor {
         format(attrs);
     }
 
-    public static void parse() {}
+    public static AreaOfEffect parseAoe(Element el) {
+        String type = sf.getStrAttr(el, "type");
+
+        switch (type.trim()) {
+            case "HealingAreaOfEffect":
+                return parseHealingAoe(el);
+            case "InstaDeathAoe":
+                return new InstaDeathAoe();
+            case "LevelUpAoe":
+                return parseCooldownAoe(el, type.trim());
+            case "TakeDamageAreaOfEffect":
+                return parseTakeDamageAoe(el);
+            case "TeleportAoe":
+                return parseTeleportAoe(el);
+            default:
+                throw new IllegalArgumentException("Unsupported Area of Effect");
+        }
+    }
+
+    public static CoolDownAoE parseCooldownAoe(Element el, String type) {
+        int cooldownticks = Integer.parseInt(sf.getStrAttr(el, "cooldownticks"));
+
+        switch(type) {
+            case "LevelUpAoe":
+                return new LevelUpAoe(cooldownticks);
+            default:
+                throw new IllegalArgumentException("Unsupported Cooldown Area of Effect");
+        }
+    }
+
+    public static TeleportAoe parseTeleportAoe(Element el) {
+        int r = Integer.parseInt(sf.getStrAttr(el, "r"));
+        int s = Integer.parseInt(sf.getStrAttr(el, "s"));
+        int z = Integer.parseInt(sf.getStrAttr(el, "z"));
+
+        return new TeleportAoe(new Location(r,s,z));
+    }
+
+    public static HealingAreaOfEffect parseHealingAoe(Element el) {
+        int healPerTick = Integer.parseInt(sf.getStrAttr(el, "healpertick"));
+
+        return new HealingAreaOfEffect(healPerTick);
+    }
+
+    public static TakeDamageAreaOfEffect parseTakeDamageAoe(Element el) {
+        int dmgPerTick = Integer.parseInt(sf.getStrAttr(el, "damagepertick"));
+
+        return new TakeDamageAreaOfEffect(dmgPerTick);
+    }
 }

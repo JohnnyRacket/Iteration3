@@ -29,6 +29,8 @@ import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Visitors.*;
 
+import java.util.Iterator;
+
 /**
  * Created by alexs on 4/1/2016.
  */
@@ -62,7 +64,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     public void visitMovableHitBox(MovableHitBox hitBox){
         ViewObject vo = factory.createDirectional(hitBox.getLocation().toPosition(), hitBox, "Effects/WaterBolt/");
         MovingViewObject viewObject = factory.createMovingViewObject(hitBox,vo);
-        hitBox.attach(viewObject);
         areaView.addViewObject(viewObject);
     }
 
@@ -141,7 +142,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitMap(Map map) {
-
         foundTop = new boolean[map.getrSize()][map.getsSize()];
 
         for (int i = 0; i < map.getrSize(); i++) {
@@ -177,8 +177,10 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
             decal.accept(this);
         }
 
-        if (tile.hasAoe()) {
-            tile.acceptAoeVisitor(this);
+        Iterator<AreaOfEffect> iter = tile.getAreasOfEffect();
+
+        while (iter.hasNext()) {
+            iter.next().accept(this);
         }
     }
 
