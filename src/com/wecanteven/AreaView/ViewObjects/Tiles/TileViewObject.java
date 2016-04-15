@@ -31,9 +31,9 @@ public class TileViewObject implements ViewObject {
 
     public void remove(ViewObject vo) {
         if (!this.children.remove(vo)) {
-            System.out.println("LOOMING DEATH IS APPROACHING THE VIEW! Danger level: " + loomingDeathCounter++);
+            //System.out.println("LOOMING DEATH IS APPROACHING THE VIEW! Danger level: " + loomingDeathCounter++);
             //ViewTime.getInstance().register(() -> this.remove(vo), 10);
-            System.out.println("BAD SHIT HAPPENED IN: TileViewObject.remove(ViewObject)");
+            //System.out.println("BAD SHIT HAPPENED IN: TileViewObject.remove(ViewObject)");
         } else {
             if (loomingDeathCounter > 0) {
                 System.out.print("WOOT WOOT!!!!!! Looming death averted");
