@@ -30,6 +30,7 @@ public class TileViewObject implements ViewObject {
     private int loomingDeathCounter = 0;
 
     public void remove(ViewObject vo) {
+
         if (!decoraterRemove(vo)) {
             System.out.println("LOOMING DEATH IS APPROACHING THE VIEW! Danger level: " + loomingDeathCounter++);
             //ViewTime.getInstance().register(() -> this.remove(vo), 10);
@@ -51,10 +52,11 @@ public class TileViewObject implements ViewObject {
 
     public boolean decoraterRemove(ViewObject toRemove) {
         for (int i = children.size() - 1; i>=0; i--) {
-            if (toRemove.equals(children.get(i)) ) {
+            if (toRemove.equals(children.get(i)) || children.get(i).equals(toRemove) ) {
                 children.remove(children.get(i));
                 return true;
             }
+
         }
         return false;
     }

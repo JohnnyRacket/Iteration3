@@ -3,6 +3,7 @@ package com.wecanteven.Models.BuffManager;
 import com.wecanteven.Models.Entities.Entity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,27 +23,39 @@ public class BuffManager {
         buff.setOwner(this);
     }
 
-    public void addUninterruptable(Buff buff) {
+    void addUninterruptable(Buff buff) {
         buffList.add(buff);
     }
 
-    public void addInterruptable(InterruptableBuff buff) {
+    void addInterruptable(InterruptableBuff buff) {
         interruptables.add(buff);
     }
 
-    public void apply(BuffApply buff) {
+    void addTickable(TickableBuff buff) {
+        buffList.add(buff);
+    }
+
+    void apply(BuffApply buff) {
+        System.out.println("Entity stats before buff: " + owner.getStats().getMovement());
         buff.apply(owner);
+        System.out.println("Buff was applied");
+        System.out.println("Entity stats after buff: " + owner.getStats().getMovement());
     }
 
-    public void unapply(BuffUnapply debuff) {
+    void unapply(BuffUnapply debuff) {
+        System.out.println("Entity stats before debuff: " + owner.getStats().getMovement());
         debuff.apply(owner);
+        System.out.println("Buff was unapplied");
+        System.out.println("Entity stats after debuff: " + owner.getStats().getMovement());
     }
 
-    public void notifyExpired(Buff buff) {
+    void notifyExpired(Buff buff) {
         buffList.remove(buff);
+        System.out.println("Buff manager notified of buff expiration");
+        System.out.println("Number of buffs: " + buffList.size());
     }
 
-    public void notifyInterruptedExpired(InterruptableBuff buff) {
+    void notifyInterruptedExpired(InterruptableBuff buff) {
         interruptables.remove(buff);
     }
 
@@ -50,5 +63,26 @@ public class BuffManager {
         for (InterruptableBuff ib: interruptables) {
             ib.interrupt();
         }
+    }
+
+    public void clearAll() {
+        Iterator<Buff> iter = getIterator();
+
+        while (iter.hasNext()) {
+            Buff buff = iter.next();
+            buff.debuff();
+            buff.disable();
+        }
+    }
+
+    public Iterator<Buff> getIterator() {
+        List<Buff> allBuffs = new ArrayList<>();
+
+        allBuffs.addAll(buffList);
+        allBuffs.addAll(interruptables);
+
+        allBuffs.sort((Buff o1, Buff o2) -> o1.getName().compareTo(o2.getName()));
+
+        return allBuffs.iterator();
     }
 }

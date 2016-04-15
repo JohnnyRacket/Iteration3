@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Factories.ItemFactories;
 
+import com.wecanteven.Models.BuffManager.Buff;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Stats.StatsAddable;
 
@@ -15,7 +16,15 @@ public class OneShotItemFactory {
     }
 
     public OneShot vendDeathOneShot(String name) {
-        return new OneShot(name, (entity) -> entity.loseLife());
+        return new OneShot(name, (entity) -> entity.modifyStats(new StatsAddable(-1,0,0,0,0,0,0,0,0)));
     }
 
+    public OneShot vendMovementSpeedBuffOneShot(String name, int movementSpeedBuff, int duration) {
+        return new OneShot(name, (entity) -> entity.buff(new Buff(
+                "MovementSpeedBuff",
+                duration,
+                (entity1) -> entity1.modifyStats(new StatsAddable(0,0,0,0,0,0,movementSpeedBuff,0,0)),
+                (entity1) -> entity1.modifyStats(new StatsAddable(0,0,0,0,0,0,-1 * movementSpeedBuff,0,0))
+        )));
+    }
 }

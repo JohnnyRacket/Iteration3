@@ -5,6 +5,7 @@ import com.wecanteven.AreaView.Biomes.DefaultBiome;
 import com.wecanteven.AreaView.ViewObjects.Factories.PlainsFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.Models.Entities.NPC;
+import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.NoInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
@@ -167,10 +168,18 @@ public class DemoLevelFactory extends LevelFactory {
     @Override
     public void populateMap(Map map) {
 
+
 //        areasOfEffect(map);
 //        weaponNPC(map);
 //        dialogNPC(map);
 //        tradeNPC(map);
+
+
+        areasOfEffect(map);
+        items(map);
+        weaponNPC(map);
+        dialogNPC(map);
+        tradeNPC(map);
 
         map.getTile(10,10,2).add(new TakeDamageAreaOfEffect(1));
     }
@@ -212,5 +221,9 @@ public class DemoLevelFactory extends LevelFactory {
 
         HealingAreaOfEffect healAoe = new HealingAreaOfEffect(1);
         map.add(healAoe, new Location(8,15,2));
+    }
+
+    public void items(Map map) {
+        map.add(ItemMap.getInstance().getItemAsOneShot("Major Movement Buff"), new Location(8,16,2));
     }
 }

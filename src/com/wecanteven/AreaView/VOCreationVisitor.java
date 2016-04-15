@@ -65,8 +65,8 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitMovableHitBox(MovableHitBox hitBox){
         ViewObject mvo = factory.createRangedEffect(hitBox);
-        System.out.println("Craeted range hitbox @" + mvo.getPosition());
-        areaView.addViewObject(factory.createRangedEffect(hitBox));
+        System.out.println("*************************************************\nCraeted range hitbox @" + mvo.getPosition());
+        areaView.addViewObject(mvo);
     }
 
     @Override
