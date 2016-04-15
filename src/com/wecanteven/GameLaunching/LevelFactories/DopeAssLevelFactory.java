@@ -102,9 +102,9 @@ public class DopeAssLevelFactory extends LevelFactory{
 
 
         map.add(new ConsumeableItem("Death Potion", 10), new Location(1, 2, 1));
-        map.add(new ItemMap().getItemAsOneShot("Box"), new Location(3,3,1));
-        map.add(new ItemMap().getItemAsInteractive("Button"), new Location(5, 5, 1));
-        map.add(new ItemMap().getItemAsObstacle("Box"), new Location(8,2,1));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3,3,1));
+        map.add(ItemMap.getInstance().getItemAsInteractive("Button"), new Location(5, 5, 1));
+        map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(8,2,1));
 
         HealingAreaOfEffect aoe = new HealingAreaOfEffect(1);
         map.add(aoe, new Location(8,6,1));

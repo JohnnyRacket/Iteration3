@@ -4,7 +4,6 @@ import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Decals.Decal;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
-import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Interactions.InteractionVisitor;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
@@ -157,6 +156,7 @@ public class Tile implements MapVisitable {
         terrain.interact(entity);
         if (!oneShot.isEmpty()) {
             oneShot.getToken().interact(entity);
+            remove(oneShot.getToken());
         }
         if (!interactiveItem.isEmpty()){
             interactiveItem.getToken().trigger();

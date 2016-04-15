@@ -47,6 +47,7 @@ public class Buff implements Alertable {
         this.owner = bm;
         ModelTime.getInstance().registerAlertable(this, tickDuration);
         owner.addUninterruptable(this);
+        owner.apply(apply);
     }
 
     public String getName() {
