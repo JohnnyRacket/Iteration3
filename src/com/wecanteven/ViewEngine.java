@@ -72,7 +72,6 @@ public class ViewEngine extends JFrame implements Runnable{
         TimeKeeper timeKeeper = new TimeKeeper(30);
         while(true) {
             timeKeeper.startTick();
-
             viewTime.tick();
             this.repaint();
 

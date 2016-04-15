@@ -167,11 +167,20 @@ public class DemoLevelFactory extends LevelFactory {
 
     @Override
     public void populateMap(Map map) {
+
+
+//        areasOfEffect(map);
+//        weaponNPC(map);
+//        dialogNPC(map);
+//        tradeNPC(map);
+
+
         areasOfEffect(map);
         items(map);
         weaponNPC(map);
         dialogNPC(map);
         tradeNPC(map);
+
         map.getTile(10,10,2).add(new TakeDamageAreaOfEffect(1));
     }
 
