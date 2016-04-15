@@ -79,7 +79,7 @@ public class ItemMap {
         OneShotItemMap.put("Major Mana Orb",
                 () -> factory.vendOneShot("Major Mana Orb", new StatsAddable(0,0,0,0,0,0,0,0,20)));
         OneShotItemMap.put("Major Movement Buff",
-                () -> factory.vendMovementSpeedBuffOneShot("Major Movement Buff", 100, 300));
+                () -> factory.vendMovementSpeedBuffOneShot("Major Movement Buff", 60, 300));
 
         usedNames.addAll(OneShotItemMap.keySet());
     }
