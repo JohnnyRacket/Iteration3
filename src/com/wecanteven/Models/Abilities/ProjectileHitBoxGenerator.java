@@ -15,10 +15,10 @@ public class ProjectileHitBoxGenerator implements HitBoxGenerator {
 
     public ProjectileHitBoxGenerator(Character caster,StatsAddable effect){
         this.caster = caster;
-        hitbox = new MovableHitBox("WaterBolt",caster.getLocation(),effect,caster.getActionHandler());
+        hitbox = new MovableHitBox("WaterBolt",caster.getLocation().adjacent(caster.getDirection()),effect,caster.getActionHandler());
     }
     public void generate(){
-        int distance = 3;
+        int distance = 5;
         int speed = 30;
         Direction direction = caster.getDirection();
         Location destination = hitbox.getLocation();

@@ -1,9 +1,6 @@
 package com.wecanteven.AreaView;
 
-import com.sun.glass.ui.View;
 import com.wecanteven.AreaView.Biomes.Biome;
-import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DestroyableViewObject;
-import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.Factories.BiomeFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
