@@ -40,7 +40,7 @@ public abstract class DecoratorViewObject implements ViewObject{
         child.addToFogOfWarViewObject(parallelViewObject);
     }
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(Object o) {
         return child.equals(o) || super.equals(o);
     }
 }

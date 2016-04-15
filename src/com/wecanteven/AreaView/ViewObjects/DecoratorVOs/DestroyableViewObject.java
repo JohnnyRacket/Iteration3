@@ -6,13 +6,9 @@ import com.wecanteven.AreaView.ViewObjects.LeafVOs.StartableViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Observers.Destroyable;
-import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.FilledHex;
-
-import java.awt.*;
-import java.awt.geom.Area;
 
 /**
  * Created by Alex on 4/7/2016.
@@ -24,6 +20,7 @@ public class DestroyableViewObject extends DecoratorViewObject implements Observ
     private ViewObject activeChild;
     private long duration;
     private AreaView areaView;
+    private boolean isDestroyed = false;
 
     public <T extends Destroyable & ViewObservable> DestroyableViewObject(ViewObject child, StartableViewObject destoyedViewObject, T subject, AreaView areaView, long duration) {
         super(child);
@@ -44,14 +41,15 @@ public class DestroyableViewObject extends DecoratorViewObject implements Observ
 
     @Override
     public void update() {
-        if (subject.isDestroyed()) {
+        if (subject.isDestroyed() && !isDestroyed) {
             destoyedViewObject.setPosition(getPosition());
             areaView.addViewObject(destoyedViewObject, getPosition());
             destoyedViewObject.start(duration);
 
 
-            reallyRemove(ViewTime.getInstance().getCurrentTime());
-            //areaView.removeViewObject(getChild(), getPosition());
+            //reallyRemove(ViewTime.getInstance().getCurrentTime());
+            areaView.removeViewObject(getChild(), getPosition());
+            isDestroyed = true;
         }
     }
 

@@ -2,7 +2,6 @@ package com.wecanteven.Models.Items;
 
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Observers.Destroyable;
-import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.Visitors.ItemVisitor;
