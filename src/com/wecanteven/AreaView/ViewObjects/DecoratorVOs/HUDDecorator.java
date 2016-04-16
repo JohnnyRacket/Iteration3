@@ -41,11 +41,9 @@ public class HUDDecorator extends DecoratorViewObject implements Observer{
     @Override
     public void draw(Graphics2D g) {
         super.draw(g);
+        
 
-
-
-
-        //drawingStrategy.draw(g, healthBar, getPosition().add(healthBarOffset));
+        drawingStrategy.draw(g, healthBar, getPosition().add(healthBarOffset));
     }
 
     private boolean tookDamage() {
