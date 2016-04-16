@@ -42,6 +42,6 @@ public class QuestableItemReward implements Questable {
 
     @Override
     public void initQuest(ActionHandler a) {
-        a.drop(questedItem, itemLocation);
+        //a.add(itemLocation, questedItem);
     }
 }

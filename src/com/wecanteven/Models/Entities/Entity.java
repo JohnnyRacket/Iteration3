@@ -8,6 +8,7 @@ import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Observers.*;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.*;
 
@@ -41,9 +42,11 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     private boolean lock, isActive;
     private BuffManager buffmanager;
 
+    private GameColor color;
+
     private boolean isDestroyed = false;
 
-    public Entity(ActionHandler actionHandler, Direction direction){
+    public Entity(ActionHandler actionHandler, Direction direction, GameColor color){
 
 
         setStats(new Stats(this));
@@ -56,8 +59,13 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         setCanFallVisitor(new TerranianCanFallVisitor());
         setMovingTicks(0);
         setIsActive(false);
+        this.color = color;
 
         buffmanager = new BuffManager(this);
+    }
+
+    public GameColor getColor() {
+        return color;
     }
 
     public BuffManager getBuffmanager() {

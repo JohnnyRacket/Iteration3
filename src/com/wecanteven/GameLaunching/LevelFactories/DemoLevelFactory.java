@@ -380,7 +380,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void weaponNPC(Map map) {
         //"Creating an NPC and Giving him a chest Plate
-        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy());
+        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.GRAY);
         OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
         npc.pickup(i);
         npc.equipItem(i);
@@ -392,7 +392,7 @@ public class DemoLevelFactory extends LevelFactory {
         dialog.add("Hello Avatar");
         dialog.add("You're an idiot and you're playing a dumb game");
         dialog.add("GTFO");
-        NPC npc = new NPC(map, Direction.SOUTHWEST, new DialogInteractionStrategy(dialog));
+        NPC npc = new NPC(map, Direction.SOUTHWEST, new DialogInteractionStrategy(dialog), GameColor.YELLOW);
         EnemySearchingController esc = new EnemySearchingController(npc,map,3);
         EnemyActionController eac = new EnemyActionController(npc,map);
         AIController controller = new AIController(esc,eac);
@@ -403,7 +403,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void questNPC(Map map) {
         QuestedItem questItem = new QuestedItem("Quest Item", 0);
-        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Top Hat"), new Location(18, 18, 2));
+        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Top Hat"), new Location(18, 18, 1));
         ArrayList<String> startQuestDialog = new ArrayList<>();
         startQuestDialog.add("HELLO QUESTER!");
         startQuestDialog.add("This is an example of how quests work");
@@ -416,12 +416,12 @@ public class DemoLevelFactory extends LevelFactory {
 
         QuestDialogInteractionStrategy questIter = new QuestDialogInteractionStrategy(startQuestDialog, endQuestDialog, quest);
 
-        NPC npc = new NPC(map, Direction.SOUTHWEST, questIter);
+        NPC npc = new NPC(map, Direction.SOUTHWEST, questIter, GameColor.PINK);
         map.add(npc, new Location(14,14,2));
     }
 
     public void tradeNPC(Map map) {
-        NPC npc = new NPC(map, Direction.SOUTHEAST, new TradeInteractionStrategy());
+        NPC npc = new NPC(map, Direction.SOUTHEAST, new TradeInteractionStrategy(), GameColor.YELLOW);
         npc.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
         npc.pickup(new ChestEquipableItem("Buyable Penis", 5, null));
         map.add(npc, new Location(13, 14, 2));

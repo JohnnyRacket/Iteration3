@@ -10,6 +10,7 @@ import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.Visitors.WeaponsVisitor;
 
 import java.awt.*;
@@ -25,6 +26,7 @@ public class HandsViewObject implements ViewObject, Observer {
 
     private HandStateCreator defaultHandState;
 
+    private GameColor color;
 
     public HandsViewObject(MicroPositionableViewObject leftHand,
                            MicroPositionableViewObject rightHand,
@@ -33,11 +35,13 @@ public class HandsViewObject implements ViewObject, Observer {
                            EquipmentSlot subject,
                            ViewObjectFactory factory,
                            Entity entity,
-                           HandStateCreator defaultHandState) {
+                           HandStateCreator defaultHandState,
+                           GameColor color) {
         this.position = position;
         this.subject = subject;
         this.factory = factory;
         this.entity = entity;
+        this.color = color;
         registerToSubject();
         handState = defaultHandState.changeHandState(direction, leftHand, rightHand);
     }
@@ -110,7 +114,7 @@ public class HandsViewObject implements ViewObject, Observer {
 
         @Override
         public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {
-            swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), subject ,oneHandedWeapon.getName(), entity));
+            swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), subject ,oneHandedWeapon.getName(), entity, color));
 
         }
 
@@ -121,12 +125,12 @@ public class HandsViewObject implements ViewObject, Observer {
 
         @Override
         public void visitDualWieldMeleeWeapon(DualWieldMeleeWeapon dualWieldMeleeWeapon) {
-            swapHandsState(factory.createDualWieldMeleeWeaponState(getPosition(), handState.getDirection(), subject ,dualWieldMeleeWeapon.getName(), entity));
+            swapHandsState(factory.createDualWieldMeleeWeaponState(getPosition(), handState.getDirection(), subject ,dualWieldMeleeWeapon.getName(), entity, color));
         }
 
         @Override
         public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon) {
-            swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), subject , oneHandedMeleeWeapon.getName(), entity));
+            swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), subject , oneHandedMeleeWeapon.getName(), entity, color));
 
 
         }
