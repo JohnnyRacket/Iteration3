@@ -15,7 +15,6 @@ import com.wecanteven.MenuView.DrawableLeafs.BackgroundImageDrawable;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
 
-import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.BiNavigatableGridWithCenterTitle;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
 import com.wecanteven.MenuView.DrawableLeafs.Toaster.Toast;
@@ -62,6 +61,58 @@ public class UIViewFactory {
 
     public void setJFrame(JFrame jFrame){
         this.jframe = jFrame;
+    }
+
+
+    public void createHUDView(Character character){
+        StatsHUD statsHUD = new StatsHUD(character.getStats());
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(statsHUD);
+        statsHUD.setHeight(150);
+        statsHUD.setWidth(300);
+        statsHUD.setBgColor(new Color(.5f,.5f,.5f,.5f));
+        SwappableView view = new SwappableView();
+        view.addDrawable(horiz);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addPermView(view);
+        },0);
+    }
+    public void createAbilityView(){
+
+    }
+    public void createMainMenuView(){
+        //make menu
+        ScrollableMenu menu = new ScrollableMenu(400, 400);
+        menu.setSelectedColor(Color.cyan);
+        menu.setBgColor(Config.TRANSMEDIUMGREY);
+        //make menu list
+        NavigatableList list = new NavigatableList();
+        list.addItem(
+                new ScrollableMenuItem("New Game", () -> {
+                    NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine);
+                    template.launch();
+                    resumeGame();
+            })
+        );
+        list.addItem(createLoadMenu(menu, list));
+        list.addItem(new ScrollableMenuItem("Exit", () -> {System.exit(0);}));
+        menu.setList(list);
+        //make swappable view
+        SwappableView view = new SwappableView();
+        //add decorators to center the menu
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Can Periwinkle Even", Config.CINNIBAR);
+        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
+        VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
+        view.addDrawable(vertCenter);
+        view.addNavigatable(menu);
+
+        controller.setMainMenuState(view.getMenuViewContainer());
+
+        ViewTime.getInstance().register(()->{
+            this.getController().clearViews();
+            this.getvEngine().clear();
+            vEngine.getManager().addView(view);
+        },0);
+
     }
 
     public void createStatsView(Character character){
@@ -123,8 +174,6 @@ public class UIViewFactory {
 
     }
 
-
-
     public void createInventoryView(Character character){
 
         NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
@@ -170,49 +219,6 @@ public class UIViewFactory {
             vEngine.getManager().addView(view);
         },0);
         controller.setMenuState(view.getMenuViewContainer());
-    }
-
-    public void createHUDView(Character character){
-        StatsHUD statsHUD = new StatsHUD(character.getStats());
-        HorizontalCenterContainer horiz = new HorizontalCenterContainer(statsHUD);
-        statsHUD.setHeight(150);
-        statsHUD.setWidth(300);
-        statsHUD.setBgColor(new Color(.5f,.5f,.5f,.5f));
-        SwappableView view = new SwappableView();
-        view.addDrawable(horiz);
-        ViewTime.getInstance().register(()->{
-            vEngine.getManager().addPermView(view);
-        },0);
-    }
-    public void createAbilityView(){
-
-    }
-    public SwappableView createMainMenuView(){
-        //make menu
-        ScrollableMenu menu = new ScrollableMenu(400, 400);
-        menu.setSelectedColor(Color.cyan);
-        menu.setBgColor(Config.TRANSMEDIUMGREY);
-        //make menu list
-        NavigatableList list = new NavigatableList();
-        list.addItem(
-                new ScrollableMenuItem("New Game", () -> {
-                    NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine);
-                    template.launch();
-            })
-        );
-        list.addItem(createLoadMenu(menu, list));
-        list.addItem(new ScrollableMenuItem("Exit", () -> {System.exit(0);}));
-        menu.setList(list);
-        //make swappable view
-        SwappableView view = new SwappableView();
-        //add decorators to center the menu
-        TitleBarDecorator title = new TitleBarDecorator(menu,"Can Periwinkle Even", Config.CINNIBAR);
-        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
-        VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
-        view.addDrawable(vertCenter);
-        view.addNavigatable(menu);
-
-        return view;
     }
 
     public void createEquippableItemMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, EquipableItem item){
@@ -317,6 +323,11 @@ public class UIViewFactory {
     }
     //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
     public void createBuyableItemMenu(NPC shopOwner, Character buyer, TakeableItem item){
+        BuyableUIObjectCreationVisitor visitor = new BuyableUIObjectCreationVisitor(this, shopOwner, buyer);
+        shopOwner.accept(visitor);
+        NavigatableList npcList = visitor.getPlayerInvList();
+        buyer.accept(visitor);
+        NavigatableList playerList = visitor.getPlayerInvList();
         NavigatableList list = new NavigatableList();
         TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
         list.addItem(new ScrollableMenuItem("Buy: " + item.getValue() + " Gold", () ->{
@@ -443,6 +454,9 @@ public class UIViewFactory {
             //dump things registered in the time models? (add clear functions to time models)
             //Ask if user wants to save? <- Josh wants this ;)
             //switch view to main menu view
+            ViewTime.getInstance().register(()->{
+                createMainMenuView();
+            },0);
         }));
 
         menu.setList(list);
@@ -471,42 +485,77 @@ public class UIViewFactory {
     }
 
     public void createTradeView(NPC npc, Character player, boolean active){
+        //VISIT THE PLAYER AND SHOP OWNER
+        //CREATE THE VIEW
+        //START THE VIEW
         BuyableUIObjectCreationVisitor visitor = new BuyableUIObjectCreationVisitor(this, npc, player);
-        npc.accept(visitor);
-        NavigatableList npcList = visitor.getInventoryItems();
+        visitor.visitBoth();
+        NavigatableList npcList = visitor.getShopOwnerInvList();
 
-        player.accept(visitor);
-        NavigatableList playerList = visitor.getInventoryItems();
-
+        NavigatableList playerList = visitor.getPlayerInvList();
         //make menu
         NavigatableGrid npcInv = new NavigatableGrid(250, 400, 5, 5);
+        npcInv.setBgColor(Config.TEAL);
         NavigatableGrid playerInv = new NavigatableGrid(250, 400, 5, 5);
-
+        playerInv.setBgColor(Config.TEAL);
         npcInv.setList(npcList);
         playerInv.setList(playerList);
         //make swappable view
-        BiNavigatableGridWithCenterTitle tradeWindow =
-                new BiNavigatableGridWithCenterTitle(npcInv, playerInv,
-                        "Buy / Sell",
-                        "Shopkeeper Gold: " + npc.getItemStorage().getMoney().getValue(),
-                        "Your Gold: " + player.getItemStorage().getMoney().getValue(),
-                        Config.MEDIUMGREY, Config.TEAL, Config.TRANSMEDIUMGREY
+
+        SwappableView swappableView = new SwappableView();
+        //add decorators to center the menu
+        ColumnatedCompositeContainer columns  = new ColumnatedCompositeContainer();
+        columns.setHeight(400);
+        columns.setWidth(700);
+
+
+        VerticalCenterContainer viewTitle =
+                new VerticalCenterContainer(
+                        new HorizontalCenterContainer(
+                                new TitleBarDecorator(columns, "Buy / Sell")
+                        )
                 );
 
+        VerticalCenterContainer npcTradeTitle = new VerticalCenterContainer(
+                new HorizontalCenterContainer(
+                        new TitleBarDecorator(
+                                npcInv,
+                                "Shopkeeper Gold: " + npc.getItemStorage().getMoney().getValue()
+                                )
+                )
+        );
+
+        VerticalCenterContainer playerTradeTitle =
+                new VerticalCenterContainer(
+                        new HorizontalCenterContainer(
+                                new TitleBarDecorator(
+                                        playerInv,
+                                        "Your Gold: " + player.getItemStorage().getMoney().getValue()
+                                )
+                        )
+                );
+
+        columns.addDrawable(npcTradeTitle);
+        columns.addDrawable(playerTradeTitle);
 
 
 
+        swappableView.addDrawable(viewTitle);
 
-//        ViewTime.getInstance().register(()->{
-//            vEngine.getManager().addView(view);
-//        },0);
-//
-//        controller.setMenuState(view.getMenuViewContainer());
-//        //This ACTIVE boolean serves the purpose of knowing whether or not draw the selector in the buy window
-//        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame John
-//        if(!active) {
-//            view.getMenuViewContainer().swap();
-//        }
+        swappableView.addNavigatable(npcInv);
+        swappableView.addNavigatable(playerInv);
+
+
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(swappableView);
+        },0);
+
+        controller.setMenuState(swappableView.getMenuViewContainer());
+        //This ACTIVE boolean serves the purpose of knowing whether or not draw the selector in the buy window
+        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame John
+        if(!active) {
+            swappableView.getMenuViewContainer().swap();
+        }
     }
 
     //Triggers initial animation dialog window - afterwards, continue is used.
@@ -608,6 +657,7 @@ public class UIViewFactory {
                 );
                 loader.loadGame();
                 loadGameLauncher.launch();
+                resumeGame();
                 exitMenu();
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 2", ()->{
@@ -619,6 +669,7 @@ public class UIViewFactory {
                 );
                 loader.loadGame();
                 loadGameLauncher.launch();
+                resumeGame();
                 exitMenu();
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 3", ()->{
@@ -630,6 +681,7 @@ public class UIViewFactory {
                 );
                 loader.loadGame();
                 loadGameLauncher.launch();
+                resumeGame();
                 exitMenu();
             }));
             loadList.addItem(new ScrollableMenuItem("Back", ()->{
@@ -646,16 +698,19 @@ public class UIViewFactory {
                 System.out.println("Trying to Save");
                 new SaveToXMLFile("save1.xml").saveGame();
                 exitMenu();
+                createToast(5, "Successful save to Slot 1");
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 2", ()->{
                 System.out.println("Trying to Save");
                 new SaveToXMLFile("save2.xml").saveGame();
                 exitMenu();
+                createToast(5, "Successful save to Slot 2");
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 3", ()->{
                 System.out.println("Trying to Save");
                 new SaveToXMLFile("save3.xml").saveGame();
                 exitMenu();
+                createToast(5, "Successful save to Slot 3");
             }));
             loadList.addItem(new ScrollableMenuItem("Back", ()->{
                 menu.setList(list);
@@ -762,6 +817,11 @@ public class UIViewFactory {
     public void resumeGame(){
         ModelTime.getInstance().resume();
         ViewTime.getInstance().resume();
+    }
+
+    public void resetGame() {
+        ModelTime.getInstance().reset();
+        ViewTime.getInstance().reset();
     }
 
 }

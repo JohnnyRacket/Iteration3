@@ -4,10 +4,7 @@ import com.wecanteven.AreaView.VOCreationVisitor;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.StatsAddable;
-import com.wecanteven.Observers.Directional;
-import com.wecanteven.Observers.Moveable;
-import com.wecanteven.Observers.Observer;
-import com.wecanteven.Observers.ViewObservable;
+import com.wecanteven.Observers.*;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanMoveVisitor;
@@ -18,9 +15,9 @@ import java.util.ArrayList;
 /**
  * Created by Brandon on 4/11/2016.
  */
-public class MovableHitBox extends HitBox implements Moveable, ViewObservable, Directional {
+public class MovableHitBox extends HitBox implements Moveable, ViewObservable, Directional, Destroyable {
     private CanMoveVisitor canMoveVisitor;
-    private int movingTicks;
+    private int movingTicks=0;
     private boolean isActive;
     private Direction direction;
     private int speed,distance;
@@ -33,7 +30,6 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
         observers = new ArrayList<>();
 
         setCanMoveVisitor(new TerranianCanMoveVisitor());
-        setMovingTicks(0);
         setIsActive(false);
     }
 
@@ -50,8 +46,10 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
         move(getLocation().add(direction.getCoords), speed);
     }
     private void move(Location destination,int speed){
-        if(count >= distance && canMove){
+        if(count >= distance || !canMove){
             getActionHandler().remove(this,getLocation());
+            isDestroyed = true;
+            notifyObservers();
             return;
         }
         canMove = getActionHandler().move(this,destination,speed);
@@ -123,4 +121,9 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
         visitor.visitMovableHitBox(this);
     }
 
+    private boolean isDestroyed = false;
+    @Override
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
 }

@@ -26,10 +26,12 @@ import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.SaveLoad.XMLProcessors.*;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.UtilityClasses.Tuple;
 import com.wecanteven.Visitors.*;
 
 import java.util.Iterator;
+import java.util.Locale;
 
 
 /**
@@ -38,12 +40,14 @@ import java.util.Iterator;
 public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor, EntityVisitor, StatsVisitor, ItemStorageVisitor, ItemVisitor, AreaOfEffectVisitor{
 
     SaveFile save;
-    //this is hacky as hell - @TODO: Fix this later
     private Avatar avatar;
     private LevelFactory levelFactory;
 
-    public XMLSaveVisitor(SaveFile save) {
+    private Location location;
 
+    public XMLSaveVisitor(SaveFile save) {
+        //Initizalizing my save location
+        location = new Location(0,0,0);
         this.save = save;
     }
 
@@ -51,39 +55,60 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     public void visitMap(Map map) {
         System.out.println("");System.out.println("");System.out.println("");
         System.out.println("Starting Save: ");
-
         TileXMLProcessor.formatMap(map);
         for(int r = 0; r < map.getrSize(); ++r){
             for(int s = 0; s < map.getsSize(); ++s){
+                location.setR(r);
+                location.setS(s);
                 map.getColumn(r, s).accept(this);
             }
         }
     }
 
+    @Override
     public void visitColumn(Column column) {
+        if(column.isEmpty()){ return; }
         TileXMLProcessor.formatColumn(column);
         for(int z  = 0; z < column.getZ(); ++z){
+            location.setZ(z);
+            System.out.println(location);
             column.getTile(z).accept(this);
         }
-
     }
+
     @Override
     public void visitTile(Tile tile) {
-        TileXMLProcessor.formatTile(tile);
+        System.out.println("Started Saving Tile");
+        if(!tile.isEmpty()) {
+            TileXMLProcessor.formatTile(tile, location);
 
-        //TODO nice to have, change this to grab the item iterator so that we can avoid the conditional logic
-        if(tile.hasObstacle()) {tile.getObstacle().accept(this);}
-        if(tile.hasInteractiveItem()) {tile.getInteractiveItem().accept(this);}
-        if(tile.hasOneShot()) {tile.getOneShot().accept(this);}
-        if(!tile.getTakeableItems().isEmpty()){
-            for (TakeableItem i: tile.getTakeableItems()) {
-                i.accept(this);
+            //TODO nice to have, change this to grab the item iterator so that we can avoid the conditional logic
+            if (tile.hasObstacle()) {
+                tile.getObstacle().accept(this);
             }
+            if (tile.hasInteractiveItem()) {
+                tile.getInteractiveItem().accept(this);
+            }
+            if (tile.hasOneShot()) {
+                tile.getOneShot().accept(this);
+            }
+            if (!tile.getTakeableItems().isEmpty()) {
+                for (TakeableItem i : tile.getTakeableItems()) {
+                    i.accept(this);
+                }
+            }
+            if (tile.hasEntity()) {
+                tile.getEntity().accept(this);
+            }
+
+            Iterator<AreaOfEffect> iter = tile.getAreasOfEffect();
+
+            while (iter.hasNext()) {
+                iter.next().accept(this);
+            }
+            System.out.println("Finished Saving Tile");
         }
-        if(tile.hasEntity()){tile.getEntity().accept(this);}
-
     }
-
 
     @Override
     public void visitAvatar(Avatar e) {
@@ -116,8 +141,8 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         saveDirection(npc.getDirection());
         npc.getStats().accept(this);
         npc.getItemStorage().accept(this);
+        System.out.println("Finished Saving NPC");
     }
-
 
     @Override
     public void visitStats(Stats stats) {

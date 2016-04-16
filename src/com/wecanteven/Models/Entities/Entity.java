@@ -1,6 +1,8 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Models.BuffManager.Buff;
+import com.wecanteven.Models.BuffManager.BuffManager;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
@@ -15,8 +17,19 @@ import java.util.ArrayList;
  * Created by Brandon on 3/31/2016.
  */
 
-public class Entity implements Moveable, Directional,Destroyable, ViewObservable, Observer{
-    private ArrayList<Observer> observers;
+public class Entity implements Moveable, Directional,Destroyable, ModelObservable, ViewObservable, Observer{
+    private ArrayList<Observer> observers = new ArrayList<>();
+    private ArrayList<Observer> modelObservers = new ArrayList<>();
+
+    @Override
+    public ArrayList<Observer> getModelObservers() {
+        return modelObservers;
+    }
+
+    public void setModelObservers(ArrayList<Observer> modelObservers) {
+        this.modelObservers = modelObservers;
+    }
+
     private ActionHandler actionHandler;
     private Stats stats;
     private int height, jumpHeight;
@@ -26,11 +39,12 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
     private CanFallVisitor canFallVisitor;
     private int movingTicks;
     private boolean lock, isActive;
+    private BuffManager buffmanager;
 
     private boolean isDestroyed = false;
 
     public Entity(ActionHandler actionHandler, Direction direction){
-        observers = new ArrayList<>();
+
 
         setStats(new Stats(this));
         setHeight(3);
@@ -42,6 +56,12 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
         setCanFallVisitor(new TerranianCanFallVisitor());
         setMovingTicks(0);
         setIsActive(false);
+
+        buffmanager = new BuffManager(this);
+    }
+
+    public BuffManager getBuffmanager() {
+        return buffmanager;
     }
 
     @Override
@@ -105,18 +125,18 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
     }
 
     public void loseLife(){
-        getActionHandler().death(this);
-        setLocation(new Location(3, 9, 1));
+
+        //setLocation(new Location(3, 9, 1));
+        isDestroyed = true;
         notifyObservers();
+        modelNotifyObservers();
+        getActionHandler().death(this);
         getStats().refreshStats();
     }
-
 
     public boolean isActive(){
         return isActive;
     }
-
-
 
     public void updateMovingTicks(int ticks) {
         setMovingTicks(ticks);
@@ -128,6 +148,7 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
     public void setMovingTicks(int movingTicks){
         this.movingTicks = movingTicks;
     }
+
     private void tickTicks(){
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
@@ -137,9 +158,11 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
             }, 1);
         }
     }
+
     private void deIncrementMovingTick(){
         movingTicks--;
     }
+
     private int calculateMovementTicks(int movementStat){
         return (int) ((30D/movementStat)*10D);
     }
@@ -149,9 +172,8 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
         notifyObservers();
     }
 
-
-
     public void setLocation(Location location) {
+        System.out.println("Im @ " + location);
         this.location = location;
         notifyObservers();
     }
@@ -160,10 +182,10 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
         getStats().addStats(new StatsAddable(0, 1, 1, 1, 1, 0, 0, 0, 0));
     }
 
-
     public Stats getStats(){
         return stats;
     }
+
     public void setStats(Stats stats){
         this.stats = stats;
     }
@@ -221,10 +243,12 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
         lock = true;
 
     }
+
     public void unlock(){
         lock = false;
         calculateActiveStatus();
     }
+
     private void calculateActiveStatus(){
         if(getMovingTicks() <= 0){
             setIsActive(false);
@@ -245,10 +269,13 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
         this.stats.addStats(addable);
     }
 
-
     @Override
     public boolean isDestroyed() {
         return isDestroyed;
+    }
+
+    public void setDestroyed(boolean isDestroyed) {
+        this.isDestroyed = isDestroyed;
     }
 
     public void takeDamage(int dmgAmount) {
@@ -259,11 +286,7 @@ public class Entity implements Moveable, Directional,Destroyable, ViewObservable
         getStats().healDamage(healAmount);
     }
 
-//    public void loseLife() {
-//        System.out.println("Entity Lost a life");
-//        getStats().loseLife();
-//        isDestroyed = true;
-//        ForDeath();
-//        notifyObservers();
-//    }
+    public void buff(Buff buff) {
+        buffmanager.addBuff(buff);
+    }
 }

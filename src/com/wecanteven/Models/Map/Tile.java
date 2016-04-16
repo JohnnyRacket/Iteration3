@@ -4,7 +4,6 @@ import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Decals.Decal;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
-import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Interactions.InteractionVisitor;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
@@ -12,18 +11,13 @@ import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.Models.Map.Terrain.Terrain;
-import com.wecanteven.Models.ModelTime.Alertable;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Observers.ModelObservable;
-import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
-import com.wecanteven.Visitors.AreaOfEffectVisitor;
-import com.wecanteven.Visitors.EntityVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 
-import java.awt.*;
-import java.awt.geom.Area;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by John on 3/31/2016.
@@ -68,7 +62,7 @@ public class Tile implements MapVisitable {
         if(this.entity.add(entity)){
             entity.lock();
             ModelTime.getInstance().registerAlertable(
-                    () -> interact(entity)
+                    () -> interactWithTile(entity)
                     , entity.getMovingTicks() + 1);
             return true;
         }else{
@@ -155,13 +149,14 @@ public class Tile implements MapVisitable {
         this.terrain = terrain;
     }
 
-    public void interact(Entity entity){
+    private void interactWithTile(Entity entity){
         //This interacts with tile you're on
         entity.unlock();
         hitBoxes.forEach(effect -> effect.interact(entity));
         terrain.interact(entity);
         if (!oneShot.isEmpty()) {
             oneShot.getToken().interact(entity);
+            remove(oneShot.getToken());
         }
         if (!interactiveItem.isEmpty()){
             interactiveItem.getToken().trigger();
@@ -171,6 +166,13 @@ public class Tile implements MapVisitable {
             aoe.apply(entity);
         }
 
+        interactWithTile((Character) entity);
+    }
+
+    private void interactWithTile(Character character) {
+        for (TakeableItem item : takeableItems) {
+            character.pickup(item);
+        }
     }
 
     public void interact(Character character) {
@@ -206,10 +208,18 @@ public class Tile implements MapVisitable {
     }
     public boolean hasAoe() { return areasOfEffect.size() > 0;}
 
-    public void acceptAoeVisitor(AreaOfEffectVisitor visitor) {
-        for (AreaOfEffect aoe : areasOfEffect) {
-            aoe.accept(visitor);
+    public boolean isEmpty() {
+
+        if(obstacle.isEmpty() && interactiveItem.isEmpty() &&
+                oneShot.isEmpty() && takeableItems.isEmpty() &&
+                entity.isEmpty() && areasOfEffect.isEmpty() && decals.isEmpty()) {
+            return true;
         }
+        return false;
+    }
+
+    public Iterator<AreaOfEffect> getAreasOfEffect() {
+        return areasOfEffect.iterator();
     }
 
     /**

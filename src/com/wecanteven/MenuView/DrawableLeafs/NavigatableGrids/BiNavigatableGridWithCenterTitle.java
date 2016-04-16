@@ -33,47 +33,6 @@ public class BiNavigatableGridWithCenterTitle extends Drawable {
     }
 
     public SwappableView createView() {
-        this.swapView = new SwappableView();
-        //add decorators to center the menu
-        ColumnatedCompositeContainer columns  = new ColumnatedCompositeContainer();
-        columns.setHeight(400);
-        columns.setWidth(700);
-
-
-        VerticalCenterContainer viewTitle =
-                new VerticalCenterContainer(
-                        new HorizontalCenterContainer(
-                                new TitleBarDecorator(columns, title)
-                        )
-                );
-
-        VerticalCenterContainer npcTradeTitle = new VerticalCenterContainer(
-                        new HorizontalCenterContainer(
-                                new TitleBarDecorator(
-                                        navigatableGrid1,
-                                        sub1
-                                )
-                        )
-                );
-
-        VerticalCenterContainer playerTradeTitle =
-                new VerticalCenterContainer(
-                        new HorizontalCenterContainer(
-                                new TitleBarDecorator(
-                                        navigatableGrid2, sub2
-                                )
-                        )
-                );
-
-
-        columns.addDrawable(playerTradeTitle);
-
-
-
-        swapView.addDrawable(viewTitle);
-
-        swapView.addNavigatable(navigatableGrid1);
-        swapView.addNavigatable(navigatableGrid2);
 
         return null;
     }

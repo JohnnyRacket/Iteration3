@@ -12,4 +12,8 @@ public class Tuple<X, Y> {
         this.y = y;
 
     }
+
+    public Tuple clone(){
+        return new Tuple(this.x, this.y);
+    }
 }

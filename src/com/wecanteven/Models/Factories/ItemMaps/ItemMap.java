@@ -27,7 +27,7 @@ public class ItemMap {
 
     private HashSet<String> usedNames;
 
-    public ItemMap() {
+    private ItemMap() {
         ObstacleMap = new HashMap<>();
         OneShotItemMap = new HashMap<>();
         InteractiveitemMap = new HashMap<>();
@@ -39,7 +39,7 @@ public class ItemMap {
         initialize();
     }
 
-    public ItemMap getInstance() {
+    public static ItemMap getInstance() {
         if (itemMap == null) {
             itemMap = new ItemMap();
         }
@@ -78,6 +78,8 @@ public class ItemMap {
                 () -> factory.vendOneShot("Major Health Orb", new StatsAddable(0,0,0,0,0,0,0,20,0)));
         OneShotItemMap.put("Major Mana Orb",
                 () -> factory.vendOneShot("Major Mana Orb", new StatsAddable(0,0,0,0,0,0,0,0,20)));
+        OneShotItemMap.put("Major Movement Buff",
+                () -> factory.vendMovementSpeedBuffOneShot("Major Movement Buff", 60, 300));
 
         usedNames.addAll(OneShotItemMap.keySet());
     }

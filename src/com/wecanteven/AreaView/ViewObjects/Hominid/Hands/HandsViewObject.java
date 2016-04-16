@@ -3,7 +3,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
@@ -76,9 +76,9 @@ public class HandsViewObject implements ViewObject, Observer {
 
 
     @Override
-    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
-        handState.addBackgroundToFogOfWar(fogOfWarViewObject);
-        handState.addForegroundToFogOfWar(fogOfWarViewObject);
+    public void addToFogOfWarViewObject(ParallelViewObject parallelViewObject) {
+        handState.addBackgroundToFogOfWar(parallelViewObject);
+        handState.addForegroundToFogOfWar(parallelViewObject);
     }
 
     public void move(long duration) {

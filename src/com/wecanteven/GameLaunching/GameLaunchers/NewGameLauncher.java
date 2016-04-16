@@ -1,6 +1,7 @@
 package com.wecanteven.GameLaunching.GameLaunchers;
 
 import com.wecanteven.Controllers.InputControllers.MainController;
+import com.wecanteven.GameLaunching.LevelFactories.DemoLevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.TSMBlowsLevelFactory;
@@ -22,12 +23,12 @@ import com.wecanteven.ViewEngine;
  */
 public class NewGameLauncher extends GameLauncher {
 
-    private LevelFactory levelFactory = new TSMBlowsLevelFactory();
+    private LevelFactory levelFactory = new DemoLevelFactory();
     //private LevelFactory levelFactory = new DopeAssLevelFactory();
 
     public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine){
         super(controller, modelEngine, viewEngine);
-        setLevelFactory(new DopeAssLevelFactory());
+        setLevelFactory(levelFactory);
     }
 
     /*
@@ -61,11 +62,7 @@ public class NewGameLauncher extends GameLauncher {
         player.pickup(new DualWieldMeleeWeapon("Katar", 5, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.getItemStorage().equip(new ChestEquipableItem("Mediocre Top", 3, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         setAvatar(new Avatar(player, getMap()));
-        getMap().add(player, new Location(3,9,1));
-        getController().setAvatar(getAvatar());
-
-        Character npc1 = new Character(getMap(), Direction.SOUTH);
-        getMap().add(npc1,new Location(2,9,5));
+        getMap().add(player, new Location(7,9,2));
     }
 
     @Override

@@ -1,10 +1,10 @@
 package com.wecanteven.AreaView.ViewObjects.Tiles;
 
 
-import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.DarkenedViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.GrayscaleViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
-import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.AreaView.Position;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class TileViewObject implements ViewObject {
     private Location location;
     private ArrayList<ViewObject> children = new ArrayList<>();
-    private TileState state = new UnknownState();
+    private TileState state = new ReadyState();
 
     public TileViewObject(Location location) {
         this.location = location;
@@ -30,16 +30,35 @@ public class TileViewObject implements ViewObject {
     private int loomingDeathCounter = 0;
 
     public void remove(ViewObject vo) {
-        if (!this.children.remove(vo)) {
+
+        if (!decoraterRemove(vo)) {
             System.out.println("LOOMING DEATH IS APPROACHING THE VIEW! Danger level: " + loomingDeathCounter++);
-            //ViewTime.getInstance().register(() -> this.remove(vo), 0);
+            //ViewTime.getInstance().register(() -> this.remove(vo), 10);
             System.out.println("BAD SHIT HAPPENED IN: TileViewObject.remove(ViewObject)");
-        } else {
-            if (loomingDeathCounter > 0) {
-                System.out.print("WOOT WOOT!!!!!! Looming death averted");
-                loomingDeathCounter = 0;
-            }
         }
+
+
+//        if (!this.children.remove(vo)) {
+//            System.out.println("LOOMING DEATH IS APPROACHING THE VIEW! Danger level: " + loomingDeathCounter++);
+//            //ViewTime.getInstance().register(() -> this.remove(vo), 10);
+//            System.out.println("BAD SHIT HAPPENED IN: TileViewObject.remove(ViewObject)");
+//        } else {
+//            if (loomingDeathCounter > 0) {
+//                System.out.print("WOOT WOOT!!!!!! Looming death averted");
+//                loomingDeathCounter = 0;
+//            }
+//        }
+    }
+
+    public boolean decoraterRemove(ViewObject toRemove) {
+        for (int i = children.size() - 1; i>=0; i--) {
+            if (toRemove.equals(children.get(i)) || children.get(i).equals(toRemove) ) {
+                children.remove(children.get(i));
+                return true;
+            }
+
+        }
+        return false;
     }
 
     public void reveal() {
@@ -69,8 +88,8 @@ public class TileViewObject implements ViewObject {
     }
 
     @Override
-    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
-        children.forEach( (child) -> child.addToFogOfWarViewObject(fogOfWarViewObject));
+    public void addToFogOfWarViewObject(ParallelViewObject parallelViewObject) {
+        children.forEach( (child) -> child.addToFogOfWarViewObject(parallelViewObject));
     }
 
     private interface TileState {
@@ -79,13 +98,13 @@ public class TileViewObject implements ViewObject {
         void conceal();
     }
     private class NonvisibleState implements TileState {
-        private FogOfWarViewObject fogOfWarViewObject = new FogOfWarViewObject(getPosition());
+        private ParallelViewObject parallelViewObject = new DarkenedViewObject(getPosition());
         public NonvisibleState() {
-            children.forEach( (child) -> child.addToFogOfWarViewObject(fogOfWarViewObject));
+            children.forEach( (child) -> child.addToFogOfWarViewObject(parallelViewObject));
         }
         @Override
         public void draw(Graphics2D g) {
-            fogOfWarViewObject.draw(g);
+            parallelViewObject.draw(g);
         }
 
         @Override
@@ -118,9 +137,14 @@ public class TileViewObject implements ViewObject {
     }
 
     private class UnknownState implements TileState {
+        private ParallelViewObject parallelViewObject = new GrayscaleViewObject(getPosition());
+        public UnknownState() {
+            children.forEach( (child) -> child.addToFogOfWarViewObject(parallelViewObject));
+        }
+
         @Override
         public void draw(Graphics2D g) {
-            //TODO: fill in
+            parallelViewObject.draw(g);
         }
         @Override
         public void reveal() {
@@ -130,6 +154,26 @@ public class TileViewObject implements ViewObject {
         @Override
         public void conceal() {
 
+        }
+    }
+
+    public class ReadyState implements TileState {
+        @Override
+        public void draw(Graphics2D g) {
+            state = new UnknownState();
+            state.draw(g);
+        }
+
+        @Override
+        public void reveal() {
+            state = new UnknownState();
+            state.reveal();
+        }
+
+        @Override
+        public void conceal() {
+            state = new UnknownState();
+            state.conceal();
         }
     }
 }

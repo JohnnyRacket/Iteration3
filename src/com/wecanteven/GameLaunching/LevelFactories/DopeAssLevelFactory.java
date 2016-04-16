@@ -102,9 +102,9 @@ public class DopeAssLevelFactory extends LevelFactory{
 
 
         map.add(new ConsumeableItem("Death Potion", 10), new Location(1, 2, 1));
-        map.add(new ItemMap().getItemAsOneShot("Box"), new Location(3,3,1));
-        map.add(new ItemMap().getItemAsInteractive("Button"), new Location(5, 5, 1));
-        map.add(new ItemMap().getItemAsObstacle("Box"), new Location(8,2,1));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3,3,1));
+        map.add(ItemMap.getInstance().getItemAsInteractive("Button"), new Location(5, 5, 1));
+        map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(8,2,1));
 
         HealingAreaOfEffect aoe = new HealingAreaOfEffect(1);
         map.add(aoe, new Location(8,6,1));
@@ -112,11 +112,11 @@ public class DopeAssLevelFactory extends LevelFactory{
         TakeDamageAreaOfEffect dmgAoe = new TakeDamageAreaOfEffect(1);
         map.add(dmgAoe, new Location(8,5,1));
 
-        //InstaDeathAoe aoeDed = new InstaDeathAoe();
-        //map.add(aoeDed, new Location(8,4,1));
+        InstaDeathAoe aoeDed = new InstaDeathAoe();
+        map.add(aoeDed, new Location(8,4,1));
 
-        //LevelUpAoe aoeLvl = new LevelUpAoe(500, false);
-        //map.add(aoeLvl, new Location(8,3,1));
+        LevelUpAoe aoeLvl = new LevelUpAoe(500, false);
+        map.add(aoeLvl, new Location(8,3,1));
 
         //TeleportAoe aoe = new TeleportAoe(new Location(8,3,1));
         //map.add(aoe, new Location(8,6,1));

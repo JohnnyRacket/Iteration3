@@ -7,6 +7,10 @@ import com.wecanteven.Visitors.AreaOfEffectVisitor;
  * Created by Cachorrita on 4/12/2016.
  */
 public class LevelUpAoe extends CoolDownAoE {
+    public LevelUpAoe(int coolDownTicks) {
+        super(coolDownTicks, false);
+    }
+
     public LevelUpAoe(int coolDownTicks, boolean onCooldown) {
         super(coolDownTicks, onCooldown);
     }

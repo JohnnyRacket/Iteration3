@@ -1,7 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.LeafVOs;
 
 import com.wecanteven.AreaView.Position;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 
 import java.awt.*;
 
@@ -15,7 +15,7 @@ public class NullViewObject extends LeafViewObject {
     }
 
     @Override
-    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
+    public void addToFogOfWarViewObject(ParallelViewObject parallelViewObject) {
         //Mixed Instance is ok sometimes
     }
 

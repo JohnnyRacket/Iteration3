@@ -4,7 +4,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
@@ -89,21 +89,21 @@ public abstract class HandState {
         }
     }
 
-    public void addBackgroundToFogOfWar(FogOfWarViewObject fogOfWarViewObject) {
+    public void addBackgroundToFogOfWar(ParallelViewObject parallelViewObject) {
         if (isInBackground(leftHand)) {
-            leftHand.addToFogOfWarViewObject(fogOfWarViewObject);
+            leftHand.addToFogOfWarViewObject(parallelViewObject);
         }
         if (isInBackground(rightHand)) {
-            rightHand.addToFogOfWarViewObject(fogOfWarViewObject);
+            rightHand.addToFogOfWarViewObject(parallelViewObject);
         }
     }
 
-    public void addForegroundToFogOfWar(FogOfWarViewObject fogOfWarViewObject) {
+    public void addForegroundToFogOfWar(ParallelViewObject parallelViewObject) {
         if (!isInBackground(leftHand)) {
-            leftHand.addToFogOfWarViewObject(fogOfWarViewObject);
+            leftHand.addToFogOfWarViewObject(parallelViewObject);
         }
         if (!isInBackground(rightHand)) {
-            rightHand.addToFogOfWarViewObject(fogOfWarViewObject);
+            rightHand.addToFogOfWarViewObject(parallelViewObject);
         }
     }
 

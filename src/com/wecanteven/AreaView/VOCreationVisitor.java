@@ -1,7 +1,6 @@
 package com.wecanteven.AreaView;
 
 import com.wecanteven.AreaView.Biomes.Biome;
-import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.Factories.BiomeFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
@@ -28,6 +27,8 @@ import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Visitors.*;
+
+import java.util.Iterator;
 
 /**
  * Created by alexs on 4/1/2016.
@@ -60,10 +61,9 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     }
     @Override
     public void visitMovableHitBox(MovableHitBox hitBox){
-        ViewObject vo = factory.createDirectional(hitBox.getLocation().toPosition(), hitBox, "Effects/WaterBolt/");
-        MovingViewObject viewObject = factory.createMovingViewObject(hitBox,vo);
-        hitBox.attach(viewObject);
-        areaView.addViewObject(viewObject);
+        ViewObject mvo = factory.createRangedEffect(hitBox);
+        System.out.println("*************************************************\nCraeted range hitbox @" + mvo.getPosition());
+        areaView.addViewObject(mvo);
     }
 
     @Override
@@ -141,7 +141,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitMap(Map map) {
-
         foundTop = new boolean[map.getrSize()][map.getsSize()];
 
         for (int i = 0; i < map.getrSize(); i++) {
@@ -155,8 +154,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
             }
         }
     }
-
-
 
     @Override
     public void visitTile(Tile tile) {
@@ -177,8 +174,10 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
             decal.accept(this);
         }
 
-        if (tile.hasAoe()) {
-            tile.acceptAoeVisitor(this);
+        Iterator<AreaOfEffect> iter = tile.getAreasOfEffect();
+
+        while (iter.hasNext()) {
+            iter.next().accept(this);
         }
     }
 
@@ -207,7 +206,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     public void visitCurrent(Current current) {
         areaView.addViewObject(factory.createWater(currentPosition));
     }
-
 
     @Override
     public void visitAoe(AreaOfEffect aoe) { }
@@ -243,7 +241,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitTeleportAoe(TeleportAoe aoe) {
-        areaView.addViewObject(factory.createAoe(currentPosition, "LevelUpInactive"));
+        areaView.addViewObject(factory.createAoe(currentPosition, "TeleportAoe"));
     }
 
     @Override

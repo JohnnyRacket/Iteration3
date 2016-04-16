@@ -3,9 +3,8 @@ package com.wecanteven.AreaView.ViewObjects.LeafVOs;
 import com.wecanteven.AreaView.DynamicImages.SimpleDynamicImage;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.DynamicImageDrawingStrategy;
-import com.wecanteven.AreaView.ViewObjects.FogOfWarViewObject;
+import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.Observers.Directional;
-import com.wecanteven.Observers.Observable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Directionalizable;
@@ -65,8 +64,8 @@ public class DirectionalViewObject extends LeafViewObject implements Directional
     }
 
     @Override
-    public void addToFogOfWarViewObject(FogOfWarViewObject fogOfWarViewObject) {
-        fogOfWarViewObject.add(currentImage, getPosition(), drawingStrategy);
+    public void addToFogOfWarViewObject(ParallelViewObject parallelViewObject) {
+        parallelViewObject.add(currentImage, getPosition(), drawingStrategy);
     }
 
     @Override

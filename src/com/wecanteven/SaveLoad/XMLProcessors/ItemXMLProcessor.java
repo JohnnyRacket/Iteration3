@@ -36,24 +36,21 @@ public class ItemXMLProcessor extends XMLProcessor {
     }
 
     public static HeadEquipableItem parseHeadEquipableItem(Element el) {
-        return (HeadEquipableItem) (new ItemMap()).getItemAsEquipable(sf.getStrAttr(el, "name"));
+        return (HeadEquipableItem) ItemMap.getInstance().getItemAsEquipable(sf.getStrAttr(el, "name"));
     }
 
     public static ChestEquipableItem parseChestEquipableItem(Element el) {
-        return (ChestEquipableItem) (new ItemMap()).getItemAsEquipable(sf.getStrAttr(el, "name"));
+        return (ChestEquipableItem) ItemMap.getInstance().getItemAsEquipable(sf.getStrAttr(el, "name"));
     }
-
-
-
 
     public static Obstacle parseObstacleItem(Element el) {
-        return new ItemMap().getItemAsObstacle(sf.getStrAttr(el, "name"));
+        return ItemMap.getInstance().getItemAsObstacle(sf.getStrAttr(el, "name"));
     }
     public static InteractiveItem parseInteractiveItem(Element el) {
-        return new ItemMap().getItemAsInteractive(el.getAttribute("name"));
+        return ItemMap.getInstance().getItemAsInteractive(el.getAttribute("name"));
     }
     public static OneShot parseOneShotItem(Element el) {
-        return new ItemMap().getItemAsOneShot(sf.getStrAttr(el, "name"));
+        return ItemMap.getInstance().getItemAsOneShot(sf.getStrAttr(el, "name"));
     }
 
 
