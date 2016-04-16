@@ -25,7 +25,7 @@ public class HUDDecorator extends DecoratorViewObject implements Observer{
 
     private int currentHealth = 0;
 
-    private Position healthBarOffset = new Position(0,0,3);
+    private Position healthBarOffset = new Position(0,0,4);
 
     public HUDDecorator(ViewObject child, Stats subject, MenuComponentDrawingStrategy drawingStrategy, ViewObjectFactory factory, AreaView areaView) {
         super(child);

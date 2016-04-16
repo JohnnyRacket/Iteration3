@@ -10,15 +10,15 @@ import java.awt.geom.RoundRectangle2D;
  */
 public class RoundedHealthBar extends Drawable {
 
-    private Color currentColor = Color.green;
-    private Color depletedColor = Color.RED;
+    private Color currentColor = new Color(255, 170, 46);
+    private Color depletedColor = new Color(189, 116, 34);
     private int percent;
     int roundness = 15;
 
     public RoundedHealthBar(int width, int height){
         this.setWidth(width);
         this.setHeight(height);
-        this.setRoundness(getHeight()/2);
+        this.setRoundness(height);
     }
     @Override
     public void draw(Graphics2D g2d, int x, int y, int windowWidth, int windowHeight) {
