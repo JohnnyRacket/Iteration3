@@ -33,6 +33,8 @@ public class BipedMovingViewObject extends MovingViewObject implements Observer 
         );
     }
 
+
+
     private double inBetween(double start, double end, double percentage) {
         return start + percentage*(end - start);
     }

@@ -54,6 +54,7 @@ public abstract class MovingViewObject extends DecoratorViewObject implements Ob
 
     protected abstract Position calculateCurrentPosition(Position source, Position destination, long startTime, long endTime);
 
+
     private boolean hasStateChange() {
         return !subject.getLocation().toPosition().equals(destination);
     }
@@ -67,7 +68,7 @@ public abstract class MovingViewObject extends DecoratorViewObject implements Ob
 
     private void adjustPosition(long endTime) {
         //System.out.println("******************************** MVO updating child");
-        getChild().setPosition(calculateCurrentPosition(source, destination, startTime, endTime));
+        getChild().setPosition(calculateCurrentPosition(source, destination, startTime, this.endTime));
         if (viewTime.getCurrentTime() < endTime) {
             viewTime.register(() -> adjustPosition(endTime), 1);
         }
