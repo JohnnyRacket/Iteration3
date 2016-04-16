@@ -240,6 +240,7 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
         map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
         map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3, 14, 2));
         //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
         //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
         //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
