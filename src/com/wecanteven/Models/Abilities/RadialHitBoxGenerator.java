@@ -26,7 +26,7 @@ public class RadialHitBoxGenerator implements HitBoxGenerator {
 
     }
     public void generate(){
-        size = 3;
+        size = 2;
         generateRing(distance);
     }
 
@@ -39,14 +39,15 @@ public class RadialHitBoxGenerator implements HitBoxGenerator {
             viewTime.register(new ViewTime.vCommand() {
                 @Override
                 public void execute() {
-                    hitbox = new HitBox("Punch", caster.getLocation().adjacent(caster.getDirection()), effect, caster.getActionHandler(), 900);
+                    hitbox = new HitBox("Punch", caster.getLocation().adjacent(caster.getDirection()), effect, caster.getActionHandler(), 450);
                     hitbox.addToMap(1, location);
-                    ++distance;
-                    if (distance <= size) {
-                        generate();
-                    }
                 }
-            }, 120);
+            }, 30 * distance);
+            distance++;
+            if (distance <= size) {
+                generate();
+            }
         }
+
     }
 }
