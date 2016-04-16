@@ -403,7 +403,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void questNPC(Map map) {
         QuestedItem questItem = new QuestedItem("Quest Item", 0);
-        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Top Hat"), new Location(18, 18, 1));
+        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(18, 18, 1));
         ArrayList<String> startQuestDialog = new ArrayList<>();
         startQuestDialog.add("HELLO QUESTER!");
         startQuestDialog.add("This is an example of how quests work");
@@ -454,7 +454,9 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsOneShot("Major Health Orb"), new Location(5,15,3));
 
 
-        map.add(ItemMap.getInstance().getItemAsTakeable("Fez"), new Location(11, 14,2));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,3));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Growth"), new Location(11, 13,3));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,3));
         //Interactive Item??????
         /* TODO implement this */
 
@@ -463,11 +465,11 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(2,14,2));
 
         //Equipable
-        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
-        map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
-        map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
-        map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3, 14, 2));
+//        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
+//        map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
+//        map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
+//        map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
+//        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3, 14, 2));
 
 
         //Consumeable

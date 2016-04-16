@@ -438,7 +438,14 @@ public abstract class ViewObjectFactory {
         return vo;
     }
 
-    public DirectionalViewObject createEquipment(Position p, Entity entity, String name, GameColor color) {
+    public ViewObject createEquipment(Position p, Entity entity, String name, GameColor color) {
+        //First we try to find a nondirectional equipment
+        try {
+            return createSimpleViewObject(p, "Equipment/" + color + "/" + name + ".xml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         DirectionalViewObject directionalViewObject =  createDirectional(p, entity, "Equipment/" +color.name + "/" + name + "/");
         entity.attach(directionalViewObject);
         return directionalViewObject;

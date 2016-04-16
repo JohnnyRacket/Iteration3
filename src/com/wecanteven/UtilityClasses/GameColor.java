@@ -9,7 +9,7 @@ public enum GameColor {
     BLUE(0x8db5e7, 0x7293bb, "Blue"),
     PINK(0xf19cb7, 0xe087a2, "Pink"),
     YELLOW(0xffcc00, 0xefbf00, "Yellow"),
-    GREEN(0x6fc4a9, 0x55ae92, "Green"),
+    GREEN(0x6fc47d, 0x4b9a58, "Green"),
     GRAY(0x9f9f9f, 0x6f6f6f, "Gray");
 
     public final Color light;

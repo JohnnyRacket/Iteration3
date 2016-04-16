@@ -56,10 +56,10 @@ public class NewGameLauncher extends GameLauncher {
 
     @Override
     protected void createAvatar(String occupation){
-        Character player = new Character(getMap(), Direction.SOUTH, GameColor.GREEN);
+        Character player = new Character(getMap(), Direction.SOUTH, GameColor.YELLOW);
 
-        player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
-        player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
+        //player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
+        //player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.pickup(new OneHandedMeleeWeapon("Katar", 4, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.pickup(new DualWieldMeleeWeapon("Katar", 5, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.getItemStorage().equip(new ChestEquipableItem("Mediocre Top", 3, new StatsAddable(1,1,1,1,1,1,1,1,1)));
