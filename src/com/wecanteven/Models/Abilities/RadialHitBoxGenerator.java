@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Abilities;
 
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.ModelTime.Alertable;
 import com.wecanteven.Models.ModelTime.ModelTime;
@@ -26,8 +27,8 @@ public class RadialHitBoxGenerator implements HitBoxGenerator {
 
     }
     public void generate(){
-        size = 2;
-        generateRing(distance);
+        size = 3;
+        generateRing(size);
     }
 
     private void generateRing(int ringSize){
@@ -35,17 +36,14 @@ public class RadialHitBoxGenerator implements HitBoxGenerator {
         Iterator<Location> iterator = hexring.iterator();
         while(iterator.hasNext()){
             Location location = iterator.next();
-            ViewTime viewTime = ViewTime.getInstance();
-            viewTime.register(new ViewTime.vCommand() {
-                @Override
-                public void execute() {
-                    hitbox = new HitBox("Punch", caster.getLocation().adjacent(caster.getDirection()), effect, caster.getActionHandler(), 450);
-                    hitbox.addToMap(1, location);
-                }
-            }, 30 * distance);
-            distance++;
-            if (distance <= size) {
-                generate();
+            ViewTime.getInstance().register(()->{
+                hitbox = new HitBox("Punch", caster.getLocation().adjacent(caster.getDirection()), effect, caster.getActionHandler(), 1200);
+                hitbox.addToMap(1, location);
+            },30*distance);
+            ++distance;
+            --size;
+            if (size > 0) {
+                generateRing(size);
             }
         }
 
