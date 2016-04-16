@@ -10,17 +10,33 @@ public abstract class LimbStrategy {
     protected abstract void animate(double percentage);
     protected abstract void complete();
 
+    private boolean isStopped = false;
+    private boolean isExecuting = false;
+
     public final void execute(long duration) {
         long startTime = ViewTime.getInstance().getCurrentTime();
+        isExecuting = true;
         step(startTime, duration);
+    }
+
+    public final void stop() {
+        if (isExecuting) {
+            isStopped = true;
+        }
+    }
+
+    public final boolean isExecuting() {
+        return isExecuting;
     }
 
     private void step(long startTime, long duration) {
         double percentage = calculatePercentage(startTime, duration);
-        if (percentage < 1) {
+        if (percentage < 1 && !isStopped) {
             animate(percentage);
             ViewTime.getInstance().register(() -> step(startTime, duration), 1);
         } else {
+            isStopped = false;
+            isExecuting = false;
             complete();
         }
 

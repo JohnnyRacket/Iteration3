@@ -30,13 +30,13 @@ public class FeetViewObject implements ViewObject {
     private LimbStrategy fallingStartegy;
     private LimbStrategy jumpingStrategy;
 
-    public FeetViewObject(Direction direction, MicroPositionableViewObject leftFoot, MicroPositionableViewObject rightFoot) {
+    public FeetViewObject(Direction direction, MicroPositionableViewObject leftFoot, MicroPositionableViewObject rightFoot, LimbStrategy walkingStrategy, LimbStrategy jumpingStrategy, LimbStrategy fallingStartegy) {
         this.leftFoot = leftFoot;
         this.rightFoot = rightFoot;
         changeDirection(direction);
-        walkingStrategy = new FeetWalkingStrategy(0.1, leftFoot, rightFoot);
-        fallingStartegy = new FeetJumpingStrategy(height, 2, leftFoot, rightFoot);//new FeetFallingStrategy(height, 5, leftFoot, rightFoot);
-        jumpingStrategy = new FeetJumpingStrategy(height, 2, leftFoot, rightFoot);
+        this.walkingStrategy = walkingStrategy;
+        this.fallingStartegy = fallingStartegy;
+        this.jumpingStrategy = jumpingStrategy;
         this.leftFoot.setRadius(radius);
         this.leftFoot.setOffsetAngle(leftAngle);
         this.leftFoot.setTangent(tangent);
