@@ -195,7 +195,7 @@ public class DemoLevelFactory extends LevelFactory {
     }
 
     public void dialogNPC(Map map) {
-        ArrayList<String> dialog = new ArrayList<String>();
+        ArrayList<String> dialog = new ArrayList<>();
         dialog.add("Hello Avatar");
         dialog.add("You're an idiot and you're playing a dumb game");
         dialog.add("GTFO");
