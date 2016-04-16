@@ -29,13 +29,12 @@ import java.util.Iterator;
  */
 public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemVisitor, EntityVisitor, UIObjectCreationVisitor {
 
-    private NavigatableList inventoryItems = new NavigatableList();
-    private NavigatableList equippedItems = new NavigatableList();
+    private NavigatableList playerInvList = new NavigatableList();
+    private NavigatableList shopOwnerInvList = new NavigatableList();
     private UIViewFactory factory;
     private NPC shopOwner;
     private Character buyer;
-    private Character character;
-    private boolean inInv = true;
+    private boolean inPlayerInv = true;
 
     public BuyableUIObjectCreationVisitor(UIViewFactory factory, NPC shopOwner, Character buyer){
         this.factory = factory;
@@ -43,12 +42,25 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
         this.buyer = buyer;
     }
 
-    public NavigatableList getInventoryItems (){
-        return inventoryItems;
+    public BuyableUIObjectCreationVisitor(UIViewFactory factory, NPC shopOwner, Character buyer, NavigatableList playerInvList, NavigatableList shopOwnerInvList){
+        this.factory = factory;
+        this.shopOwner = shopOwner;
+        this.buyer = buyer;
+        this.playerInvList = playerInvList;
+        this.shopOwnerInvList = shopOwnerInvList;
     }
 
-    public NavigatableList getEquippedItems(){
-        return equippedItems;
+    public NavigatableList getPlayerInvList(){
+        return playerInvList;
+    }
+
+    public NavigatableList getShopOwnerInvList(){
+        return shopOwnerInvList;
+    }
+
+    public void visitBoth() {
+        shopOwner.accept(this);
+        buyer.accept(this);
     }
 
     @Override
@@ -58,40 +70,39 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
 
     @Override
     public void visitCharacter(Character c) {
-        this.character = c;
         c.getItemStorage().accept(this);
     }
 
     @Override
     public void visitNPC(NPC npc) {
-        this.character = npc;
+        System.out.println("Visiting an NPC");
         npc.getItemStorage().accept(this);
     }
 
     @Override
     public void visitItemStorage(ItemStorage itemStorage) {
-        inInv = true;
-        inventoryItems = new NavigatableList();
-        equippedItems = new NavigatableList();
+        inPlayerInv = true;
+        playerInvList = new NavigatableList();
+        shopOwnerInvList = new NavigatableList();
     }
 
     @Override
     public void visitEquipment(Equipment equipment) {
-        inInv = false;
-        Iterator<EquipableItem> iter = equipment.getIterator();
-        while(iter.hasNext()){
-            iter.next().accept(this);
-        }
     }
 
     @Override
     public void visitInventory(Inventory inventory) {
-        inInv = true;
+        if(buyer.getItemStorage().getInventory() == inventory) {
+            inPlayerInv = true;
+        } else{
+            inPlayerInv = false;
+        }
         Iterator<TakeableItem> iter = inventory.getIterator();
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             TakeableItem item = iter.next();
             item.accept(this);
         }
+
     }
 
     @Override
@@ -116,12 +127,12 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-        if (character == buyer) {
-            inventoryItems.addItem(new GridItem(takeable.getName(), () -> {
+        if (inPlayerInv) {
+            playerInvList.addItem(new GridItem(takeable.getName(), () -> {
                 factory.createSellableItemMenu(shopOwner, buyer, takeable);
             }));
         }else {
-            inventoryItems.addItem(new GridItem(takeable.getName(), () -> {
+            shopOwnerInvList.addItem(new GridItem(takeable.getName(), () -> {
                 factory.createBuyableItemMenu(shopOwner, buyer, takeable);
             }));
         }
@@ -145,5 +156,13 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
     @Override
     public void visitConsumableItem(ConsumeableItem consumable) {
         visitTakeableItem(consumable);
+    }
+
+    public void setPlayerInvList(NavigatableList playerInvList) {
+        this.playerInvList = playerInvList;
+    }
+
+    public void setShopOwnerInvList(NavigatableList shopOwnerInvList) {
+        this.shopOwnerInvList = shopOwnerInvList;
     }
 }

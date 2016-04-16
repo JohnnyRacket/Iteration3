@@ -9,7 +9,7 @@ public class TerranianCanFallVisitor extends CanFallVisitor {
     private boolean visitedCurrent;
     @Override
     public void visitWater(Water water) {
-        this.setCanMove(true);
+        this.setCanMove(false);
         visitedCurrent = false;
     }
 
