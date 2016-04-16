@@ -48,7 +48,7 @@ public class Character extends Entity {
         if(!isActive()){
             System.out.println("The entity attacked");
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendRadialAttack(this);
+            Ability attack = factory.vendDomeAttack(this);
             attack.cast();
         }
     }
