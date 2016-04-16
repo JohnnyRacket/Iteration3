@@ -66,6 +66,7 @@ public abstract class ViewObjectFactory {
 
     public abstract ViewObject createGround(Position p);
     public abstract ViewObject createWater(Position p);
+    public abstract ViewObject createCurrent(Position p);
 
     public void setCenter(ViewObject center) {
         hexDrawingStrategy.setCenterTarget(center);

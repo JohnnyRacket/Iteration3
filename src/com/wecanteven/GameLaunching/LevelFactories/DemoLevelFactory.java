@@ -15,6 +15,7 @@ import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
+import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.Stats.StatsAddable;
@@ -124,13 +125,13 @@ public class DemoLevelFactory extends LevelFactory {
         });
 
         //River
-        map.getTile(getLocation(7,2,14)).setTerrain(new Water());
-        map.getTile(getLocation(8,2,14)).setTerrain(new Water());
-        map.getTile(getLocation(9,2,14)).setTerrain(new Water());
-        map.getTile(getLocation(10,2,12)).setTerrain(new Water());
-        map.getTile(getLocation(11,2,12)).setTerrain(new Water());
-        map.getTile(getLocation(12,2,12)).setTerrain(new Water());
-        map.getTile(getLocation(12,3,12)).setTerrain(new Water());
+        map.getTile(getLocation(7,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(8,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(9,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(10,2,12)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(11,2,12)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(12,2,12)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,12)).setTerrain(new Current(Direction.SOUTH));
 
         //Clearing up portions
         (new HexColumn(getLocation(8,6, 2), 11)).iterator().forEachRemaining( (location) -> {
@@ -149,6 +150,21 @@ public class DemoLevelFactory extends LevelFactory {
             map.getTile(location).setTerrain(new Water());
         });
 
+        map.getTile(getLocation(12,4,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,5,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,6,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,7,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,8,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,9,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,10,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
+
+        (new FilledHex(getLocation(16,6,0), 6)).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(new Ground());
+        });
+        (new HexLine(getLocation(11,5,0), Direction.NORTHEAST, 4 )).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(new Ground());
+        });
 
 //        (new HexColumn(getLocation(7,13, 2), 6)).iterator().forEachRemaining( (location) -> {
 //            map.getTile(location).setTerrain(new Ground());
