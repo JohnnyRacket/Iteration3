@@ -15,4 +15,8 @@ public class ItemTarget extends Target{
     public void accept(TargetVisitor visitor) {
         visitor.visitItemTarget(this);
     }
+    @Override
+    public String toString() {
+        return "ItemTarget: Priority: " + getPriority() + ", Location: " + getLocation();
+    }
 }

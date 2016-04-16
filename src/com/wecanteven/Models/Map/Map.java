@@ -5,6 +5,7 @@ import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Interactions.InteractionVisitor;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
@@ -92,6 +93,7 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean move(Entity entity, Location destination, int movespeed) {
         Location source = entity.getLocation();
         CanMoveVisitor visitor = entity.getCanMoveVisitor();
+        System.out.println("############################## moving from " + source + " to " + destination);
 
         //checks if you are moving outside the bounds of the map
         if(isOutOfBounds(destination)){
@@ -165,6 +167,10 @@ public class Map implements MapVisitable, ActionHandler {
         else{
             //reached an entity/obstacle/wall
             if(tile.hasEntity()){//hits the entity if there is one
+
+                //Interact visitor to be called here!
+
+              //  InteractionVisitor interactionVisitor = new InteractionVisitor(tile.getEntity());
                 hitBox.setLocation(destination);
                 hitBox.updateMovingTicks(moveSpeed);
                 remove(hitBox, source);

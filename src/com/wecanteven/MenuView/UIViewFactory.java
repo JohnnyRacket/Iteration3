@@ -556,22 +556,31 @@ public class UIViewFactory {
     }
 
     //Triggers initial animation dialog window - afterwards, continue is used.
-    public void createDialogView(NPC npc, Character player, String dialog){
-
+    public void createDialogView(NPC npc, Character player, Iterator dialogIter){
+        String dialog = (String) dialogIter.next();
+        ScrollableMenuItem textHolder = new ScrollableMenuItem(dialog, null);
         NavigatableList chatOptions = new NavigatableList();
-        chatOptions.addItem(new ScrollableMenuItem("Continue",()->{
-            controller.popView();
-            continueDialogView(npc, player, ((DialogInteractionStrategy)npc.getInteraction()).getNextDialog());
-        }));
+        ScrollableMenuItem continueButton = new ScrollableMenuItem("Continue",()->{
+                if(dialogIter.hasNext()) {
+                    textHolder.setName((String) dialogIter.next());
+                }
+                if(!dialogIter.hasNext()) {
+                    chatOptions.removeItemFromIndex(0);
+                }
+        });
+        chatOptions.addItem(continueButton);
+
         chatOptions.addItem(new ScrollableMenuItem("Exit",()->{
             exitMenu();
+            ((DialogInteractionStrategy)npc.getInteraction()).endDialogInteraction();
+
         }));
 
         ScrollableMenu chatMenu = new ScrollableMenu(300,400);
         chatMenu.setList(chatOptions);
 
         NavigatableList conversation = new NavigatableList();
-        conversation.addItem(new ScrollableMenuItem(dialog,null));
+        conversation.addItem(textHolder);
 
         ScrollableMenu conversationMenu = new ScrollableMenu(300,400);
         conversationMenu.setList(conversation);
@@ -597,50 +606,6 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
 
     }
-
-    //Only called if there is multple dialog
-    public void continueDialogView(NPC npc, Character player, String dialog){
-
-        NavigatableList chatOptions = new NavigatableList();
-        chatOptions.addItem(new ScrollableMenuItem("Continue",()->{
-            controller.popView();
-            continueDialogView(npc, player, ((DialogInteractionStrategy)npc.getInteraction()).getNextDialog());
-        }));
-        chatOptions.addItem(new ScrollableMenuItem("Exit",()->{
-            exitMenu();
-            ((DialogInteractionStrategy)npc.getInteraction()).endDialogInteraction();
-        }));
-
-        ScrollableMenu chatMenu = new ScrollableMenu(300,400);
-        chatMenu.setList(chatOptions);
-
-        NavigatableList conversation = new NavigatableList();
-        conversation.addItem(new ScrollableMenuItem(dialog,null));
-
-        ScrollableMenu conversationMenu = new ScrollableMenu(300,400);
-        conversationMenu.setList(conversation);
-
-        RowedCompositeContainer rows = new RowedCompositeContainer();
-        rows.setWidth(400);
-        rows.setHeight(300);
-        rows.addDrawable(conversationMenu);
-        rows.addDrawable(chatMenu);
-
-        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation", Config.TEAL);
-        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
-        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
-
-        SwappableView view = new SwappableView();
-        view.addNavigatable(chatMenu);
-        view.addDrawable(vert);
-
-        ViewTime.getInstance().register(()->{
-            vEngine.getManager().addView(view);
-        },0);
-        controller.setMenuState(view.getMenuViewContainer());
-
-    }
-
 
 
     public ScrollableMenuItem createLoadMenu(ScrollableMenu menu, NavigatableList list){
