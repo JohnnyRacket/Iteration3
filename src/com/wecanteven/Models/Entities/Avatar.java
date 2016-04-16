@@ -79,4 +79,8 @@ public class Avatar implements Observer{
             }, 45);
         }
     }
+
+    protected void swapState(AvatarState state) {
+        this.state = state;
+    }
 }
