@@ -47,4 +47,21 @@ public class StatsAddable {
     public int getMana(){
         return mana.getStat();
     }
+
+
+    public String toString(){
+        String s = "";
+
+        s += health.getName() + ": " + getHealth() + "\n";
+        s += mana.getName() + ": " + getMana() + "\n";
+        s += experience.getName() + ": " + getExperience() + "\n";
+
+        s += lives.getName() + ": " + getLives() + "\n";
+        s += strength.getName() + ": " + getStrength() + "\n";
+        s += agility.getName() + ": " + getAgility() + "\n";
+        s += intellect.getName() + ": " + getIntellect() + "\n";
+        s += hardiness.getName() + ": " + getHardiness() + "\n";
+        s += movement.getName() + ": " + getMovement() + "\n";
+        return s;
+    }
 }

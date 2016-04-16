@@ -41,7 +41,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         this.movement = new PrimaryStat("Movement",movement);
 
         level = new LevelStat(experience);
-        level.modelAttach(this);
+        //level.modelAttach(this);
 
         maxHealth = new HealthStat(this.hardiness,level);
         maxMana = new ManaStat(this.intellect,level);
@@ -55,9 +55,8 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void update(){
-        entity.levelUp();
-        refreshStats();
-        modelNotifyObservers();
+        System.out.println("ENDLESS LOOP");
+        levelUp();
     }
 
     public boolean isDead(){
@@ -71,7 +70,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void addStats(StatsAddable statsAddable){
-
+        System.out.println(statsAddable);
         lives.add(statsAddable.getLives());
         strength.add(statsAddable.getStrength());
         agility.add(statsAddable.getAgility());
@@ -81,6 +80,12 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         movement.add(statsAddable.getMovement());
         currentHealth.add(statsAddable.getHealth());
         currentMana.add(statsAddable.getMana());
+        if(currentHealth.getStat()>maxHealth.getStat()){
+            currentHealth.setStat(maxHealth.getStat());
+        }
+        if(currentMana.getStat()>maxMana.getStat()){
+            currentMana.setStat(maxMana.getStat());
+        }
         notifyObservers();
     }
 
@@ -150,9 +155,15 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
 
     public void loseLife() {
         lives.subtract(1);
-
         notifyObservers();
-       // modelNotifyObservers();
+        // modelNotifyObservers();
+    }
+
+    public void levelUp(){
+        level.add(1);
+        addStats(entity.getLevelUpStats());
+        refreshStats();
+        notifyObservers();
     }
 
     //getters

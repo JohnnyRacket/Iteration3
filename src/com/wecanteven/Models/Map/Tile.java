@@ -205,7 +205,7 @@ public class Tile implements MapVisitable {
         if(hasEntity())
         interactWithTile(getEntity());
     }
-    
+
 //    public void interact(Character character) {
 //        if(hasEntity()) {
 //            InteractionVisitor visitor = new InteractionVisitor(character);
