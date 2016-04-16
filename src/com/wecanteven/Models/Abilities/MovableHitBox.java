@@ -85,6 +85,27 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
     public int getMovingTicks() {
         return movingTicks;
     }
+
+    @Override
+    public boolean move(Direction d) {
+        return false;
+    }
+
+    @Override
+    public boolean move(Location l) {
+        return false;
+    }
+
+    @Override
+    public boolean fall() {
+        return false;
+    }
+
+    @Override
+    public void setDirection(Direction d) {
+
+    }
+
     public void updateMovingTicks(int ticks) {
         setMovingTicks(calculateMovementTicks(ticks));
         calculateActiveStatus();
