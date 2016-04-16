@@ -1,6 +1,8 @@
 package com.wecanteven.Controllers.AIControllers.SearchingControllers;
 
 import com.wecanteven.Controllers.AIControllers.Targets.EnemyTarget;
+import com.wecanteven.Controllers.AIControllers.Targets.FriendlyTarget;
+import com.wecanteven.Controllers.AIControllers.Targets.ItemTarget;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Entities.NPC;
@@ -18,11 +20,11 @@ import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Models.Occupation.*;
 
 /**
- * Created by John on 4/13/2016.
+ * Created by John on 4/16/2016.
  */
-public class EnemySearchingController extends AbstractSearchingController {
+public class PetSearchingController extends AbstractSearchingController {
 
-    public EnemySearchingController(Character character, Map map, int searchRadius) {
+    public PetSearchingController(Character character, Map map, int searchRadius) {
         super(character, map, searchRadius);
     }
 
@@ -33,8 +35,6 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitCharacter(Character c) {
-        this.setTarget(c);
-        c.getOccupation().accept(this);
 
     }
 
@@ -50,42 +50,37 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitTile(Tile tile) {
-        Character character = (Character) tile.getEntity();//this is dangerous
-        if(character != null){
-            System.out.println(character);
-            character.accept(this);
-        }
+
     }
 
     @Override
     public void visitEnemy(Enemy enemy) {
-
-    }
-
-    @Override
-    public void visitPet(Pet pet) {
         this.addNewTarget(new EnemyTarget(2,this.getTarget().getLocation()));
     }
 
     @Override
+    public void visitPet(Pet pet) {
+
+    }
+
+    @Override
     public void visitSmasher(Smasher smasher) {
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
+        this.addNewTarget(new FriendlyTarget(3,this.getTarget().getLocation()));
     }
 
     @Override
     public void visitSneak(Sneak sneak) {
-        this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
+        this.addNewTarget(new FriendlyTarget(3,this.getTarget().getLocation()));
     }
 
     @Override
     public void visitSummoner(Summoner summoner) {
-        this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
+        this.addNewTarget(new FriendlyTarget(3,this.getTarget().getLocation()));
     }
 
     @Override
     public void visitItem(Item item) {
-        
+
     }
 
     @Override
@@ -105,7 +100,7 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-
+        this.addNewTarget(new ItemTarget(1,this.getTarget().getLocation()));
     }
 
     @Override
