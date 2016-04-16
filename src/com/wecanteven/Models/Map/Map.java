@@ -95,6 +95,7 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean move(Entity entity, Location destination, int movespeed) {
         Location source = entity.getLocation();
         CanMoveVisitor visitor = entity.getCanMoveVisitor();
+        System.out.println("############################## moving from " + source + " to " + destination);
 
         //checks if you are moving outside the bounds of the map
         if(isOutOfBounds(destination)){

@@ -4,6 +4,9 @@ import com.wecanteven.AreaView.Biomes.Biome;
 import com.wecanteven.AreaView.Biomes.DefaultBiome;
 import com.wecanteven.AreaView.ViewObjects.Factories.PlainsFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
+import com.wecanteven.Controllers.AIControllers.AIController;
+import com.wecanteven.Controllers.AIControllers.ActionControllers.EnemyActionController;
+import com.wecanteven.Controllers.AIControllers.SearchingControllers.EnemySearchingController;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
@@ -17,6 +20,7 @@ import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.*;
 
@@ -200,8 +204,12 @@ public class DemoLevelFactory extends LevelFactory {
         dialog.add("You're an idiot and you're playing a dumb game");
         dialog.add("GTFO");
         NPC npc = new NPC(map, Direction.SOUTHWEST, new DialogInteractionStrategy(dialog));
+        EnemySearchingController esc = new EnemySearchingController(npc,map,3);
+        EnemyActionController eac = new EnemyActionController(npc,map);
+        AIController controller = new AIController(esc,eac);
+        npc.setController(controller);
         map.add(npc, new Location(9,8,2));
-
+        ModelTime.getInstance().registerTickable(controller);
     }
 
     public void tradeNPC(Map map) {
