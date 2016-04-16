@@ -17,7 +17,10 @@ public class MountState extends AvatarState {
         mount(avatar);
     }
     public boolean move(Direction d){
-        return (avatar.move(d) && mount.move(d));
+        boolean moved = true;
+        //moved = avatar.move(d) && moved;
+        moved = mount.move(d) && moved;
+        return moved;
     }
     public void attack(){}
     public void useAbility(int index){}
