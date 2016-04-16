@@ -5,7 +5,7 @@ import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.MenuComponentDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
-import com.wecanteven.MenuView.DrawableLeafs.ProgressBars.AnimatedChangeProgressBar;
+import com.wecanteven.MenuView.DrawableLeafs.ProgressBars.RoundedHealthBar;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Observers.Observer;
 
@@ -17,7 +17,7 @@ import java.awt.*;
 public class HUDDecorator extends DecoratorViewObject implements Observer{
     private Stats subject;
 
-    private AnimatedChangeProgressBar healthBar;
+    private RoundedHealthBar healthBar;
     private MenuComponentDrawingStrategy drawingStrategy;
 
     private ViewObjectFactory factory;
@@ -25,12 +25,12 @@ public class HUDDecorator extends DecoratorViewObject implements Observer{
 
     private int currentHealth = 0;
 
-    private Position healthBarOffset = new Position(0,0,6);
+    private Position healthBarOffset = new Position(0,0,4);
 
     public HUDDecorator(ViewObject child, Stats subject, MenuComponentDrawingStrategy drawingStrategy, ViewObjectFactory factory, AreaView areaView) {
         super(child);
         this.subject = subject;
-        healthBar = new AnimatedChangeProgressBar(60, 15);
+        healthBar = new RoundedHealthBar(60, 6);
         this.drawingStrategy = drawingStrategy;
         this.factory = factory;
         this.areaView = areaView;
@@ -43,16 +43,14 @@ public class HUDDecorator extends DecoratorViewObject implements Observer{
         super.draw(g);
 
 
-
-
-        //drawingStrategy.draw(g, healthBar, getPosition().add(healthBarOffset));
+        drawingStrategy.draw(g, healthBar, getPosition().add(healthBarOffset));
     }
 
     private boolean tookDamage() {
-        return (healthBar.getCurrentProgress() > subject.getHealth()) ;
+        return (((float)healthBar.getPercent()/100f * (float)subject.getMaxHealth()) > subject.getHealth()) ;
     }
     private int getDamage() {
-        return healthBar.getCurrentProgress() - subject.getHealth();
+        return (int)((float)healthBar.getPercent()/100f * (float)subject.getMaxHealth()) - subject.getHealth();
     }
 
     @Override
@@ -67,7 +65,8 @@ public class HUDDecorator extends DecoratorViewObject implements Observer{
             ));
 
         }
-        healthBar.setCurrentProgress(subject.getHealth());
-        healthBar.setMaxProgress(subject.getMaxHealth());
+        healthBar.setPercent((int)(((float)subject.getHealth()/(float)subject.getMaxHealth())*100f));
+        //healthBar.setCurrentProgress(subject.getHealth());
+        //healthBar.setMaxProgress(subject.getMaxHealth());
     }
 }

@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Map;
 
+import com.wecanteven.AreaView.VOCreationVisitor;
 import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.ActionHandler;
@@ -10,12 +11,11 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Items.Takeable.TakeableMoveable;
 import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
-import com.wecanteven.Visitors.CanFallVisitor;
-import com.wecanteven.Visitors.CanMoveVisitor;
-import com.wecanteven.Visitors.MapVisitor;
+import com.wecanteven.Visitors.*;
 
 import java.util.ArrayList;
 
@@ -28,6 +28,11 @@ public class Map implements MapVisitable, ActionHandler {
     private int rSize;
     private int sSize;
     private int zSize;
+
+    private VOCreationVisitor voCreationVisitor;
+    public void setVOCreationVisitor(VOCreationVisitor visitor) {
+        this.voCreationVisitor = visitor;
+    }
 
     public int getrSize() {
         return rSize;
@@ -198,17 +203,61 @@ public class Map implements MapVisitable, ActionHandler {
 
     @Override
     public boolean move(TakeableItem item, Location location, int movespeed) {
+        Location source = item.getLocation();
+
+        if(isOutOfBounds(location)){
+            return false;
+        }
+
+        //checks to see if anything is blocking your height when moving
+        CanMoveVisitor visitor = new TerranianCanMoveVisitor();
+        boolean canMove = true;
+        for(int i = 0; i < 1 && canMove; ++i){
+            Tile tile = this.getTile(location.add(new Location(0,0,i)));
+            tile.accept(visitor);
+            canMove = canMove && visitor.canMove();
+        }
+
+        //checks the tile you will be standing on
+        Tile tileBelow = this.getTile(location.subtract(new Location(0,0,1)));
+        tileBelow.accept(visitor);
+        canMove = canMove && visitor.CanMoveBelow();
+
+        if(canMove) {//move if you can
+            item.setLocation(location);
+            remove(item, source);
+            add(item, location);
+            return true;
+        }
+
         return false;
     }
 
     @Override
     public boolean fall(TakeableItem item, Location location) {
-        return false;
+        CanFallVisitor visitor = new TerranianCanFallVisitor();
+        getTile(location).accept(visitor);
+        int tilesCount = 0;
+        while(visitor.isCanMove()){
+            location.setZ(location.getZ()-1);
+            getTile(location).accept(visitor);
+            tilesCount++;
+        }
+        if(tilesCount > 0) {
+            location.setZ(location.getZ() + 1);
+            return move(item, location, 2*tilesCount);
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
     public boolean drop(TakeableItem item, Location location) {
-        getTile(location).add(item);
+        item.setLocation(location);
+        item.setIsDestoryed(false);
+        item.accept(voCreationVisitor);
+        getTile(location).add(new TakeableMoveable(item.getName(), item.getValue(), item, this, location));
         return true;
     }
     @Override
@@ -244,15 +293,19 @@ public class Map implements MapVisitable, ActionHandler {
         return columns[loc.getR()][loc.getS()].add(entity, loc.getZ());
     }
     public boolean add(OneShot oneShot, Location loc){
+        oneShot.setLocation(loc);
         return columns[loc.getR()][loc.getS()].add(oneShot, loc.getZ());
     }
     public boolean add(TakeableItem takeableItem, Location loc){
-        return columns[loc.getR()][loc.getS()].add(takeableItem, loc.getZ());
+        takeableItem.setLocation(loc);
+        return columns[loc.getR()][loc.getS()].add(new TakeableMoveable(takeableItem.getName(), takeableItem.getValue(), takeableItem, this, loc), loc.getZ());
     }
     public boolean add(Obstacle obstacle, Location loc){
+        obstacle.setLocation(loc);
         return columns[loc.getR()][loc.getS()].add(obstacle, loc.getZ());
     }
     public boolean add(InteractiveItem interactiveItem, Location loc){
+        interactiveItem.setLocation(loc);
         return columns[loc.getR()][loc.getS()].add(interactiveItem, loc.getZ());
     }
 

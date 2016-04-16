@@ -1,6 +1,6 @@
 package com.wecanteven.Models.Map.Terrain;
 
-import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Visitors.TerrainVisitor;
 
 /**
@@ -15,9 +15,9 @@ public class Air extends Terrain {
     public String getTerrain() {
         return "Air";
     }
-    public void interact(Entity entity){
-        System.out.println("THE ENTITY IS FALLING");
-        entity.fall();
 
+    @Override
+    public void interact(Moveable moveable) {
+        moveable.fall();
     }
 }

@@ -1,12 +1,12 @@
 package com.wecanteven.Models.Items.Takeable;
 
+import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.Item;
-import com.wecanteven.Observers.Destroyable;
-import com.wecanteven.Observers.Observable;
-import com.wecanteven.Observers.Observer;
-import com.wecanteven.Observers.ViewObservable;
+import com.wecanteven.Observers.*;
+import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.ItemVisitor;
 
 import java.util.ArrayList;
@@ -14,22 +14,27 @@ import java.util.ArrayList;
 /**
  * Created by simonnea on 3/31/16.
  */
-public class TakeableItem extends Item implements Destroyable, ViewObservable{
+public class TakeableItem extends Item implements Destroyable, ViewObservable {
     private ArrayList<Observer> observers = new ArrayList<>();
-
+    private ActionHandler handler = null;
     private int value;
-
     private boolean isDestroyed = false;
+
     public TakeableItem(String name, int value) {
         super(name);
         this.value = value;
     }
+
     public int getValue() {return value;}
+
+    public void setIsDestoryed(boolean isDestoryed) {
+        this.isDestroyed = isDestoryed;
+    }
 
     public void interact(Character character) {
         isDestroyed = true;
-        character.pickup(this);
         notifyObservers();
+        character.pickup(this);
     }
 
     /**

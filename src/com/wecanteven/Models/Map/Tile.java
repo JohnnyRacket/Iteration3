@@ -9,6 +9,7 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Items.Takeable.TakeableMoveable;
 import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.Models.Map.Terrain.Terrain;
 import com.wecanteven.Models.ModelTime.ModelTime;
@@ -28,7 +29,7 @@ public class Tile implements MapVisitable {
     private TileSlot<Obstacle> obstacle = new TileSlot<>();
     private TileSlot<InteractiveItem> interactiveItem = new TileSlot<>();
     private TileSlot<OneShot> oneShot = new TileSlot<>();
-    private ArrayList<TakeableItem> takeableItems = new ArrayList<>();
+    private ArrayList<TakeableMoveable> takeableItems = new ArrayList<>();
     private TileSlot<Entity> entity = new TileSlot<>();
     private ArrayList<HitBox> hitBoxes = new ArrayList<>();
     private ArrayList<AreaOfEffect> areasOfEffect = new ArrayList<>();
@@ -80,12 +81,13 @@ public class Tile implements MapVisitable {
     public boolean add(InteractiveItem interactiveItem){
         return this.interactiveItem.add(interactiveItem);
     }
-    public boolean add(TakeableItem takeableItem) {
+    public boolean add(TakeableMoveable takeableItem) {
         if (this.takeableItems.add(takeableItem)) {
+            terrain.interact(takeableItem);
+            return true;
+        } else {
+            return false;
         }
-
-        //this.takeableItems.add(takeableItem);
-        return true;
     }
 
     public boolean remove(AreaOfEffect aoe) {
@@ -96,7 +98,6 @@ public class Tile implements MapVisitable {
 
         return false;
     }
-
     public boolean remove(Entity entity) {
         if (!interactiveItem.isEmpty())
             interactiveItem.getToken().release();
@@ -135,7 +136,13 @@ public class Tile implements MapVisitable {
     }
 
     public ArrayList<TakeableItem> getTakeableItems() {
-        return takeableItems;
+        ArrayList<TakeableItem> list = new ArrayList<>();
+
+        for (TakeableMoveable item : takeableItems) {
+            list.add(item.extractItem());
+        }
+
+        return list;
     }
 
     public Entity getEntity() {
@@ -170,17 +177,18 @@ public class Tile implements MapVisitable {
         interactWithCharacter((Character) entity);
     }
 
+
     private void interactWithCharacter(Character character) {
-        Iterator<TakeableItem> iter = takeableItems.iterator();
-
-        while (iter.hasNext()) {
-            TakeableItem item = iter.next();
-
+        ArrayList<TakeableMoveable> leftover = new ArrayList<>();
+        for (TakeableMoveable i : takeableItems) {
             if (!character.getItemStorage().inventoryIsFull()) {
-                character.pickup(item);
-                iter.remove();
+                i.extractItem().interact(character);
+            } else {
+                leftover.add(i);
             }
         }
+
+        takeableItems = leftover;
     }
 
     public void interact(Character character) {

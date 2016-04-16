@@ -20,4 +20,14 @@ public class Config {
     public static Color GOLD = new Color(227, 185, 92);
     public static Color DARKGOLD = new Color(178, 147, 78);
     public static Color CINNIBAR = new Color(231, 76, 60);
+
+    //Blob colors
+    public static Color PINK = new Color(0xf19cb7);
+    public static Color DARK_PINK = new Color(0xe087a2);
+    public static Color BLUE = new Color(0x8db5e7);
+    public static Color DARK_BLUE = new Color(0x7293bb);
+    public static Color YELLOW = new Color(0xffcc00);
+    public static Color DARK_YELLOW = new Color(0xefbf00);
+    public static Color BIRDLEG = new Color(0xff9600);
+
 }
