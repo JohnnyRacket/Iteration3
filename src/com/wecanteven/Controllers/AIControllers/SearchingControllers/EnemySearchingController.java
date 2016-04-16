@@ -43,6 +43,7 @@ public class EnemySearchingController extends AbstractSearchingController {
     public void visitTile(Tile tile) {
         Character character = (Character) tile.getEntity();//this is dangerous
         if(character != null){
+            System.out.println(character);
             character.accept(this);
         }
     }
@@ -59,6 +60,7 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitSmasher(Smasher smasher) {
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
     }
 

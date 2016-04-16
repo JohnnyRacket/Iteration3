@@ -29,4 +29,10 @@ public class PlainsViewObjectFactory extends ViewObjectFactory {
 
     }
 
+    @Override
+    public ViewObject createCurrent(Position p) {
+        return createSimpleViewObject(p, "Terrain/Current.xml");
+
+    }
+
 }

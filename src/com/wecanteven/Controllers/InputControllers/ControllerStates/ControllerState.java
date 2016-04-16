@@ -30,7 +30,7 @@ public abstract class ControllerState {
 
     public abstract void createKeybindings();
     public void destroyKeyBindings(){
-        System.out.println("destroying keybindings");
+
         for(KeyActionBinding binding: this.getKeyBindings()){
             this.getjFrame().removeKeyListener(binding);
         }

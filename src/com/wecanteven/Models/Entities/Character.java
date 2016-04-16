@@ -46,9 +46,9 @@ public class Character extends Entity {
 
     public void attack() {
         if(!isActive()){
-            System.out.println("The entity attacked");
+
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendRangedAttack(this);
+            Ability attack = factory.vendRadialAttack(this);
             attack.cast();
         }
     }
@@ -76,7 +76,7 @@ public class Character extends Entity {
     }
 
     public void drop(TakeableItem item) {
-        if (getActionHandler().drop(item, this.getLocation())) {
+        if (getActionHandler().drop(item, this.getLocation().add(getDirection().getCoords))) {
             itemStorage.removeItem(item);
         }
     }
@@ -92,7 +92,7 @@ public class Character extends Entity {
 
     public void interact(Character character) {
         //Probably pointless in Character
-        System.out.println(getClass().getSimpleName() + " is interacting with " + character.getClass().getSimpleName());
+
     }
 
     private boolean equipAbility(String id) {

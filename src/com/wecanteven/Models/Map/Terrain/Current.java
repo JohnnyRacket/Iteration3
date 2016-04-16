@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Map.Terrain;
 
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Observers.Moveable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.Visitors.TerrainVisitor;
 
@@ -21,11 +22,17 @@ public class Current extends Terrain {
     public String getTerrain() {
         return "Current";
     }
+
+    @Override
+    public void interact(Moveable moveable) {
+        System.out.println("Moveable entered Current");
+
+        //TODO need to update entity direction
+        moveable.setDirection(direction);
+        moveable.move(direction);
+    }
+
     public Direction getDirection(){
         return direction;
-    }
-    public void interact(Entity entity){
-        entity.setDirection(direction);
-        entity.move(direction);
     }
 }

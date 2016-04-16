@@ -15,7 +15,7 @@ public class Toaster {
 
     public Toaster() {
         lastProcessed = (int) (System.currentTimeMillis() / 1000L);
-        System.out.println(lastProcessed);
+
     }
 
     public void draw(Graphics2D g2d, int windowWidth, int windowHeight) {

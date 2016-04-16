@@ -18,14 +18,15 @@ public class InteractionVisitor implements EntityVisitor {
 
     @Override
     public void visitEntity(Entity interactee) {
-        System.out.println("Characters can't interact with entities");
+
     }
 
     @Override
     public void visitCharacter(Character interactee) {
-        System.out.println("Characters can't interact with Charactors yet");
+
         //interactee.interact(interactor);
     }
+
 
     @Override
     public void visitNPC(NPC interactee) {

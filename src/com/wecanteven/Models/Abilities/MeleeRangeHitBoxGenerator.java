@@ -14,11 +14,11 @@ public class MeleeRangeHitBoxGenerator implements HitBoxGenerator {
 
     public MeleeRangeHitBoxGenerator(Character caster,StatsAddable effect){
         this.caster = caster;
-        hitbox = new HitBox("Punch",caster.getLocation(),effect,caster.getActionHandler());
+        hitbox = new HitBox("Punch",caster.getLocation(),effect,caster.getActionHandler(),300);
     }
     public void generate(){
         int duration = 1;
-        System.out.println("The spell is occuring");
+
         Direction casterDirection = caster.getDirection();
         Location startLocation = caster.getLocation();
         Location destination = startLocation.add(casterDirection.getCoords);

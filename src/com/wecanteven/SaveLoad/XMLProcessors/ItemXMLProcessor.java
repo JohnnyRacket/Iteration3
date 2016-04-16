@@ -26,10 +26,10 @@ public class ItemXMLProcessor extends XMLProcessor {
 
     public static TakeableItem parseTakeableItem(Element el) {
         if(el.getTagName().equals("HeadEquipableItem")){
-            System.out.println("Head Equipable Item Found");
+
             return parseHeadEquipableItem(el);
         }else if(el.getTagName().equals("ChestEquipableItem")){
-            System.out.println("Head Equipable Item Found");
+
             return parseChestEquipableItem(el);
         }
         return new TakeableItem(sf.getStrAttr(el, "name"), 2);

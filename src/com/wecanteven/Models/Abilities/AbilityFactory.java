@@ -12,11 +12,15 @@ import com.wecanteven.Models.Stats.StatsAddable;
  */
 public class AbilityFactory {
     public Ability vendMeleeAttack(Character caster) {
-        MeleeRangeHitBoxGenerator hitBox = new MeleeRangeHitBoxGenerator(caster,new StatsAddable(0,0,0,0,0,0,0,-1,0));
-        return new Ability(caster,hitBox);
+        MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(caster,new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        return new Ability(caster,generator);
     }
     public Ability vendRangedAttack(Character caster) {
-        ProjectileHitBoxGenerator hitBox = new ProjectileHitBoxGenerator(caster,new StatsAddable(0,0,0,0,0,0,0,-1,0));
-        return new Ability(caster,hitBox);
+        ProjectileHitBoxGenerator generator = new ProjectileHitBoxGenerator(caster,new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        return new Ability(caster,generator);
+    }
+    public Ability vendRadialAttack(Character caster) {
+        RadialHitBoxGenerator generator = new RadialHitBoxGenerator(caster, new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        return new Ability(caster,generator);
     }
 }

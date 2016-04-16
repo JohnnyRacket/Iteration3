@@ -62,13 +62,13 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitMovableHitBox(MovableHitBox hitBox){
         ViewObject mvo = factory.createRangedEffect(hitBox);
-        System.out.println("*************************************************\nCraeted range hitbox @" + mvo.getPosition());
+
         areaView.addViewObject(mvo);
     }
 
     @Override
     public void visitEntity(Entity e) {
-        System.out.println("adding entity to areaview");
+
         //areaView.addViewObject(factory.createSneak(currentPosition, e.getDirection(), e));
     }
 
@@ -85,7 +85,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitNPC(NPC c) {
-        System.out.println("adding character to areaview");
+
         areaView.addViewObject(factory.createBaseHominoid(currentPosition, c, "Yellow", "TestFace"));
 
     }
@@ -204,7 +204,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitCurrent(Current current) {
-        areaView.addViewObject(factory.createWater(currentPosition));
+        areaView.addViewObject(factory.createCurrent(currentPosition));
     }
 
     @Override

@@ -35,12 +35,12 @@ public class MenuViewContainer implements Navigatable {
 
     @Override
     public void select() {
-        System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+
         menus.get(current).select();
     }
 
     public void swap() {
-        System.out.println("swapping, size is: " + menus.size());
+
         menus.get(current).active(false);
         if (current < menus.size() - 1) {
             ++current;
@@ -48,7 +48,7 @@ public class MenuViewContainer implements Navigatable {
             current = 0;
         }
         menus.get(current).active(true);
-        System.out.println("current is:" + current);
+
     }
     public void active(boolean active){}
 

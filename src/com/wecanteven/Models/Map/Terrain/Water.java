@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Map.Terrain;
 
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Visitors.TerrainVisitor;
 
 /**
@@ -15,5 +16,10 @@ public class Water extends Terrain {
     public String getTerrain() {
         return "Water";
     }
-    public void interact(Entity entity){}
+
+    @Override
+    public void interact(Moveable moveable) {
+        // moveable.fall();
+        // TODO should water be making things fall?
+    }
 }

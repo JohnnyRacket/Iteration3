@@ -96,7 +96,7 @@ public class HandsViewObject implements ViewObject, Observer {
     }
 
     public void update() {
-        System.out.println("BLLLOOOOOOOOOOOPPPPP");
+
         subject.getItem().accept(weaponsVisitor);
 
     }
@@ -111,7 +111,7 @@ public class HandsViewObject implements ViewObject, Observer {
         @Override
         public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {
             swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), subject ,oneHandedWeapon.getName(), entity));
-            System.out.println("visitOneHandedWeapon method...");
+
         }
 
         @Override
@@ -127,14 +127,14 @@ public class HandsViewObject implements ViewObject, Observer {
         @Override
         public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon) {
             swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), subject , oneHandedMeleeWeapon.getName(), entity));
-            System.out.println("visitOneHandedMeleeWeapon method..");
+
 
         }
 
         @Override
         public void visitOneHandedRangedWeapon(OneHandedRangedWeapon oneHandedRangedWeapon) {
             handState.equip(oneHandedRangedWeapon);
-            System.out.println("visitOneHandedRangedWeapon method...");
+
 
         }
 

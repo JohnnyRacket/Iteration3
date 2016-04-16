@@ -1,8 +1,13 @@
 package com.wecanteven.Models.Items;
 
+import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Positionable;
+import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.ItemVisitor;
+
+import javax.swing.*;
 
 /**
  * Created by simonnea on 3/31/16.

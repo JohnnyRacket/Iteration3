@@ -97,7 +97,7 @@ public class ViewEngine extends JFrame implements Runnable{
                     Thread.sleep((tickTimeMilli - delta));
                 } catch (Exception e) {}
             } else {
-                System.out.println("View tick took too long");
+
             }
         }
     }

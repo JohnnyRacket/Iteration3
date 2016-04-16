@@ -66,6 +66,7 @@ public abstract class ViewObjectFactory {
 
     public abstract ViewObject createGround(Position p);
     public abstract ViewObject createWater(Position p);
+    public abstract ViewObject createCurrent(Position p);
 
     public void setCenter(ViewObject center) {
         hexDrawingStrategy.setCenterTarget(center);
@@ -522,7 +523,7 @@ public abstract class ViewObjectFactory {
         String path = "Effects/" + hitBox.getName() + "/" + hitBox.getName() + ".xml";
         Position p = hitBox.getLocation().toPosition();
         StartableViewObject hitBoxVO = createStartableViewObject(p, path);
-        hitBoxVO.start(300);
+        hitBoxVO.start(hitBox.getDuration());
         return hitBoxVO;
     }
 

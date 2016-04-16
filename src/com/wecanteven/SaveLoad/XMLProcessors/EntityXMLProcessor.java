@@ -35,7 +35,7 @@ public class EntityXMLProcessor extends XMLProcessor {
     }
 
     public static void parseEntity(Map map, Element el) {
-        System.out.println("Hopefully nothing tries to process an entity... It's not gonna happen");
+
     }
 
     public static void formatCharacter(Character e, String parent) {
@@ -167,7 +167,7 @@ public class EntityXMLProcessor extends XMLProcessor {
 
     public static InteractionStrategy parseInteraction(Element el) {
         if(el.getAttribute("type").equals("TradeInteractionStrategy")){
-            System.out.println("Loading Trader");
+
             return new TradeInteractionStrategy();
         }else if(el.getAttribute("type").equals("DialogInteractionStrategy")){
             return new DialogInteractionStrategy(parseDialog(el));

@@ -16,6 +16,7 @@ import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
 
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
+import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGridWithCenterTitle;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
 import com.wecanteven.MenuView.DrawableLeafs.Toaster.Toast;
 import com.wecanteven.MenuView.UIObjectCreationVisitors.BuyableUIObjectCreationVisitor;
@@ -120,7 +121,7 @@ public class UIViewFactory {
 
         NavigatableList skillList = new NavigatableList();
         skillList.addItem(new ScrollableMenuItem("placeholder skill", ()->{
-            System.out.println("you tried to level up palcehold skill kappafacenospace");
+
         }));
 
         ScrollableMenu skillMenu = new ScrollableMenu(300,650);
@@ -226,7 +227,7 @@ public class UIViewFactory {
         NavigatableList list = new NavigatableList();
         MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Equip", () ->{
-            System.out.println("equip pressed");
+
             character.equipItem(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
@@ -239,7 +240,7 @@ public class UIViewFactory {
             controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Drop", () ->{
-            System.out.println("drop pressed");
+
             character.drop(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
@@ -250,7 +251,7 @@ public class UIViewFactory {
             controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
-            System.out.println("cancel pressed");
+
             ViewTime.getInstance().register(() ->{
                 controller.popView();
 
@@ -277,7 +278,7 @@ public class UIViewFactory {
         NavigatableList list = new NavigatableList();
         MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Unequip", () ->{
-            System.out.println("unequip pressed");
+
             character.unequipItem(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
@@ -288,7 +289,7 @@ public class UIViewFactory {
             controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
-            System.out.println("cancel pressed");
+
             ViewTime.getInstance().register(() ->{
                 controller.popView();
                 visitor.visitCharacter(character);
@@ -327,7 +328,7 @@ public class UIViewFactory {
         TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
         MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Buy: " + item.getValue() + " Gold", () ->{
-            System.out.println("Buyable equip pressed");
+
             if(!buyer.getItemStorage().inventoryIsFull() && interactionStrategy.sell(item)){
                 shopOwner.getItemStorage().removeItem(item);
                 buyer.pickup(item);
@@ -346,7 +347,7 @@ public class UIViewFactory {
 
 
             ViewTime.getInstance().register(() ->{
-                System.out.println("Redrawing list instead of recreating List");
+
                 controller.popView();
                 visitor.visitBoth();
                 visitor.updateList();
@@ -355,7 +356,7 @@ public class UIViewFactory {
 
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
-            System.out.println("cancel pressed");
+
             ViewTime.getInstance().register(() ->{
                 controller.popView();
             },0);
@@ -380,7 +381,7 @@ public class UIViewFactory {
         NavigatableList list = new NavigatableList();
         TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
         list.addItem(new ScrollableMenuItem("Sell: " + item.getValue() + " Gold", () ->{
-            System.out.println("Trying to sell item");
+
             if(!shopOwner.getItemStorage().inventoryIsFull() && interactionStrategy.buy(item)){
                 buyer.getItemStorage().removeItem(item);
                 shopOwner.pickup(item);
@@ -395,8 +396,8 @@ public class UIViewFactory {
                     createToast(5, "The Shopkeeper can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
                 }
             }
-            System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
-            System.out.println("Shopper Bal: " + buyer.getItemStorage().getMoney().getValue());
+
+
             ViewTime.getInstance().register(() ->{
                 controller.popView();
                 createTradeView(shopOwner, buyer, false);
@@ -404,7 +405,7 @@ public class UIViewFactory {
 
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
-            System.out.println("cancel pressed");
+
             ViewTime.getInstance().register(() ->{
                 controller.popView();
                 createTradeView(shopOwner, buyer, false);
@@ -485,19 +486,28 @@ public class UIViewFactory {
     }
 
     public void createTradeView(NPC npc, Character player, boolean active){
-        //VISIT THE PLAYER AND SHOP OWNER
-        //CREATE THE VIEW
-        //START THE VIEW
-        NavigatableGrid npcInv = new NavigatableGrid(250, 400, 5, 5);
-        NavigatableGrid playerInv = new NavigatableGrid(250, 400, 5, 5);
+
+        /*
+        Creates 2 Navigatable grids that have Titles
+         */
+        NavigatableGridWithCenterTitle npcInv = new NavigatableGridWithCenterTitle(250, 400, 5, 5,
+                Config.TEAL,
+                Config.MEDIUMGREY,
+                Config.DARKGREY,
+                "Shopkeeper Gold: " + npc.getItemStorage().getMoney().getValue()
+        );
+        NavigatableGridWithCenterTitle playerInv = new NavigatableGridWithCenterTitle(250, 400, 5, 5,
+                Config.TEAL,
+                Config.MEDIUMGREY,
+                Config.DARKGREY,
+                "Your Gold: " + player.getItemStorage().getMoney().getValue()
+        );
 
         BuyableUIObjectCreationVisitor visitor = new BuyableUIObjectCreationVisitor(this, npc, player, npcInv, playerInv);
         visitor.visitBoth();
         //make menu
-        npcInv.setBgColor(Config.TEAL);
         npcInv.setList(visitor.getShopOwnerInvList());
 
-        playerInv.setBgColor(Config.TEAL);
         playerInv.setList(visitor.getPlayerInvList());
 
         //make swappable view
@@ -516,23 +526,11 @@ public class UIViewFactory {
                 );
 
         VerticalCenterContainer npcTradeTitle = new VerticalCenterContainer(
-                new HorizontalCenterContainer(
-                        new TitleBarDecorator(
-                                npcInv,
-                                "Shopkeeper Gold: " + npc.getItemStorage().getMoney().getValue()
-                                )
-                )
-        );
+                new HorizontalCenterContainer(npcInv.getTitleBar()));
 
         VerticalCenterContainer playerTradeTitle =
                 new VerticalCenterContainer(
-                        new HorizontalCenterContainer(
-                                new TitleBarDecorator(
-                                        playerInv,
-                                        "Your Gold: " + player.getItemStorage().getMoney().getValue()
-                                )
-                        )
-                );
+                        new HorizontalCenterContainer(playerInv.getTitleBar()));
 
         columns.addDrawable(npcTradeTitle);
         columns.addDrawable(playerTradeTitle);
@@ -558,22 +556,31 @@ public class UIViewFactory {
     }
 
     //Triggers initial animation dialog window - afterwards, continue is used.
-    public void createDialogView(NPC npc, Character player, String dialog){
-
+    public void createDialogView(NPC npc, Character player, Iterator dialogIter){
+        String dialog = (String) dialogIter.next();
+        ScrollableMenuItem textHolder = new ScrollableMenuItem(dialog, null);
         NavigatableList chatOptions = new NavigatableList();
-        chatOptions.addItem(new ScrollableMenuItem("Continue",()->{
-            controller.popView();
-            continueDialogView(npc, player, ((DialogInteractionStrategy)npc.getInteraction()).getNextDialog());
-        }));
+        ScrollableMenuItem continueButton = new ScrollableMenuItem("Continue",()->{
+                if(dialogIter.hasNext()) {
+                    textHolder.setName((String) dialogIter.next());
+                }
+                if(!dialogIter.hasNext()) {
+                    chatOptions.removeItemFromIndex(0);
+                }
+        });
+        chatOptions.addItem(continueButton);
+
         chatOptions.addItem(new ScrollableMenuItem("Exit",()->{
             exitMenu();
+            ((DialogInteractionStrategy)npc.getInteraction()).endDialogInteraction();
+
         }));
 
         ScrollableMenu chatMenu = new ScrollableMenu(300,400);
         chatMenu.setList(chatOptions);
 
         NavigatableList conversation = new NavigatableList();
-        conversation.addItem(new ScrollableMenuItem(dialog,null));
+        conversation.addItem(textHolder);
 
         ScrollableMenu conversationMenu = new ScrollableMenu(300,400);
         conversationMenu.setList(conversation);
@@ -599,49 +606,6 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
 
     }
-
-    //Only called if there is multple dialog
-    public void continueDialogView(NPC npc, Character player, String dialog){
-
-        NavigatableList chatOptions = new NavigatableList();
-        chatOptions.addItem(new ScrollableMenuItem("Continue",()->{
-            controller.popView();
-            continueDialogView(npc, player, ((DialogInteractionStrategy)npc.getInteraction()).getNextDialog());
-        }));
-        chatOptions.addItem(new ScrollableMenuItem("Exit",()->{
-            exitMenu();
-        }));
-
-        ScrollableMenu chatMenu = new ScrollableMenu(300,400);
-        chatMenu.setList(chatOptions);
-
-        NavigatableList conversation = new NavigatableList();
-        conversation.addItem(new ScrollableMenuItem(dialog,null));
-
-        ScrollableMenu conversationMenu = new ScrollableMenu(300,400);
-        conversationMenu.setList(conversation);
-
-        RowedCompositeContainer rows = new RowedCompositeContainer();
-        rows.setWidth(400);
-        rows.setHeight(300);
-        rows.addDrawable(conversationMenu);
-        rows.addDrawable(chatMenu);
-
-        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation", Config.TEAL);
-        HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
-        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
-
-        SwappableView view = new SwappableView();
-        view.addNavigatable(chatMenu);
-        view.addDrawable(vert);
-
-        ViewTime.getInstance().register(()->{
-            vEngine.getManager().addView(view);
-        },0);
-        controller.setMenuState(view.getMenuViewContainer());
-
-    }
-
 
 
     public ScrollableMenuItem createLoadMenu(ScrollableMenu menu, NavigatableList list){
@@ -694,19 +658,19 @@ public class UIViewFactory {
         return new ScrollableMenuItem("Save", ()->{
             NavigatableList loadList = new NavigatableList();
             loadList.addItem(new ScrollableMenuItem("Slot 1", ()->{
-                System.out.println("Trying to Save");
+
                 new SaveToXMLFile("save1.xml").saveGame();
                 exitMenu();
                 createToast(5, "Successful save to Slot 1");
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 2", ()->{
-                System.out.println("Trying to Save");
+
                 new SaveToXMLFile("save2.xml").saveGame();
                 exitMenu();
                 createToast(5, "Successful save to Slot 2");
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 3", ()->{
-                System.out.println("Trying to Save");
+
                 new SaveToXMLFile("save3.xml").saveGame();
                 exitMenu();
                 createToast(5, "Successful save to Slot 3");

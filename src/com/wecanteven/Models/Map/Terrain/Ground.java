@@ -1,6 +1,6 @@
 package com.wecanteven.Models.Map.Terrain;
 
-import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Visitors.TerrainVisitor;
 
 /**
@@ -15,5 +15,9 @@ public class Ground extends Terrain {
     public String getTerrain() {
         return "Ground";
     }
-    public void interact(Entity entity){}
+
+    @Override
+    public void interact(Moveable moveable) {
+
+    }
 }

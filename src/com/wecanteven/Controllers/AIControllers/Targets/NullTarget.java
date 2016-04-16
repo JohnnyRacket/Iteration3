@@ -7,10 +7,14 @@ import com.wecanteven.Visitors.TargetVisitor;
  */
 public class NullTarget extends Target {
     public NullTarget(){
-        super(0, null);
+        super(100, null);
     }
     @Override
     public void accept(TargetVisitor visitor) {
         visitor.visitNullTarget(this);
+    }
+    @Override
+    public String toString() {
+        return "NullTarget";
     }
 }

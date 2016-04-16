@@ -54,7 +54,7 @@ public class MenuState extends ControllerState {
         }, this.getjFrame(), this.getController()));
 
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ESCAPE), ()->{
-            System.out.println("esc hit");
+
             this.getController().setPlayState();
             ViewTime.getInstance().register(()->{
                 ViewTime.getInstance().resume();

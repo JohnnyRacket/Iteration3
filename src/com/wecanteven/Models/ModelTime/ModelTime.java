@@ -57,11 +57,11 @@ public class ModelTime implements Tickable {
     public void removeUnstoppable(Tickable tickable){unstoppables.remove(tickable);}
 
     public void pause(){
-        System.out.println("PAUSING MODEL~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
         paused = true;
     }
     public void resume(){
-        System.out.println("RESUMING MODEL~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
         paused = false;
     }
     public void reset(){

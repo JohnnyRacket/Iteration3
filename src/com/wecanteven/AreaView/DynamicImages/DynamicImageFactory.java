@@ -34,7 +34,7 @@ public class DynamicImageFactory {
             case "single_frame_animation":
                 return this.createSingleFrameAnimation(element);
             default:
-                System.out.println("Could not find dynamic image for: " + element.getNodeName());
+
                 return loadDynamicImage(NULL_PATH);
 
         }
@@ -59,7 +59,7 @@ public class DynamicImageFactory {
 
 
         } catch (Exception e ) {
-            System.out.println("WUT");
+
             e.printStackTrace();
             return getRootElement(NULL_PATH);
         }
