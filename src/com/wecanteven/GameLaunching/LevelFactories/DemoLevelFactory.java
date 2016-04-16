@@ -7,6 +7,7 @@ import com.wecanteven.AreaView.ViewObjects.Factories.*;
 import com.wecanteven.Controllers.AIControllers.AIController;
 import com.wecanteven.Controllers.AIControllers.ActionControllers.EnemyActionController;
 import com.wecanteven.Controllers.AIControllers.SearchingControllers.EnemySearchingController;
+import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
@@ -365,9 +366,16 @@ public class DemoLevelFactory extends LevelFactory {
         areasOfEffect(map);
         items(map);
         weaponNPC(map);
+        mount(map);
         dialogNPC(map);
         tradeNPC(map);
         questNPC(map);
+    }
+
+    public void mount(Map map) {
+        Mount mount = new Mount(map, Direction.SOUTH);
+        System.out.println("ADDING THE MOUNT TO THE MAPPPPP");
+        map.add(mount, new Location(16,10,2));
     }
 
     public void weaponNPC(Map map) {
