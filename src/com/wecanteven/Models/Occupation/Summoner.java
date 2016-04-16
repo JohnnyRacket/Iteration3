@@ -9,6 +9,7 @@ import com.wecanteven.Visitors.TerranianCanMoveVisitor;
  */
 public class Summoner extends Occupation {
     public Summoner(){
+        super();
         this.setCanMoveVisitor(new TerranianCanMoveVisitor());
         statsAddable = new StatsAddable(0,1,1,5,1,0,0,0,0);
     }
