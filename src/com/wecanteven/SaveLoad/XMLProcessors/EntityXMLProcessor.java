@@ -12,6 +12,7 @@ import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -42,6 +43,7 @@ public class EntityXMLProcessor extends XMLProcessor {
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("Occupation", e.getOccupation().getClass().getSimpleName()));
         attr.add(sf.saveAttr("Height", e.getHeight()));
+        attr.add(sf.saveAttr("Color", e.getColor().ordinal()));
         sf.appendObjectTo(parent, sf.createSaveElement("Character",attr));
         formatLocation(sf, e);
     }
@@ -50,7 +52,8 @@ public class EntityXMLProcessor extends XMLProcessor {
         Character c =  new Character(map,
                 parseDirection(sf.getElemenetById(el, "Direction", 0)),
                 parseOccupation(sf.getStrAttr(el, "Occupation")),
-                StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0))
+                StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0)),
+                GameColor.values()[sf.getIntAttr(el, "Color")]
         );
         parseStats(c, sf.getElemenetById(el, "Stats", 0));
         map.add(c, parseLocation(sf.getElemenetById(el, "Location", 0)));
@@ -73,6 +76,7 @@ public class EntityXMLProcessor extends XMLProcessor {
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(sf.saveAttr("Occupation", npc.getOccupation().getClass().getSimpleName()));
         attr.add(sf.saveAttr("Height", npc.getHeight()));
+        attr.add(sf.saveAttr("Color", npc.getColor().ordinal()));
         sf.appendObjectTo(parent, sf.createSaveElement("NPC",attr));
         formatLocation(sf, npc);
         formatInteraction(npc.getInteraction());
@@ -84,8 +88,8 @@ public class EntityXMLProcessor extends XMLProcessor {
                 parseDirection(sf.getElemenetById(el, "Direction", 0)),
                 parseInteraction(sf.getElemenetById(el, "Interaction", 0)),
                 parseOccupation(sf.getStrAttr(el, "Occupation")),
-                StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0))
-        );
+                StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0)),
+                GameColor.values()[sf.getIntAttr(el, "Color")] );
         map.add(npc, parseLocation(sf.getElemenetById(el, "Location", 0)));
         return npc;
     }

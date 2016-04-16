@@ -8,6 +8,7 @@ import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.Visitors.EntityVisitor;
 
 /**
@@ -18,14 +19,14 @@ public class NPC extends Character {
     private InteractionStrategy interaction;
     private AIController controller;
 
-    public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction){
-        super(actionHandler, direction);
+    public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction, GameColor color){
+        super(actionHandler, direction, color);
         this.interaction = interaction;
         this.interaction.setOwner(this);
     }
 
-    public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction, Occupation occupation, ItemStorage itemStorage){
-        super(actionHandler, direction, occupation, itemStorage);
+    public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction, Occupation occupation, ItemStorage itemStorage, GameColor color){
+        super(actionHandler, direction, occupation, itemStorage, color);
         this.interaction = interaction;
         this.interaction.setOwner(this);
     }
@@ -34,6 +35,10 @@ public class NPC extends Character {
     public void interact(Character c){
         interaction.interact(c);
     }
+
+//    public void interact(Avatar c){
+//        interaction.interact(c);
+//    }
 
     public void accept(EntityVisitor visitor) {
 
