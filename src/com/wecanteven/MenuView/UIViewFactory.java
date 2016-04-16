@@ -486,9 +486,10 @@ public class UIViewFactory {
     }
 
     public void createTradeView(NPC npc, Character player, boolean active){
-        //VISIT THE PLAYER AND SHOP OWNER
-        //CREATE THE VIEW
-        //START THE VIEW
+
+        /*
+        Creates 2 Navigatable grids that have Titles
+         */
         NavigatableGridWithCenterTitle npcInv = new NavigatableGridWithCenterTitle(250, 400, 5, 5,
                 Config.TEAL,
                 Config.MEDIUMGREY,
