@@ -16,12 +16,10 @@ import static sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl.ThreadStat
 public class DialogInteractionStrategy implements InteractionStrategy {
 
     private NPC owner;
-    private int currentDialog;
     ArrayList<String> dialog;
 
     public DialogInteractionStrategy(ArrayList<String> dialog){
         this.dialog = dialog;
-        currentDialog = 0;
     }
     public void setOwner(NPC npc) {
         this.owner = npc;

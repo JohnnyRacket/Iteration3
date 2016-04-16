@@ -19,17 +19,15 @@ public class QuestDialogInteractionStrategy implements InteractionStrategy {
     private boolean questStarted;
     private boolean questEnded;
 
-    ArrayList<String> startDialog;
-    ArrayList<String> endDialog;
+    private ArrayList<String> startDialog;
+    private ArrayList<String> endDialog;
 
 
-    private int currentDialog;
 
     public QuestDialogInteractionStrategy(ArrayList<String> startDialog, ArrayList<String> endDialog, Questable quest){
         this.quest = quest;
         this.startDialog = startDialog;
         this.endDialog = endDialog;
-        currentDialog = 0;
         questStarted = false;
         questEnded = false;
     }
@@ -55,6 +53,9 @@ public class QuestDialogInteractionStrategy implements InteractionStrategy {
     public boolean endQuest(Character c) {
         if(quest.completeQuest(c)) {
             //Show End Quest Dialog
+            ViewTime.getInstance().register(()->{
+                UIViewFactory.getInstance().createDialogView(owner, c, getEndIterator());
+            },0);
             questEnded = true;
             return true;
         }
@@ -64,10 +65,7 @@ public class QuestDialogInteractionStrategy implements InteractionStrategy {
     @Override
     public void interact(Character c) {
         if(questStarted){
-            if(questEnded){
-                //Do Nothing
-                //Quest Over
-            }else {
+            if(!questEnded){
                 //Quested Started, Lets try to end the quest
                 endQuest(c);
             }
@@ -80,14 +78,6 @@ public class QuestDialogInteractionStrategy implements InteractionStrategy {
     @Override
     public void setOwner(NPC npc) {
         this.owner = npc;
-    }
-
-    public void endDialogInteraction() {
-        //DO SOMETHING
-        ViewTime.getInstance().register(()->{
-            UIViewFactory.getInstance().createToast(4, "YOU GOT A QUEST ITEM!!");
-            UIViewFactory.getInstance().createToast(4, "lawl just kidding...");
-        },0);
     }
 
 }
