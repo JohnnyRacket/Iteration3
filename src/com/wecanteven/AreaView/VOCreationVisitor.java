@@ -204,7 +204,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitCurrent(Current current) {
-        areaView.addViewObject(factory.createWater(currentPosition));
+        areaView.addViewObject(factory.createCurrent(currentPosition));
     }
 
     @Override
