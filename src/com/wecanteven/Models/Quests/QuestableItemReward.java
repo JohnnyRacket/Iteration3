@@ -32,6 +32,7 @@ public class QuestableItemReward implements Questable {
         if (questerInventory.contains(questedItem)) {
             if(!questerInventory.isFull()){
                 quester.pickup(rewardItem);
+                quester.getItemStorage().removeItem(questedItem);
                 return true;
             }else{
                 UIViewFactory.getInstance().createToast(4, "Your Inventory is full!");
@@ -42,6 +43,6 @@ public class QuestableItemReward implements Questable {
 
     @Override
     public void initQuest(ActionHandler a) {
-        //a.add(itemLocation, questedItem);
+        a.drop(questedItem, itemLocation);
     }
 }

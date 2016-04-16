@@ -143,7 +143,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
 
         //setLocation(new Location(3, 9, 1));
         isDestroyed = true;
-        notifyObservers();
+        notifyObserversOnNotDestroyed();
         modelNotifyObservers();
         getActionHandler().death(this);
         getStats().refreshStats();
@@ -157,7 +157,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         setMovingTicks(ticks);
         calculateActiveStatus();
         tickTicks();
-        notifyObservers();
+        notifyObserversOnNotDestroyed();
     }
 
     public void setMovingTicks(int movingTicks){
@@ -184,13 +184,18 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-        notifyObservers();
+        notifyObserversOnNotDestroyed();
     }
 
     public void setLocation(Location location) {
 
         this.location = location;
-        notifyObservers();
+        notifyObserversOnNotDestroyed();
+    }
+
+    public void notifyObserversOnNotDestroyed() {
+        if(!isDestroyed())
+            notifyObservers();
     }
 
     public void levelUp(){
@@ -294,6 +299,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
 
     public void setDestroyed(boolean isDestroyed) {
         this.isDestroyed = isDestroyed;
+        notifyObservers();
     }
 
     public void takeDamage(int dmgAmount) {

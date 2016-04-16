@@ -58,9 +58,12 @@ public class Avatar implements Observer{
         getCharacter().interact(this);
     }
     public void mount(Mount mount){
+        avatar.setDestroyed(true);
         swapState(new MountState(avatar, mount));
     }
     public void dismount(){
+        avatar.setDestroyed(false);
+        swapState(new EntityState(avatar, this));
     }
 
     public Character getCharacter(){

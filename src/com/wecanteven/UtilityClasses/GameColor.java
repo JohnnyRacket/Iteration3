@@ -7,13 +7,11 @@ import java.awt.*;
  */
 public enum GameColor {
     /*
-
     CHARACTER NAMES
-    Periwinkle
-    Marigold
-    Sherbet
-    Shamrock
-
+        Periwinkle
+        Marigold
+        Sherbet
+        Shamrock
     */
 
     BLUE(0x8db5e7, 0x7293bb, "Blue", "Periwinkle"),
