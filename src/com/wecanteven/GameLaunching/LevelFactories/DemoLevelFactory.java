@@ -416,7 +416,7 @@ public class DemoLevelFactory extends LevelFactory {
 
         QuestDialogInteractionStrategy questIter = new QuestDialogInteractionStrategy(startQuestDialog, endQuestDialog, quest);
 
-        NPC npc = new NPC(map, Direction.SOUTHWEST, questIter);
+        NPC npc = new NPC(map, Direction.SOUTHWEST, questIter, GameColor.PINK);
         map.add(npc, new Location(14,14,2));
     }
 
