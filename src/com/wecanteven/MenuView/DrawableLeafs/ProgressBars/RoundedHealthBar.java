@@ -10,10 +10,12 @@ import java.awt.geom.RoundRectangle2D;
  */
 public class RoundedHealthBar extends Drawable {
 
-    private Color currentColor = new Color(255, 170, 46);
-    private Color depletedColor = new Color(189, 116, 34);
+    private Color currentColor = new Color(255, 171, 10);
+    private Color depletedColor = new Color(178, 109, 34);
     private int percent;
-    int roundness = 15;
+    private int roundness = 15;
+    private int yOffset = 0;
+    private int xOffset = 0;
 
     public RoundedHealthBar(int width, int height){
         this.setWidth(width);
@@ -25,8 +27,6 @@ public class RoundedHealthBar extends Drawable {
 
         int width = this.getWidth();
         int height = this.getHeight();
-        int xOffset = x;
-        int yOffset = y;
 
         RenderingHints rh = new RenderingHints(
                 RenderingHints.KEY_ANTIALIASING,
@@ -37,11 +37,11 @@ public class RoundedHealthBar extends Drawable {
 
         g2d.setRenderingHints(rh);
 
-        RoundRectangle2D rect = new RoundRectangle2D.Float(x,y,width,height,roundness,roundness);
+        RoundRectangle2D rect = new RoundRectangle2D.Float(x + xOffset,y + yOffset,width,height,roundness,roundness);
         g2d.setColor(depletedColor);
         g2d.fill(rect);
 
-        rect = new RoundRectangle2D.Float(x,y,(float)width*((float)percent/100f),height,roundness,roundness);
+        rect = new RoundRectangle2D.Float(x + xOffset,y + yOffset,(float)width*((float)percent/100f),height,roundness,roundness);
         g2d.setColor(currentColor);
         g2d.fill(rect);
     }
@@ -78,5 +78,21 @@ public class RoundedHealthBar extends Drawable {
 
     public void setRoundness(int roundness) {
         this.roundness = roundness;
+    }
+
+    public int getyOffset() {
+        return yOffset;
+    }
+
+    public void setyOffset(int yOffset) {
+        this.yOffset = yOffset;
+    }
+
+    public int getxOffset() {
+        return xOffset;
+    }
+
+    public void setxOffset(int xOffset) {
+        this.xOffset = xOffset;
     }
 }

@@ -25,8 +25,8 @@ public class OneHandedWeaponState extends HandState {
     private LimbStrategy jumpingStrategy;
     private LimbStrategy fallingStrategy;
 
-    public OneHandedWeaponState(Direction direction, MicroPositionableViewObject rightHand, ViewObjectFactory factory, Entity entity) {
-        super(factory.createSimpleLeftHand(rightHand.getPosition(), null, entity), rightHand);
+    public OneHandedWeaponState(Direction direction, MicroPositionableViewObject rightHand, MicroPositionableViewObject leftHand, ViewObjectFactory factory, Entity entity) {
+        super(leftHand, rightHand);
         walkingStrategy = new HandWalkingStrategy(0.3, leftHand, rightHand);
         jumpingStrategy = new HandsYJumpingStrategy(height, 5, leftHand, rightHand);
         fallingStrategy = new HandsFallingStrategy(height, radius, leftHand, rightHand);

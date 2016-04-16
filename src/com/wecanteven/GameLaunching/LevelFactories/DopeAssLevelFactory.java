@@ -25,6 +25,7 @@ import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
 
 import java.util.ArrayList;
@@ -131,7 +132,7 @@ public class DopeAssLevelFactory extends LevelFactory{
 
     public void weaponNPC(Map map) {
         //"Creating an NPC and Giving him a chest Plate
-        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy());
+        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.PINK);
         OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
         npc.pickup(i);
         npc.equipItem(i);
@@ -143,13 +144,13 @@ public class DopeAssLevelFactory extends LevelFactory{
         dialog.add("Hello Avatar");
         dialog.add("You're an idiot and you're playing a dumb game");
         dialog.add("GTFO");
-        NPC npc = new NPC(map, Direction.SOUTHWEST, new DialogInteractionStrategy(dialog));
+        NPC npc = new NPC(map, Direction.SOUTHWEST, new DialogInteractionStrategy(dialog), GameColor.PINK);
         map.add(npc, new Location(2,8,1));
 
     }
 
     public void tradeNPC(Map map) {
-        NPC npc = new NPC(map, Direction.SOUTHEAST, new TradeInteractionStrategy());
+        NPC npc = new NPC(map, Direction.SOUTHEAST, new TradeInteractionStrategy(), GameColor.PINK);
         npc.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
         npc.pickup(new ChestEquipableItem("Buyable Penis", 5, null));
         map.add(npc, new Location(4, 5, 1));

@@ -6,6 +6,7 @@ import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanFallVisitor;
 import com.wecanteven.Visitors.CanMoveVisitor;
@@ -20,7 +21,7 @@ public class Mount extends Character {
   Character mountee;
 
   public Mount(ActionHandler actionHandler, Direction direction) {
-    super(actionHandler, direction);
+    super(actionHandler, direction, GameColor.BLUE);
   }
 
 
