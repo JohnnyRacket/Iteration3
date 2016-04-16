@@ -20,7 +20,7 @@ public enum GameColor {
     PINK(0xf19cb7, 0xe087a2, "Pink", "Sherbet"),
     YELLOW(0xffcc00, 0xefbf00, "Yellow", "Marigold"),
     GREEN(0x6fc4a9, 0x55ae92, "Green", "Shamrock"),
-    GRAY(0x9f9f9f, 0x6f6f6f, "Gray", "");
+    GRAY(0x9f9f9f, 0x6f6f6f, "Gray", "Ash");
 
     public final Color light;
     public final String name;
