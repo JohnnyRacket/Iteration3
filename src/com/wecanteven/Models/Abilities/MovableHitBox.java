@@ -26,7 +26,7 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
     private ArrayList<Observer> observers;
 
     public MovableHitBox(String name, Location source, StatsAddable effect, ActionHandler actionHandler){
-        super(name,source,effect,actionHandler);
+        super(name,source,effect,actionHandler,0);
         observers = new ArrayList<>();
 
         setCanMoveVisitor(new TerranianCanMoveVisitor());

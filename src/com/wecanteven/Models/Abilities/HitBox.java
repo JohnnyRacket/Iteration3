@@ -19,8 +19,10 @@ public class HitBox implements Destroyable{
     private ActionHandler actionHandler;
     static VOCreationVisitor voCreationVisitor;
     private boolean isDestroyed;
+    private int duration;
 
-    public HitBox(String name,Location location, StatsAddable effect, ActionHandler actionHandler){
+    public HitBox(String name,Location location, StatsAddable effect, ActionHandler actionHandler,int duration){
+        setDuration(duration);
         setName(name);
         setLocation(location);
         setEffect(effect);
@@ -40,7 +42,7 @@ public class HitBox implements Destroyable{
                 actionHandler.remove(hitBox, destination);
                 setIsDestroyed(true);
             }
-        }, 1);
+        }, duration);
     }
 
     public void interact(Entity entity){
@@ -86,5 +88,11 @@ public class HitBox implements Destroyable{
     }
     public boolean isDestroyed(){
         return isDestroyed;
+    }
+    public int getDuration(){
+        return duration;
+    }
+    public void setDuration(int duration){
+        this.duration = duration;
     }
 }

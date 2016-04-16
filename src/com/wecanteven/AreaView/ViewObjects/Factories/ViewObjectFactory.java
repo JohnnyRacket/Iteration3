@@ -435,7 +435,7 @@ public abstract class ViewObjectFactory {
         String path = "Effects/" + hitBox.getName() + "/" + hitBox.getName() + ".xml";
         Position p = hitBox.getLocation().toPosition();
         StartableViewObject hitBoxVO = createStartableViewObject(p, path);
-        hitBoxVO.start(300);
+        hitBoxVO.start(hitBox.getDuration());
         return hitBoxVO;
     }
 
