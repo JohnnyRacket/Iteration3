@@ -43,6 +43,54 @@ public class HexRing {
         return locations.iterator();
     }
 
+    public Iterator<Location> orderedIterator() {
+        ArrayList<Location> locations = new ArrayList<>();
+
+        if (radius == 0) {
+            locations.add(center);
+        } else {
+            int r = center.getR();
+            int s = center.getS();
+            int z = center.getZ();
+
+
+            //ORDERED HEXRING
+            //NORTH
+            Location north = new Location(r,s-radius,z);
+            locations.add(north);
+            for (int n = 1; n <= radius; n++) {
+                locations.add(new Location(north.getR()+n,north.getS(),z));
+            }
+            //NORTHEAST
+            Location northEast = new Location(r+radius,s-radius,z);
+            for(int n = 1; n <= radius; n++){
+                locations.add(new Location(northEast.getR(),northEast.getS()+n,z));
+            }
+            //SOUTHEAST
+            Location southEast = new Location(r+radius,s,z);
+            for(int n = 1; n <= radius; n++){
+                locations.add(new Location(southEast.getR()-n,southEast.getS()+n,z));
+            }
+            //SOUTH
+            Location south = new Location(r,s+radius,z);
+            for(int n = 1; n <= radius; n++){
+                locations.add(new Location(south.getR()-n,south.getS(),z));
+            }
+            //SOUTHWEST
+            Location southWest = new Location(r-radius,s+radius,z);
+            for(int n = 1; n <= radius; n++){
+                locations.add(new Location(southWest.getR(),southWest.getS()-n,z));
+            }
+            //NORTHEWEST
+            Location northWest = new Location(r-radius,s,z);
+            for(int n = 1; n < radius; n++){
+                locations.add(new Location(northWest.getR()+n,northWest.getS()-n,z));
+            }
+        }
+        saftey(locations);
+        return locations.iterator();
+    }
+
     private void saftey(ArrayList<Location> locations) {
 
     }

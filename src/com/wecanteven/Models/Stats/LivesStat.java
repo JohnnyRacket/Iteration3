@@ -19,6 +19,12 @@ public class LivesStat extends PrimaryStat implements Observer {
         modelAttach(entity);
         update();
     }
+    @Override
+    public void add(int addable){
+        if(addable == 0) return;
+        stat += addable;
+        if(addable<0) modelNotifyObservers();
+    }
     public void update(){
 
         if(health.getStat() <= 0){

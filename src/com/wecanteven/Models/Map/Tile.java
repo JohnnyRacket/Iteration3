@@ -184,12 +184,12 @@ public class Tile implements MapVisitable {
             aoe.apply(entity);
         }
 
-        interactWithTile((Character) entity);
+        interactWithCharacter((Character) entity);
     }
 
-    private void interactWithTile(Character character) {
-        ArrayList<TakeableMoveable> leftover = new ArrayList<>();
 
+    private void interactWithCharacter(Character character) {
+        ArrayList<TakeableMoveable> leftover = new ArrayList<>();
         for (TakeableMoveable i : takeableItems) {
             if (!character.getItemStorage().inventoryIsFull()) {
                 i.extractItem().interact(character);
@@ -199,6 +199,11 @@ public class Tile implements MapVisitable {
         }
 
         takeableItems = leftover;
+    }
+
+    public void update(){
+        if(hasEntity())
+        interactWithTile(getEntity());
     }
 
 //    public void interact(Character character) {
