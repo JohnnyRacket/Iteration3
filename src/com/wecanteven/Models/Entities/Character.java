@@ -147,6 +147,7 @@ public class Character extends Entity {
         itemStorage.addMoney(new MoneyItem(value));
     }
 
-
-
+    public void setOccupation(Occupation occupation) {
+        this.occupation = occupation;
+    }
 }

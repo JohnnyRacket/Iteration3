@@ -69,7 +69,6 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitSmasher(Smasher smasher) {
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
     }
 

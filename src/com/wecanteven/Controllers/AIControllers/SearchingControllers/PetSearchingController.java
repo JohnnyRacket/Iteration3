@@ -35,7 +35,8 @@ public class PetSearchingController extends AbstractSearchingController {
 
     @Override
     public void visitCharacter(Character c) {
-
+        this.setTarget(c);
+        c.getOccupation().accept(this);
     }
 
     @Override
@@ -50,7 +51,11 @@ public class PetSearchingController extends AbstractSearchingController {
 
     @Override
     public void visitTile(Tile tile) {
-
+        Character character = (Character) tile.getEntity();//this is dangerous
+        if(character != null){
+            System.out.println(character);
+            character.accept(this);
+        }
     }
 
     @Override
@@ -65,6 +70,7 @@ public class PetSearchingController extends AbstractSearchingController {
 
     @Override
     public void visitSmasher(Smasher smasher) {
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         this.addNewTarget(new FriendlyTarget(3,this.getTarget().getLocation()));
     }
 
