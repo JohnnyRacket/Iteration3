@@ -315,8 +315,9 @@ public class DemoLevelFactory extends LevelFactory {
         line(18,15,2,Direction.SOUTHEAST, 2, groundMaker);
         line(3,19,0,Direction.SOUTHWEST, 4, groundMaker);
 
-
-
+        filled(23,11, 0, 9,groundMaker);
+        line(22, 1, 1, Direction.SOUTH, 7, groundMaker);
+        line(22, 6, 1, Direction.SOUTHWEST, 3, groundMaker);
 
 
 
