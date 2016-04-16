@@ -125,7 +125,9 @@ public class EquippableUIObjectCreationVisitor implements ItemStorageVisitor, It
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-
+        inventoryItems.addItem(new GridItem(takeable.getName(), () ->{
+            factory.createDropableItemMenu(character, invHolder, eqHolder, takeable);
+        }));
     }
 
     @Override

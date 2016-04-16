@@ -411,9 +411,9 @@ public class DemoLevelFactory extends LevelFactory {
         startQuestDialog.add("Go and get the questable item!");
 
         ArrayList<String> endQuestDialog = new ArrayList<>();
-        endQuestDialog.add("HELLO QUESTER!");
-        endQuestDialog.add("This is an example of how quests work");
-        endQuestDialog.add("Go and get the questable item!");
+        endQuestDialog.add("Oh! My! Lawd!");
+        endQuestDialog.add("You found the item I was looking for!");
+        endQuestDialog.add("Here, take this top hat! Goodbye!");
 
         QuestDialogInteractionStrategy questIter = new QuestDialogInteractionStrategy(startQuestDialog, endQuestDialog, quest);
 

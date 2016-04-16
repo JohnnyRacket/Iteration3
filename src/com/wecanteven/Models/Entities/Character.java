@@ -85,6 +85,9 @@ public class Character extends Entity {
 
     public void pickup(TakeableItem item) {
         itemStorage.addItem(item);
+        if(itemStorage.hasItem(item)){
+            System.out.println("Item was added");
+        }
     }
 
     public void interact() {
