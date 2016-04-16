@@ -16,6 +16,7 @@ import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
 
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
+import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGridWithCenterTitle;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
 import com.wecanteven.MenuView.DrawableLeafs.Toaster.Toast;
 import com.wecanteven.MenuView.UIObjectCreationVisitors.BuyableUIObjectCreationVisitor;
@@ -488,16 +489,24 @@ public class UIViewFactory {
         //VISIT THE PLAYER AND SHOP OWNER
         //CREATE THE VIEW
         //START THE VIEW
-        NavigatableGrid npcInv = new NavigatableGrid(250, 400, 5, 5);
-        NavigatableGrid playerInv = new NavigatableGrid(250, 400, 5, 5);
+        NavigatableGridWithCenterTitle npcInv = new NavigatableGridWithCenterTitle(250, 400, 5, 5,
+                Config.TEAL,
+                Config.MEDIUMGREY,
+                Config.DARKGREY,
+                "Shopkeeper Gold: " + npc.getItemStorage().getMoney().getValue()
+        );
+        NavigatableGridWithCenterTitle playerInv = new NavigatableGridWithCenterTitle(250, 400, 5, 5,
+                Config.TEAL,
+                Config.MEDIUMGREY,
+                Config.DARKGREY,
+                "Your Gold: " + player.getItemStorage().getMoney().getValue()
+        );
 
         BuyableUIObjectCreationVisitor visitor = new BuyableUIObjectCreationVisitor(this, npc, player, npcInv, playerInv);
         visitor.visitBoth();
         //make menu
-        npcInv.setBgColor(Config.TEAL);
         npcInv.setList(visitor.getShopOwnerInvList());
 
-        playerInv.setBgColor(Config.TEAL);
         playerInv.setList(visitor.getPlayerInvList());
 
         //make swappable view
@@ -516,23 +525,11 @@ public class UIViewFactory {
                 );
 
         VerticalCenterContainer npcTradeTitle = new VerticalCenterContainer(
-                new HorizontalCenterContainer(
-                        new TitleBarDecorator(
-                                npcInv,
-                                "Shopkeeper Gold: " + npc.getItemStorage().getMoney().getValue()
-                                )
-                )
-        );
+                new HorizontalCenterContainer(npcInv.getTitleBar()));
 
         VerticalCenterContainer playerTradeTitle =
                 new VerticalCenterContainer(
-                        new HorizontalCenterContainer(
-                                new TitleBarDecorator(
-                                        playerInv,
-                                        "Your Gold: " + player.getItemStorage().getMoney().getValue()
-                                )
-                        )
-                );
+                        new HorizontalCenterContainer(playerInv.getTitleBar()));
 
         columns.addDrawable(npcTradeTitle);
         columns.addDrawable(playerTradeTitle);

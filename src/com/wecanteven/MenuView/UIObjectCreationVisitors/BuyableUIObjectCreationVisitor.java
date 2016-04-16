@@ -2,6 +2,7 @@ package com.wecanteven.MenuView.UIObjectCreationVisitors;
 
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
+import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGridWithCenterTitle;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
 import com.wecanteven.MenuView.Navigatable;
 import com.wecanteven.MenuView.UIViewFactory;
@@ -33,8 +34,8 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
 
     private NavigatableList playerInvList = new NavigatableList();
     private NavigatableList shopOwnerInvList = new NavigatableList();
-    private NavigatableGrid playerMenu;
-    private NavigatableGrid shopMenu;
+    private NavigatableGridWithCenterTitle playerMenu;
+    private NavigatableGridWithCenterTitle shopMenu;
     private UIViewFactory factory;
     private NPC shopOwner;
     private Character buyer;
@@ -46,7 +47,7 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
         this.buyer = buyer;
     }
 
-    public BuyableUIObjectCreationVisitor(UIViewFactory factory, NPC shopOwner, Character buyer, NavigatableGrid shopMenu, NavigatableGrid playerMenu){
+    public BuyableUIObjectCreationVisitor(UIViewFactory factory, NPC shopOwner, Character buyer, NavigatableGridWithCenterTitle shopMenu, NavigatableGridWithCenterTitle playerMenu){
         this.factory = factory;
         this.shopOwner = shopOwner;
         this.buyer = buyer;
@@ -165,17 +166,19 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
     }
 
 
-    public NavigatableGrid getPlayerMenu() {
+    public NavigatableGridWithCenterTitle getPlayerMenu() {
         return playerMenu;
     }
 
-    public NavigatableGrid getShopMenu() {
+    public NavigatableGridWithCenterTitle getShopMenu() {
         return shopMenu;
     }
 
     public void updateList() {
         getPlayerMenu().setList(getPlayerInvList());
+        getPlayerMenu().setTitle("Your Gold: " + buyer.getItemStorage().getMoney().getValue());
         getShopMenu().setList(getShopOwnerInvList());
+        getShopMenu().setTitle("Shopkeeper Gold: " + shopOwner.getItemStorage().getMoney().getValue());
     }
 
 
