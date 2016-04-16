@@ -86,7 +86,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
 
     @Override
     public void update(){
-        System.out.println("crazy shit is happening");
+
         loseLife();
     }
 
@@ -98,6 +98,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
         if(getDirection() == d){
             setDirection(d);
+            System.out.println("Going to " + getLocation().add(d.getCoords));
             Location destination = getLocation().add(d.getCoords);
             int moveTime = calculateMovementTicks(movementStat);
             return getActionHandler().move(this,destination,moveTime);
@@ -176,7 +177,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     }
 
     public void setLocation(Location location) {
-        System.out.println("Im @ " + location);
+
         this.location = location;
         notifyObservers();
     }
@@ -268,7 +269,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     }
 
     public void modifyStats(StatsAddable addable){
-        System.out.println("The Entity's stats have changed");
+
         this.stats.addStats(addable);
     }
 
@@ -292,4 +293,8 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     public void buff(Buff buff) {
         buffmanager.addBuff(buff);
     }
+
+    public void interact(Character character) {}
+
+    public void interact() {}
 }

@@ -196,12 +196,12 @@ public class Tile implements MapVisitable {
             InteractionVisitor visitor = new InteractionVisitor(character);
             getEntity().accept(visitor);
         }else {
-            System.out.println("Didn't have a Entity to interact with");
+
         }
     }
 
     public boolean add(HitBox hitBox){
-        System.out.println("adding effects to the tile ");
+
         if(hitBoxes.add(hitBox) && hasEntity()){
            hitBox.interact(getEntity());
             return true;

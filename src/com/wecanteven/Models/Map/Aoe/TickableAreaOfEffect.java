@@ -23,7 +23,7 @@ public abstract class TickableAreaOfEffect extends AreaOfEffect implements Ticka
     @Override
     public void tick() {
         if (entity != null && active) {
-            System.out.println("Tick apply");
+
             apply(entity);
             active = false;
             ModelTime.getInstance().registerAlertable(this, 30);
@@ -37,9 +37,9 @@ public abstract class TickableAreaOfEffect extends AreaOfEffect implements Ticka
         }
 
         if (entity == null) {
-            System.out.println("Entity left Aoe");
+
         } else {
-            System.out.println("Entity entered Aoe");
+
         }
     }
 

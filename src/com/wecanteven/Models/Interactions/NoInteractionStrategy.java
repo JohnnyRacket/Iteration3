@@ -13,7 +13,7 @@ public class NoInteractionStrategy implements InteractionStrategy {
     @Override
     public void interact(Character c) {
         this.other = c;
-        System.out.println("Tried to Interact with a boring NPC");
+
     }
 
     @Override

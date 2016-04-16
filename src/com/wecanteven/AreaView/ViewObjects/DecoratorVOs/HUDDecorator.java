@@ -65,7 +65,7 @@ public class HUDDecorator extends DecoratorViewObject implements Observer{
                     Color.WHITE,
                     4
             ));
-            System.out.println("I took damage");
+
         }
         healthBar.setCurrentProgress(subject.getHealth());
         healthBar.setMaxProgress(subject.getMaxHealth());

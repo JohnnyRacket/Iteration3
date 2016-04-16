@@ -65,7 +65,7 @@ public class AnimatedChangeProgressBar extends Drawable {
             this.oldCurrent += maxProgress/100f;
             g2d.setColor(currentColor.darker());
             int curPercentage = (int)((currentProgress/maxProgress) * progressBarWidth);
-            //System.out.println(curPercentage);
+            //
             if(curPercentage >= borderWidth) {
                 g2d.fillRect(x + borderWidth / 2, y + borderWidth / 2, curPercentage - borderWidth, progressBarHeight - borderWidth);
             }else{

@@ -15,4 +15,9 @@ public class EnemyTarget extends Target {
     public void accept(TargetVisitor visitor) {
         visitor.visitEnemyTarget(this);
     }
+
+    @Override
+    public String toString() {
+        return "EnemyTarget: Priority: " + getPriority() + ", Location: " + getLocation();
+    }
 }

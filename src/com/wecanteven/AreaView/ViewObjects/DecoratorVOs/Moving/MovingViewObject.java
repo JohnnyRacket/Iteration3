@@ -67,7 +67,7 @@ public abstract class MovingViewObject extends DecoratorViewObject implements Ob
 
 
     private void adjustPosition(long endTime) {
-        //System.out.println("******************************** MVO updating child");
+        //
         getChild().setPosition(calculateCurrentPosition(source, destination, startTime, this.endTime));
         if (viewTime.getCurrentTime() < endTime) {
             viewTime.register(() -> adjustPosition(endTime), 1);
@@ -83,13 +83,13 @@ public abstract class MovingViewObject extends DecoratorViewObject implements Ob
     }
 
     private void swap() {
-        System.out.println("Removing from: " + owner.getPosition());
+
         owner.remove(this);
-        System.out.println("Adding to: " + destination);
+
 
         areaView.addViewObject(this, destination);
         owner = areaView.getTileViewObject(destination);
-        System.out.println("Owner is: " + owner.getPosition());
+
         realPosition = destination;
     }
 
@@ -102,7 +102,7 @@ public abstract class MovingViewObject extends DecoratorViewObject implements Ob
     public void update() {
         if (hasStateChange()) {
             updateState();
-            System.out.println("Going from: " + source + " to " + destination);
+
             adjustPosition(endTime);
             reposition();
         }

@@ -16,4 +16,8 @@ public class FriendlyTarget extends Target {
     public void accept(TargetVisitor visitor) {
         visitor.visitFriendlyTarget(this);
     }
+    @Override
+    public String toString() {
+        return "FriendlyTarget: Priority: " + getPriority() + ", Location: " + getLocation();
+    }
 }

@@ -37,14 +37,14 @@ public class StorageXMLProcessor extends XMLProcessor {
     }
 
     public static void parseInventory(Element el, ItemStorage is) {
-        System.out.println("Parsing inventory");
+
         NodeList itemSlots = sf.getElementsById(el, "ItemSlot");
         for(int i = 0; i < itemSlots.getLength(); ++i){
             //Get item slot number
             int position = sf.getIntAttr((Element)itemSlots.item(i), "position");
             //process item
             TakeableItem item = ItemXMLProcessor.parseTakeableItem((Element)itemSlots.item(i).getChildNodes().item(1));
-            System.out.println(item.getName());
+
             is.addItem(item, position);
         }
 

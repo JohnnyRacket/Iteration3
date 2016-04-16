@@ -26,7 +26,7 @@ public class OneShot extends Item implements Destroyable, ViewObservable{
         isDestroyed = true;
         itemAction.execute(entity);
         notifyObservers();
-        System.out.println("DESTROYED A BOX");
+
     }
 
     /**

@@ -22,7 +22,7 @@ public class ViewManager {
         Stack<SwappableView> tmpPermStack = (Stack<SwappableView>) permViewStack.clone();
         Iterator<SwappableView> iter = tmpPermStack.iterator();
         while (iter.hasNext()) {
-            //System.out.println("in view manager drawing" + i++);
+            //
             iter.next().draw(g2d, windowWidth, windowHeight);
         }
 
@@ -30,7 +30,7 @@ public class ViewManager {
         Stack<SwappableView> tmpStack = (Stack<SwappableView>) viewStack.clone();
         iter = tmpStack.iterator();
         while (iter.hasNext()) {
-            //System.out.println("in view manager drawing" + i++);
+            //
             iter.next().draw(g2d, windowWidth, windowHeight);
         }
 

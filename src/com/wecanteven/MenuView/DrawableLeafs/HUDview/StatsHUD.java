@@ -54,7 +54,7 @@ public class StatsHUD extends Drawable implements Observer {
 
 //            stoneTexture = ImageIO.read(new File("resources/textures/stone.png"));
 //        }catch(Exception e){
-//            System.out.println("failed to load stone texture");
+//
 //        }
 //        texture = new TexturePaint(stoneTexture, new Rectangle(0, 0, 90, 60));
 
@@ -133,7 +133,7 @@ public class StatsHUD extends Drawable implements Observer {
 //
 //        g2d.setColor(new Color(230, 176, 49));
 //        g2d.fill(areaTest);
-        //System.out.println(x);
+        //
 //
 //        healthBar.draw(g2d,x,y,windowWidth,windowHeight);
 //        manaBar.draw(g2d,x + 500,y,windowWidth, windowHeight);
@@ -158,7 +158,7 @@ public class StatsHUD extends Drawable implements Observer {
         maxExp = 100; //TODO fix this
         expBar.setCurrentProgress((int)exp);
         expBar.setMaxProgress(100);
-        System.out.println("The stats hud was updated");
+
     }
 
     public Color getBgColor() {

@@ -5,6 +5,7 @@ import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Interactions.InteractionVisitor;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
@@ -91,6 +92,7 @@ public class Map implements MapVisitable, ActionHandler {
     public boolean move(Entity entity, Location destination, int movespeed) {
         Location source = entity.getLocation();
         CanMoveVisitor visitor = entity.getCanMoveVisitor();
+        System.out.println("############################## moving from " + source + " to " + destination);
 
         //checks if you are moving outside the bounds of the map
         if(isOutOfBounds(destination)){
@@ -147,7 +149,7 @@ public class Map implements MapVisitable, ActionHandler {
 
         //checks if you are moving outside the bounds of the map
         if(isOutOfBounds(destination)){
-            System.out.println("Out of Bounds");
+
             return false;
         }
 
@@ -164,12 +166,16 @@ public class Map implements MapVisitable, ActionHandler {
         else{
             //reached an entity/obstacle/wall
             if(tile.hasEntity()){//hits the entity if there is one
+
+                //Interact visitor to be called here!
+
+              //  InteractionVisitor interactionVisitor = new InteractionVisitor(tile.getEntity());
                 hitBox.setLocation(destination);
                 hitBox.updateMovingTicks(moveSpeed);
                 remove(hitBox, source);
                 add(hitBox, destination);
             }
-            System.out.println("can't move projectile");
+
             return false;
         }
     }
@@ -246,9 +252,9 @@ public class Map implements MapVisitable, ActionHandler {
 
 //    @Override
 //    public void useAbility(ArrayList<Location> locations, StatsAddable effect){
-//        System.out.println("these are the number of locations "+ locations.size());
+//
 //        for(Location location : locations){
-//            System.out.println("adding things again and again");
+//
 //            getTile(location).add(effect);
 //        }
 //    }
@@ -268,7 +274,7 @@ public class Map implements MapVisitable, ActionHandler {
 
     public boolean add(Entity entity, Location loc){
         entity.setLocation(loc);
-        System.out.println("Adding Entity: r: " + loc.getR() + " s:" + loc.getS() + " z:" + loc.getZ());
+
         return columns[loc.getR()][loc.getS()].add(entity, loc.getZ());
     }
     public boolean add(OneShot oneShot, Location loc){
@@ -301,7 +307,7 @@ public class Map implements MapVisitable, ActionHandler {
     }
     public void death(Entity entity){
         remove(entity, entity.getLocation());
-        System.out.println("An entity was removed from the map");
+
     }
 
 

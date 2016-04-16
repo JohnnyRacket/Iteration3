@@ -110,7 +110,7 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         offsetPosition.setR(getR());
         offsetPosition.setS(getS());
         offsetPosition.setZ(getZ());
-        //System.out.println("Position offset did just change: " + offsetPosition);
+        //
         updateChildPosition();
     }
 

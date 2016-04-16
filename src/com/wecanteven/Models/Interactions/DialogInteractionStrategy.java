@@ -6,6 +6,7 @@ import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.NPC;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl.ThreadStateMap.Byte1.other;
 
@@ -32,6 +33,9 @@ public class DialogInteractionStrategy implements InteractionStrategy {
     public ArrayList<String> getDialog() {
         return dialog;
     }
+    public Iterator<String> getIterator() {
+        return dialog.iterator();
+    }
 
     public void endDialogInteraction() {
         //DO SOMETHING
@@ -44,7 +48,7 @@ public class DialogInteractionStrategy implements InteractionStrategy {
     @Override
     public void interact(Character c) {
         ViewTime.getInstance().register(()->{
-            UIViewFactory.getInstance().createDialogView(owner, c, getNextDialog());
+            UIViewFactory.getInstance().createDialogView(owner, c, getIterator());
         },0);
     }
 }
