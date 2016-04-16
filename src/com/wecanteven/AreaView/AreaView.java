@@ -34,6 +34,7 @@ public class AreaView extends JPanel {
         Biome biome = levelFactory.createBiomes(factory);
         VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory, biome);
         map.accept(voCreationVisitor);
+        map.setVOCreationVisitor(voCreationVisitor);
 
 
 

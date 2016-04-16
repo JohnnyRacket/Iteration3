@@ -105,6 +105,7 @@ public class ItemMap {
 
         EquipableItemMap.put("Merp Boots", () -> factory.vendBoots("Merp Boots", 3, new StatsAddable(0,0,0,0,0,0,10,0,0)));
 
+        EquipableItemMap.put("Fez", () -> factory.vendHeadEquipableItem("Fez", 69, new StatsAddable(1,1,1,1,1,1,1,1,1)));
 
         usedNames.addAll(EquipableItemMap.keySet());
     }

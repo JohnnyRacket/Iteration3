@@ -422,6 +422,8 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsOneShot("Minor Health Orb"), new Location(4,15,2));
         map.add(ItemMap.getInstance().getItemAsOneShot("Major Health Orb"), new Location(5,15,3));
 
+
+        map.add(ItemMap.getInstance().getItemAsTakeable("Fez"), new Location(11, 14,2));
         //Interactive Item??????
         /* TODO implement this */
 

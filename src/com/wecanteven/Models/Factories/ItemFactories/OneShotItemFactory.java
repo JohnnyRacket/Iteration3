@@ -21,7 +21,7 @@ public class OneShotItemFactory {
 
     public OneShot vendMovementSpeedBuffOneShot(String name, int movementSpeedBuff, int duration) {
         return new OneShot(name, (entity) -> entity.buff(new Buff(
-                "Red",
+                "Purple",
                 duration,
                 (entity1) -> entity1.modifyStats(new StatsAddable(0,0,0,0,0,0,movementSpeedBuff,0,0)),
                 (entity1) -> entity1.modifyStats(new StatsAddable(0,0,0,0,0,0,-1 * movementSpeedBuff,0,0))

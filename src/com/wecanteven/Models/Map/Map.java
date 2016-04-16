@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Map;
 
+import com.wecanteven.AreaView.VOCreationVisitor;
 import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.ActionHandler;
@@ -27,6 +28,11 @@ public class Map implements MapVisitable, ActionHandler {
     private int rSize;
     private int sSize;
     private int zSize;
+
+    private VOCreationVisitor voCreationVisitor;
+    public void setVOCreationVisitor(VOCreationVisitor visitor) {
+        this.voCreationVisitor = visitor;
+    }
 
     public int getrSize() {
         return rSize;
@@ -242,6 +248,9 @@ public class Map implements MapVisitable, ActionHandler {
 
     @Override
     public boolean drop(TakeableItem item, Location location) {
+        item.setLocation(location);
+        item.setIsDestoryed(false);
+        item.accept(voCreationVisitor);
         getTile(location).add(new TakeableMoveable(item.getName(), item.getValue(), item, this, location));
         return true;
     }
@@ -278,15 +287,19 @@ public class Map implements MapVisitable, ActionHandler {
         return columns[loc.getR()][loc.getS()].add(entity, loc.getZ());
     }
     public boolean add(OneShot oneShot, Location loc){
+        oneShot.setLocation(loc);
         return columns[loc.getR()][loc.getS()].add(oneShot, loc.getZ());
     }
     public boolean add(TakeableItem takeableItem, Location loc){
+        takeableItem.setLocation(loc);
         return columns[loc.getR()][loc.getS()].add(new TakeableMoveable(takeableItem.getName(), takeableItem.getValue(), takeableItem, this, loc), loc.getZ());
     }
     public boolean add(Obstacle obstacle, Location loc){
+        obstacle.setLocation(loc);
         return columns[loc.getR()][loc.getS()].add(obstacle, loc.getZ());
     }
     public boolean add(InteractiveItem interactiveItem, Location loc){
+        interactiveItem.setLocation(loc);
         return columns[loc.getR()][loc.getS()].add(interactiveItem, loc.getZ());
     }
 
