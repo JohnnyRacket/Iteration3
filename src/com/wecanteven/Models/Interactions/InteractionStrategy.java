@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Interactions;
 
+import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.NPC;
 
@@ -8,5 +9,6 @@ import com.wecanteven.Models.Entities.NPC;
  */
 public interface InteractionStrategy {
     void interact(Character c);
+   // void interact(Avatar c);
     void setOwner(NPC npc);
 }

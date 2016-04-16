@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Interactions;
 
+import com.wecanteven.AreaView.DynamicImages.ConstantDynamicImage;
 import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Character;
@@ -18,19 +19,19 @@ public class QuestDialogInteractionStrategy implements InteractionStrategy {
     private Questable quest;
     private boolean questStarted;
     private boolean questEnded;
+    private boolean repeat;
 
-    ArrayList<String> startDialog;
-    ArrayList<String> endDialog;
+    private ArrayList<String> startDialog;
+    private ArrayList<String> endDialog;
 
 
-    private int currentDialog;
 
     public QuestDialogInteractionStrategy(ArrayList<String> startDialog, ArrayList<String> endDialog, Questable quest){
         this.quest = quest;
         this.startDialog = startDialog;
         this.endDialog = endDialog;
-        currentDialog = 0;
         questStarted = false;
+        repeat = false;
         questEnded = false;
     }
 
@@ -44,34 +45,45 @@ public class QuestDialogInteractionStrategy implements InteractionStrategy {
     }
 
 
+    public void initMap(){
+        quest.initQuest(owner.getActionHandler());
+    }
+
+
     public void startQuest(Character c) {
-        //PLACE ITEM STILL
         ViewTime.getInstance().register(()->{
             UIViewFactory.getInstance().createDialogView(owner, c, getStartIterator());
         },0);
+        if(!questStarted){
+            initMap();
+        }
         questStarted = true;
     }
 
     public boolean endQuest(Character c) {
+        repeatQuestDialog();
         if(quest.completeQuest(c)) {
             //Show End Quest Dialog
+            ViewTime.getInstance().register(()->{
+                UIViewFactory.getInstance().createDialogView(owner, c, getEndIterator());
+            },0);
             questEnded = true;
             return true;
         }
+        startQuest(c);
         return false;
     }
 
     @Override
     public void interact(Character c) {
         if(questStarted){
-            if(questEnded){
-                //Do Nothing
-                //Quest Over
-            }else {
+            System.out.println("Quest Started but not Ended");
+            if(!questEnded){
                 //Quested Started, Lets try to end the quest
                 endQuest(c);
             }
         }else {
+            System.out.println("Quest Started");
             //Starting Quest
             startQuest(c);
         }
@@ -82,12 +94,11 @@ public class QuestDialogInteractionStrategy implements InteractionStrategy {
         this.owner = npc;
     }
 
-    public void endDialogInteraction() {
-        //DO SOMETHING
-        ViewTime.getInstance().register(()->{
-            UIViewFactory.getInstance().createToast(4, "YOU GOT A QUEST ITEM!!");
-            UIViewFactory.getInstance().createToast(4, "lawl just kidding...");
-        },0);
+    public void repeatQuestDialog() {
+        if(!repeat) {
+            startDialog.add(0, "Quest already started, but here's a refresher");
+            repeat = true;
+        }
     }
 
 }

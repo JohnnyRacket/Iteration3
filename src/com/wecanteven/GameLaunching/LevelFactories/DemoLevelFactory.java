@@ -7,18 +7,22 @@ import com.wecanteven.AreaView.ViewObjects.Factories.*;
 import com.wecanteven.Controllers.AIControllers.AIController;
 import com.wecanteven.Controllers.AIControllers.ActionControllers.EnemyActionController;
 import com.wecanteven.Controllers.AIControllers.SearchingControllers.EnemySearchingController;
+import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.NoInteractionStrategy;
+import com.wecanteven.Models.Interactions.QuestDialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
+import com.wecanteven.Models.Items.Takeable.QuestedItem;
 import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
+import com.wecanteven.Models.Quests.QuestableItemReward;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.*;
 
@@ -359,11 +363,19 @@ public class DemoLevelFactory extends LevelFactory {
 
     @Override
     public void populateMap(Map map) {
-//        areasOfEffect(map);
-//        items(map);
-//        weaponNPC(map);
-//        dialogNPC(map);
-//        tradeNPC(map);
+        areasOfEffect(map);
+        items(map);
+        weaponNPC(map);
+        mount(map);
+        dialogNPC(map);
+        tradeNPC(map);
+        questNPC(map);
+    }
+
+    public void mount(Map map) {
+        Mount mount = new Mount(map, Direction.SOUTH);
+        System.out.println("ADDING THE MOUNT TO THE MAPPPPP");
+        map.add(mount, new Location(16,10,2));
     }
 
     public void weaponNPC(Map map) {
@@ -389,11 +401,30 @@ public class DemoLevelFactory extends LevelFactory {
         ModelTime.getInstance().registerTickable(controller);
     }
 
+    public void questNPC(Map map) {
+        QuestedItem questItem = new QuestedItem("Quest Item", 0);
+        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Top Hat"), new Location(18, 18, 1));
+        ArrayList<String> startQuestDialog = new ArrayList<>();
+        startQuestDialog.add("HELLO QUESTER!");
+        startQuestDialog.add("This is an example of how quests work");
+        startQuestDialog.add("Go and get the questable item!");
+
+        ArrayList<String> endQuestDialog = new ArrayList<>();
+        endQuestDialog.add("HELLO QUESTER!");
+        endQuestDialog.add("This is an example of how quests work");
+        endQuestDialog.add("Go and get the questable item!");
+
+        QuestDialogInteractionStrategy questIter = new QuestDialogInteractionStrategy(startQuestDialog, endQuestDialog, quest);
+
+        NPC npc = new NPC(map, Direction.SOUTHWEST, questIter);
+        map.add(npc, new Location(14,14,2));
+    }
+
     public void tradeNPC(Map map) {
         NPC npc = new NPC(map, Direction.SOUTHEAST, new TradeInteractionStrategy(), GameColor.YELLOW);
         npc.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
         npc.pickup(new ChestEquipableItem("Buyable Penis", 5, null));
-        map.add(npc, new Location(6, 2, 15));
+        map.add(npc, new Location(13, 14, 2));
     }
 
     public void areasOfEffect(Map map) {
@@ -432,16 +463,12 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(2,14,2));
 
         //Equipable
-        //map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
-        //map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
-        //map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
-        //map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
-        //map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3, 14, 2));
-        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
-        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
-        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
-        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
-        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3, 14, 2));
+
 
         //Consumeable
     }

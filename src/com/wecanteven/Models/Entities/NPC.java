@@ -36,6 +36,10 @@ public class NPC extends Character {
         interaction.interact(c);
     }
 
+//    public void interact(Avatar c){
+//        interaction.interact(c);
+//    }
+
     public void accept(EntityVisitor visitor) {
 
         visitor.visitNPC(this);

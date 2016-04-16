@@ -23,4 +23,8 @@ public class AbilityFactory {
         RadialHitBoxGenerator generator = new RadialHitBoxGenerator(caster, new StatsAddable(0,0,0,0,0,0,0,-1,0));
         return new Ability(caster,generator);
     }
+    public Ability vendDomeAttack(Character caster) {
+        DomeHitBoxGenerator generator = new DomeHitBoxGenerator(caster, new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        return new Ability(caster,generator);
+    }
 }
