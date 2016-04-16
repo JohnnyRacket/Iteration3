@@ -26,6 +26,10 @@ public class TakeableItem extends Item implements Destroyable, ViewObservable{
     }
     public int getValue() {return value;}
 
+    public void setIsDestoryed(boolean isDestoryed) {
+        this.isDestroyed = isDestoryed;
+    }
+
     public void interact(Character character) {
         isDestroyed = true;
         notifyObservers();

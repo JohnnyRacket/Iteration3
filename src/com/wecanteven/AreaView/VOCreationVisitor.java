@@ -112,7 +112,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-        areaView.addViewObject(factory.createTakeableItem(currentPosition, takeable));
+        areaView.addViewObject(factory.createTakeableItem(takeable.getLocation().toPosition(), takeable));
     }
 
     @Override
