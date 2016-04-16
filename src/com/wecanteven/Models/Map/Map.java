@@ -5,18 +5,16 @@ import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Interactions.InteractionVisitor;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
-import com.wecanteven.Models.Map.Terrain.Air;
-import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanFallVisitor;
 import com.wecanteven.Visitors.CanMoveVisitor;
-import com.wecanteven.Visitors.ColumnVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
@@ -169,6 +167,10 @@ public class Map implements MapVisitable, ActionHandler {
         else{
             //reached an entity/obstacle/wall
             if(tile.hasEntity()){//hits the entity if there is one
+
+                //Interact visitor to be called here!
+
+              //  InteractionVisitor interactionVisitor = new InteractionVisitor(tile.getEntity());
                 hitBox.setLocation(destination);
                 hitBox.updateMovingTicks(moveSpeed);
                 remove(hitBox, source);
@@ -178,20 +180,6 @@ public class Map implements MapVisitable, ActionHandler {
             return false;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public Tile getTile(int r, int s, int z) {
         return columns[r][s].getTile(z);

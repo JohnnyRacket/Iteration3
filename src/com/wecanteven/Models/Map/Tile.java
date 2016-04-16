@@ -18,6 +18,7 @@ import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by John on 3/31/2016.
@@ -170,8 +171,15 @@ public class Tile implements MapVisitable {
     }
 
     private void interactWithTile(Character character) {
-        for (TakeableItem item : takeableItems) {
-            character.pickup(item);
+        Iterator<TakeableItem> iter = takeableItems.iterator();
+
+        while (iter.hasNext()) {
+            TakeableItem item = iter.next();
+
+            if (!character.getItemStorage().inventoryIsFull()) {
+                character.pickup(item);
+                iter.remove();
+            }
         }
     }
 

@@ -27,6 +27,7 @@ public class InteractionVisitor implements EntityVisitor {
         //interactee.interact(interactor);
     }
 
+
     @Override
     public void visitNPC(NPC interactee) {
         interactee.interact(interactor);

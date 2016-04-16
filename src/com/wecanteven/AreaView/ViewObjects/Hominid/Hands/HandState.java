@@ -20,7 +20,7 @@ public abstract class HandState {
         this.rightHand = rightHand;
     }
 
-    public Direction getDirection() {
+    public final Direction getDirection() {
         return leftHand.getDirection();
     }
 
@@ -28,50 +28,49 @@ public abstract class HandState {
 
     public abstract void jump(long duration);
 
-    public abstract void changeDirection(Direction direction);
-
-    public abstract void setLocation(Location location);
-
-    public abstract Location getLocation();
+    public final void changeDirection(Direction direction) {
+        leftHand.setDirection(direction);
+        rightHand.setDirection(direction);
+    }
 
     public abstract void attack(long durationOfAttack);
 
     public abstract void fall(long duration);
 
-    public double getLeftHandY() {
+    public final double getLeftHandY() {
         return leftHand.getY();
     }
 
-    public double getRightHandY() {
+    public final double getRightHandY() {
         return rightHand.getY();
     }
 
 
-    public void setLeftHandPosition(Position position) {
+    public final void setLeftHandPosition(Position position) {
         leftHand.setPosition(position);
     }
 
-    public void setRightHandPosition(Position position) {
+    public final void setRightHandPosition(Position position) {
         rightHand.setPosition(position);
     }
 
-    public void setLeftHandDirection(Direction direction) {
+    public final void setLeftHandDirection(Direction direction) {
         leftHand.setDirection(direction);
     }
 
-    public void setRightHandDirection(Direction direction) {
+    public final void setRightHandDirection(Direction direction) {
         rightHand.setDirection(direction);
     }
-    public void equip(WeaponEquipableItem weapon) {
+    public final void equip(WeaponEquipableItem weapon) {
 
     }
 
-    public void draw(Graphics2D g) {
+    public final void draw(Graphics2D g) {
         leftHand.draw(g);
         rightHand.draw(g);
     }
 
-    public void drawBackground(Graphics2D g) {
+    public final void drawBackground(Graphics2D g) {
         if (isInBackground(leftHand)) {
             leftHand.draw(g);
         }
@@ -80,7 +79,7 @@ public abstract class HandState {
         }
     }
 
-    public void drawForeground(Graphics2D g) {
+    public final void drawForeground(Graphics2D g) {
         if (!isInBackground(leftHand)) {
             leftHand.draw(g);
         }
@@ -89,7 +88,7 @@ public abstract class HandState {
         }
     }
 
-    public void addBackgroundToFogOfWar(ParallelViewObject parallelViewObject) {
+    public final void addBackgroundToFogOfWar(ParallelViewObject parallelViewObject) {
         if (isInBackground(leftHand)) {
             leftHand.addToFogOfWarViewObject(parallelViewObject);
         }
@@ -98,7 +97,7 @@ public abstract class HandState {
         }
     }
 
-    public void addForegroundToFogOfWar(ParallelViewObject parallelViewObject) {
+    public final void addForegroundToFogOfWar(ParallelViewObject parallelViewObject) {
         if (!isInBackground(leftHand)) {
             leftHand.addToFogOfWarViewObject(parallelViewObject);
         }
