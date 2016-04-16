@@ -1,6 +1,8 @@
 package com.wecanteven.Models.BuffManager;
 
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Observers.Observer;
+import com.wecanteven.Observers.ViewObservable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,8 +11,9 @@ import java.util.List;
 /**
  * Created by simonnea on 4/14/16.
  */
-public class BuffManager {
+public class BuffManager implements ViewObservable {
     private Entity owner;
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     private List<Buff> buffList = new ArrayList<>();
     private List<InterruptableBuff> interruptables = new ArrayList<>();
@@ -84,5 +87,10 @@ public class BuffManager {
         allBuffs.sort((Buff o1, Buff o2) -> o1.getName().compareTo(o2.getName()));
 
         return allBuffs.iterator();
+    }
+
+    @Override
+    public ArrayList<Observer> getObservers() {
+        return observers;
     }
 }

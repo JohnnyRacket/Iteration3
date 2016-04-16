@@ -8,6 +8,8 @@ import com.wecanteven.AreaView.DynamicImages.StartableDynamicImage;
 import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.*;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving.BipedMovingViewObject;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving.SimpleMovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.BuffRingViewObject;
 import com.wecanteven.AreaView.ViewObjects.Parallel.DarkenedViewObject;
@@ -124,7 +126,7 @@ public abstract class ViewObjectFactory {
 ////        hexDrawingStrategy.setCenterTarget(stationarySneak);
 ////
 ////
-////        return createMovingViewObject(subject, destroyableViewObject);
+////        return createBipedMovingViewObject(subject, destroyableViewObject);
 //    }
 
     //This method is OG
@@ -163,7 +165,7 @@ public abstract class ViewObjectFactory {
         FeetViewObject feet = new FeetViewObject(Direction.SOUTH, leftFoot, rightFoot);
 
         //Create the buff thingy
-        BuffRingViewObject buffs = new BuffRingViewObject(p, this);
+        BuffRingViewObject buffs = new BuffRingViewObject(p, this, character.getBuffmanager());
 
         //Finnally create the Hominoid
         HominidViewObject hominoid = new  HominidViewObject(
@@ -188,7 +190,7 @@ public abstract class ViewObjectFactory {
 
 
         //Make a moving view object
-        MovingViewObject moivingHominoidWithHUD = createMovingViewObject(character, homioidWithHUD);
+        BipedMovingViewObject moivingHominoidWithHUD = createBipedMovingViewObject(character, homioidWithHUD);
 
 
         //Now give him a death animation
@@ -263,7 +265,7 @@ public abstract class ViewObjectFactory {
 
     public ViewObject createRangedEffect(MovableHitBox m) {
         ViewObject vo =createDirectional(m.getLocation().toPosition(), m, "Effects/WaterBolt/");
-        MovingViewObject viewObject = createMovingViewObject(m, vo);
+        SimpleMovingViewObject viewObject = createSimpleMovingViewObject(m, vo);
         DestroyableViewObject destroyableMovingDirectionVO = new DestroyableViewObject(viewObject, createStartableViewObject(m.getLocation().toPosition(), "null.xml"), m, areaView, 100);
         return destroyableMovingDirectionVO;
     }
@@ -360,8 +362,13 @@ public abstract class ViewObjectFactory {
         return new DirectionalViewObject(p, d, hexDrawingStrategy, bodyNorth, bodySouth, bodyNorthEast, bodyNorthWest, bodySoutheast, bodySouthWest);
     }
 
-    public <T extends Moveable & ViewObservable> MovingViewObject createMovingViewObject(T subject, ViewObject child) {
-        MovingViewObject mvo = new  MovingViewObject(child, subject, areaView, jumpDetector);
+    public <T extends Moveable & ViewObservable> BipedMovingViewObject createBipedMovingViewObject(T subject, ViewObject child) {
+        BipedMovingViewObject mvo = new BipedMovingViewObject(child, subject, areaView, jumpDetector);
+        return mvo;
+    }
+
+    public <T extends Moveable & ViewObservable> SimpleMovingViewObject createSimpleMovingViewObject(T subject, ViewObject child) {
+        SimpleMovingViewObject mvo = new SimpleMovingViewObject(child, subject, areaView);
         return mvo;
     }
 
