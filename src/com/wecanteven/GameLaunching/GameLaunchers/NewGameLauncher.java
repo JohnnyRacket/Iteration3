@@ -39,7 +39,7 @@ public class NewGameLauncher extends GameLauncher {
 
     @Override
     public void launch(){
-        System.out.println("launching game");
+
         createMap();
         createAvatar("test");
         populateMap(getMap());

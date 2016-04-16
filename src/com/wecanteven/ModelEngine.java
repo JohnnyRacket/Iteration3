@@ -36,7 +36,7 @@ public class ModelEngine implements Runnable{
                     Thread.sleep((tickTimeMilli - delta));
                 } catch (Exception e) {}
             } else {
-                System.out.println("Model tick took too long");
+
             }
         }
     }

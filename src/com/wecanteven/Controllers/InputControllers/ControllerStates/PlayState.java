@@ -67,13 +67,13 @@ public class PlayState extends ControllerState {
             this.setContinuousCommandToExecute(()->avatar.move(Direction.SOUTHWEST));
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ITEMINVENTORY), ()->{
-            System.out.println("open inventory hit");
+
             ViewTime.getInstance().register(()->{
                 UIViewFactory.getInstance().createInventoryView(avatar.getCharacter());
             },0);
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.STATS), ()->{
-            System.out.println("open stats hit");
+
             ViewTime.getInstance().register(()->{
                 UIViewFactory.getInstance().createStatsView(avatar.getCharacter());
             },0);
@@ -82,12 +82,12 @@ public class PlayState extends ControllerState {
             avatar.interactWithTile();
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ATTACK), ()->{
-            System.out.println("use ability");
+
             avatar.attack();
             //this.setContinuousCommandToExecute(()->avatar.useAbility(5));
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ESCAPE), ()->{
-            System.out.println("open pause menu hit");
+
             ViewTime.getInstance().register(()->{
                 UIViewFactory.getInstance().createPauseMenu();
             },0);

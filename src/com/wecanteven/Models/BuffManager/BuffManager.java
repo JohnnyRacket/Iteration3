@@ -39,23 +39,23 @@ public class BuffManager implements ViewObservable {
     }
 
     void apply(BuffApply buff) {
-        System.out.println("Entity stats before buff: " + owner.getStats().getMovement());
+
         buff.apply(owner);
-        System.out.println("Buff was applied");
-        System.out.println("Entity stats after buff: " + owner.getStats().getMovement());
+
+
     }
 
     void unapply(BuffUnapply debuff) {
-        System.out.println("Entity stats before debuff: " + owner.getStats().getMovement());
+
         debuff.apply(owner);
-        System.out.println("Buff was unapplied");
-        System.out.println("Entity stats after debuff: " + owner.getStats().getMovement());
+
+
     }
 
     void notifyExpired(Buff buff) {
         buffList.remove(buff);
-        System.out.println("Buff manager notified of buff expiration");
-        System.out.println("Number of buffs: " + buffList.size());
+
+
     }
 
     void notifyInterruptedExpired(InterruptableBuff buff) {

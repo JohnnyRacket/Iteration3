@@ -33,7 +33,7 @@ public abstract class CoolDownAoE extends OneTimeAreaOfEffect implements Alertab
     @Override
     public void alert() {
         setCooldown(false);
-        System.out.println("Cooldown Expired");
+
     }
 
     @Override
@@ -41,9 +41,9 @@ public abstract class CoolDownAoE extends OneTimeAreaOfEffect implements Alertab
         if (!onCooldown()) {
             registerCooldown();
             executeEffect(entity);
-            System.out.println("Aoe is active");
+
         } else {
-            System.out.println("Aoe is on cooldown");
+
         }
     }
 
@@ -56,7 +56,7 @@ public abstract class CoolDownAoE extends OneTimeAreaOfEffect implements Alertab
     }
 
     private void registerCooldown() {
-        System.out.println("Cooldown started");
+
         setCooldown(true);
         ModelTime.getInstance().registerAlertable(this, coolDownTicks);
     }

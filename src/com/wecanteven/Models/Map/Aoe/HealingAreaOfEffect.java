@@ -21,7 +21,7 @@ public class HealingAreaOfEffect extends TickableAreaOfEffect {
 
     @Override
     public void apply(Entity entity) {
-        System.out.println("Entity was healed for " + perTickHeal);
+
         entity.healDamage(perTickHeal);
     }
 

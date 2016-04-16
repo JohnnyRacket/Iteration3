@@ -18,7 +18,7 @@ public class MeleeRangeHitBoxGenerator implements HitBoxGenerator {
     }
     public void generate(){
         int duration = 1;
-        System.out.println("The spell is occuring");
+
         Direction casterDirection = caster.getDirection();
         Location startLocation = caster.getLocation();
         Location destination = startLocation.add(casterDirection.getCoords);

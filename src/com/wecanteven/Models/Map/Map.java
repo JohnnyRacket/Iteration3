@@ -150,7 +150,7 @@ public class Map implements MapVisitable, ActionHandler {
 
         //checks if you are moving outside the bounds of the map
         if(isOutOfBounds(destination)){
-            System.out.println("Out of Bounds");
+
             return false;
         }
 
@@ -176,7 +176,7 @@ public class Map implements MapVisitable, ActionHandler {
                 remove(hitBox, source);
                 add(hitBox, destination);
             }
-            System.out.println("can't move projectile");
+
             return false;
         }
     }
@@ -212,9 +212,9 @@ public class Map implements MapVisitable, ActionHandler {
 
 //    @Override
 //    public void useAbility(ArrayList<Location> locations, StatsAddable effect){
-//        System.out.println("these are the number of locations "+ locations.size());
+//
 //        for(Location location : locations){
-//            System.out.println("adding things again and again");
+//
 //            getTile(location).add(effect);
 //        }
 //    }
@@ -234,7 +234,7 @@ public class Map implements MapVisitable, ActionHandler {
 
     public boolean add(Entity entity, Location loc){
         entity.setLocation(loc);
-        System.out.println("Adding Entity: r: " + loc.getR() + " s:" + loc.getS() + " z:" + loc.getZ());
+
         return columns[loc.getR()][loc.getS()].add(entity, loc.getZ());
     }
     public boolean add(OneShot oneShot, Location loc){
@@ -267,7 +267,7 @@ public class Map implements MapVisitable, ActionHandler {
     }
     public void death(Entity entity){
         remove(entity, entity.getLocation());
-        System.out.println("An entity was removed from the map");
+
     }
 
 

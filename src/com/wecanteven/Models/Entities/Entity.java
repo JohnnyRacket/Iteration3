@@ -86,7 +86,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
 
     @Override
     public void update(){
-        System.out.println("crazy shit is happening");
+
         loseLife();
     }
 
@@ -173,7 +173,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     }
 
     public void setLocation(Location location) {
-        System.out.println("Im @ " + location);
+
         this.location = location;
         notifyObservers();
     }
@@ -265,7 +265,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     }
 
     public void modifyStats(StatsAddable addable){
-        System.out.println("The Entity's stats have changed");
+
         this.stats.addStats(addable);
     }
 

@@ -69,7 +69,7 @@ public class ViewTime {
     }
 
     public void pause(){
-        System.out.println("PAUSING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
         if(!paused) {
             paused = true;
             pausedTime = System.currentTimeMillis();
@@ -82,7 +82,7 @@ public class ViewTime {
             while(iter.hasNext()){
                 Tuple<vCommand,Long> tuple = iter.next();
                 executablesCopy.add(new Tuple(tuple.x, tuple.y));
-                System.out.println( "old time is: " + tuple.y);
+
             }
             executables = new PriorityQueue<>(
                     (Tuple<vCommand, Long> o1, Tuple<vCommand, Long> o2) ->  (int)(o1.y - o2.y)
@@ -91,14 +91,14 @@ public class ViewTime {
     }
     public void resume(){
         if(paused) {
-            System.out.println("RESUMING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
             paused = false;
             staging = new CopyOnWriteArrayList<>();
             executables = new PriorityQueue<>(
                     (Tuple<vCommand, Long> o1, Tuple<vCommand, Long> o2) ->  (int)(o1.y - o2.y)
             );
             long timeToAdd = System.currentTimeMillis() - pausedTime;
-            //System.out.println(timeToAdd);
+            //
             Iterator<Tuple<vCommand,Long>> iter = stagingCopy.iterator();
             while(iter.hasNext()){
                 Tuple<vCommand,Long> tuple = iter.next();
@@ -109,10 +109,10 @@ public class ViewTime {
             while(iter.hasNext()){
                 Tuple<vCommand,Long> tuple = iter.next();
                 executables.add(new Tuple(tuple.x, tuple.y + timeToAdd));
-                //System.out.println( "new time is: " + (tuple.y+timeToAdd );
-                //System.out.println(System.currentTimeMillis());
+                //
+                //
             }
-            System.out.println( "time to add: " + timeToAdd + "compared to " + (System.currentTimeMillis() - pausedTime));
+
 
         }
     }

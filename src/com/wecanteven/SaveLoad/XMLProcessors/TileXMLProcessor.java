@@ -38,7 +38,7 @@ public class TileXMLProcessor extends XMLProcessor {
         NodeList tiles = sf.getElementsById("Tile");
         for(int i = 0; i < tiles.getLength(); ++i) {
             Element tile =  (Element)tiles.item(i);
-            System.out.println("r:" + sf.getIntAttr(tile, "r")  + " s:" + sf.getIntAttr(tile, "s")  + "  z:" + sf.getIntAttr(tile, "z"));
+
             Column column = map.getColumn(sf.getIntAttr(tile, "r"), sf.getIntAttr(tile, "s"));
             column.setTile(parseTile(map, tile), sf.getIntAttr(tile, "z"));
         }
@@ -82,11 +82,11 @@ public class TileXMLProcessor extends XMLProcessor {
         Terrain terrain;
         switch(sf.getStrAttr(el, "terrain")){
             case "Air":
-                //System.out.println("Making Air");
+                //
                 terrain = new Air();
                 break;
             case "Ground":
-                //System.out.println("Making Ground");
+                //
                 terrain = new Ground();
                 break;
             case "Current":
