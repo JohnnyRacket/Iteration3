@@ -574,8 +574,6 @@ public class UIViewFactory {
 
         chatOptions.addItem(new ScrollableMenuItem("Exit",()->{
             exitMenu();
-            ((DialogInteractionStrategy)npc.getInteraction()).endDialogInteraction();
-
         }));
 
         ScrollableMenu chatMenu = new ScrollableMenu(300,400);
