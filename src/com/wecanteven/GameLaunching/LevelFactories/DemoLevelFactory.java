@@ -27,15 +27,6 @@ import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.*;
 
 import java.util.ArrayList;
-/*
-
-CHARACTER NAMES
-    Periwinkle
-    Marigold
-    Sherbet
-
-
- */
 
 
 /**
