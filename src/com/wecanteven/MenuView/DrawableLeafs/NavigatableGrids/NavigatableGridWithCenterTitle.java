@@ -40,6 +40,7 @@ public class NavigatableGridWithCenterTitle extends NavigatableGrid {
         int itemWidth = (this.getWidth() - calculatedPadding)/getCols();
         int itemHeight = (this.getHeight() - calculatedPadding)/getRows();
 
+
         g2d.setColor(isActive() ? getBgColor() : getInActiveBgColor());
         g2d.fillRect(offsetX, offsetY, this.getWidth(), this.getHeight());
 
