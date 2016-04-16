@@ -26,13 +26,9 @@ public class DialogInteractionStrategy implements InteractionStrategy {
     public void setOwner(NPC npc) {
         this.owner = npc;
     }
-    public String getNextDialog() {
-        return dialog.get(currentDialog++ % dialog.size());
-    }
 
-    public ArrayList<String> getDialog() {
-        return dialog;
-    }
+    public ArrayList<String> getDialog() { return dialog;}
+
     public Iterator<String> getIterator() {
         return dialog.iterator();
     }
