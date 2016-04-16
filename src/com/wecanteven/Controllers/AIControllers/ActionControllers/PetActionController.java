@@ -18,12 +18,24 @@ public class PetActionController extends AbstractActionController {
 
     @Override
     public void visitItemTarget(ItemTarget target) {
+        try {
+            System.out.println("moving");
+            this.getCharacter().move(getPathToTarget(target));
 
+        }catch (NullPointerException e){
+            System.out.println("direction was null, this might mean john is bad a programming");
+        }
     }
 
     @Override
     public void visitEnemyTarget(EnemyTarget target) {
+        try {
+            System.out.println("moving");
+            this.getCharacter().move(getPathToTarget(target));
 
+        }catch (NullPointerException e){
+            System.out.println("direction was null, this might mean john is bad a programming");
+        }
     }
 
     @Override

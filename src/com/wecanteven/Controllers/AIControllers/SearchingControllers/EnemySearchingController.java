@@ -40,7 +40,8 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitNPC(NPC n) {
-
+        this.setTarget(n);
+        n.getOccupation().accept(this);
     }
 
     @Override

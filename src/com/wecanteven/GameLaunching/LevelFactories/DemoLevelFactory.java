@@ -44,7 +44,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     private final int mapWidth = 40;
     private final int mapLength = 40;
-    private final int mapHeight = 20;
+    private final int mapHeight = 22;
 
     private ArrayList<Location> desertLocations = new ArrayList<>();
     private ArrayList<Location> snowLocations = new ArrayList<>();

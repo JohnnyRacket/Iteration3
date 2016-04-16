@@ -19,6 +19,9 @@ import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Models.Occupation.*;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
  * Created by John on 4/16/2016.
  */
@@ -41,7 +44,8 @@ public class PetSearchingController extends AbstractSearchingController {
 
     @Override
     public void visitNPC(NPC n) {
-
+        this.setTarget(n);
+        n.getOccupation().accept(this);
     }
 
     @Override
@@ -55,6 +59,11 @@ public class PetSearchingController extends AbstractSearchingController {
         if(character != null){
             System.out.println(character);
             character.accept(this);
+        }
+        ArrayList<TakeableItem> items = tile.getTakeableItems();
+        Iterator<TakeableItem> iter = items.iterator();
+        while(iter.hasNext()){
+            iter.next().accept(this);
         }
     }
 
@@ -70,7 +79,6 @@ public class PetSearchingController extends AbstractSearchingController {
 
     @Override
     public void visitSmasher(Smasher smasher) {
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         this.addNewTarget(new FriendlyTarget(3,this.getTarget().getLocation()));
     }
 
@@ -106,26 +114,26 @@ public class PetSearchingController extends AbstractSearchingController {
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-        this.addNewTarget(new ItemTarget(1,this.getTarget().getLocation()));
+        this.addNewTarget(new ItemTarget(1,takeable.getLocation()));
     }
 
     @Override
     public void visitEquipableItem(EquipableItem equipable) {
-
+        this.addNewTarget(new ItemTarget(1,equipable.getLocation()));
     }
 
     @Override
     public void visitUseableItem(UseableItem useable) {
-
+        this.addNewTarget(new ItemTarget(1,useable.getLocation()));
     }
 
     @Override
     public void visitAbilityItem(AbilityItem ability) {
-
+        this.addNewTarget(new ItemTarget(1,ability.getLocation()));
     }
 
     @Override
     public void visitConsumableItem(ConsumeableItem consumable) {
-
+        this.addNewTarget(new ItemTarget(1,consumable.getLocation()));
     }
 }

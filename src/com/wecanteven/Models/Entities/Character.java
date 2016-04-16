@@ -151,4 +151,9 @@ public class Character extends Entity {
     public void setOccupation(Occupation occupation) {
         this.occupation = occupation;
     }
+
+    @Override
+    public String toString() {
+        return "Character: " + getOccupation();
+    }
 }
