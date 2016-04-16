@@ -116,7 +116,9 @@ public class Map implements MapVisitable, ActionHandler {
         if(canMove) {//move if you can
             remove(entity, source);
             Column col = getColumn(entity.getLocation().getR(),entity.getLocation().getS());
-            for(int a=0;a<col.getZ();a++){
+            //when surrogates are added to the game.
+            //for(int a=entity.getLocation().getZ()+entity.getHeight();a<col.getZ();a++){
+            for(int a=entity.getLocation().getZ();a<col.getZ();a++){
                 col.getTile(a).update();
             }
             entity.setLocation(destination);
