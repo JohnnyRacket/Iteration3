@@ -33,7 +33,7 @@ public class AIController implements Tickable {
             searchArea = searchingController.getSearchArea();
             Target target = searchingController.search(searchArea);
             //System.out.println("search done");
-            //System.out.println(target);
+            System.out.println(target);
             //System.out.println("beginning pathfind");
             actionController.act(target);
             //System.out.println("end pathfind");

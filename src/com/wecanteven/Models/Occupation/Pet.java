@@ -12,6 +12,12 @@ public class Pet extends Occupation {
         this.setCanMoveVisitor(new TerranianCanMoveVisitor());
         statsAddable = new StatsAddable(0,1,1,1,1,0,0,0,0);
     }
+
+    @Override
+    protected void initSkills() {
+
+    }
+
     @Override
     public void accept(OccupationVisitor visitor) {
         visitor.visitPet(this);

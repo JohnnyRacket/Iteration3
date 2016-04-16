@@ -42,7 +42,7 @@ public abstract class AbstractActionController implements TargetVisitor{
         //Map map = Map.getInstance();
         ArrayList<Location> searchableArea = controller.getSearchArea();
 
-        System.out.println("done building searchable area");
+        //System.out.println("done building searchable area");
 
         queue.add(character.getLocation());
         parentMap.put(character.getLocation(), null);
@@ -52,7 +52,7 @@ public abstract class AbstractActionController implements TargetVisitor{
             Location currLocation = queue.remove();
             if(!visited.contains(currLocation)) {
                 visited.add(currLocation);
-                System.out.println("building path");
+               //System.out.println("building path");
                 //System.out.println("Comparing R's: " + currLocation.getR() + "=" + targetLocation.getR() + " and S's: " + currLocation.getS() + "=" + targetLocation.getS());
                 if (currLocation.equals(targetLocation)) {
                     //we found the thing
@@ -90,7 +90,7 @@ public abstract class AbstractActionController implements TargetVisitor{
                     }
                 }
             }else{
-                System.out.println("cockblocked");
+                //System.out.println("cockblocked");
             }
         }
         System.out.println("this should not happen");

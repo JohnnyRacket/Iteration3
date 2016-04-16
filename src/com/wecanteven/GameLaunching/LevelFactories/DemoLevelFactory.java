@@ -6,7 +6,10 @@ import com.wecanteven.AreaView.Biomes.DefaultBiome;
 import com.wecanteven.AreaView.ViewObjects.Factories.*;
 import com.wecanteven.Controllers.AIControllers.AIController;
 import com.wecanteven.Controllers.AIControllers.ActionControllers.EnemyActionController;
+import com.wecanteven.Controllers.AIControllers.ActionControllers.PetActionController;
 import com.wecanteven.Controllers.AIControllers.SearchingControllers.EnemySearchingController;
+import com.wecanteven.Controllers.AIControllers.SearchingControllers.PetSearchingController;
+import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
@@ -24,6 +27,7 @@ import com.wecanteven.Models.Map.Terrain.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Occupation.Enemy;
 import com.wecanteven.Models.Occupation.Friendly;
+import com.wecanteven.Models.Occupation.Pet;
 import com.wecanteven.Models.Quests.QuestableItemReward;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.*;
@@ -41,7 +45,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     private final int mapWidth = 40;
     private final int mapLength = 40;
-    private final int mapHeight = 20;
+    private final int mapHeight = 22;
 
     private ArrayList<Location> desertLocations = new ArrayList<>();
     private ArrayList<Location> snowLocations = new ArrayList<>();
@@ -374,6 +378,7 @@ public class DemoLevelFactory extends LevelFactory {
         dialogNPC(map);
         tradeNPC(map);
         questNPC(map);
+        petNPC(map);
     }
 
     public void mount(Map map) {
@@ -383,13 +388,30 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(mount, new Location(16,10,2));
     }
 
+    public void petNPC(Map map){
+        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.PINK);
+        npc.setOccupation(new Pet());
+        PetSearchingController searchingController = new PetSearchingController(npc, map, 4);
+        PetActionController actionController = new PetActionController(npc, map);
+        AIController controller = new AIController(searchingController,actionController);
+        npc.setController(controller);
+        map.add(npc, new Location(9,9,2));
+        ModelTime.getInstance().registerTickable(controller);
+    }
+
     public void weaponNPC(Map map) {
         //"Creating an NPC and Giving him a chest Plate
         NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), new Enemy(), GameColor.GRAY);
+        npc.setOccupation(new Enemy());
         OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
+        EnemySearchingController esc = new EnemySearchingController(npc,map,3);
+        EnemyActionController eac = new EnemyActionController(npc,map);
+        AIController controller = new AIController(esc,eac);
+        npc.setController(controller);
         npc.pickup(i);
         npc.equipItem(i);
         map.add(npc, new Location(7,3,15));
+        ModelTime.getInstance().registerTickable(controller);
     }
 
     public void dialogNPC(Map map) {
@@ -402,8 +424,8 @@ public class DemoLevelFactory extends LevelFactory {
         EnemyActionController eac = new EnemyActionController(npc,map);
         AIController controller = new AIController(esc,eac);
         npc.setController(controller);
+
         map.add(npc, new Location(9,8,2));
-        ModelTime.getInstance().registerTickable(controller);
     }
 
     public void questNPC(Map map) {

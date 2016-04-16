@@ -14,6 +14,11 @@ public class Friendly extends Occupation {
     }
 
     @Override
+    protected void initSkills() {
+
+    }
+
+    @Override
     public void accept(OccupationVisitor visitor) {
         visitor.visitFriendly(this);
     }
