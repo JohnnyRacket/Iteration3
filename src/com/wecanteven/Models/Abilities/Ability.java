@@ -1,6 +1,8 @@
 package com.wecanteven.Models.Abilities;
 
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.ModelTime.ModelTime;
 
 
 /**
@@ -18,7 +20,19 @@ public class Ability {
         this.hitBoxGenerator = hitBoxGenerator;
     }
     public void cast(){
-        hitBoxGenerator.generate();
+        int windUpTime = 120;
+        caster.updateWindUpTicks(windUpTime);
+        System.out.println("Activating the spell");
+        activateAbility();
+
+    }
+    private void activateAbility(){
+        int coolDown = 120;
+        ModelTime.getInstance().registerAlertable(() -> {
+            System.out.println("The spell was activated");
+            hitBoxGenerator.generate();
+            caster.updateCoolDownTicks(coolDown);
+        },caster.getWindUpTicks());
     }
 
     //public void configure(Skill skill)  {

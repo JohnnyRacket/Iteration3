@@ -164,7 +164,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         this.movingTicks = movingTicks;
     }
 
-    private void tickTicks(){
+    protected void tickTicks(){
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
                 deIncrementMovingTick();
@@ -174,7 +174,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
     }
 
-    private void deIncrementMovingTick(){
+    protected void deIncrementMovingTick(){
         movingTicks--;
     }
 
@@ -267,7 +267,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         calculateActiveStatus();
     }
 
-    private void calculateActiveStatus(){
+    protected void calculateActiveStatus(){
         if(getMovingTicks() <= 0){
             setIsActive(false);
         }

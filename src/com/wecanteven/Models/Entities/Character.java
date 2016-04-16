@@ -5,6 +5,7 @@ import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
@@ -150,4 +151,58 @@ public class Character extends Entity {
 
 
 
+    public void updateWindUpTicks(int ticks){
+        setWindUpTicks(ticks);
+        calculateActiveStatus();
+        tickTicks();
+        notifyObservers();
+    }
+    public void updateCoolDownTicks(int ticks){
+        setCoolDownTicks(ticks);
+        calculateActiveStatus();
+        tickTicks();
+        notifyObservers();
+    }
+    @Override
+    protected void tickTicks(){
+        if(isActive()){
+            ModelTime.getInstance().registerAlertable(() -> {
+                deIncrementMovingTick();
+                deIncrementWindUpTick();
+                deIncrementCoolDownTicks();
+                calculateActiveStatus();
+                tickTicks();
+            }, 1);
+        }
+    }
+
+    public void setWindUpTicks(int ticks){
+        windUpTicks = ticks;
+    }
+    public int getWindUpTicks(){
+        return windUpTicks;
+    }
+    private void deIncrementWindUpTick(){
+        windUpTicks--;
+    }
+
+    public  void setCoolDownTicks(int ticks){
+        coolDownTicks = ticks;
+    }
+    public int getCoolDownTicks(){
+        return coolDownTicks;
+    }
+    private void deIncrementCoolDownTicks(){
+        coolDownTicks--;
+    }
+
+    @Override
+    protected void calculateActiveStatus(){
+        if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0){
+            setIsActive(false);
+        }
+        else{
+            setIsActive(true);
+        }
+    }
 }
