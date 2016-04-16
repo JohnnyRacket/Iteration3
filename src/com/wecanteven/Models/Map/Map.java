@@ -5,6 +5,7 @@ import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Interactions.InteractionVisitor;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
@@ -165,6 +166,10 @@ public class Map implements MapVisitable, ActionHandler {
         else{
             //reached an entity/obstacle/wall
             if(tile.hasEntity()){//hits the entity if there is one
+
+                //Interact visitor to be called here!
+
+              //  InteractionVisitor interactionVisitor = new InteractionVisitor(tile.getEntity());
                 hitBox.setLocation(destination);
                 hitBox.updateMovingTicks(moveSpeed);
                 remove(hitBox, source);

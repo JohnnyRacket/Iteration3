@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Entities.AvatarStates;
 
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
@@ -8,6 +9,7 @@ import com.wecanteven.UtilityClasses.Direction;
  */
 public class MountState extends AvatarState {
     private Character avatar;
+    private Mount mount;
     public boolean move(Direction d){
        return avatar.move(d);
     }
@@ -31,6 +33,10 @@ public class MountState extends AvatarState {
     public void drop(){}
     public void pickup(){}
     public void interactWith(){}
-    public void mount(){}
-    public void dismount(){}
+    public void mount(){
+        mount.mount();
+    }
+    public void dismount(){
+        mount.dismount();
+    }
 }
