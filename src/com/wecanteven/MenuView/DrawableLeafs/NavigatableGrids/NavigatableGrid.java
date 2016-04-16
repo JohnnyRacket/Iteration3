@@ -119,4 +119,36 @@ public class NavigatableGrid extends Drawable implements Navigatable, Navigatabl
     public void active(boolean active) {
         this.active = active;
     }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public Color getActiveColor() {
+        return activeColor;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActiveColor(Color activeColor) {
+        this.activeColor = activeColor;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setCols(int cols) {
+        this.cols = cols;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
 }
