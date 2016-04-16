@@ -56,7 +56,7 @@ public class NewGameLauncher extends GameLauncher {
 
     @Override
     protected void createAvatar(String occupation){
-        Character player = new Character(getMap(), Direction.SOUTH, GameColor.BLUE);
+        Character player = new Character(getMap(), Direction.SOUTH, GameColor.GREEN);
 
         player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));

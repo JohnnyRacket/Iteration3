@@ -380,7 +380,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void weaponNPC(Map map) {
         //"Creating an NPC and Giving him a chest Plate
-        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.GREEN);
+        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.GRAY);
         OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
         npc.pickup(i);
         npc.equipItem(i);
