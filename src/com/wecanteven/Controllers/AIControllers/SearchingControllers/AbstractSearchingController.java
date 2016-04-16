@@ -6,12 +6,15 @@ import com.wecanteven.Controllers.AIControllers.Targets.Target;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
+import com.wecanteven.UtilityClasses.Filled3DHex;
+import com.wecanteven.UtilityClasses.FilledHex;
 import com.wecanteven.UtilityClasses.HexRing;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.EntityVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 import com.wecanteven.Visitors.OccupationVisitor;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -32,15 +35,23 @@ public abstract class AbstractSearchingController implements MapVisitor, EntityV
         this.searchRadius = searchRadius;
     }
 
+    public ArrayList<Location> getSearchArea(){
+        Iterator<Location> iter = new Filled3DHex(character.getLocation(),searchRadius).iterator();
+        ArrayList<Location> searchArea = new ArrayList<>();
+        while(iter.hasNext()){
+            searchArea.add(iter.next());
+        }
+        return searchArea;
+    }
 
-    public Target search(){
+
+    public Target search(ArrayList<Location> searchArea){
         highPriorityTarget = new NullTarget();
-        Location currentLocation = character.getLocation();
 
-        Iterator<Location> searchArea = new HexRing(searchRadius, currentLocation).iterator();
-
-        while (searchArea.hasNext()) {
-            Location current = searchArea.next();
+        Iterator<Location> iter = searchArea.iterator();
+        while (iter.hasNext()) {
+            Location current = iter.next();
+            //System.out.println(current);
             Tile currentTile = map.getTile(current);
             currentTile.accept(this);
         }

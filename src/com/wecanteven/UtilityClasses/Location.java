@@ -56,7 +56,10 @@ public class Location {
         return add(d.getCoords);
     }
 
-    public boolean equals(Location location) {
+
+    @Override
+    public boolean equals(Object obj) {
+        Location location = (Location) obj;
         return location.getR() == r &&
                 location.getS() == s &&
                 location.getZ() == z;

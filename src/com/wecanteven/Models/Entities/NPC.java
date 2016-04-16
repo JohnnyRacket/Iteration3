@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.Controllers.AIControllers.AIController;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.InteractionStrategy;
@@ -15,6 +16,7 @@ import com.wecanteven.Visitors.EntityVisitor;
 public class NPC extends Character {
 
     private InteractionStrategy interaction;
+    private AIController controller;
 
     public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction){
         super(actionHandler, direction);
@@ -40,5 +42,13 @@ public class NPC extends Character {
 
     public InteractionStrategy getInteraction() {
         return interaction;
+    }
+
+    public AIController getController() {
+        return controller;
+    }
+
+    public void setController(AIController controller) {
+        this.controller = controller;
     }
 }
