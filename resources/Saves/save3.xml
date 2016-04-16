@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<SaveFile FileName="save2.xml">
+<SaveFile FileName="save3.xml">
     <Map name="DemoLevelFactory" r="40" s="40" z="20">
         <Column z="20">
             <Tile r="6" s="2" terrain="Air" z="15">
@@ -39,34 +39,6 @@
             </Tile>
         </Column>
         <Column z="20">
-            <Tile r="7" s="14" terrain="Air" z="3">
-                <Avatar>
-                    <Character Height="3" Occupation="Smasher">
-                        <Location r="7" s="14" z="3"/>
-                        <Direction enum="1"/>
-                        <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="1"/>
-                        <ItemStorage maxInventoryCapacity="5">
-                            <Inventory maxInventoryCapacity="5">
-                                <ItemSlot position="0">
-                                    <HeadEquipableItem name="Top Hat"/>
-                                </ItemSlot>
-                                <ItemSlot position="1">
-                                    <HeadEquipableItem name="THE GAME CRASHER"/>
-                                </ItemSlot>
-                                <ItemSlot position="2">
-                                    <OneHandedMeleeWeapon name="Katar"/>
-                                </ItemSlot>
-                                <ItemSlot position="3">
-                                    <DualWieldMeleeWeapon name="Katar"/>
-                                </ItemSlot>
-                            </Inventory>
-                            <Equipment/>
-                        </ItemStorage>
-                    </Character>
-                </Avatar>
-            </Tile>
-        </Column>
-        <Column z="20">
             <Tile r="9" s="8" terrain="Air" z="2">
                 <NPC Height="3" Occupation="Smasher">
                     <Location r="9" s="8" z="2"/>
@@ -87,6 +59,34 @@
         <Column z="20">
             <Tile r="10" s="10" terrain="Air" z="2">
                 <AreaOfEffect damagepertick="1" type="TakeDamageAreaOfEffect"/>
+            </Tile>
+        </Column>
+        <Column z="20">
+            <Tile r="11" s="14" terrain="Air" z="2">
+                <Avatar>
+                    <Character Height="3" Occupation="Smasher">
+                        <Location r="11" s="14" z="2"/>
+                        <Direction enum="5"/>
+                        <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="1"/>
+                        <ItemStorage maxInventoryCapacity="5">
+                            <Inventory maxInventoryCapacity="5">
+                                <ItemSlot position="0">
+                                    <HeadEquipableItem name="Top Hat"/>
+                                </ItemSlot>
+                                <ItemSlot position="1">
+                                    <HeadEquipableItem name="THE GAME CRASHER"/>
+                                </ItemSlot>
+                                <ItemSlot position="2">
+                                    <OneHandedMeleeWeapon name="Katar"/>
+                                </ItemSlot>
+                                <ItemSlot position="3">
+                                    <DualWieldMeleeWeapon name="Katar"/>
+                                </ItemSlot>
+                            </Inventory>
+                            <Equipment/>
+                        </ItemStorage>
+                    </Character>
+                </Avatar>
             </Tile>
         </Column>
     </Map>

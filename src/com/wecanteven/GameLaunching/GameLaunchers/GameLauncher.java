@@ -50,7 +50,7 @@ public abstract class GameLauncher {
     protected void initializeAreaView(){
         getViewEngine().clear();
         getViewEngine().getManager().popView();
-        //viewEngine.registerView(new AreaView(avatar,map));
+        viewEngine.registerView(new AreaView(getMap(),getLevelFactory()));
 
 
 
@@ -95,19 +95,9 @@ public abstract class GameLauncher {
         this.controller = controller;
     }
 
-    protected ModelEngine getModelEngine() {
-        return modelEngine;
-    }
-
-    protected void setModelEngine(ModelEngine modelEngine) {
-        this.modelEngine = modelEngine;
-    }
 
     protected ViewEngine getViewEngine() {
         return viewEngine;
     }
 
-    protected void setViewEngine(ViewEngine viewEngine) {
-        this.viewEngine = viewEngine;
-    }
 }

@@ -245,6 +245,7 @@ public class Map implements MapVisitable, ActionHandler {
 
     public boolean add(Entity entity, Location loc){
         entity.setLocation(loc);
+        System.out.println("Adding Entity: r: " + loc.getR() + " s:" + loc.getS() + " z:" + loc.getZ());
         return columns[loc.getR()][loc.getS()].add(entity, loc.getZ());
     }
     public boolean add(OneShot oneShot, Location loc){

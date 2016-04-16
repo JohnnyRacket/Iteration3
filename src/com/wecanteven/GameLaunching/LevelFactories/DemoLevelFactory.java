@@ -35,7 +35,7 @@ public class DemoLevelFactory extends LevelFactory {
     @Override
     public Map createMap() {
         Map map = new Map(40, 40, 20);
-
+        map.setName("DemoLevelFactory");
 
         rOffset = 0;
         sOffset = 0;

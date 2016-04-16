@@ -18,6 +18,8 @@ public class LevelFactoryFactory {
         levelFactories = new HashMap<>();
         levelFactories.put("DopeAssLevelFactory", ()->{ return new DopeAssLevelFactory(); } );
         levelFactories.put("TSMBlowsLevelFactory", ()->{ return new TSMBlowsLevelFactory(); } );
+        levelFactories.put("DemoLevelFactory", ()->{ return new DemoLevelFactory(); } );
+
     }
 
     public LevelFactory vendLevelFactory(String levelFactoryName) {
