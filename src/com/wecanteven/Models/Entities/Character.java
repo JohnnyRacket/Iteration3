@@ -1,5 +1,7 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
+import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
@@ -23,6 +25,7 @@ public class Character extends Entity {
     private Occupation occupation;
     private ItemStorage itemStorage, abilityItemStorage;
     private int windUpTicks, coolDownTicks;
+    private ViewObjectFactory factory;
 
     public Character(ActionHandler actionHandler, Direction direction, GameColor color) {
         super(actionHandler, direction, color);
@@ -44,6 +47,17 @@ public class Character extends Entity {
         this.occupation = occupation;
         this.itemStorage = itemStorage;
         getItemStorage().setOwner(this);
+    }
+
+    public void setFactory(ViewObjectFactory factory) {
+        this.factory = factory;
+    }
+
+    public ViewObjectFactory getFactory() throws Exception {
+        if(factory == null)
+            throw new Exception("No View Object Factory Exists");
+        else
+            return factory;
     }
 
     public void attack() {

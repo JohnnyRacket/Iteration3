@@ -374,6 +374,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void mount(Map map) {
         Mount mount = new Mount(map, Direction.SOUTH);
+        mount.setJumpHeight(5);
         System.out.println("ADDING THE MOUNT TO THE MAPPPPP");
         map.add(mount, new Location(16,10,2));
     }

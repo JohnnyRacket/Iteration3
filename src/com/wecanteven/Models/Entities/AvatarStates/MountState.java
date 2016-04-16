@@ -55,8 +55,9 @@ public class MountState extends AvatarState {
     public void drop(){}
     public void pickup(){}
     public void interactWith(){}
-    public void mount(Character mountee){
-        mount.mount(mountee);
+    public void mount(Character mounter){
+        System.out.println("Calling mount on the Mount Object");
+        mount.mount(mounter);
     }
     public void dismount(){
         mount.dismount();

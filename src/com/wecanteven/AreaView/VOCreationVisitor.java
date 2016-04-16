@@ -9,6 +9,7 @@ import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.Decals.Decal;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
@@ -80,13 +81,23 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
         factory.setCenter(avatar);
         areaView.addViewObject(avatar);
         areaView.setBackground(factory.createBackgroundDrawable(avatar));
-
+        c.setFactory(factory);
     }
 
     @Override
     public void visitNPC(NPC c) {
 
         areaView.addViewObject(factory.createBaseHominoid(currentPosition, c,  "TestFace"));
+
+    }
+
+    @Override
+    public void visitMount(Mount mount) {
+        System.out.println("adding mount to areaview");
+        ViewObject mountVO = factory.createBaseHominoid(currentPosition, mount, "mounty");
+        mount.addVO(mountVO);
+        mount.setFactory(factory);
+        areaView.addViewObject(mountVO);
 
     }
 
