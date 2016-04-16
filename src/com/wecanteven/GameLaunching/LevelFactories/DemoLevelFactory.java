@@ -132,6 +132,17 @@ public class DemoLevelFactory extends LevelFactory {
         map.getTile(getLocation(11,2,12)).setTerrain(new Current(Direction.SOUTHEAST));
         map.getTile(getLocation(12,2,12)).setTerrain(new Current(Direction.SOUTH));
         map.getTile(getLocation(12,3,12)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,11)).setTerrain(new Current(null));
+        map.getTile(getLocation(12,3,10)).setTerrain(new Current(null));
+        map.getTile(getLocation(12,3,9)).setTerrain(new Current(null));
+        map.getTile(getLocation(12,3,8)).setTerrain(new Current(null));
+        map.getTile(getLocation(12,3,7)).setTerrain(new Current(null));
+        map.getTile(getLocation(12,3,6)).setTerrain(new Current(null));
+        map.getTile(getLocation(12,3,5)).setTerrain(new Current(null));
+        map.getTile(getLocation(12,3,4)).setTerrain(new Current(null));
+        map.getTile(getLocation(12,3,3)).setTerrain(new Current(null));
+        map.getTile(getLocation(12,3,2)).setTerrain(new Current(null));
+
 
         //Clearing up portions
         (new HexColumn(getLocation(8,6, 2), 11)).iterator().forEachRemaining( (location) -> {

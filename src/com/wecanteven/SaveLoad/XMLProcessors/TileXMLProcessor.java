@@ -3,10 +3,7 @@ package com.wecanteven.SaveLoad.XMLProcessors;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactoryFactory;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
-import com.wecanteven.Models.Map.Terrain.Air;
-import com.wecanteven.Models.Map.Terrain.Current;
-import com.wecanteven.Models.Map.Terrain.Ground;
-import com.wecanteven.Models.Map.Terrain.Terrain;
+import com.wecanteven.Models.Map.Terrain.*;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.UtilityClasses.Direction;
@@ -94,6 +91,9 @@ public class TileXMLProcessor extends XMLProcessor {
                 break;
             case "Current":
                 terrain = new Current(EntityXMLProcessor.parseDirection(sf.getElemenetById(el, "CurrentDirection", 0)));
+                break;
+            case "Water":
+                terrain = new Water();
                 break;
             default:
                 terrain = new Ground();
