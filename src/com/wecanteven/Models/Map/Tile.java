@@ -62,7 +62,7 @@ public class Tile implements MapVisitable {
         if(this.entity.add(entity)){
             entity.lock();
             ModelTime.getInstance().registerAlertable(
-                    () -> interact(entity)
+                    () -> interactWithTile(entity)
                     , entity.getMovingTicks() + 1);
             return true;
         }else{
@@ -149,7 +149,7 @@ public class Tile implements MapVisitable {
         this.terrain = terrain;
     }
 
-    public void interact(Entity entity){
+    private void interactWithTile(Entity entity){
         //This interacts with tile you're on
         entity.unlock();
         hitBoxes.forEach(effect -> effect.interact(entity));
@@ -166,6 +166,13 @@ public class Tile implements MapVisitable {
             aoe.apply(entity);
         }
 
+        interactWithTile((Character) entity);
+    }
+
+    private void interactWithTile(Character character) {
+        for (TakeableItem item : takeableItems) {
+            character.pickup(item);
+        }
     }
 
     public void interact(Character character) {
