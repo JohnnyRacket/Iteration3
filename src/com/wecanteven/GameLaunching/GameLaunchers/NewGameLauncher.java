@@ -62,7 +62,8 @@ public class NewGameLauncher extends GameLauncher {
         //player.pickup(new DualWieldMeleeWeapon("Katar", 5, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.getItemStorage().equip(new ChestEquipableItem("Mediocre Top", 3, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         setAvatar(new Avatar(player, getMap()));
-        getMap().add(player, new Location(7,9,2));
+        getMap().add(player, new Location(16,12,2));
+
     }
 
     @Override

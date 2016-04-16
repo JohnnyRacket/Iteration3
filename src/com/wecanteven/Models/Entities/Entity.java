@@ -97,6 +97,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
         if(getDirection() == d){
             setDirection(d);
+            System.out.println("Going to " + getLocation().add(d.getCoords));
             Location destination = getLocation().add(d.getCoords);
             int moveTime = calculateMovementTicks(movementStat);
             return getActionHandler().move(this,destination,moveTime);
