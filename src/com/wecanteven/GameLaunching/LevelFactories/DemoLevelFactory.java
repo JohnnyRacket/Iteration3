@@ -395,7 +395,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void questNPC(Map map) {
         QuestedItem questItem = new QuestedItem("Quest Item", 0);
-        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Top Hat"), new Location(18, 18, 2));
+        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Top Hat"), new Location(18, 18, 1));
         ArrayList<String> startQuestDialog = new ArrayList<>();
         startQuestDialog.add("HELLO QUESTER!");
         startQuestDialog.add("This is an example of how quests work");
