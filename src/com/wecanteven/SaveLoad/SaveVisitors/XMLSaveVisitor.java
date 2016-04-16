@@ -1,10 +1,8 @@
 package com.wecanteven.SaveLoad.SaveVisitors;
 
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
-import com.wecanteven.Models.Entities.Avatar;
+import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
-import com.wecanteven.Models.Entities.Entity;
-import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
@@ -141,6 +139,11 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         saveDirection(npc.getDirection());
         npc.getStats().accept(this);
         npc.getItemStorage().accept(this);
+
+    }
+
+    @Override
+    public void visitMount(Mount mount) {
 
     }
 

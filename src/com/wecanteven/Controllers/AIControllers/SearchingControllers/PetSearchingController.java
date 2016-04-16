@@ -5,6 +5,7 @@ import com.wecanteven.Controllers.AIControllers.Targets.FriendlyTarget;
 import com.wecanteven.Controllers.AIControllers.Targets.ItemTarget;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
@@ -46,6 +47,11 @@ public class PetSearchingController extends AbstractSearchingController {
     public void visitNPC(NPC n) {
         this.setTarget(n);
         n.getOccupation().accept(this);
+    }
+
+    @Override
+    public void visitMount(Mount mount) {
+
     }
 
     @Override

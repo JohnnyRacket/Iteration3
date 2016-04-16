@@ -3,6 +3,7 @@ package com.wecanteven.Controllers.AIControllers.SearchingControllers;
 import com.wecanteven.Controllers.AIControllers.Targets.EnemyTarget;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
@@ -21,6 +22,10 @@ import com.wecanteven.Models.Occupation.*;
  * Created by John on 4/13/2016.
  */
 public class EnemySearchingController extends AbstractSearchingController {
+    @Override
+    public void visitMount(Mount mount) {
+
+    }
 
     public EnemySearchingController(Character character, Map map, int searchRadius) {
         super(character, map, searchRadius);

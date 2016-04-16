@@ -312,6 +312,7 @@ public class DemoLevelFactory extends LevelFactory {
         line(23,13,2,Direction.SOUTH, 2, groundMaker);
         line(22,17,1,Direction.NORTHWEST, 2, groundMaker);
         line(18,15,2,Direction.SOUTHEAST, 2, groundMaker);
+        line(3,19,0,Direction.SOUTHWEST, 4, groundMaker);
 
 
 
@@ -381,6 +382,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void mount(Map map) {
         Mount mount = new Mount(map, Direction.SOUTH);
+        mount.setJumpHeight(5);
         System.out.println("ADDING THE MOUNT TO THE MAPPPPP");
         map.add(mount, new Location(16,10,2));
     }
@@ -429,9 +431,9 @@ public class DemoLevelFactory extends LevelFactory {
         startQuestDialog.add("Go and get the questable item!");
 
         ArrayList<String> endQuestDialog = new ArrayList<>();
-        endQuestDialog.add("HELLO QUESTER!");
-        endQuestDialog.add("This is an example of how quests work");
-        endQuestDialog.add("Go and get the questable item!");
+        endQuestDialog.add("Oh! My! Lawd!");
+        endQuestDialog.add("You found the item I was looking for!");
+        endQuestDialog.add("Here, take this top hat! Goodbye!");
 
         QuestDialogInteractionStrategy questIter = new QuestDialogInteractionStrategy(startQuestDialog, endQuestDialog, quest);
 
