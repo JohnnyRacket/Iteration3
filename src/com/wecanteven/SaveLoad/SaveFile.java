@@ -97,7 +97,7 @@ public class SaveFile {
         catch (Exception e)
         {
             doc = null;
-            System.out.println("Error converting file to Document");
+
             e.printStackTrace();
         }
         return doc;
@@ -109,11 +109,11 @@ public class SaveFile {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             return builder.parse(file);
         } catch (ParserConfigurationException e) {
-            System.out.println("ParserError");
+
         } catch (SAXException e) {
-            System.out.println("SAXException");
+
         } catch (IOException e) {
-            System.out.println("IOException");
+
         }
         return null;
     }
@@ -147,10 +147,10 @@ public class SaveFile {
                 result = true;
             }
             catch(SecurityException se) {
-                System.out.println("Error in SaveFile Security Exception");
+
             }
             if(result) {
-                System.out.println("DIR created");
+
             }
         }
         file = getFileFromRes(fileName);
@@ -173,7 +173,7 @@ public class SaveFile {
             new FileOutputStream(PATH + fileName, false).close();
             return new File(PATH + fileName);
         } catch (IOException e) {
-            System.out.println("Error creating/getting file");
+
             e.printStackTrace();
             return null;
         }

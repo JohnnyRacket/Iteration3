@@ -18,7 +18,7 @@ public class LevelUpAoe extends CoolDownAoE {
     @Override
     protected void executeEffect(Entity entity) {
         entity.levelUp();
-        System.out.println("Entity leveled up");
+
     }
 
     @Override

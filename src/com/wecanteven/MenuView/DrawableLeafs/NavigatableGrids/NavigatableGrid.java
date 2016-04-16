@@ -50,7 +50,7 @@ public class NavigatableGrid extends Drawable implements Navigatable, Navigatabl
                 return;
             }
             if (index == list.getCurrentIndex() && active) {
-                //System.out.println(list.getCurrentIndex());
+                //
                 SelectableItem current = iter.next();
                 g2d.setColor(new Color(1f,1f,1f,.4f));
                 g2d.fillRect(offsetX + calculatedPadding / 2, offsetY + calculatedPadding/2, itemWidth, itemHeight);

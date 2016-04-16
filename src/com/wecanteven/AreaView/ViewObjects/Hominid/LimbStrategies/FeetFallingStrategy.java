@@ -37,7 +37,7 @@ public class FeetFallingStrategy extends LimbStrategy {
 
     @Override
     public void animate(double percentage) {
-        System.out.println("FALLING ANIMATE");
+
 //        leftFoot.setTangent(-maxTangent*Math.sin(percentage*2*Math.PI));
 //        rightFoot.setTangent(-maxTangent*Math.sin(percentage*2*Math.PI));
 //        leftFoot.setHeight(calcPosition(percentage));

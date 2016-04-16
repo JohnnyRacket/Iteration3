@@ -82,7 +82,7 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
 
     @Override
     public void visitNPC(NPC npc) {
-        System.out.println("Visiting an NPC");
+
         npc.getItemStorage().accept(this);
     }
 
@@ -133,12 +133,12 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
         if (inPlayerInv) {
-            System.out.println("Adding takeable: " + takeable.getName() + " to players");
+
             playerInvList.addItem(new GridItem(takeable.getName(), () -> {
                 factory.createSellableItemMenu(shopOwner, buyer, takeable);
             }));
         }else {
-            System.out.println("Adding takeable: " + takeable.getName() + " to shopowner");
+
             shopOwnerInvList.addItem(new GridItem(takeable.getName(), () -> {
                 factory.createBuyableItemMenu(this, shopOwner, buyer, takeable);
             }));

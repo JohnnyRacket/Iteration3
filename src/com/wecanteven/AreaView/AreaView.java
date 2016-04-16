@@ -67,7 +67,7 @@ public class AreaView extends JPanel {
 //                avatar.setDirection(Direction.NORTHEAST);
 //                avatar.setLocation(new Location(4,0,1));
 //                avatar.setMovingTicks(20);
-//                System.out.println("TEST");
+//
 //            }, 2*half + full*i);
 //
 //            ViewTime.getInstance().register(() -> {
@@ -80,7 +80,7 @@ public class AreaView extends JPanel {
 //                avatar.setDirection(Direction.SOUTH);
 //                avatar.setLocation(new Location(5,1,1));
 //                avatar.setMovingTicks(20);
-//                System.out.println("TEST2");
+//
 //            }, 4*half + full*i);
 //
 ////            ViewTime.getInstance().register(() -> {
@@ -215,7 +215,7 @@ public class AreaView extends JPanel {
         }
 
         private TileViewObject get(int x, int y, int z) {
-            //System.out.println("" + x + ", " + y + ", " + z);
+            //
             return cube.get(y).get(z).get(x);
         }
 

@@ -60,7 +60,7 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
         if(!hasSubject())
             return;
         if (subject.hasItem()) {
-            System.out.println("EQUIPING: " + subject.getItem().getName());
+
             equipment = factory.createEquipment(getPosition(),entitySubject, subject.getItem().getName());
         } else {
             if(hasEquipment()) {

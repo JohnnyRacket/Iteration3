@@ -99,7 +99,7 @@ public class EquippableUIObjectCreationVisitor implements ItemStorageVisitor, It
         while(iter.hasNext()){
             TakeableItem item = iter.next();
             item.accept(this);
-            System.out.println(item.getName());
+
         }
     }
 
@@ -132,12 +132,12 @@ public class EquippableUIObjectCreationVisitor implements ItemStorageVisitor, It
     public void visitEquipableItem(EquipableItem equipable) {
         if(inInv) {
             inventoryItems.addItem(new GridItem(equipable.getName(), () -> {
-                System.out.println("select hit on equppable item");
+
                 factory.createEquippableItemMenu(character, invHolder, eqHolder, equipable);
             }));
         }else{
             equippedItems.addItem(new GridItem(equipable.getName(), () -> {
-                System.out.println("select hit on equpped item");
+
                 factory.createEquippedItemMenu(character, invHolder, eqHolder, equipable);
             }));
         }

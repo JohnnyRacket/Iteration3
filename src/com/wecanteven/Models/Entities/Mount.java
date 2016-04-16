@@ -22,11 +22,11 @@ public class Mount extends Character {
   }
 
   public void mount() {
-    System.out.println("I am being mounted bloooppp");
+
   }
 
   public void dismount() {
-    System.out.println("I am being dismounted blooooop");
+
   }
 
   @Override

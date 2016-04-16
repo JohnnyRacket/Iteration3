@@ -32,7 +32,7 @@ public abstract class AbstractActionController implements TargetVisitor{
 //            Location currLocation = queue.remove();
 //            if(!visited.contains(currLocation)) {
 //                visited.add(currLocation);
-//                //System.out.println("Comparing R's: " + currLocation.getR() + "=" + targetLocation.getR() + " and S's: " + currLocation.getS() + "=" + targetLocation.getS());
+//                //
 //                if (currLocation.equals(targetLocation)) {
 //                    //we found the thing
 //                    Location prev = null;
@@ -58,7 +58,7 @@ public abstract class AbstractActionController implements TargetVisitor{
 //                            }
 //                        }
 //                    } catch (Exception e) {
-//                        //System.out.println("out of map bounds");
+//                        //
 //                    }
 //                }
 //            }

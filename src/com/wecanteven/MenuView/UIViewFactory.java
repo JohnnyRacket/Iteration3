@@ -121,7 +121,7 @@ public class UIViewFactory {
 
         NavigatableList skillList = new NavigatableList();
         skillList.addItem(new ScrollableMenuItem("placeholder skill", ()->{
-            System.out.println("you tried to level up palcehold skill kappafacenospace");
+
         }));
 
         ScrollableMenu skillMenu = new ScrollableMenu(300,650);
@@ -227,7 +227,7 @@ public class UIViewFactory {
         NavigatableList list = new NavigatableList();
         MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Equip", () ->{
-            System.out.println("equip pressed");
+
             character.equipItem(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
@@ -240,7 +240,7 @@ public class UIViewFactory {
             controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Drop", () ->{
-            System.out.println("drop pressed");
+
             character.drop(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
@@ -251,7 +251,7 @@ public class UIViewFactory {
             controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
-            System.out.println("cancel pressed");
+
             ViewTime.getInstance().register(() ->{
                 controller.popView();
 
@@ -278,7 +278,7 @@ public class UIViewFactory {
         NavigatableList list = new NavigatableList();
         MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Unequip", () ->{
-            System.out.println("unequip pressed");
+
             character.unequipItem(item);
             ViewTime.getInstance().register(() ->{
                 controller.popView();
@@ -289,7 +289,7 @@ public class UIViewFactory {
             controller.setMenuState(container);
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
-            System.out.println("cancel pressed");
+
             ViewTime.getInstance().register(() ->{
                 controller.popView();
                 visitor.visitCharacter(character);
@@ -328,7 +328,7 @@ public class UIViewFactory {
         TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
         MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Buy: " + item.getValue() + " Gold", () ->{
-            System.out.println("Buyable equip pressed");
+
             if(!buyer.getItemStorage().inventoryIsFull() && interactionStrategy.sell(item)){
                 shopOwner.getItemStorage().removeItem(item);
                 buyer.pickup(item);
@@ -347,7 +347,7 @@ public class UIViewFactory {
 
 
             ViewTime.getInstance().register(() ->{
-                System.out.println("Redrawing list instead of recreating List");
+
                 controller.popView();
                 visitor.visitBoth();
                 visitor.updateList();
@@ -356,7 +356,7 @@ public class UIViewFactory {
 
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
-            System.out.println("cancel pressed");
+
             ViewTime.getInstance().register(() ->{
                 controller.popView();
             },0);
@@ -381,7 +381,7 @@ public class UIViewFactory {
         NavigatableList list = new NavigatableList();
         TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
         list.addItem(new ScrollableMenuItem("Sell: " + item.getValue() + " Gold", () ->{
-            System.out.println("Trying to sell item");
+
             if(!shopOwner.getItemStorage().inventoryIsFull() && interactionStrategy.buy(item)){
                 buyer.getItemStorage().removeItem(item);
                 shopOwner.pickup(item);
@@ -396,8 +396,8 @@ public class UIViewFactory {
                     createToast(5, "The Shopkeeper can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
                 }
             }
-            System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
-            System.out.println("Shopper Bal: " + buyer.getItemStorage().getMoney().getValue());
+
+
             ViewTime.getInstance().register(() ->{
                 controller.popView();
                 createTradeView(shopOwner, buyer, false);
@@ -405,7 +405,7 @@ public class UIViewFactory {
 
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
-            System.out.println("cancel pressed");
+
             ViewTime.getInstance().register(() ->{
                 controller.popView();
                 createTradeView(shopOwner, buyer, false);
@@ -658,19 +658,19 @@ public class UIViewFactory {
         return new ScrollableMenuItem("Save", ()->{
             NavigatableList loadList = new NavigatableList();
             loadList.addItem(new ScrollableMenuItem("Slot 1", ()->{
-                System.out.println("Trying to Save");
+
                 new SaveToXMLFile("save1.xml").saveGame();
                 exitMenu();
                 createToast(5, "Successful save to Slot 1");
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 2", ()->{
-                System.out.println("Trying to Save");
+
                 new SaveToXMLFile("save2.xml").saveGame();
                 exitMenu();
                 createToast(5, "Successful save to Slot 2");
             }));
             loadList.addItem(new ScrollableMenuItem("Slot 3", ()->{
-                System.out.println("Trying to Save");
+
                 new SaveToXMLFile("save3.xml").saveGame();
                 exitMenu();
                 createToast(5, "Successful save to Slot 3");

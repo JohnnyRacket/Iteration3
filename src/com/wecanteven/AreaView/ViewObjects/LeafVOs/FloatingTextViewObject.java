@@ -57,9 +57,9 @@ public class FloatingTextViewObject extends LeafViewObject{
         float percentage = calculatePercentage();
         adjustTransparency(percentage);
         adjustPosition(percentage);
-        System.out.println("%: " + percentage);
-        System.out.println("Transp: " + transparency);
-        System.out.println("Position: " + getPosition());
+
+
+
 
         if (ViewTime.getInstance().getCurrentTime() < endTime) {
             ViewTime.getInstance().register( this::tick, 20);
@@ -73,10 +73,10 @@ public class FloatingTextViewObject extends LeafViewObject{
     }
 
     private float calculatePercentage() {
-        System.out.println(ViewTime.getInstance().getCurrentTime());
-        System.out.println(startTime);
-        System.out.println((ViewTime.getInstance().getCurrentTime() - startTime));
-        System.out.println((double)(endTime - startTime));
+
+
+
+
         return (float)((double)(ViewTime.getInstance().getCurrentTime() - startTime)/(endTime - startTime));
     }
 

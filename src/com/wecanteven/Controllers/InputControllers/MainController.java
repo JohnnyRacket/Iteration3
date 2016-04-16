@@ -41,7 +41,7 @@ public class MainController implements Tickable{
         if (state != null) {
             state.destroyKeyBindings();
             menuState.setMenus(null);
-            System.out.println("bloopey");
+
         }
     }
 
@@ -93,13 +93,13 @@ public class MainController implements Tickable{
     @Override
     public void tick() {
         if(state.getCommandToExecute() != null) {
-            //System.out.println("executing controller command");
+            //
             state.getCommandToExecute().execute();
             state.setCommandToExecute(null);
 
         }
         if(state.getContinuousCommandToExecute() != null) {
-            //System.out.println("executing controller command");
+            //
             state.getContinuousCommandToExecute().execute();
             //state.setContinuousCommandToExecute(null);
 

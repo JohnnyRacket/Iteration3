@@ -65,13 +65,13 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void refreshStats(){
-        System.out.println("the entity healed: "+maxHealth.getStat());
+
         currentHealth.setStat(maxHealth.getStat());
         currentMana.setStat(maxMana.getStat());
     }
 
     public void addStats(StatsAddable statsAddable){
-        System.out.println("The entities Stats were modified" + statsAddable.getHealth());
+
         lives.add(statsAddable.getLives());
         strength.add(statsAddable.getStrength());
         agility.add(statsAddable.getAgility());

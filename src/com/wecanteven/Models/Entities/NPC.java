@@ -34,7 +34,7 @@ public class NPC extends Character {
     }
 
     public void accept(EntityVisitor visitor) {
-        System.out.println("Visiting NPC");
+
         visitor.visitNPC(this);
     }
 
