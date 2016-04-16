@@ -95,7 +95,7 @@ public class ItemMap {
 
     private void initializeEquipable() {
         EquipableItemFactory factory = new EquipableItemFactory();
-        //These are real items that are in the game:
+        //These are real items that are in the game: oh really....
         EquipableItemMap.put("Top Hat", () -> factory.vendHeadEquipableItem("Top Hat", 100, new StatsAddable(0,0,0,0,0,0,2,0,0)));
         EquipableItemMap.put("THE GAME CRASHER", () -> factory.vendHeadEquipableItem("THE GAME CRASHER", 1000, new StatsAddable(2,0,0,0,0,0,0,0,0)));
         EquipableItemMap.put("Katar", () -> factory.vendOneHandedMeleeWeapon("Katar", 50,  new StatsAddable(0,0,0,0,0,0,0,4,0)));
@@ -103,7 +103,7 @@ public class ItemMap {
         EquipableItemMap.put("Buyable Chestplate", () -> factory.vendChestplate("Buyable Chestplate", 10,  new StatsAddable(0,0,0,0,0,0,0,4,0)));
         EquipableItemMap.put("Buyable Penis", () -> factory.vendChestplate("Buyable Penis", 2,  new StatsAddable(0,0,0,0,0,0,0,4,0)));
 
-
+        EquipableItemMap.put("Merp Boots", () -> factory.vendBoots("Merp Boots", 3, new StatsAddable(0,0,0,0,0,0,10,0,0)));
 
 
         usedNames.addAll(EquipableItemMap.keySet());

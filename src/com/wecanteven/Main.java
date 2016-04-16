@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("hello world");
+        Thread.currentThread().setName("Main Thread (Controller)");
         ViewEngine engine = new ViewEngine();
         engine.setBackground(Config.BACKGROUNDBLUE);
         UIViewFactory factory = UIViewFactory.getInstance();

@@ -322,44 +322,44 @@ public class UIViewFactory {
         return null;
     }
     //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
-    public void createBuyableItemMenu(NPC shopOwner, Character buyer, TakeableItem item){
-        BuyableUIObjectCreationVisitor visitor = new BuyableUIObjectCreationVisitor(this, shopOwner, buyer);
-        shopOwner.accept(visitor);
-        NavigatableList npcList = visitor.getPlayerInvList();
-        buyer.accept(visitor);
-        NavigatableList playerList = visitor.getPlayerInvList();
+    public void createBuyableItemMenu(BuyableUIObjectCreationVisitor visitor, NPC shopOwner, Character buyer, TakeableItem item){
         NavigatableList list = new NavigatableList();
         TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
+        MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Buy: " + item.getValue() + " Gold", () ->{
-            System.out.println("equip pressed");
+            System.out.println("Buyable equip pressed");
             if(!buyer.getItemStorage().inventoryIsFull() && interactionStrategy.sell(item)){
                 shopOwner.getItemStorage().removeItem(item);
                 buyer.pickup(item);
-                createToast(5, "You've purchased a " + item.getName() + " for " + item.getValue() + " gold!");
+                createToast(3, "You've purchased a " + item.getName() + " for " + item.getValue() + " gold!");
             }else {
                 //PLAYER CANT BUY IF HIS INVENTORY IS FULL
-                if(shopOwner.getItemStorage().inventoryIsFull()){
-                    createToast(5, "Your inventory is full!");
+                if(buyer.getItemStorage().inventoryIsFull()){
+                    createToast(3, "Your inventory is full!");
 
                 }else {
                     //PLAYER CANT BUY IF HE DOESNT HAVE MONEY
                     createToast(5, "You can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
 
-                }            }
-            System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
-            System.out.println("Shopper Bal: " + buyer.getItemStorage().getMoney().getValue());
+                }
+            }
+
+
             ViewTime.getInstance().register(() ->{
+                System.out.println("Redrawing list instead of recreating List");
                 controller.popView();
-                createTradeView(shopOwner, buyer, true);
+                visitor.visitBoth();
+                visitor.updateList();
             },0);
+            controller.setMenuState(container);
 
         }));
         list.addItem(new ScrollableMenuItem("Cancel", () ->{
             System.out.println("cancel pressed");
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createTradeView(shopOwner, buyer, true);
             },0);
+            controller.setMenuState(container);
         }));
         ScrollableMenu menu = new ScrollableMenu(100,100);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
@@ -376,19 +376,19 @@ public class UIViewFactory {
 
     }
     //WHEN THE SHOPPER TRIES TO SELL TO THE SHOPKEEPER
-    public void createSellableItemMenu(NPC shopOwner, Character seller, TakeableItem item){
+    public void createSellableItemMenu(NPC shopOwner, Character buyer, TakeableItem item){
         NavigatableList list = new NavigatableList();
         TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
         list.addItem(new ScrollableMenuItem("Sell: " + item.getValue() + " Gold", () ->{
             System.out.println("Trying to sell item");
             if(!shopOwner.getItemStorage().inventoryIsFull() && interactionStrategy.buy(item)){
-                seller.getItemStorage().removeItem(item);
+                buyer.getItemStorage().removeItem(item);
                 shopOwner.pickup(item);
-                createToast(5, "You've sold a " + item.getName() + " for " + item.getValue() + " gold!");
+                createToast(3, "You've sold a " + item.getName() + " for " + item.getValue() + " gold!");
             }else {
                 //SHOPOWNER CANT BUY IF HIS INVENTORY IS FULL
                 if(shopOwner.getItemStorage().inventoryIsFull()){
-                    createToast(5, "Shop Owner's inventory is full!");
+                    createToast(3, "Shop Owner's inventory is full!");
 
                 }else {
                     //SHOPOWNER CANT BUY IF HE DOESNT HAVE MONEY
@@ -396,10 +396,10 @@ public class UIViewFactory {
                 }
             }
             System.out.println("Shopkeeper Bal: " + shopOwner.getItemStorage().getMoney().getValue());
-            System.out.println("Shopper Bal: " + seller.getItemStorage().getMoney().getValue());
+            System.out.println("Shopper Bal: " + buyer.getItemStorage().getMoney().getValue());
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createTradeView(shopOwner, seller, false);
+                createTradeView(shopOwner, buyer, false);
             },0);
 
         }));
@@ -407,7 +407,7 @@ public class UIViewFactory {
             System.out.println("cancel pressed");
             ViewTime.getInstance().register(() ->{
                 controller.popView();
-                createTradeView(shopOwner, seller, false);
+                createTradeView(shopOwner, buyer, false);
             },0);
         }));
         ScrollableMenu menu = new ScrollableMenu(100,100);
@@ -488,20 +488,19 @@ public class UIViewFactory {
         //VISIT THE PLAYER AND SHOP OWNER
         //CREATE THE VIEW
         //START THE VIEW
-        BuyableUIObjectCreationVisitor visitor = new BuyableUIObjectCreationVisitor(this, npc, player);
-        visitor.visitBoth();
-        NavigatableList npcList = visitor.getShopOwnerInvList();
-
-        NavigatableList playerList = visitor.getPlayerInvList();
-        //make menu
         NavigatableGrid npcInv = new NavigatableGrid(250, 400, 5, 5);
-        npcInv.setBgColor(Config.TEAL);
         NavigatableGrid playerInv = new NavigatableGrid(250, 400, 5, 5);
-        playerInv.setBgColor(Config.TEAL);
-        npcInv.setList(npcList);
-        playerInv.setList(playerList);
-        //make swappable view
 
+        BuyableUIObjectCreationVisitor visitor = new BuyableUIObjectCreationVisitor(this, npc, player, npcInv, playerInv);
+        visitor.visitBoth();
+        //make menu
+        npcInv.setBgColor(Config.TEAL);
+        npcInv.setList(visitor.getShopOwnerInvList());
+
+        playerInv.setBgColor(Config.TEAL);
+        playerInv.setList(visitor.getPlayerInvList());
+
+        //make swappable view
         SwappableView swappableView = new SwappableView();
         //add decorators to center the menu
         ColumnatedCompositeContainer columns  = new ColumnatedCompositeContainer();

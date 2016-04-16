@@ -8,10 +8,6 @@ import com.wecanteven.Controllers.AIControllers.Targets.*;
 public class EnemyActionController extends AbstractActionController {
 
 
-    @Override
-    public void visitAvatarTarget(AvatarTarget target) {
-
-    }
 
     @Override
     public void visitItemTarget(ItemTarget target) {

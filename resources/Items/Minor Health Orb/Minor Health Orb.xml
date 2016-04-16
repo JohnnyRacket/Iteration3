@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+    <x>20</x>
+    <y>20</y>
+    <rootPath>Items/Minor Health Orb/</rootPath>
+    <fileName>Minor Health Orb.png</fileName>
+    <fileName>null.png</fileName>
+</single_frame_animation>

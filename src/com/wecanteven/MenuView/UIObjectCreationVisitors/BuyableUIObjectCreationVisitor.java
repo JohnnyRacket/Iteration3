@@ -1,7 +1,9 @@
 package com.wecanteven.MenuView.UIObjectCreationVisitors;
 
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
+import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
+import com.wecanteven.MenuView.Navigatable;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
@@ -31,6 +33,8 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
 
     private NavigatableList playerInvList = new NavigatableList();
     private NavigatableList shopOwnerInvList = new NavigatableList();
+    private NavigatableGrid playerMenu;
+    private NavigatableGrid shopMenu;
     private UIViewFactory factory;
     private NPC shopOwner;
     private Character buyer;
@@ -42,12 +46,12 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
         this.buyer = buyer;
     }
 
-    public BuyableUIObjectCreationVisitor(UIViewFactory factory, NPC shopOwner, Character buyer, NavigatableList playerInvList, NavigatableList shopOwnerInvList){
+    public BuyableUIObjectCreationVisitor(UIViewFactory factory, NPC shopOwner, Character buyer, NavigatableGrid shopMenu, NavigatableGrid playerMenu){
         this.factory = factory;
         this.shopOwner = shopOwner;
         this.buyer = buyer;
-        this.playerInvList = playerInvList;
-        this.shopOwnerInvList = shopOwnerInvList;
+        this.playerMenu = playerMenu;
+        this.shopMenu = shopMenu;
     }
 
     public NavigatableList getPlayerInvList(){
@@ -59,6 +63,8 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
     }
 
     public void visitBoth() {
+        playerInvList = new NavigatableList();
+        shopOwnerInvList = new NavigatableList();
         shopOwner.accept(this);
         buyer.accept(this);
     }
@@ -81,9 +87,7 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
 
     @Override
     public void visitItemStorage(ItemStorage itemStorage) {
-        inPlayerInv = true;
-        playerInvList = new NavigatableList();
-        shopOwnerInvList = new NavigatableList();
+
     }
 
     @Override
@@ -128,12 +132,14 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
         if (inPlayerInv) {
+            System.out.println("Adding takeable: " + takeable.getName() + " to players");
             playerInvList.addItem(new GridItem(takeable.getName(), () -> {
                 factory.createSellableItemMenu(shopOwner, buyer, takeable);
             }));
         }else {
+            System.out.println("Adding takeable: " + takeable.getName() + " to shopowner");
             shopOwnerInvList.addItem(new GridItem(takeable.getName(), () -> {
-                factory.createBuyableItemMenu(shopOwner, buyer, takeable);
+                factory.createBuyableItemMenu(this, shopOwner, buyer, takeable);
             }));
         }
     }
@@ -158,11 +164,19 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
         visitTakeableItem(consumable);
     }
 
-    public void setPlayerInvList(NavigatableList playerInvList) {
-        this.playerInvList = playerInvList;
+
+    public NavigatableGrid getPlayerMenu() {
+        return playerMenu;
     }
 
-    public void setShopOwnerInvList(NavigatableList shopOwnerInvList) {
-        this.shopOwnerInvList = shopOwnerInvList;
+    public NavigatableGrid getShopMenu() {
+        return shopMenu;
     }
+
+    public void updateList() {
+        getPlayerMenu().setList(getPlayerInvList());
+        getShopMenu().setList(getShopOwnerInvList());
+    }
+
+
 }

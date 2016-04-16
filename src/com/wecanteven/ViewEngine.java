@@ -64,6 +64,7 @@ public class ViewEngine extends JFrame implements Runnable{
 
     public void start() {
         thread = new Thread(this);
+        thread.setName("View Thread");
         thread.start();
     }
 
