@@ -26,6 +26,7 @@ import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Occupation.Enemy;
+import com.wecanteven.Models.Occupation.Friendly;
 import com.wecanteven.Models.Occupation.Pet;
 import com.wecanteven.Models.Quests.QuestableItemReward;
 import com.wecanteven.Models.Stats.StatsAddable;
@@ -400,7 +401,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void weaponNPC(Map map) {
         //"Creating an NPC and Giving him a chest Plate
-        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.GRAY);
+        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), new Enemy(), GameColor.GRAY);
         npc.setOccupation(new Enemy());
         OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
         EnemySearchingController esc = new EnemySearchingController(npc,map,3);
@@ -418,7 +419,12 @@ public class DemoLevelFactory extends LevelFactory {
         dialog.add("Hello Avatar");
         dialog.add("You're an idiot and you're playing a dumb game");
         dialog.add("GTFO");
-        NPC npc = new NPC(map, Direction.SOUTHWEST, new DialogInteractionStrategy(dialog), GameColor.YELLOW);
+        NPC npc = new NPC(map, Direction.SOUTHWEST, new DialogInteractionStrategy(dialog), new Friendly(), GameColor.YELLOW);
+        EnemySearchingController esc = new EnemySearchingController(npc,map,3);
+        EnemyActionController eac = new EnemyActionController(npc,map);
+        AIController controller = new AIController(esc,eac);
+        npc.setController(controller);
+
         map.add(npc, new Location(9,8,2));
     }
 
@@ -437,12 +443,12 @@ public class DemoLevelFactory extends LevelFactory {
 
         QuestDialogInteractionStrategy questIter = new QuestDialogInteractionStrategy(startQuestDialog, endQuestDialog, quest);
 
-        NPC npc = new NPC(map, Direction.SOUTHWEST, questIter, GameColor.PINK);
+        NPC npc = new NPC(map, Direction.SOUTHWEST, questIter,new Friendly(),GameColor.PINK);
         map.add(npc, new Location(14,14,2));
     }
 
     public void tradeNPC(Map map) {
-        NPC npc = new NPC(map, Direction.SOUTHEAST, new TradeInteractionStrategy(), GameColor.YELLOW);
+        NPC npc = new NPC(map, Direction.SOUTHEAST, new TradeInteractionStrategy(),new Friendly(), GameColor.YELLOW);
         npc.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
         npc.pickup(new ChestEquipableItem("Buyable Penis", 5, null));
         map.add(npc, new Location(13, 14, 2));
