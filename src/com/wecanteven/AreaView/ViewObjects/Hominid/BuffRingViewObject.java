@@ -6,6 +6,8 @@ import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.Models.BuffManager.BuffManager;
+import com.wecanteven.Observers.Observer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.Random;
 /**
  * Created by Alex on 4/14/2016.
  */
-public class BuffRingViewObject implements ViewObject{
+public class BuffRingViewObject implements ViewObject, Observer{
     private ArrayList<Pair> buffs = new ArrayList<>();
 
     private ViewObjectFactory factory;
@@ -26,16 +28,15 @@ public class BuffRingViewObject implements ViewObject{
     long loopTime = 3000;
 
     private Position position;
+    private BuffManager subject;
 
-    public BuffRingViewObject(Position p, ViewObjectFactory factory) {
+    public BuffRingViewObject(Position p, ViewObjectFactory factory, BuffManager subject) {
         this.factory = factory;
         this.position = p;
-        //TEMP
-        ArrayList<String> names = new ArrayList<>();
-        names.add("Red");
-        names.add("Red");
-        names.add("Red");
-        addBuffs(names);
+
+        this.subject = subject;
+        subject.attach(this);
+        update();
         adjustBuffs();
     }
 
@@ -78,8 +79,9 @@ public class BuffRingViewObject implements ViewObject{
         }
     }
 
-    private void addBuffs(ArrayList<String> buffNames) {
+    private void setBuffs(ArrayList<String> buffNames) {
         buffs.clear();
+        if (buffNames.size() == 0) return;
         double angleOffset = 2*Math.PI/buffNames.size();
         for (int i = 0; i < buffNames.size(); i++) {
             MicroPositionableViewObject buff = factory.createBuff(getPosition(), buffNames.get(i));
@@ -93,6 +95,15 @@ public class BuffRingViewObject implements ViewObject{
         buff.setHeight(height);
         buff.setRadius(r);
         buff.setTangent(tangent);
+    }
+
+    @Override
+    public void update() {
+        ArrayList<String> buffNames = new ArrayList<>();
+        subject.getIterator().forEachRemaining( (buff) -> {
+            buffNames.add(buff.getName());
+        });
+        setBuffs(buffNames);
     }
 
     @Override

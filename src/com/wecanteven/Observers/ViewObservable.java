@@ -17,6 +17,9 @@ public interface ViewObservable {
         ModelTime.getInstance().registerAlertable(() -> getObservers().remove(o), 1);
     }
     default void notifyObservers() {
-        ViewTime.getInstance().register( () -> getObservers().forEach( Observer::update ), 1 );
+        ArrayList<Observer> observers = new ArrayList<>();
+
+        getObservers().forEach( (observer) -> observers.add(observer) );
+        ViewTime.getInstance().register( () -> observers.forEach( Observer::update ), 1 );
     }
 }

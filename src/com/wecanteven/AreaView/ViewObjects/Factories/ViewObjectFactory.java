@@ -165,7 +165,7 @@ public abstract class ViewObjectFactory {
         FeetViewObject feet = new FeetViewObject(Direction.SOUTH, leftFoot, rightFoot);
 
         //Create the buff thingy
-        BuffRingViewObject buffs = new BuffRingViewObject(p, this);
+        BuffRingViewObject buffs = new BuffRingViewObject(p, this, character.getBuffmanager());
 
         //Finnally create the Hominoid
         HominidViewObject hominoid = new  HominidViewObject(
