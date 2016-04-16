@@ -158,21 +158,12 @@ public class DemoLevelFactory extends LevelFactory {
         return map;
     }
 
-
     private Location getLocation(int r, int s, int z) {
         return new Location(r+rOffset, s+sOffset, z);
     }
 
     @Override
     public void populateMap(Map map) {
-
-
-//        areasOfEffect(map);
-//        weaponNPC(map);
-//        dialogNPC(map);
-//        tradeNPC(map);
-
-
         areasOfEffect(map);
         items(map);
         weaponNPC(map);
@@ -229,10 +220,32 @@ public class DemoLevelFactory extends LevelFactory {
     }
 
     public void items(Map map) {
+
+        //One shot
         map.add(ItemMap.getInstance().getItemAsOneShot("Major Movement Buff"), new Location(1,15,2));
         map.add(ItemMap.getInstance().getItemAsOneShot("Minor Mana Orb"), new Location(2,15,2));
         map.add(ItemMap.getInstance().getItemAsOneShot("Major Mana Orb"), new Location(3,15,2));
         map.add(ItemMap.getInstance().getItemAsOneShot("Minor Health Orb"), new Location(4,15,2));
         map.add(ItemMap.getInstance().getItemAsOneShot("Major Health Orb"), new Location(5,15,3));
+
+        //Interactive Item??????
+        /* TODO implement this */
+
+        //Obstacle
+        map.add(ItemMap.getInstance().getItemAsObstacle("Crate"), new Location(1,14,2));
+        map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(2,14,2));
+
+        //Equipable
+        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+
+        //Consumeable
     }
 }
