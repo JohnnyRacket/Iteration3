@@ -342,7 +342,7 @@ public abstract class ViewObjectFactory {
                         hexDrawingStrategy),
                 takeableItem,
                 areaView,
-                100);
+                1);
         return destroyableViewObject;
     }
 

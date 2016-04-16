@@ -177,7 +177,7 @@ public class Tile implements MapVisitable {
             TakeableItem item = iter.next();
 
             if (!character.getItemStorage().inventoryIsFull()) {
-                character.pickup(item);
+                item.interact(character);
                 iter.remove();
             }
         }

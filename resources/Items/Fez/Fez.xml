@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+    <x>25</x>
+    <y>25</y>
+    <rootPath>Items/Fez/</rootPath>
+    <fileName>Fez.png</fileName>
+    <fileName>null.png</fileName>
+</single_frame_animation>
