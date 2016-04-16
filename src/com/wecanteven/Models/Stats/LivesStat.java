@@ -23,6 +23,7 @@ public class LivesStat extends PrimaryStat implements Observer {
     public void add(int addable){
         if(addable == 0) return;
         stat += addable;
+        if(addable<0) modelNotifyObservers();
     }
     public void update(){
 

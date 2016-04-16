@@ -33,6 +33,7 @@ import com.wecanteven.UtilityClasses.*;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by alexs on 4/14/2016.
  */
@@ -219,9 +220,9 @@ public class DemoLevelFactory extends LevelFactory {
         map.getTile(getLocation(12,3,7)).setTerrain(new Current(Direction.SOUTH));
         map.getTile(getLocation(12,3,6)).setTerrain(new Current(Direction.SOUTH));
         map.getTile(getLocation(12,3,5)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,4)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,3)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,2)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,4)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(12,3,3)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(12,3,2)).setTerrain(new Current(Direction.NORTHWEST));
 
         //MAKES TUNNEL
         map.getTile(getLocation(9, 4, 2)).setTerrain(new Air());
@@ -259,14 +260,14 @@ public class DemoLevelFactory extends LevelFactory {
         map.getTile(getLocation(12,8,1)).setTerrain(new Current(Direction.SOUTH));
         map.getTile(getLocation(12,9,1)).setTerrain(new Current(Direction.SOUTH));
         map.getTile(getLocation(12,10,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
+        //smap.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
 
-        (new FilledHex(getLocation(16,6,0), 6)).iterator().forEachRemaining( (location) -> {
-            map.getTile(location).setTerrain(new Ground());
-        });
-        (new HexLine(getLocation(11,5,0), Direction.NORTHEAST, 4 )).iterator().forEachRemaining( (location) -> {
-            map.getTile(location).setTerrain(new Ground());
-        });
+        //sand under Lake
+        biomePaint = desertLocations;
+        filled(16,7,0,7, groundMaker);
+        line(14 ,2, 0, Direction.SOUTHWEST, 4, groundMaker);
+
+
 
 //        (new HexColumn(getLocation(7,13, 2), 6)).iterator().forEachRemaining( (location) -> {
 //            map.getTile(location).setTerrain(new Ground());

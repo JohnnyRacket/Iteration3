@@ -8,6 +8,7 @@ import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
+import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
@@ -121,8 +122,8 @@ public class Character extends Entity {
     }
 
     @Override
-    public void levelUp() {
-        getStats().addStats(occupation.getStatsAddable());
+    public StatsAddable getLevelUpStats() {
+        return occupation.getStatsAddable();
     }
 
     public Occupation getOccupation() {
