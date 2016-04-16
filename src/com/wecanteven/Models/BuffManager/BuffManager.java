@@ -28,14 +28,17 @@ public class BuffManager implements ViewObservable {
 
     void addUninterruptable(Buff buff) {
         buffList.add(buff);
+        notifyObservers();
     }
 
     void addInterruptable(InterruptableBuff buff) {
         interruptables.add(buff);
+        notifyObservers();
     }
 
     void addTickable(TickableBuff buff) {
         buffList.add(buff);
+        notifyObservers();
     }
 
     void apply(BuffApply buff) {
@@ -54,6 +57,7 @@ public class BuffManager implements ViewObservable {
 
     void notifyExpired(Buff buff) {
         buffList.remove(buff);
+        notifyObservers();
         System.out.println("Buff manager notified of buff expiration");
         System.out.println("Number of buffs: " + buffList.size());
     }
