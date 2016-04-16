@@ -42,6 +42,7 @@ public class Column {
     public Tile getTile(int zLevel) {
         return tiles.get(zLevel);
     }
+    public void setTile(Tile tile, int zLevel) { tiles.set(zLevel, tile); }
     public int getZ() {
         return z;
     }
@@ -87,6 +88,15 @@ public class Column {
 
     public void accept(ColumnVisitor visitor) {
         visitor.visitColumn(this);
+    }
+
+    public boolean isEmpty() {
+        for(int i = 0; i < getZ(); ++i) {
+            if(!tiles.get(i).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public String toString() {

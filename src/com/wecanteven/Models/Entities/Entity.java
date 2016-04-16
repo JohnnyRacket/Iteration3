@@ -60,6 +60,10 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         buffmanager = new BuffManager(this);
     }
 
+    public BuffManager getBuffmanager() {
+        return buffmanager;
+    }
+
     @Override
     public ArrayList<Observer> getObservers() {
         return observers;

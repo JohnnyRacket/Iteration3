@@ -5,17 +5,17 @@ import com.wecanteven.AreaView.Biomes.DefaultBiome;
 import com.wecanteven.AreaView.ViewObjects.Factories.PlainsFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.Models.Entities.NPC;
+import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.NoInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
-import com.wecanteven.Models.Map.Aoe.HealingAreaOfEffect;
-import com.wecanteven.Models.Map.Aoe.TakeDamageAreaOfEffect;
-import com.wecanteven.Models.Map.Aoe.TeleportAoe;
+import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
+import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.Stats.StatsAddable;
@@ -34,7 +34,7 @@ public class DemoLevelFactory extends LevelFactory {
     @Override
     public Map createMap() {
         Map map = new Map(40, 40, 20);
-
+        map.setName("DemoLevelFactory");
 
         rOffset = 0;
         sOffset = 0;
@@ -125,13 +125,36 @@ public class DemoLevelFactory extends LevelFactory {
         });
 
         //River
-        map.getTile(getLocation(7,2,14)).setTerrain(new Water());
-        map.getTile(getLocation(8,2,14)).setTerrain(new Water());
-        map.getTile(getLocation(9,2,14)).setTerrain(new Water());
-        map.getTile(getLocation(10,2,12)).setTerrain(new Water());
-        map.getTile(getLocation(11,2,12)).setTerrain(new Water());
-        map.getTile(getLocation(12,2,12)).setTerrain(new Water());
-        map.getTile(getLocation(12,3,12)).setTerrain(new Water());
+        map.getTile(getLocation(7,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(8,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(9,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(10,2,12)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(11,2,12)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(12,2,12)).setTerrain(new Current(Direction.SOUTH));
+        //WATERFALL
+        map.getTile(getLocation(12,3,12)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,11)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,10)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,9)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,8)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,7)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,6)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,5)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,4)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,3)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,2)).setTerrain(new Current(Direction.SOUTH));
+
+        //MAKES TUNNEL
+        map.getTile(getLocation(9, 4, 2)).setTerrain(new Air());
+        map.getTile(getLocation(9, 4, 3)).setTerrain(new Air());
+        map.getTile(getLocation(9, 4, 4)).setTerrain(new Air());
+
+        for(int i = 8; i < 12; ++i){
+            map.getTile(getLocation(i, 3, 2)).setTerrain(new Air());
+            map.getTile(getLocation(i, 3, 3)).setTerrain(new Air());
+            map.getTile(getLocation(i, 3, 4)).setTerrain(new Air());
+        }
+        //END OF MAKE TUNNEL
 
         //Clearing up portions
         (new HexColumn(getLocation(8,6, 2), 11)).iterator().forEachRemaining( (location) -> {
@@ -150,6 +173,21 @@ public class DemoLevelFactory extends LevelFactory {
             map.getTile(location).setTerrain(new Water());
         });
 
+        map.getTile(getLocation(12,4,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,5,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,6,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,7,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,8,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,9,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,10,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
+
+        (new FilledHex(getLocation(16,6,0), 6)).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(new Ground());
+        });
+        (new HexLine(getLocation(11,5,0), Direction.NORTHEAST, 4 )).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(new Ground());
+        });
 
 //        (new HexColumn(getLocation(7,13, 2), 6)).iterator().forEachRemaining( (location) -> {
 //            map.getTile(location).setTerrain(new Ground());
@@ -159,7 +197,6 @@ public class DemoLevelFactory extends LevelFactory {
         return map;
     }
 
-
     private Location getLocation(int r, int s, int z) {
         return new Location(r+rOffset, s+sOffset, z);
     }
@@ -167,10 +204,10 @@ public class DemoLevelFactory extends LevelFactory {
     @Override
     public void populateMap(Map map) {
         areasOfEffect(map);
+        items(map);
         weaponNPC(map);
         dialogNPC(map);
         tradeNPC(map);
-        map.getTile(10,10,2).add(new TakeDamageAreaOfEffect(1));
     }
 
     @Override
@@ -188,7 +225,7 @@ public class DemoLevelFactory extends LevelFactory {
     }
 
     public void dialogNPC(Map map) {
-        ArrayList<String> dialog = new ArrayList<String>();
+        ArrayList<String> dialog = new ArrayList<>();
         dialog.add("Hello Avatar");
         dialog.add("You're an idiot and you're playing a dumb game");
         dialog.add("GTFO");
@@ -205,10 +242,50 @@ public class DemoLevelFactory extends LevelFactory {
     }
 
     public void areasOfEffect(Map map) {
+        TakeDamageAreaOfEffect tkdmgAoe = new TakeDamageAreaOfEffect(1);
+        map.add(tkdmgAoe, new Location(1,16,2));
+
         TeleportAoe teleAoe = new TeleportAoe(new Location(7,4,15));
-        map.add(teleAoe, new Location(8,8,2));
+        map.add(teleAoe, new Location(2, 16, 2));
 
         HealingAreaOfEffect healAoe = new HealingAreaOfEffect(1);
-        map.add(healAoe, new Location(8,15,2));
+        map.add(healAoe, new Location(3,16,2));
+
+        LevelUpAoe levelUpAoe = new LevelUpAoe(300);
+        map.add(levelUpAoe,new Location(4,16,2));
+
+        InstaDeathAoe deathAoe = new InstaDeathAoe();
+        map.add(deathAoe, new Location(5,16,2));
+    }
+
+    public void items(Map map) {
+
+        //One shot
+        map.add(ItemMap.getInstance().getItemAsOneShot("Major Movement Buff"), new Location(1,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Minor Mana Orb"), new Location(2,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Major Mana Orb"), new Location(3,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Minor Health Orb"), new Location(4,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Major Health Orb"), new Location(5,15,3));
+
+        //Interactive Item??????
+        /* TODO implement this */
+
+        //Obstacle
+        map.add(ItemMap.getInstance().getItemAsObstacle("Crate"), new Location(1,14,2));
+        map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(2,14,2));
+
+        //Equipable
+        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3, 14, 2));
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+
+        //Consumeable
     }
 }

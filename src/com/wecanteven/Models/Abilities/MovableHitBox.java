@@ -4,10 +4,7 @@ import com.wecanteven.AreaView.VOCreationVisitor;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.StatsAddable;
-import com.wecanteven.Observers.Directional;
-import com.wecanteven.Observers.Moveable;
-import com.wecanteven.Observers.Observer;
-import com.wecanteven.Observers.ViewObservable;
+import com.wecanteven.Observers.*;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanMoveVisitor;
@@ -18,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by Brandon on 4/11/2016.
  */
-public class MovableHitBox extends HitBox implements Moveable, ViewObservable, Directional {
+public class MovableHitBox extends HitBox implements Moveable, ViewObservable, Directional, Destroyable {
     private CanMoveVisitor canMoveVisitor;
     private int movingTicks=0;
     private boolean isActive;
@@ -29,7 +26,7 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
     private ArrayList<Observer> observers;
 
     public MovableHitBox(String name, Location source, StatsAddable effect, ActionHandler actionHandler){
-        super(name,source,effect,actionHandler);
+        super(name,source,effect,actionHandler,0);
         observers = new ArrayList<>();
 
         setCanMoveVisitor(new TerranianCanMoveVisitor());
@@ -49,8 +46,10 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
         move(getLocation().add(direction.getCoords), speed);
     }
     private void move(Location destination,int speed){
-        if(count >= distance && canMove){
+        if(count >= distance || !canMove){
             getActionHandler().remove(this,getLocation());
+            isDestroyed = true;
+            notifyObservers();
             return;
         }
         canMove = getActionHandler().move(this,destination,speed);
@@ -90,7 +89,6 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
         setMovingTicks(calculateMovementTicks(ticks));
         calculateActiveStatus();
         tickTicks();
-        //notifyObservers();
     }
 
     private void tickTicks(){
@@ -123,4 +121,9 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
         visitor.visitMovableHitBox(this);
     }
 
+    private boolean isDestroyed = false;
+    @Override
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
 }

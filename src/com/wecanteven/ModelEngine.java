@@ -44,6 +44,7 @@ public class ModelEngine implements Runnable{
     public void start() {
         if(modelEngineThread == null) {
             modelEngineThread = new Thread(this);
+            modelEngineThread.setName("Model Thread");
             modelEngineThread.start();
         }
     }

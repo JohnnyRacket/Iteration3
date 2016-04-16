@@ -1,5 +1,6 @@
 package com.wecanteven.Controllers.AIControllers.SearchingControllers;
 
+import com.wecanteven.Controllers.AIControllers.Targets.EnemyTarget;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Entities.NPC;
@@ -23,7 +24,9 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitCharacter(Character c) {
-        c.getOccupation();
+        this.setTarget(c);
+        c.getOccupation().accept(this);
+
     }
 
     @Override
@@ -38,7 +41,10 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitTile(Tile tile) {
-
+        Character character = (Character) tile.getEntity();//this is dangerous
+        if(character != null){
+            character.accept(this);
+        }
     }
 
     @Override
@@ -48,21 +54,21 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitPet(Pet pet) {
-
+        this.addNewTarget(new EnemyTarget(2,this.getTarget().getLocation()));
     }
 
     @Override
     public void visitSmasher(Smasher smasher) {
-
+        this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
     }
 
     @Override
     public void visitSneak(Sneak sneak) {
-
+        this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
     }
 
     @Override
     public void visitSummoner(Summoner summoner) {
-
+        this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
     }
 }

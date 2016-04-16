@@ -30,14 +30,14 @@ public class HominidViewObject implements ViewObject, Observer{
 
     private HandsViewObject hands;
     private FeetViewObject feet;
-
+    private BuffRingViewObject buffs;
     private JumpDetector jumpDetector;
 
     //private FeetViewObject feet;
 
     private Location lastLocation;
 
-    public HominidViewObject(Position position, Entity entity, ViewObject body, ViewObject head, HandsViewObject hands, FeetViewObject feet, JumpDetector jumpDetector) {
+    public HominidViewObject(Position position, Entity entity, ViewObject body, ViewObject head, HandsViewObject hands, FeetViewObject feet, BuffRingViewObject buffs, JumpDetector jumpDetector) {
         this.position = position;
         this.directionSubject = entity;
         this.movingSubject = entity;
@@ -45,8 +45,10 @@ public class HominidViewObject implements ViewObject, Observer{
         this.head = head;
         this.hands = hands;
         this.feet = feet;
+        this.buffs = buffs;
         this.lastLocation = movingSubject.getLocation();
         this.jumpDetector = jumpDetector;
+
 
         entity.attach(this);
         update();
@@ -68,8 +70,9 @@ public class HominidViewObject implements ViewObject, Observer{
         updateHandsPosition();
         updateFeetPosition();
         updateHeadPosition();
+        updateBuffsPosition();
     }
-
+    private void updateBuffsPosition() {buffs.setPosition(position);}
     private void updateFeetPosition() {
         feet.setPosition(position);
     }
@@ -81,6 +84,7 @@ public class HominidViewObject implements ViewObject, Observer{
         feet.draw(g);
         body.draw(g);
         head.draw(g);
+        buffs.draw(g);
         hands.drawForeground(g);
     }
 
