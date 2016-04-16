@@ -1,9 +1,9 @@
 package com.wecanteven.GameLaunching.LevelFactories;
 
 import com.wecanteven.AreaView.Biomes.Biome;
+import com.wecanteven.AreaView.Biomes.CustomBiome;
 import com.wecanteven.AreaView.Biomes.DefaultBiome;
-import com.wecanteven.AreaView.ViewObjects.Factories.PlainsFactory;
-import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
+import com.wecanteven.AreaView.ViewObjects.Factories.*;
 import com.wecanteven.Controllers.AIControllers.AIController;
 import com.wecanteven.Controllers.AIControllers.ActionControllers.EnemyActionController;
 import com.wecanteven.Controllers.AIControllers.SearchingControllers.EnemySearchingController;
@@ -17,10 +17,7 @@ import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
 import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
-import com.wecanteven.Models.Map.Terrain.Air;
-import com.wecanteven.Models.Map.Terrain.Current;
-import com.wecanteven.Models.Map.Terrain.Ground;
-import com.wecanteven.Models.Map.Terrain.Water;
+import com.wecanteven.Models.Map.Terrain.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.*;
@@ -35,9 +32,23 @@ public class DemoLevelFactory extends LevelFactory {
     private int rOffset;
     private int sOffset;
 
+    private final int mapWidth = 40;
+    private final int mapLength = 40;
+    private final int mapHeight = 20;
+
+    private ArrayList<Location> desertLocations = new ArrayList<>();
+    private ArrayList<Location> snowLocations = new ArrayList<>();
+    private ArrayList<Location> fallLocations = new ArrayList<>();
+    private ArrayList<Location> dirtyLocaions = new ArrayList<>();
+    private ArrayList<Location> grassLocations = new ArrayList<>();
+
+    private ArrayList<Location> biomePaint = fallLocations;
+
+    Map map = new Map(mapWidth, mapLength, mapHeight);
+
+
     @Override
     public Map createMap() {
-        Map map = new Map(40, 40, 20);
         map.setName("DemoLevelFactory");
 
         rOffset = 0;
@@ -103,6 +114,61 @@ public class DemoLevelFactory extends LevelFactory {
         (new HexColumn(getLocation(6,6, 2), 10)).iterator().forEachRemaining( (location) -> {
             map.getTile(location).setTerrain(new Ground());
         });
+
+        //SouthEast of ramp
+        (new HexLine(getLocation(10,13,2), Direction.SOUTHEAST, 4)).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(new Ground());
+        });
+        (new HexLine(getLocation(9,14,2), Direction.SOUTHEAST, 4)).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(new Ground());
+        });
+
+        biomePaint = desertLocations;
+        filled(7,19,2,5,groundMaker);
+        filled(7,19,3,5,groundMaker);
+
+        filled(9,20,2,5,groundMaker);
+        filled(6,22,1,6,groundMaker);
+        filled(12,23,0,6,groundMaker);
+        filled(7,28,0,8,groundMaker);
+
+
+        biomePaint = dirtyLocaions;
+        //The desert pillars
+        column(4,24,2,6,groundMaker);
+        column(5,24,2,2,groundMaker);
+
+        column(1,28,1,3,groundMaker);
+        column(3,30,1,5,groundMaker);
+        column(3,31,1,3,groundMaker);
+        column(4,30,1,1,groundMaker);
+
+
+        column(12,25,1,7,groundMaker);
+        column(11,25,1,4,groundMaker);
+        column(11,26,1,3,groundMaker);
+
+
+        column(9,25,1,9,groundMaker);
+        column(8,26,1,7,groundMaker);
+
+        column(9,18,4,3,groundMaker);
+        column(5,19,4,4,groundMaker);
+        column(2,21,2,7,groundMaker);
+        column(1,22,2,5,groundMaker);
+        column(7,23,1,8,groundMaker);
+
+        column(7,32,1,8,groundMaker);
+        column(8,31,1,5,groundMaker);
+        column(9,31,1,6,groundMaker);
+        column(10,31,1,4,groundMaker);
+        column(11,30,1,2,groundMaker);
+
+
+
+        filled(18,15,0, 7, groundMaker);
+        line(13,17,1, Direction.SOUTH, 4, groundMaker);
+
 
 
         //Mountain
@@ -197,26 +263,107 @@ public class DemoLevelFactory extends LevelFactory {
 //            map.getTile(location).setTerrain(new Ground());
 //        });
 
+        //Wetlands
+        (new FilledHex(getLocation(20,10,0), 10)).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(new Ground());
+        });
+
+        line(23,9,1,Direction.SOUTHWEST, 3, groundMaker);
+        line(19,14,1,Direction.SOUTHWEST, 3, groundMaker);
+        line(19,15,1,Direction.SOUTHWEST, 2, groundMaker);
+        line(23,12,1,Direction.SOUTH, 4, groundMaker);
+
+        point(24,10,1, groundMaker);
+
+
+
+
+        //Marsh River
+        (new HexLine(getLocation(21,7,0), Direction.SOUTHEAST, 7 )).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(new Water());
+        });
+        (new HexLine(getLocation(20,8,0), Direction.SOUTHEAST, 8 )).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(new Water());
+        });
+        line(21,9,0,Direction.SOUTH, 4, waterMaker);
+        line(26,9,0,Direction.SOUTHWEST, 3, waterMaker);
+
+        line(20,11,0,Direction.SOUTHWEST, 5, waterMaker);
+        line(20,13,0,Direction.SOUTH, 2, waterMaker);
+        line(26,10,0,Direction.SOUTH, 3, waterMaker);
+        line(24,12,0,Direction.SOUTH, 2, waterMaker);
+        line(20,12,0,Direction.SOUTHWEST, 5, waterMaker);
+        filled(20,16,0,2,waterMaker);
+
+        biomePaint = grassLocations;
+        line(23,9,2,Direction.SOUTHWEST, 2, groundMaker);
+        point(24,10,2, groundMaker);
+        point(25,9,1, groundMaker);
+        line(23,13,2,Direction.SOUTH, 2, groundMaker);
+        line(22,17,1,Direction.NORTHWEST, 2, groundMaker);
+        line(18,15,2,Direction.SOUTHEAST, 2, groundMaker);
+
+
+
+
+
 
         return map;
     }
 
+    @Override
+    public Biome createBiomes(ViewObjectFactory factory) {
+        Biome plainsBiome = new DefaultBiome(new PlainsFactory(factory));
+
+        Biome tundraBiome = new CustomBiome(new TundraFactory(factory), snowLocations, plainsBiome);
+        Biome fallBiome = new CustomBiome(new AutumnFactory(factory), fallLocations, tundraBiome);
+        Biome dirtyBiome = new CustomBiome(new DirtFactory(factory), dirtyLocaions, fallBiome);
+        Biome desertBiome = new CustomBiome(new DesertFactory(factory), desertLocations, dirtyBiome);
+
+
+
+
+        return desertBiome;
+    }
+
+    private void filled(int r, int s, int z, int size, TerrainMaker terrainMaker) {
+        (new FilledHex(getLocation(r,s,z), size)).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(terrainMaker.makeTerrain());
+            biomePaint.add(location);
+        });
+    }
+
+    private void line(int r, int s, int z, Direction d, int size, TerrainMaker terrainMaker) {
+        (new HexLine(getLocation(r,s,z), d, size)).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(terrainMaker.makeTerrain());
+            biomePaint.add(location);
+        });
+    }
+    private void column(int r, int s, int z, int size, TerrainMaker terrainMaker) {
+        (new HexColumn(getLocation(r,s,z), size)).iterator().forEachRemaining( (location) -> {
+            map.getTile(location).setTerrain(terrainMaker.makeTerrain());
+            biomePaint.add(location);
+        });
+    }
+
+    private void point(int r, int s, int z, TerrainMaker terrainMaker) {
+        map.getTile(getLocation(r,s,z)).setTerrain(terrainMaker.makeTerrain());
+        biomePaint.add(getLocation(r,s,z));
+    }
+
     private Location getLocation(int r, int s, int z) {
         return new Location(r+rOffset, s+sOffset, z);
+
+
     }
 
     @Override
     public void populateMap(Map map) {
-        areasOfEffect(map);
-        items(map);
-        weaponNPC(map);
-        dialogNPC(map);
-        tradeNPC(map);
-    }
-
-    @Override
-    public Biome createBiomes(ViewObjectFactory factory) {
-        return new DefaultBiome(new PlainsFactory(factory));
+//        areasOfEffect(map);
+//        items(map);
+//        weaponNPC(map);
+//        dialogNPC(map);
+//        tradeNPC(map);
     }
 
     public void weaponNPC(Map map) {
@@ -283,11 +430,11 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(2,14,2));
 
         //Equipable
-        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
-        map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
-        map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
-        map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3, 14, 2));
+        //map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
+        //map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
+        //map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
+        //map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
+        //map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3, 14, 2));
         //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
         //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
         //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
@@ -296,4 +443,12 @@ public class DemoLevelFactory extends LevelFactory {
 
         //Consumeable
     }
+
+    private interface TerrainMaker {
+        Terrain makeTerrain();
+    }
+
+    private TerrainMaker groundMaker = Ground::new;
+    private TerrainMaker waterMaker = Water::new;
+
 }

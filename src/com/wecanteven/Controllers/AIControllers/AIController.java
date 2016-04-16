@@ -29,14 +29,14 @@ public class AIController implements Tickable {
     @Override
     public void tick() {
         if(ticks % reactionTime == 0) {
-            System.out.println("bwoop");
+            //System.out.println("bwoop");
             searchArea = searchingController.getSearchArea();
             Target target = searchingController.search(searchArea);
-            System.out.println("search done");
-            System.out.println(target);
-            System.out.println("beginning pathfind");
+            //System.out.println("search done");
+            //System.out.println(target);
+            //System.out.println("beginning pathfind");
             actionController.act(target);
-            System.out.println("end pathfind");
+            //System.out.println("end pathfind");
 
         }
         ++ticks;
