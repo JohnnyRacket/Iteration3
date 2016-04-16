@@ -48,11 +48,13 @@ public class ViewManager {
     }
 
     public void popView() {
-        SwappableView view = viewStack.peek();
-        view.closeDrawables();
-        ViewTime.getInstance().register(() -> {
-            viewStack.remove(view);
-        }, 200);
+        if(!viewStack.empty()) {
+            SwappableView view = viewStack.peek();
+            view.closeDrawables();
+            ViewTime.getInstance().register(() -> {
+                viewStack.remove(view);
+            }, 200);
+        }
     }
 
     public void addToast(Toast toast) { toaster.addToast(toast); }

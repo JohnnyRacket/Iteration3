@@ -24,6 +24,8 @@ public abstract class AbstractSearchingController implements MapVisitor, EntityV
     private int searchRadius;
     private Map map;
 
+    private Character target;
+
     public AbstractSearchingController(Character character, Map map, int searchRadius){
         this.character = character;
         this.map = map;
@@ -37,7 +39,6 @@ public abstract class AbstractSearchingController implements MapVisitor, EntityV
 
         Iterator<Location> searchArea = new HexRing(searchRadius, currentLocation).iterator();
 
-        Iterator<Location> iter;
         while (searchArea.hasNext()) {
             Location current = searchArea.next();
             Tile currentTile = map.getTile(current);
@@ -45,4 +46,20 @@ public abstract class AbstractSearchingController implements MapVisitor, EntityV
         }
         return highPriorityTarget;
     }
+
+    public void addNewTarget(Target target){
+        //lower number priority is more priority, ie number 1 is most wanted on the top 10 most wanted list
+        if(this.highPriorityTarget.getPriority() > target.getPriority()){
+            this.highPriorityTarget = target;
+        }
+    }
+
+    public Character getTarget() {
+        return target;
+    }
+
+    public void setTarget(Character target) {
+        this.target = target;
+    }
+
 }

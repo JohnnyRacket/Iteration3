@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Occupation;
 
 import com.wecanteven.Models.Stats.StatsAddable;
+import com.wecanteven.Visitors.OccupationVisitor;
 import com.wecanteven.Visitors.TerranianCanMoveVisitor;
 
 /**
@@ -10,5 +11,9 @@ public class Sneak extends Occupation {
     public Sneak(){
         this.setCanMoveVisitor(new TerranianCanMoveVisitor());
         statsAddable = new StatsAddable(0,1,5,1,1,0,0,0,0);
+    }
+    @Override
+    public void accept(OccupationVisitor visitor) {
+        visitor.visitSneak(this);
     }
 }

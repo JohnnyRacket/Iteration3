@@ -11,9 +11,7 @@ import com.wecanteven.Models.Interactions.NoInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
-import com.wecanteven.Models.Map.Aoe.HealingAreaOfEffect;
-import com.wecanteven.Models.Map.Aoe.TakeDamageAreaOfEffect;
-import com.wecanteven.Models.Map.Aoe.TeleportAoe;
+import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
@@ -160,28 +158,17 @@ public class DemoLevelFactory extends LevelFactory {
         return map;
     }
 
-
     private Location getLocation(int r, int s, int z) {
         return new Location(r+rOffset, s+sOffset, z);
     }
 
     @Override
     public void populateMap(Map map) {
-
-
-//        areasOfEffect(map);
-//        weaponNPC(map);
-//        dialogNPC(map);
-//        tradeNPC(map);
-
-
         areasOfEffect(map);
         items(map);
         weaponNPC(map);
         dialogNPC(map);
         tradeNPC(map);
-
-        map.getTile(10,10,2).add(new TakeDamageAreaOfEffect(1));
     }
 
     @Override
@@ -199,7 +186,7 @@ public class DemoLevelFactory extends LevelFactory {
     }
 
     public void dialogNPC(Map map) {
-        ArrayList<String> dialog = new ArrayList<String>();
+        ArrayList<String> dialog = new ArrayList<>();
         dialog.add("Hello Avatar");
         dialog.add("You're an idiot and you're playing a dumb game");
         dialog.add("GTFO");
@@ -216,14 +203,49 @@ public class DemoLevelFactory extends LevelFactory {
     }
 
     public void areasOfEffect(Map map) {
+        TakeDamageAreaOfEffect tkdmgAoe = new TakeDamageAreaOfEffect(1);
+        map.add(tkdmgAoe, new Location(1,16,2));
+
         TeleportAoe teleAoe = new TeleportAoe(new Location(7,4,15));
-        map.add(teleAoe, new Location(8,8,2));
+        map.add(teleAoe, new Location(2, 16, 2));
 
         HealingAreaOfEffect healAoe = new HealingAreaOfEffect(1);
-        map.add(healAoe, new Location(8,15,2));
+        map.add(healAoe, new Location(3,16,2));
+
+        LevelUpAoe levelUpAoe = new LevelUpAoe(300);
+        map.add(levelUpAoe,new Location(4,16,2));
+
+        InstaDeathAoe deathAoe = new InstaDeathAoe();
+        map.add(deathAoe, new Location(5,16,2));
     }
 
     public void items(Map map) {
-        map.add(ItemMap.getInstance().getItemAsOneShot("Major Movement Buff"), new Location(8,16,2));
+
+        //One shot
+        map.add(ItemMap.getInstance().getItemAsOneShot("Major Movement Buff"), new Location(1,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Minor Mana Orb"), new Location(2,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Major Mana Orb"), new Location(3,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Minor Health Orb"), new Location(4,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Major Health Orb"), new Location(5,15,3));
+
+        //Interactive Item??????
+        /* TODO implement this */
+
+        //Obstacle
+        map.add(ItemMap.getInstance().getItemAsObstacle("Crate"), new Location(1,14,2));
+        map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(2,14,2));
+
+        //Equipable
+        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
+        map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+        //map.add(ItemMap.getInstance().getItemAsEquipable(""), new Location());
+
+        //Consumeable
     }
 }

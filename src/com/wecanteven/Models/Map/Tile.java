@@ -18,6 +18,7 @@ import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by John on 3/31/2016.
@@ -62,7 +63,7 @@ public class Tile implements MapVisitable {
         if(this.entity.add(entity)){
             entity.lock();
             ModelTime.getInstance().registerAlertable(
-                    () -> interact(entity)
+                    () -> interactWithTile(entity)
                     , entity.getMovingTicks() + 1);
             return true;
         }else{
@@ -149,7 +150,7 @@ public class Tile implements MapVisitable {
         this.terrain = terrain;
     }
 
-    public void interact(Entity entity){
+    private void interactWithTile(Entity entity){
         //This interacts with tile you're on
         entity.unlock();
         hitBoxes.forEach(effect -> effect.interact(entity));
@@ -166,6 +167,20 @@ public class Tile implements MapVisitable {
             aoe.apply(entity);
         }
 
+        interactWithTile((Character) entity);
+    }
+
+    private void interactWithTile(Character character) {
+        Iterator<TakeableItem> iter = takeableItems.iterator();
+
+        while (iter.hasNext()) {
+            TakeableItem item = iter.next();
+
+            if (!character.getItemStorage().inventoryIsFull()) {
+                character.pickup(item);
+                iter.remove();
+            }
+        }
     }
 
     public void interact(Character character) {

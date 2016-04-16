@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+    <x>20</x>
+    <y>20</y>
+    <rootPath>Items/Major Mana Orb/</rootPath>
+    <fileName>Major Mana Orb.png</fileName>
+    <fileName>null.png</fileName>
+</single_frame_animation>
