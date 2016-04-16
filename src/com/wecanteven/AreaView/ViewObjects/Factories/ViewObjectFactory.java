@@ -8,7 +8,10 @@ import com.wecanteven.AreaView.DynamicImages.StartableDynamicImage;
 import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.*;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving.BipedMovingViewObject;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving.SimpleMovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
+import com.wecanteven.AreaView.ViewObjects.Hominid.BuffRingViewObject;
 import com.wecanteven.AreaView.ViewObjects.Parallel.DarkenedViewObject;
 import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
@@ -21,6 +24,7 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.*;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Abilities.HitBox;
+import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.Decals.Decal;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
@@ -122,7 +126,7 @@ public abstract class ViewObjectFactory {
 ////        hexDrawingStrategy.setCenterTarget(stationarySneak);
 ////
 ////
-////        return createMovingViewObject(subject, destroyableViewObject);
+////        return createBipedMovingViewObject(subject, destroyableViewObject);
 //    }
 
     //This method is OG
@@ -160,6 +164,9 @@ public abstract class ViewObjectFactory {
                 "Feet/" + color + "/Foot.xml");
         FeetViewObject feet = new FeetViewObject(Direction.SOUTH, leftFoot, rightFoot);
 
+        //Create the buff thingy
+        BuffRingViewObject buffs = new BuffRingViewObject(p, this, character.getBuffmanager());
+
         //Finnally create the Hominoid
         HominidViewObject hominoid = new  HominidViewObject(
                 p,
@@ -168,6 +175,7 @@ public abstract class ViewObjectFactory {
                 hatArmor,
                 hands,
                 feet,
+                buffs,
                 jumpDetector);
 
         //And give him a HUD
@@ -182,14 +190,14 @@ public abstract class ViewObjectFactory {
 
 
         //Make a moving view object
-        MovingViewObject moivingHominoidWithHUD = createMovingViewObject(character, homioidWithHUD);
+        BipedMovingViewObject moivingHominoidWithHUD = createBipedMovingViewObject(character, homioidWithHUD);
 
 
         //Now give him a death animation
         StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
 
         //And return the new destroyable VO
-        return new DestroyableViewObject(
+        DestroyableViewObject destroyableViewObject = new DestroyableViewObject(
                 moivingHominoidWithHUD,
                 startableViewObject,
                 character,
@@ -197,6 +205,7 @@ public abstract class ViewObjectFactory {
                 800);
 
         //Finally return a moving avatar
+        return hominoid;
     }
 
     public <T extends Positionable & ViewObservable> void makeLightSource(ViewObject v, int radius, T subject) {
@@ -254,6 +263,13 @@ public abstract class ViewObjectFactory {
         return new BackgroundDrawable(factory.loadDynamicImage("Textures/DarkBlue.xml"), getDrawingStrategy(), centerTarget);
     }
 
+    public ViewObject createRangedEffect(MovableHitBox m) {
+        ViewObject vo =createDirectional(m.getLocation().toPosition(), m, "Effects/WaterBolt/");
+        SimpleMovingViewObject viewObject = createSimpleMovingViewObject(m, vo);
+        DestroyableViewObject destroyableMovingDirectionVO = new DestroyableViewObject(viewObject, createStartableViewObject(m.getLocation().toPosition(), "null.xml"), m, areaView, 100);
+        return destroyableMovingDirectionVO;
+    }
+
     public DestroyableViewObject createOneShotItem(Position position, OneShot oneShot) {
         StartableDynamicImage animation = factory.loadActiveDynamicImage("Items/" + oneShot.getName() + "/" + oneShot.getName() + ".xml");
 
@@ -279,6 +295,10 @@ public abstract class ViewObjectFactory {
                 decal.getR(),
                 decal.getS()
         );
+    }
+
+    public MicroPositionableViewObject createBuff(Position p, String name) {
+        return createMicroPositionableViewObject(p, "Buffs/" + name + ".xml");
     }
 
     @Deprecated
@@ -342,8 +362,13 @@ public abstract class ViewObjectFactory {
         return new DirectionalViewObject(p, d, hexDrawingStrategy, bodyNorth, bodySouth, bodyNorthEast, bodyNorthWest, bodySoutheast, bodySouthWest);
     }
 
-    public <T extends Moveable & ViewObservable> MovingViewObject createMovingViewObject(T subject, ViewObject child) {
-        MovingViewObject mvo = new  MovingViewObject(child, subject, areaView, jumpDetector);
+    public <T extends Moveable & ViewObservable> BipedMovingViewObject createBipedMovingViewObject(T subject, ViewObject child) {
+        BipedMovingViewObject mvo = new BipedMovingViewObject(child, subject, areaView, jumpDetector);
+        return mvo;
+    }
+
+    public <T extends Moveable & ViewObservable> SimpleMovingViewObject createSimpleMovingViewObject(T subject, ViewObject child) {
+        SimpleMovingViewObject mvo = new SimpleMovingViewObject(child, subject, areaView);
         return mvo;
     }
 

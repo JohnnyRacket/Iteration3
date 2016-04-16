@@ -69,7 +69,7 @@ public class ViewTime {
     }
 
     public void pause(){
-        System.out.println("PAUSING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("PAUSING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         if(!paused) {
             paused = true;
             pausedTime = System.currentTimeMillis();
@@ -89,9 +89,8 @@ public class ViewTime {
         }
     }
     public void resume(){
-        System.out.println("RESUMING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         if(paused) {
-
+            System.out.println("RESUMING VIEW~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             paused = false;
             staging = new CopyOnWriteArrayList<>();
             executables = new PriorityQueue<>(

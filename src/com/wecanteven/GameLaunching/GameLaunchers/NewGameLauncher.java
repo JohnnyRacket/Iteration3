@@ -63,10 +63,6 @@ public class NewGameLauncher extends GameLauncher {
         player.getItemStorage().equip(new ChestEquipableItem("Mediocre Top", 3, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         setAvatar(new Avatar(player, getMap()));
         getMap().add(player, new Location(7,9,2));
-        getController().setAvatar(getAvatar());
-
-        //Character npc1 = new Character(getMap(), Direction.SOUTH);
-        //getMap().add(npc1,new Location(2,9,5));
     }
 
     @Override

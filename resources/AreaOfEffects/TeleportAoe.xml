@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <single_frame_animation>
-    <x>20</x>
-    <y>20</y>
+    <x>38</x>
+    <y>44</y>
     <rootPath>AreaOfEffects/</rootPath>
     <fileName>TeleportAoe.png</fileName>
 </single_frame_animation>

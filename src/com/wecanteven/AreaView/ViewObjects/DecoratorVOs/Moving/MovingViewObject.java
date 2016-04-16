@@ -1,22 +1,21 @@
-package com.wecanteven.AreaView.ViewObjects.DecoratorVOs;
+package com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving;
 
 import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DecoratorViewObject;
+import com.wecanteven.AreaView.ViewObjects.Tiles.TileViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Config;
-import com.wecanteven.UtilityClasses.Direction;
-
-import java.awt.*;
 
 /**
- * Created by Alex on 3/31/2016.
+ * Created by Alex on 4/15/2016.
  */
-public class MovingViewObject extends DecoratorViewObject implements Observer {
+public abstract class MovingViewObject extends DecoratorViewObject implements Observer{
     private AreaView areaView;
 
     private Position source;
@@ -29,63 +28,37 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
 
     private Moveable subject;
 
-    private JumpDetector jumpDetector;
 
+    private TileViewObject owner;
 
-    public <T extends Moveable & ViewObservable> MovingViewObject(ViewObject child, T subject, AreaView areaView, JumpDetector jumpDetector) {
+    private Position realPosition;
+
+    public <T extends Moveable & ViewObservable> MovingViewObject(ViewObject child, T subject, AreaView areaView) {
         super(child);
         this.subject = subject;
         this.areaView = areaView;
         this.source = child.getPosition();
         this.destination = child.getPosition();
-        this.jumpDetector = jumpDetector;
+        this.realPosition = child.getPosition();
 
+        owner = areaView.getTileViewObject(source);
         subject.attach(this);
         update();
     }
 
 
-    public Position calculateCurrentPosition() {
-        long t = viewTime.getCurrentTime();
-        if (t >= endTime) return destination;
-
-        double percentage = (double)(t - startTime)/(double)(endTime - startTime);
-
-
-        return new Position(
-                inBetween(source.getR(), destination.getR(), percentage),
-                inBetween(source.getS(), destination.getS(), percentage),
-                parabola(source, destination, percentage)
-        );
+    @Override
+    public Position getPosition() {
+        return realPosition;
     }
 
-    private double inBetween(double start, double end, double percentage) {
-        return start + percentage*(end - start);
-    }
-
-    private double parabola(Position startLoc, Position endLoc, double percentage) {
-        double start = startLoc.getZ();
-        double end = endLoc.getZ();
-        double deltaY = end - start;
-
-        if (jumpDetector.isJumping(startLoc, endLoc)) {
-            double jumpConstant = 0.8;
-            double a = -2*deltaY -4*jumpConstant;
-            double v = 3*deltaY+4*jumpConstant;
-            return a*Math.pow(percentage, 2) + v*percentage + start;
-        } else {
-            return start + (end - start) * percentage;
-        }
-
-
-
-    }
+    protected abstract Position calculateCurrentPosition(Position source, Position destination, long startTime, long endTime);
 
     private boolean hasStateChange() {
         return !subject.getLocation().toPosition().equals(destination);
     }
     private void updateState() {
-        source = calculateCurrentPosition();
+        source = calculateCurrentPosition(source, destination, startTime, endTime);
         destination = subject.getLocation().toPosition();
         startTime = ViewTime.getInstance().getCurrentTime();
         endTime = startTime + subject.getMovingTicks()* Config.MODEL_TICK;
@@ -94,7 +67,7 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
 
     private void adjustPosition(long endTime) {
         //System.out.println("******************************** MVO updating child");
-        getChild().setPosition(calculateCurrentPosition());
+        getChild().setPosition(calculateCurrentPosition(source, destination, startTime, endTime));
         if (viewTime.getCurrentTime() < endTime) {
             viewTime.register(() -> adjustPosition(endTime), 1);
         }
@@ -109,13 +82,14 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     }
 
     private void swap() {
-        try {
-            areaView.removeViewObject(this, source);
-            areaView.addViewObject(this, destination);
-        } catch (Exception e) {
-            areaView.addViewObject(this, source);
-        }
+        System.out.println("Removing from: " + owner.getPosition());
+        owner.remove(this);
+        System.out.println("Adding to: " + destination);
 
+        areaView.addViewObject(this, destination);
+        owner = areaView.getTileViewObject(destination);
+        System.out.println("Owner is: " + owner.getPosition());
+        realPosition = destination;
     }
 
     private boolean shouldSwapNow() {
@@ -127,6 +101,7 @@ public class MovingViewObject extends DecoratorViewObject implements Observer {
     public void update() {
         if (hasStateChange()) {
             updateState();
+            System.out.println("Going from: " + source + " to " + destination);
             adjustPosition(endTime);
             reposition();
         }
