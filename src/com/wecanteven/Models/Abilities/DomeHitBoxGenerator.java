@@ -1,12 +1,9 @@
 package com.wecanteven.Models.Abilities;
 
-import com.wecanteven.AreaView.ViewTime;
-import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.FilledHex;
-import com.wecanteven.UtilityClasses.HexRing;
 import com.wecanteven.UtilityClasses.Location;
 
 import java.util.Iterator;
@@ -36,8 +33,10 @@ public class DomeHitBoxGenerator implements HitBoxGenerator {
         Iterator<Location> iterator = filledHex.iterator();
         while(iterator.hasNext()){
             Location tileLocation = iterator.next();
-            hitbox = new HitBox("Punch",tileLocation, effect, caster.getActionHandler(), 1200);
-            hitbox.addToMap(1, tileLocation);
+            if(!tileLocation.equals(caster.getLocation())){
+                hitbox = new HitBox("Punch",tileLocation, effect, caster.getActionHandler(), 1200);
+                hitbox.addToMap(1, tileLocation);
+            }
         }
         --size;
         location = location.add(Direction.UP.getCoords);

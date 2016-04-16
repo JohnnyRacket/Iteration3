@@ -48,7 +48,7 @@ public class Character extends Entity {
         if(!isActive()){
 
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendDomeAttack(this);
+            Ability attack = factory.vendRadialAttack(this);
             attack.cast();
         }
     }

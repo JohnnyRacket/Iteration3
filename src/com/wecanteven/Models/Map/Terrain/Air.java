@@ -16,6 +16,7 @@ public class Air extends Terrain {
         return "Air";
     }
     public void interact(Entity entity){
+        System.out.println("THE ENTITY IS FALLING");
         entity.fall();
 
     }

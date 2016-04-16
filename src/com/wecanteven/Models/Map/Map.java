@@ -114,9 +114,13 @@ public class Map implements MapVisitable, ActionHandler {
 
 
         if(canMove) {//move if you can
+            remove(entity, source);
+            Column col = getColumn(entity.getLocation().getR(),entity.getLocation().getS());
+            for(int a=0;a<col.getZ();a++){
+                col.getTile(a).update();
+            }
             entity.setLocation(destination);
             entity.updateMovingTicks(movespeed);
-            remove(entity, source);
             add(entity, destination);
             return true;
         }else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){

@@ -167,10 +167,10 @@ public class Tile implements MapVisitable {
             aoe.apply(entity);
         }
 
-        interactWithTile((Character) entity);
+        interactWithCharacter((Character) entity);
     }
 
-    private void interactWithTile(Character character) {
+    private void interactWithCharacter(Character character) {
         Iterator<TakeableItem> iter = takeableItems.iterator();
 
         while (iter.hasNext()) {
@@ -190,6 +190,10 @@ public class Tile implements MapVisitable {
         }else {
 
         }
+    }
+    public void update(){
+        if(hasEntity())
+        interactWithTile(getEntity());
     }
 
     public boolean add(HitBox hitBox){
