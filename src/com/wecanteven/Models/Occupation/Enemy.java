@@ -14,6 +14,11 @@ public class Enemy extends Occupation {
     }
 
     @Override
+    protected void initSkills() {
+
+    }
+
+    @Override
     public void accept(OccupationVisitor visitor) {
 
         visitor.visitEnemy(this);
