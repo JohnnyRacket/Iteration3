@@ -255,7 +255,7 @@ public class DemoLevelFactory extends LevelFactory {
         map.getTile(getLocation(12,8,1)).setTerrain(new Current(Direction.SOUTH));
         map.getTile(getLocation(12,9,1)).setTerrain(new Current(Direction.SOUTH));
         map.getTile(getLocation(12,10,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
+        //smap.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
 
         //sand under Lake
         biomePaint = desertLocations;
