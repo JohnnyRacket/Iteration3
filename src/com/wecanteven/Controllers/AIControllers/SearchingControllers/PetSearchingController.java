@@ -65,6 +65,11 @@ public class PetSearchingController extends AbstractSearchingController {
     }
 
     @Override
+    public void visitFriendly(Friendly friendly) {
+
+    }
+
+    @Override
     public void visitPet(Pet pet) {
 
     }

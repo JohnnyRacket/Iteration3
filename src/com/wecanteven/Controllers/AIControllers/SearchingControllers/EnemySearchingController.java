@@ -68,6 +68,11 @@ public class EnemySearchingController extends AbstractSearchingController {
     }
 
     @Override
+    public void visitFriendly(Friendly friendly) {
+
+    }
+
+    @Override
     public void visitPet(Pet pet) {
         this.addNewTarget(new EnemyTarget(2,this.getTarget().getLocation()));
     }
