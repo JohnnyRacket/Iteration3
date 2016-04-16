@@ -87,12 +87,17 @@ public class Character extends Entity {
 
     public void interact() {
         Location destination = getLocation().add(getDirection().getCoords);
-        getActionHandler().interact(this, destination);
+        //getActionHandler().interact(this, destination);
     }
 
     public void interact(Character character) {
         //Probably pointless in Character
 
+    }
+
+    public void interact(Avatar avatar) {
+        Location destination = getLocation().add(getDirection().getCoords);
+        getActionHandler().interact(avatar, destination);
     }
 
     private boolean equipAbility(String id) {
@@ -101,6 +106,10 @@ public class Character extends Entity {
 
     private boolean unequipAbility(String id) {
         return false;
+    }
+
+    public void mount(Mount mount) {
+        System.out.println("character trying to mount");
     }
 
     /**

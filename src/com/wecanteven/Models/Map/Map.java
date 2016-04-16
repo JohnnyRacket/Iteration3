@@ -4,6 +4,7 @@ import com.wecanteven.AreaView.VOCreationVisitor;
 import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Interactions.InteractionVisitor;
@@ -254,9 +255,14 @@ public class Map implements MapVisitable, ActionHandler {
         getTile(location).add(new TakeableMoveable(item.getName(), item.getValue(), item, this, location));
         return true;
     }
+//    @Override
+//    public void interact(Character interactor, Location destination) {
+//        getTile(destination).interact(interactor);
+//    }
+
     @Override
-    public void interact(Character interactor, Location destination) {
-        getTile(destination).interact(interactor);
+    public void interact(Avatar avatar, Location location) {
+        getTile(location).interact(avatar);
     }
 
 //    @Override
@@ -322,6 +328,11 @@ public class Map implements MapVisitable, ActionHandler {
         remove(entity, entity.getLocation());
 
     }
+//
+//    @Override
+//    public void interact(Character character, Location location) {
+//
+//    }
 
 
     public boolean add(HitBox hitbox, Location loc){

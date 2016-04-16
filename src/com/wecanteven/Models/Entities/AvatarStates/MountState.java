@@ -10,8 +10,14 @@ import com.wecanteven.UtilityClasses.Direction;
 public class MountState extends AvatarState {
     private Character avatar;
     private Mount mount;
+
+    public MountState(Character avatar, Mount mount) {
+        this.avatar = avatar;
+        this.mount = mount;
+        mount(avatar);
+    }
     public boolean move(Direction d){
-       return avatar.move(d);
+        return (avatar.move(d) && mount.move(d));
     }
     public void attack(){}
     public void useAbility(int index){}
@@ -33,8 +39,8 @@ public class MountState extends AvatarState {
     public void drop(){}
     public void pickup(){}
     public void interactWith(){}
-    public void mount(){
-        mount.mount();
+    public void mount(Character mountee){
+        mount.mount(mountee);
     }
     public void dismount(){
         mount.dismount();

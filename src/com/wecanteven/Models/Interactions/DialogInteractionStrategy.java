@@ -2,6 +2,7 @@ package com.wecanteven.Models.Interactions;
 
 import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.MenuView.UIViewFactory;
+import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.NPC;
 
@@ -43,6 +44,12 @@ public class DialogInteractionStrategy implements InteractionStrategy {
     public void interact(Character c) {
         ViewTime.getInstance().register(()->{
             UIViewFactory.getInstance().createDialogView(owner, c, getIterator());
+        },0);
+    }
+
+    public void interact(Avatar c) {
+        ViewTime.getInstance().register(()->{
+            UIViewFactory.getInstance().createDialogView(owner, c.getCharacter(), getIterator());
         },0);
     }
 }

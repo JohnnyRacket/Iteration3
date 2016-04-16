@@ -4,6 +4,7 @@ import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.AvatarStates.AvatarState;
 import com.wecanteven.Models.Entities.AvatarStates.DeadState;
 import com.wecanteven.Models.Entities.AvatarStates.EntityState;
+import com.wecanteven.Models.Entities.AvatarStates.MountState;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.ModelTime.ModelTime;
@@ -54,9 +55,10 @@ public class Avatar implements Observer{
     public void drop(){}
     public void pickup(){}
     public void interactWithTile(){
-        getCharacter().interact();
+        getCharacter().interact(this);
     }
-    public void mount(){
+    public void mount(Mount mount){
+        swapState(new MountState(avatar, mount));
     }
     public void dismount(){
     }

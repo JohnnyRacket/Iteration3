@@ -41,8 +41,7 @@ public class EntityState extends AvatarState {
     public void drop(){}
     public void pickup(){}
     public void interactWith(){}
-    public void mount(){
-        controller.mount();
+    public void mount(Character mountee){
     }
     public void dismount(){}
 }

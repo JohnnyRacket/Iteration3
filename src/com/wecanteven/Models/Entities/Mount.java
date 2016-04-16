@@ -17,12 +17,15 @@ import java.util.ArrayList;
  * Created by adamfortier on 4/15/16.
  */
 public class Mount extends Character {
+  Character mountee;
+
   public Mount(ActionHandler actionHandler, Direction direction) {
     super(actionHandler, direction);
   }
 
-  public void mount() {
 
+  public void mount(Character mountee) {
+    this.mountee = mountee;
   }
 
   public void dismount() {
@@ -31,6 +34,16 @@ public class Mount extends Character {
 
   @Override
   public void interact(Character character) {
+    System.out.println("MOUNT INTERACTION METHOD");
+    character.mount(this);
+  }
 
+  public void interact(Avatar avatar) {
+    System.out.println("Interacting with Avatar");
+    avatar.mount(this);
+  }
+
+  public String toString() {
+    return "Mount instance!";
   }
 }
