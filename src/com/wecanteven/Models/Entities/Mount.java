@@ -6,6 +6,7 @@ import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanFallVisitor;
 import com.wecanteven.Visitors.CanMoveVisitor;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  */
 public class Mount extends Character {
   public Mount(ActionHandler actionHandler, Direction direction) {
-    super(actionHandler, direction);
+    super(actionHandler, direction, GameColor.BLUE);
   }
 
   public void mount() {

@@ -75,7 +75,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitCharacter(Character c) {
         System.out.println("adding character to areaview");
-        ViewObject avatar = factory.createBaseHominoid(currentPosition, c, "Pink", "Connery");
+        ViewObject avatar = factory.createBaseHominoid(currentPosition, c, "Connery");
         factory.makeLightSource(avatar, 5, c);
         factory.setCenter(avatar);
         areaView.addViewObject(avatar);
@@ -86,7 +86,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitNPC(NPC c) {
 
-        areaView.addViewObject(factory.createBaseHominoid(currentPosition, c, "Yellow", "TestFace"));
+        areaView.addViewObject(factory.createBaseHominoid(currentPosition, c,  "TestFace"));
 
     }
 

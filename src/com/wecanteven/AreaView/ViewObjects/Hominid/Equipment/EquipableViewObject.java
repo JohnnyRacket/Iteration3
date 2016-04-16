@@ -8,6 +8,7 @@ import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Observer;
+import com.wecanteven.UtilityClasses.GameColor;
 
 import java.awt.*;
 
@@ -21,13 +22,15 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
     private ViewObjectFactory factory;
 
     private Entity entitySubject;
+    private GameColor color;
 
-    public EquipableViewObject(ViewObject child, ViewObject defaultEquipment, EquipmentSlot subject, ViewObjectFactory factory, Entity entitySubject) {
+    public EquipableViewObject(ViewObject child, ViewObject defaultEquipment, EquipmentSlot subject, ViewObjectFactory factory, Entity entitySubject, GameColor color) {
         super(child);
         this.defaultEquipment = defaultEquipment;
         this.subject = subject;
         this.entitySubject = entitySubject;
         this.factory = factory;
+        this.color = color;
 
         //Attach this to subject
         subject.attach(this);
@@ -60,8 +63,7 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
         if(!hasSubject())
             return;
         if (subject.hasItem()) {
-
-            equipment = factory.createEquipment(getPosition(),entitySubject, subject.getItem().getName());
+            equipment = factory.createEquipment(getPosition(),entitySubject, subject.getItem().getName(), color);
         } else {
             if(hasEquipment()) {
                 equipment = defaultEquipment;

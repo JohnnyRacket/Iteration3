@@ -10,6 +10,7 @@ import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.EntityVisitor;
 
@@ -22,23 +23,23 @@ public class Character extends Entity {
     private ItemStorage itemStorage, abilityItemStorage;
     private int windUpTicks, coolDownTicks;
 
-    public Character(ActionHandler actionHandler, Direction direction) {
-        super(actionHandler, direction);
+    public Character(ActionHandler actionHandler, Direction direction, GameColor color) {
+        super(actionHandler, direction, color);
         occupation = new Smasher();
         this.itemStorage = new ItemStorage(this, 5);
         windUpTicks = 0;
         coolDownTicks = 0;
     }
 
-    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats) {
-        super(actionHandler, direction);
+    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats, GameColor color) {
+        super(actionHandler, direction, color);
         this.occupation = occupation;
         setStats(stats);
         this.itemStorage = new ItemStorage(this, 5);
     }
 
-    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage) {
-        super(actionHandler, direction);
+    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage, GameColor color) {
+        super(actionHandler, direction, color);
         this.occupation = occupation;
         this.itemStorage = itemStorage;
         getItemStorage().setOwner(this);
