@@ -12,14 +12,14 @@ import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving.BipedMovingViewOb
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving.SimpleMovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.BuffRingViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.*;
+import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.FeetFlyingStrategy;
+import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.FeetJumpingStrategy;
+import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.FeetWalkingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Parallel.DarkenedViewObject;
 import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
-import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.DualWieldState;
-import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandState;
-import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
-import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.OneHandedWeaponState;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.*;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
@@ -66,6 +66,7 @@ public abstract class ViewObjectFactory {
 
     public abstract ViewObject createGround(Position p);
     public abstract ViewObject createWater(Position p);
+    public abstract ViewObject createCurrent(Position p);
 
     public void setCenter(ViewObject center) {
         hexDrawingStrategy.setCenterTarget(center);
@@ -155,14 +156,18 @@ public abstract class ViewObjectFactory {
         HandsViewObject hands = new HandsViewObject(leftHand, rightHand,
                 Direction.SOUTH, p,
                 weaponSlot, this,
-                character);
+                character,
+                (d, left, right) -> new BrawlingState(d, left, right));
 
         //Create some feet
         MicroPositionableViewObject leftFoot = createMicroPositionableViewObject(p,
                         "Feet/" + color + "/Foot.xml");
         MicroPositionableViewObject rightFoot = createMicroPositionableViewObject(p,
                 "Feet/" + color + "/Foot.xml");
-        FeetViewObject feet = new FeetViewObject(Direction.SOUTH, leftFoot, rightFoot);
+        FeetViewObject feet = new FeetViewObject(Direction.SOUTH, leftFoot, rightFoot,
+                new FeetWalkingStrategy(0.1, leftFoot, rightFoot),
+                new FeetJumpingStrategy(0, 2, leftFoot, rightFoot),
+                new FeetJumpingStrategy(0, 2, leftFoot, rightFoot));
 
         //Create the buff thingy
         BuffRingViewObject buffs = new BuffRingViewObject(p, this, character.getBuffmanager());
@@ -207,6 +212,89 @@ public abstract class ViewObjectFactory {
         //Finally return a moving avatar
         return hominoid;
     }
+
+    public ViewObject createBird(Position p, Character character, String color, String face) {
+        EquipmentSlot chestSlot = character.getItemStorage().getEquipped().getChest();
+        EquipmentSlot weaponSlot = character.getItemStorage().getEquipped().getWeapon();
+        EquipmentSlot hatSlot = character.getItemStorage().getEquipped().getHead();
+
+        //Create the body and decorate it with body armor
+        SimpleViewObject body = new SimpleViewObject(p,
+                factory.loadDynamicImage("Entities/MiniBeans/" + color + ".xml"),
+                hexDrawingStrategy);
+        EquipableViewObject bodyArmor = createEquipable(body, createNullViewObject(), chestSlot, character);
+
+        //Create the face and decorate it with a hat
+        DirectionalViewObject head = createDirectional(p, character, "Face/" + face + "/");
+        EquipableViewObject hatArmor = createEquipable(
+                head,
+                createEquipment(p, character, "Shaved"),
+                hatSlot,
+                character);
+
+        //Create a pair of hands
+        MicroPositionableViewObject leftHand = createHand(p, weaponSlot, character, "Wing " + color);
+        MicroPositionableViewObject rightHand = createHand(p, weaponSlot, character, "Wing " + color);
+        HandsViewObject hands = new HandsViewObject(leftHand, rightHand,
+                Direction.SOUTH, p,
+                weaponSlot, this,
+                character,
+                (d, left, right) -> new WingState(d, left, right));
+
+        //Create some feet
+        MicroPositionableViewObject leftFoot = createMicroPositionableViewObject(p,
+                "Feet/" + "Bird" + "/Foot.xml");
+        MicroPositionableViewObject rightFoot = createMicroPositionableViewObject(p,
+                "Feet/" + "Bird" + "/Foot.xml");
+        FeetViewObject feet = new FeetViewObject(Direction.SOUTH, leftFoot, rightFoot,
+                new FeetJumpingStrategy(0, 2,  leftFoot, rightFoot),
+                new FeetFlyingStrategy(1, leftFoot, rightFoot),
+                new FeetFlyingStrategy(1, leftFoot, rightFoot));
+
+        //Create the buff thingy
+        BuffRingViewObject buffs = new BuffRingViewObject(p, this, character.getBuffmanager());
+
+        //Finnally create the Hominoid
+        HominidViewObject hominoid = new  HominidViewObject(
+                p,
+                character,
+                bodyArmor,
+                hatArmor,
+                hands,
+                feet,
+                buffs,
+                jumpDetector);
+
+        //And give him a HUD
+        HUDDecorator homioidWithHUD = new HUDDecorator(
+                hominoid,
+                character.getStats(),
+                hexDrawingStrategy,
+                this,
+                areaView);
+
+
+
+
+        //Make a moving view object
+        BipedMovingViewObject moivingHominoidWithHUD = createBipedMovingViewObject(character, homioidWithHUD);
+
+
+        //Now give him a death animation
+        StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
+
+        //And return the new destroyable VO
+        DestroyableViewObject destroyableViewObject = new DestroyableViewObject(
+                moivingHominoidWithHUD,
+                startableViewObject,
+                character,
+                areaView,
+                800);
+
+        //Finally return a moving avatar
+        return hominoid;
+    }
+
 
     public <T extends Positionable & ViewObservable> void makeLightSource(ViewObject v, int radius, T subject) {
         new VisibilitySourceViewObject(v, subject, areaView, radius);

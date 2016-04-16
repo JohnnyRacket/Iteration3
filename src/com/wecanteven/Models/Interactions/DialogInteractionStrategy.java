@@ -33,6 +33,13 @@ public class DialogInteractionStrategy implements InteractionStrategy {
         return dialog;
     }
 
+    public void endDialogInteraction() {
+        //DO SOMETHING
+        ViewTime.getInstance().register(()->{
+            UIViewFactory.getInstance().createToast(4, "YOU GOT A QUEST ITEM!!");
+            UIViewFactory.getInstance().createToast(4, "lawl just kidding...");
+        },0);
+    }
 
     @Override
     public void interact(Character c) {

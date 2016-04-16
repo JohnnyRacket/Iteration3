@@ -175,20 +175,6 @@ public class Map implements MapVisitable, ActionHandler {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public Tile getTile(int r, int s, int z) {
         return columns[r][s].getTile(z);
     }

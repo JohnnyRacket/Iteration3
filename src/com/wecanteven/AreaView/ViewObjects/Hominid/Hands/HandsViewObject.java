@@ -23,17 +23,23 @@ public class HandsViewObject implements ViewObject, Observer {
     private WeaponsVisitor weaponsVisitor = new ViewWeaponVisitor();
    // private Equipment --dont have it yet..
 
+    private HandStateCreator defaultHandState;
 
 
     public HandsViewObject(MicroPositionableViewObject leftHand,
-                           MicroPositionableViewObject rightHand, Direction direction,
-                           Position position, EquipmentSlot subject, ViewObjectFactory factory, Entity entity) {
+                           MicroPositionableViewObject rightHand,
+                           Direction direction,
+                           Position position,
+                           EquipmentSlot subject,
+                           ViewObjectFactory factory,
+                           Entity entity,
+                           HandStateCreator defaultHandState) {
         this.position = position;
         this.subject = subject;
         this.factory = factory;
         this.entity = entity;
         registerToSubject();
-        handState = new BrawlingState(direction, leftHand, rightHand);
+        handState = defaultHandState.changeHandState(direction, leftHand, rightHand);
     }
 
     private void registerToSubject() {

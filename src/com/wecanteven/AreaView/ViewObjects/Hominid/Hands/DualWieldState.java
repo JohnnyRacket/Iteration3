@@ -51,11 +51,6 @@ public class DualWieldState extends HandState {
         walkingStrategy.execute(duration);
     }
 
-    public void changeDirection(Direction direction) {
-        leftHand.setDirection(direction);
-        rightHand.setDirection(direction);
-    }
-
     public void setLocation(Location location) {
         //TODO
     }

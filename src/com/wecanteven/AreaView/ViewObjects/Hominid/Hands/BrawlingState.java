@@ -48,21 +48,9 @@ public class BrawlingState extends HandState {
         walkingStrategy.execute(duration);
     }
 
-    public void changeDirection(Direction direction) {
-        leftHand.setDirection(direction);
-        rightHand.setDirection(direction);
-    }
-
-    public void setLocation(Location location) {
-        //TODO
-    }
 
     public void fall(long duration) {
         fallingStrategy.execute(duration);
-    }
-
-    public Location getLocation() {
-        return null;
     }
 
     public void attack(long durationOfAttack) {
