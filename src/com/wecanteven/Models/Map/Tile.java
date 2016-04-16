@@ -2,6 +2,7 @@ package com.wecanteven.Models.Map;
 
 import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Decals.Decal;
+import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Interactions.InteractionVisitor;
@@ -57,6 +58,15 @@ public class Tile implements MapVisitable {
         }
 
         return false;
+    }
+
+    public void interact(Avatar avatar) {
+        if(hasEntity()) {
+            InteractionVisitor visitor = new InteractionVisitor(avatar);
+            getEntity().accept(visitor);
+        }else {
+
+        }
     }
 
     public boolean add(Entity entity){
@@ -191,18 +201,19 @@ public class Tile implements MapVisitable {
         takeableItems = leftover;
     }
 
-    public void interact(Character character) {
-        if(hasEntity()) {
-            InteractionVisitor visitor = new InteractionVisitor(character);
-            getEntity().accept(visitor);
-        }else {
-
-        }
-    }
     public void update(){
         if(hasEntity())
         interactWithTile(getEntity());
     }
+    
+//    public void interact(Character character) {
+//        if(hasEntity()) {
+//            InteractionVisitor visitor = new InteractionVisitor(character);
+//            getEntity().accept(visitor);
+//        }else {
+//
+//        }
+//    }
 
     public boolean add(HitBox hitBox){
 

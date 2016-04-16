@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Entities.AvatarStates;
 
+import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
@@ -17,6 +18,6 @@ public abstract class AvatarState {
     public abstract void drop();
     public abstract void pickup();
     public abstract void interactWith();
-    public abstract void mount();
+    public abstract void mount(Character mountee);
     public abstract void dismount();
 }
