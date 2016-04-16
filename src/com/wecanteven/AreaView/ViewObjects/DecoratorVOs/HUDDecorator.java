@@ -56,7 +56,7 @@ public class HUDDecorator extends DecoratorViewObject implements Observer{
         return (((float)healthBar.getPercent()/100f * (float)subject.getMaxHealth()) > subject.getHealth()) ;
     }
     private int getDamage() {
-        return (int)((float)healthBar.getPercent()/100f * (float)subject.getMaxHealth()) - subject.getHealth();
+        return (int)Math.ceil(((float)healthBar.getPercent()/100f * (float)subject.getMaxHealth()) - (float)subject.getHealth());
     }
 
     @Override
