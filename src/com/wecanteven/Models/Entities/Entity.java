@@ -90,6 +90,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         loseLife();
     }
 
+    @Override
     public boolean move(Direction d){
         int movementStat = getStats().getMovement();
         if(movementStat == 0 || isActive()){
@@ -106,6 +107,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
     }
 
+    @Override
     public boolean move(Location l) {
         int movementStat = getStats().getMovement();
         if(movementStat == 0 || isActive()){
@@ -116,6 +118,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         return getActionHandler().move(this,l,moveTime);
     }
 
+    @Override
     public boolean fall(){
         if(!isActive()) {
             Location tileBelow = getLocation().subtract(new Location(0, 0, 1));

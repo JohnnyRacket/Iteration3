@@ -76,7 +76,7 @@ public class Character extends Entity {
     }
 
     public void drop(TakeableItem item) {
-        if (getActionHandler().drop(item, this.getLocation())) {
+        if (getActionHandler().drop(item, this.getLocation().add(getDirection().getCoords))) {
             itemStorage.removeItem(item);
         }
     }
