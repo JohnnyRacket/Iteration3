@@ -35,10 +35,4 @@ public class EquipableItemVOFactory {
         entity.attach(directionalViewObject);
         return directionalViewObject;
     }
-
-//    public DirectionalViewObject createEquipment(Position p, Entity entity, String name, GameColor color) {
-//        DirectionalViewObject directionalViewObject =  viewObjectFactory.createDirectional(p, entity, "Equipment/" +color.name + "/" + name + "/");
-//        entity.attach(directionalViewObject);
-//        return directionalViewObject;
-//    }
 }
