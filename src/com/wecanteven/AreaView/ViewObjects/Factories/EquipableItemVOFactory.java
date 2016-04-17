@@ -19,16 +19,18 @@ public class EquipableItemVOFactory {
     }
 
 
-    public EquipableViewObject createBodyArmor(ViewObject body, ViewObject bodyArmor, EquipmentSlot subject, Entity entity, GameColor color) {
-        return viewObjectFactory.createEquipable(body, subject, this, subject, entity, color);
-    }
-
     public EquipableViewObject createEquipable(ViewObject child, EquipmentSlot subject, Entity entity, GameColor color) {
         return new EquipableViewObject(child, subject, this, entity, color);
     }
 
+    public ViewObject createEquipment(Position p, Entity entity, String name, GameColor color) {
+        //First we try to find a nondirectional equipment
+        try {
+            return viewObjectFactory.createSimpleViewObject(p, "Equipment/" + color + "/" + name + ".xml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    public DirectionalViewObject createEquipment(Position p, Entity entity, String name, GameColor color) {
         DirectionalViewObject directionalViewObject =  viewObjectFactory.createDirectional(p, entity, "Equipment/" +color.name + "/" + name + "/");
         entity.attach(directionalViewObject);
         return directionalViewObject;
