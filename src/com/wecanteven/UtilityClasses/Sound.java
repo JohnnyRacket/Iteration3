@@ -26,7 +26,7 @@ public class Sound {
             this.gain = gain;
         }
     }
-    public static boolean mute = false;
+    public static boolean mute = true;
     public Volume volume = Volume.LOW;
 
     private Clip clip;
