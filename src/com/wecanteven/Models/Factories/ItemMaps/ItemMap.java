@@ -7,11 +7,11 @@ import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Stats.StatsAddable;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by simonnea on 4/7/16.
@@ -24,6 +24,7 @@ public class ItemMap {
     private HashMap<String, IInteractiveItemCreateCommand> InteractiveitemMap;
     private HashMap<String, IEquipableItemCreateCommand> EquipableItemMap;
     private HashMap<String, ITakeableItemCreateCommand> TakeableItemMap;
+    private HashMap<String, IUseableItemCreateCommand> UseableItemMap;
 
     private HashSet<String> usedNames;
 
@@ -33,6 +34,7 @@ public class ItemMap {
         InteractiveitemMap = new HashMap<>();
         EquipableItemMap = new HashMap<>();
         TakeableItemMap = new HashMap<>();
+        UseableItemMap = new HashMap<>();
 
         usedNames = new HashSet<>();
 
@@ -53,6 +55,7 @@ public class ItemMap {
         initializeInteractive();
         initializeEquipable();
         initializeTakeable();
+        initializeUseable();
     }
 
     private void initializeObstacle() {
@@ -129,6 +132,15 @@ public class ItemMap {
         usedNames.addAll(TakeableItemMap.keySet());
     }
 
+    private void initializeUseable() {
+        UseableItemFactory factory = new UseableItemFactory();
+
+        UseableItemMap.put("Intellect Buff",
+                () -> factory.vendStatModifyingBuffItem("Intellect Buff", 25, new StatsAddable(0,0,0,15,0,0,0,0,0)));
+
+        usedNames.addAll(UseableItemMap.keySet());
+    }
+
     public Obstacle getItemAsObstacle(String name) {
         if (ObstacleMap.containsKey(name)) {
             return ObstacleMap.get(name).create();
@@ -166,11 +178,23 @@ public class ItemMap {
             return EquipableItemMap.get(name).create();
         }
 
+        if (UseableItemMap.containsKey(name)) {
+            return UseableItemMap.get(name).create();
+        }
+
         if (TakeableItemMap.containsKey(name)) {
             return TakeableItemMap.get(name).create();
         }
 
         throw new IllegalArgumentException("There is no Takeable item with name: " + name);
+    }
+
+    public UseableItem getItemAsUseable(String name) {
+        if (UseableItemMap.containsKey(name)) {
+            return UseableItemMap.get(name).create();
+        }
+
+        throw new IllegalArgumentException("There is no Useable item with name: " + name);
     }
     /**
      * Extensibility

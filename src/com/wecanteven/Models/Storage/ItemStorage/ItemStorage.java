@@ -1,7 +1,7 @@
 package com.wecanteven.Models.Storage.ItemStorage;
 
 import com.wecanteven.Models.Entities.Character;
-import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
+import com.wecanteven.Models.Items.Takeable.StatsModifyUseable;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.MoneyItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
@@ -126,7 +126,7 @@ public class ItemStorage {
     /**
      * Precondition: Item must be in inventory
      * */
-    public void use(ConsumeableItem item) {
+    public void use(StatsModifyUseable item) {
         if (inventory.contains(item)) {
             inventory.remove(item);
             item.use(owner);
