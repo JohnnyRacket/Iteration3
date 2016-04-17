@@ -23,11 +23,13 @@ public enum GameColor {
     public final Color light;
     public final String name;
     public final Color dark;
+    public final String race;
 
     GameColor(int lightColorCode, int darkColorCode, String standardName, String race) {
         this.light = new Color(lightColorCode);
         this.name = standardName;
         this.dark = new Color(darkColorCode);
+        this.race = race;
     }
     @Override
     public String toString() {

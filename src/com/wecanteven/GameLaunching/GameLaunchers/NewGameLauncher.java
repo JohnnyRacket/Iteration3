@@ -14,6 +14,8 @@ import com.wecanteven.Models.Items.Takeable.Equipable.DualWieldMeleeWeapon;
 import com.wecanteven.Models.Items.Takeable.Equipable.HeadEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
 import com.wecanteven.Models.Map.Map;
+import com.wecanteven.Models.Occupation.Occupation;
+import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
@@ -27,10 +29,12 @@ public class NewGameLauncher extends GameLauncher {
 
     private LevelFactory levelFactory = new DemoLevelFactory();
     //private LevelFactory levelFactory = new DopeAssLevelFactory();
+    private Occupation occupation;
 
-    public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine){
+    public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine, Occupation occupation, String face, GameColor color){
         super(controller, modelEngine, viewEngine);
         setLevelFactory(levelFactory);
+        this.occupation = occupation;
     }
 
     /*
@@ -43,7 +47,7 @@ public class NewGameLauncher extends GameLauncher {
     public void launch(){
 
         createMap();
-        createAvatar("test");
+        createAvatar();
         populateMap(getMap());
         initializeAreaView();
         initializeUIView();
@@ -55,8 +59,8 @@ public class NewGameLauncher extends GameLauncher {
     }
 
     @Override
-    protected void createAvatar(String occupation){
-        Character player = new Character(getMap(), Direction.SOUTH, GameColor.GREEN);
+    protected void createAvatar(){
+        Character player = new Character(getMap(), Direction.SOUTH, occupation, GameColor.GREEN);
 
         player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
