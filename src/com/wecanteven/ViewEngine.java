@@ -55,6 +55,8 @@ public class ViewEngine extends JFrame implements Runnable{
         Dimension DimMax = Toolkit.getDefaultToolkit().getScreenSize();
         DimMax.setSize(DimMax.width/2, DimMax.height/2);
         setPreferredSize(DimMax);
+
+
         pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);

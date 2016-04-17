@@ -726,16 +726,49 @@ public class UIViewFactory {
             menu.setList(keyBindList);
 
         }));
+
+        NavigatableList windowOptions = new NavigatableList();
+        windowOptions.addItem(new ScrollableMenuItem("Fullscreen", ()->{
+
+            ViewTime.getInstance().register(()->{
+                vEngine.dispose();
+                vEngine.setUndecorated(true);
+                GraphicsDevice device = GraphicsEnvironment
+                        .getLocalGraphicsEnvironment().getScreenDevices()[0];
+                device.setFullScreenWindow(vEngine);
+                vEngine.pack();
+                vEngine.setExtendedState(vEngine.MAXIMIZED_BOTH);
+
+            },0);
+        }));
+        windowOptions.addItem(new ScrollableMenuItem("Windowed", ()->{
+            ViewTime.getInstance().register(()->{
+                vEngine.dispose();
+                vEngine.setUndecorated(false);
+                GraphicsDevice device = GraphicsEnvironment
+                        .getLocalGraphicsEnvironment().getScreenDevices()[0];
+                device.setFullScreenWindow(vEngine);
+                vEngine.setPreferredSize(new Dimension(1280,720));
+                vEngine.pack();
+            },0);
+        }));
+        windowOptions.addItem(new ScrollableMenuItem("Back", ()->{
+            ViewTime.getInstance().register(()->{
+               menu.setList(list);
+            },0);
+        }));
+        list.addItem(new ScrollableMenuItem("Options", ()->{
+            ViewTime.getInstance().register(()->{
+                menu.setList(windowOptions);
+            },0);
+        }));
         list.addItem(new ScrollableMenuItem("Exit to Main Menu", ()->{
-            //exit to main menu
-            //what all do i need to do here?
-            //dump things registered in the time models? (add clear functions to time models)
-            //Ask if user wants to save? <- Josh wants this ;)
-            //switch view to main menu view
+
             ViewTime.getInstance().register(()->{
                 createMainMenuView();
             },0);
         }));
+
 
         menu.setList(list);
         TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu", Config.CINNIBAR);
@@ -826,7 +859,7 @@ public class UIViewFactory {
 
         controller.setMenuState(swappableView.getMenuViewContainer());
         //This ACTIVE boolean serves the purpose of knowing whether or not draw the selector in the buy window
-        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame John
+        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame Josh
         if(!active) {
             swappableView.getMenuViewContainer().swap();
         }
