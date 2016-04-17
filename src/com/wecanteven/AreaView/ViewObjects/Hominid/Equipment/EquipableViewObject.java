@@ -7,7 +7,10 @@ import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
+import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Observer;
+import com.wecanteven.Observers.ViewObservable;
+import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 
 import java.awt.*;
@@ -20,13 +23,13 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
     private EquipmentSlot subject;
     private EquipableItemVOFactory factory;
 
-    private Entity entitySubject;
+    private Entity weaponSubject;
     private GameColor color;
 
-    public EquipableViewObject(ViewObject child, EquipmentSlot subject, EquipableItemVOFactory factory, Entity entitySubject, GameColor color) {
+    public  EquipableViewObject(ViewObject child, EquipmentSlot subject, EquipableItemVOFactory factory, Entity weaponSubject, GameColor color) {
         super(child);
         this.subject = subject;
-        this.entitySubject = entitySubject;
+        this.weaponSubject = weaponSubject;
         this.factory = factory;
         this.color = color;
 
@@ -61,7 +64,7 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
         if(!hasSubject())
             return;
         if (subject.hasItem()) {
-            equipment = factory.createEquipment(getPosition(),entitySubject, subject.getItem().getName(), color);
+            equipment = factory.createEquipment(getPosition(), weaponSubject, subject.getItem().getName(), color);
         }
     }
 

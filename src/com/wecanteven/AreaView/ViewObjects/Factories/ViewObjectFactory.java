@@ -107,12 +107,7 @@ public class ViewObjectFactory {
         //Create a pair of hands
         MicroPositionableViewObject leftHand = hominidVOFactory.createHand(p, weaponSlot, character, color);
         MicroPositionableViewObject rightHand = hominidVOFactory.createHand(p, weaponSlot, character, color);
-        HandsViewObject hands = new HandsViewObject(leftHand, rightHand,
-                Direction.SOUTH, p,
-                weaponSlot, this,
-                character,
-                (d, left, right) -> new BrawlingState(d, left, right),
-                color);
+        HandsViewObject hands = hominidVOFactory.createHandsViewObject(p, weaponSlot, character, color);
 
         //Create some feet
         MicroPositionableViewObject leftFoot = hominidVOFactory.createFoot(p, color);
