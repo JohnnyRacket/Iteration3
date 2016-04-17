@@ -19,7 +19,7 @@ public class StatsModifyUseable extends UseableItem {
     public void use(Character character) {
         character.buff(new Buff(
                 "Purple",
-                300,
+                1000000,
                 (entity) -> entity.modifyStatsAdditive(modify),
                 (entity) -> entity.modifyStatsSubtractive(modify)
         ));
