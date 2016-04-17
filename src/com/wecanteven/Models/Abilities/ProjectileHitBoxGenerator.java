@@ -1,9 +1,7 @@
 package com.wecanteven.Models.Abilities;
 
 import com.wecanteven.Models.Abilities.Effects.Effects;
-import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Character;
-import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 

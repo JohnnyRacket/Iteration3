@@ -6,7 +6,6 @@ import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.ModelTime.Alertable;
 import com.wecanteven.Models.ModelTime.ModelTime;
-import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Observers.Destroyable;
 import com.wecanteven.UtilityClasses.Location;
 
