@@ -44,6 +44,8 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     private Location location;
 
+    private String currentParent;
+
     public XMLSaveVisitor(SaveFile save) {
         //Initizalizing my save location
         location = new Location(0,0,0);
@@ -131,6 +133,9 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         saveDirection(e.getDirection());
         e.getStats().accept(this);
         e.getItemStorage().accept(this);
+
+        currentParent = "Character";
+        e.getOccupation().accept(this);
     }
 
     @Override
@@ -141,6 +146,8 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
         npc.getStats().accept(this);
         npc.getItemStorage().accept(this);
 
+        currentParent = "NPC";
+        npc.getOccupation().accept(this);
     }
 
     @Override
@@ -287,12 +294,13 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitOccupation(Occupation occupation) {
+        OccupationSkillXMLProcessor.formatSkillContainer(currentParent);
+
         Iterator<Tuple<Skill, Integer>> iter = occupation.getSkillIterator();
 
         while (iter.hasNext()) {
             Tuple<Skill, Integer> tuple = iter.next();
-
-
+            OccupationSkillXMLProcessor.formatSkill(tuple);
         }
     }
 

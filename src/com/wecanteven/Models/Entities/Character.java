@@ -253,9 +253,15 @@ public class Character extends Entity {
     public int getAvailablePoints() {
         return this.availableSkillPoints;
     }
+    public void setAvailableSkillPoints(int points) {
+        if (points >= 0) {
+            this.availableSkillPoints = points;
+        }
 
+        System.out.println("Character has " + getAvailablePoints() + " skill points");
+    }
     public boolean allocateSkillPoint(Skill skill, int points) {
-        if (points > 0) {
+        if (points > 0 && points <= getAvailablePoints()) {
             try {
                 occupation.addSkillPoints(skill, points);
                 decrementAvailablePoints(points);
