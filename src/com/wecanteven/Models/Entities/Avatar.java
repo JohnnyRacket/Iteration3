@@ -73,7 +73,7 @@ public class Avatar implements Observer{
             this.state = new DeadState();
             ModelTime.getInstance().registerAlertable( () -> {
                 avatar.setDestroyed(false);
-                map.add(avatar, new Location(13,13,19));
+                map.add(avatar, new Location(13,13,6));
                 avatar.fall();
                 this.state = new EntityState(avatar, this);
             }, 45);
