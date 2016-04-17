@@ -40,7 +40,7 @@ public class GridColor extends SelectableItem {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(color.light);
-        g2d.fillOval(x + windowWidth/2 - imageSize/2 + 12, y + imageSize/2 - 10, 50, 50);
+        g2d.fillOval(x + windowWidth/2 - imageSize/2 + 4, y + imageSize/2 - 10, 50, 50);
         g2d.setColor(color.dark);
         g2d.drawString(color.race, x + windowWidth/2 - metrics.stringWidth(color.race)/2, y + windowHeight - padding/2);
 

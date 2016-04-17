@@ -176,13 +176,13 @@ public class UIViewFactory {
 
 
 
-        TitleBarDecorator title = new TitleBarDecorator(selectRow,"Configuration", Config.PINK);
+        TitleBarDecorator title = new TitleBarDecorator(selectRow,"Configuration", Config.GRAY);
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
 
         view.addDrawable(vertCenter);
 
-        TitleBarDecorator previewTitle = new TitleBarDecorator(characterView,"Preview", Config.PINK);
+        TitleBarDecorator previewTitle = new TitleBarDecorator(characterView,"Preview", Config.GRAY);
         HorizontalCenterContainer previewTitleH = new HorizontalCenterContainer(previewTitle);
         VerticalCenterContainer previewTitleV = new VerticalCenterContainer(previewTitleH);
 
@@ -192,7 +192,7 @@ public class UIViewFactory {
 
 
         //MAIN WINDOW TITLE
-        TitleBarDecorator mainView = new TitleBarDecorator(columns,"Create Character", Config.DARK_PINK);
+        TitleBarDecorator mainView = new TitleBarDecorator(columns,"Create Character", Config.DARK_GRAY);
         HorizontalCenterContainer mainViewC = new HorizontalCenterContainer(mainView);
         VerticalCenterContainer mainViewV = new VerticalCenterContainer(mainViewC);
 
@@ -312,6 +312,21 @@ public class UIViewFactory {
                     resumeGame();
                 })
         );
+        startList.addItem(
+                new ScrollableMenuItem("Restart", () -> {
+                    menuItems[0] = null;
+                    menuItems[1] = null;
+                    menuItems[2] = null;
+                    preview.setColor(GameColor.GRAY);
+                    mainView.setBgColor(GameColor.GRAY.dark);
+                    title.setBgColor(GameColor.GRAY.light);
+                    previewTitle.setBgColor(GameColor.GRAY.light);
+                    faceSelection.setActive(false);
+                    classSelection.setActive(false);
+                    colorSelection.setActive(false);
+                    view.getMenuViewContainer().swap();
+                })
+        );
 
     }
 
@@ -324,7 +339,7 @@ public class UIViewFactory {
             Tuple<Skill, Integer> skill = iter.next();
             list.addItem(new ScrollableMenuItem(skill.x + ": " + skill.y, () -> {
                 if (!character.allocateSkillPoint(skill.x, 1)) {
-                    createToast(30, "You're out of skill points!");
+                    createToast(2, "You're out of skill points!");
                 }
                 createSkillList(character, list, title);
             }));
@@ -711,16 +726,49 @@ public class UIViewFactory {
             menu.setList(keyBindList);
 
         }));
+
+        NavigatableList windowOptions = new NavigatableList();
+        windowOptions.addItem(new ScrollableMenuItem("Fullscreen", ()->{
+
+            ViewTime.getInstance().register(()->{
+                vEngine.dispose();
+                vEngine.setUndecorated(true);
+                GraphicsDevice device = GraphicsEnvironment
+                        .getLocalGraphicsEnvironment().getScreenDevices()[0];
+                device.setFullScreenWindow(vEngine);
+                vEngine.pack();
+                vEngine.setExtendedState(vEngine.MAXIMIZED_BOTH);
+
+            },0);
+        }));
+        windowOptions.addItem(new ScrollableMenuItem("Windowed", ()->{
+            ViewTime.getInstance().register(()->{
+                vEngine.dispose();
+                vEngine.setUndecorated(false);
+                GraphicsDevice device = GraphicsEnvironment
+                        .getLocalGraphicsEnvironment().getScreenDevices()[0];
+                device.setFullScreenWindow(vEngine);
+                vEngine.setPreferredSize(new Dimension(1280,720));
+                vEngine.pack();
+            },0);
+        }));
+        windowOptions.addItem(new ScrollableMenuItem("Back", ()->{
+            ViewTime.getInstance().register(()->{
+               menu.setList(list);
+            },0);
+        }));
+        list.addItem(new ScrollableMenuItem("Options", ()->{
+            ViewTime.getInstance().register(()->{
+                menu.setList(windowOptions);
+            },0);
+        }));
         list.addItem(new ScrollableMenuItem("Exit to Main Menu", ()->{
-            //exit to main menu
-            //what all do i need to do here?
-            //dump things registered in the time models? (add clear functions to time models)
-            //Ask if user wants to save? <- Josh wants this ;)
-            //switch view to main menu view
+
             ViewTime.getInstance().register(()->{
                 createMainMenuView();
             },0);
         }));
+
 
         menu.setList(list);
         TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu", Config.CINNIBAR);
@@ -811,7 +859,7 @@ public class UIViewFactory {
 
         controller.setMenuState(swappableView.getMenuViewContainer());
         //This ACTIVE boolean serves the purpose of knowing whether or not draw the selector in the buy window
-        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame John
+        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame Josh
         if(!active) {
             swappableView.getMenuViewContainer().swap();
         }

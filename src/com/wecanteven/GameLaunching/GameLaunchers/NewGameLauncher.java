@@ -21,11 +21,14 @@ public class NewGameLauncher extends GameLauncher {
     private LevelFactory levelFactory = new DemoLevelFactory();
     //private LevelFactory levelFactory = new DopeAssLevelFactory();
     private Occupation occupation;
+    private String face;
+    private GameColor playerColor;
 
     public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine, Occupation occupation, String face, GameColor color){
         super(controller, modelEngine, viewEngine);
         setLevelFactory(levelFactory);
         this.occupation = occupation;
+        playerColor = color;
     }
 
     /*
@@ -52,7 +55,7 @@ public class NewGameLauncher extends GameLauncher {
     @Override
     protected void createAvatar(){
         Character player = new Character(getMap(), Direction.SOUTH, occupation, GameColor.GREEN);
-
+        player.setColor(playerColor);
         //player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.pickup(new OneHandedMeleeWeapon("Katar", 4, new StatsAddable(1,1,1,1,1,1,1,1,1)));

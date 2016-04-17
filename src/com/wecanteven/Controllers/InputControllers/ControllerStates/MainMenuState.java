@@ -25,7 +25,6 @@ public class MainMenuState extends ControllerState {
         mappings.put(ActionEnum.LEFT, KeyEvent.VK_LEFT);
         mappings.put(ActionEnum.RIGHT, KeyEvent.VK_RIGHT);
         mappings.put(ActionEnum.SELECT, KeyEvent.VK_ENTER);
-        mappings.put(ActionEnum.SWAPVIEW, KeyEvent.VK_SPACE);
         mappings.put(ActionEnum.ESCAPE, KeyEvent.VK_ESCAPE);
         this.setMappings(mappings);
     }
@@ -48,9 +47,7 @@ public class MainMenuState extends ControllerState {
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.RIGHT), ()->{
             this.setCommandToExecute(()->menus.right());
         }, this.getjFrame(), this.getController()));
-        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.SWAPVIEW), ()->{
-            this.setCommandToExecute(()->menus.swap());
-        }, this.getjFrame(), this.getController()));
+
 
 
     }
