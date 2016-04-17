@@ -17,15 +17,15 @@ public class OneShotItemFactory {
     }
 
     public OneShot vendDeathOneShot(String name) {
-        return new OneShot(name, (entity) -> entity.modifyStats(new StatsAddable(-1,0,0,0,0,0,0,0,0)));
+        return new OneShot(name, (entity) -> entity.modifyStatsAdditive(new StatsAddable(-1,0,0,0,0,0,0,0,0)));
     }
 
     public OneShot vendMovementSpeedBuffOneShot(String name, int movementSpeedBuff, int duration) {
         return new OneShot(name, (entity) -> entity.buff(new Buff(
                 "Purple",
                 duration,
-                (entity1) -> entity1.modifyStats(new StatsAddable(0,0,0,0,0,0,movementSpeedBuff,0,0)),
-                (entity1) -> entity1.modifyStats(new StatsAddable(0,0,0,0,0,0,-1 * movementSpeedBuff,0,0))
+                (entity1) -> entity1.modifyStatsAdditive(new StatsAddable(0,0,0,0,0,0,movementSpeedBuff,0,0)),
+                (entity1) -> entity1.modifyStatsSubtractive(new StatsAddable(0,0,0,0,0,0,movementSpeedBuff,0,0))
         )));
     }
 

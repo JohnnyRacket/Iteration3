@@ -12,6 +12,6 @@ public class StatsEffect implements Effects{
         this.effect = effect;
     }
     public void interact(Entity entity){
-        entity.modifyStats(effect);
+        entity.modifyStatsAdditive(effect);
     }
 }

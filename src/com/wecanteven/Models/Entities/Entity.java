@@ -313,9 +313,14 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
     }
 
-    public void modifyStats(StatsAddable addable){
+    public void modifyStatsAdditive(StatsAddable addable){
 
         this.stats.addStats(addable);
+    }
+
+    public void modifyStatsSubtractive(StatsAddable addable){
+
+        this.stats.subtractStats(addable);
     }
 
     @Override

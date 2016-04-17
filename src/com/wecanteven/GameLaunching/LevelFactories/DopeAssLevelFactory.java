@@ -4,19 +4,13 @@ import com.wecanteven.AreaView.Biomes.Biome;
 import com.wecanteven.AreaView.Biomes.DefaultBiome;
 import com.wecanteven.AreaView.ViewObjects.Factories.PlainsFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
-import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.Models.Entities.*;
-import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
-import com.wecanteven.Models.Interactions.NoInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
-import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
-import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
-import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
@@ -93,7 +87,7 @@ public class DopeAssLevelFactory extends LevelFactory{
 
 
 //
-//        map.add(new ConsumeableItem("Death Potion", 10), new Location(1, 2, 1));
+//        map.add(new StatsModifyUseable("Death Potion", 10), new Location(1, 2, 1));
 //        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3,3,1));
 //        map.add(ItemMap.getInstance().getItemAsInteractive("Button"), new Location(5, 5, 1));
 //        map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(8,2,1));

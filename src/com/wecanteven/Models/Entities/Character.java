@@ -149,8 +149,12 @@ public class Character extends Entity {
     /**
      * Consumption
      */
-    // TODO hook up with items
-    public boolean consume(String id) {
+    public boolean consume(UseableItem item) {
+        if (itemStorage.hasItem(item)) {
+            item.use(this);
+            itemStorage.removeItem(item);
+            return true;
+        }
         return false;
     }
 

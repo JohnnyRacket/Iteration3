@@ -11,7 +11,7 @@ public class InstaDeathAoe extends OneTimeAreaOfEffect {
     @Override
     public void apply(Entity entity) {
 
-        entity.modifyStats(new StatsAddable(-1,0,0,0,0,0,0,0,0));
+        entity.modifyStatsAdditive(new StatsAddable(-1,0,0,0,0,0,0,0,0));
     }
 
     @Override
