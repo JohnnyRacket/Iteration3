@@ -15,6 +15,10 @@ import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.*;
+import com.wecanteven.Visitors.CanFallVisitors.CanFallVisitor;
+import com.wecanteven.Visitors.CanFallVisitors.TerranianCanFallVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.CanMoveVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.TerranianCanMoveVisitor;
 
 /**
  * Created by John on 3/31/2016.
@@ -254,9 +258,10 @@ public class Map implements MapVisitable, ActionHandler {
     @Override
     public boolean drop(TakeableItem item, Location location) {
         item.setLocation(location);
-        item.setIsDestoryed(false);
         item.accept(voCreationVisitor);
-        getTile(location).add(new TakeableMoveable(item.getName(), item.getValue(), item, this, location));
+        TakeableMoveable newItem = new TakeableMoveable(item.getName(), item.getValue(), item, this, location);
+        newItem.setIsDestoryed(false);
+        getTile(location).add(newItem);
         return true;
     }
 //    @Override

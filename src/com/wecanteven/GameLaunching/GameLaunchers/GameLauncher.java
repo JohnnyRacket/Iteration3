@@ -31,7 +31,7 @@ public abstract class GameLauncher {
     abstract void launch();
     abstract void createMap();
 
-    abstract void createAvatar(String occupation);
+    abstract void createAvatar();
 
     abstract void populateMap(Map map);
     public LevelFactory getLevelFactory() {return levelFactory; }

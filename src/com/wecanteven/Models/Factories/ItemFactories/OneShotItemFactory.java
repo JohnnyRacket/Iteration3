@@ -3,6 +3,7 @@ package com.wecanteven.Models.Factories.ItemFactories;
 import com.wecanteven.Models.BuffManager.Buff;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Stats.StatsAddable;
+import com.wecanteven.Visitors.CanFallVisitors.FlyingCanFallVisitor;
 
 /**
  * Created by Cachorrita on 4/6/2016.
@@ -25,6 +26,18 @@ public class OneShotItemFactory {
                 duration,
                 (entity1) -> entity1.modifyStats(new StatsAddable(0,0,0,0,0,0,movementSpeedBuff,0,0)),
                 (entity1) -> entity1.modifyStats(new StatsAddable(0,0,0,0,0,0,-1 * movementSpeedBuff,0,0))
+        )));
+    }
+
+    public OneShot vendFlyingBuffOneShot(String name, int duration) {
+        return new OneShot(name, (entity) -> entity.buff(new Buff(
+                "Purple",
+                duration,
+                (entity1) -> {
+                    entity1.cacheCanFall();
+                    entity1.setCanFallVisitor(new FlyingCanFallVisitor());
+                },
+                (entity1) -> entity1.restoreCanFall()
         )));
     }
 }

@@ -489,7 +489,7 @@ public class DemoLevelFactory extends LevelFactory {
 
         //Obstacle
         map.add(ItemMap.getInstance().getItemAsObstacle("Crate"), new Location(1,14,2));
-        map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(2,14,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(2,14,2));
 
         //Equipable
 //        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
