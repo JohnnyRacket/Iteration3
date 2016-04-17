@@ -5,6 +5,7 @@ import com.wecanteven.AreaView.Biomes.CustomBiome;
 import com.wecanteven.AreaView.Biomes.DefaultBiome;
 import com.wecanteven.AreaView.ViewObjects.Factories.*;
 import com.wecanteven.Controllers.AIControllers.AIController;
+import com.wecanteven.Controllers.AIControllers.AITime;
 import com.wecanteven.Controllers.AIControllers.ActionControllers.EnemyActionController;
 import com.wecanteven.Controllers.AIControllers.ActionControllers.PetActionController;
 import com.wecanteven.Controllers.AIControllers.SearchingControllers.EnemySearchingController;
@@ -397,7 +398,7 @@ public class DemoLevelFactory extends LevelFactory {
         AIController controller = new AIController(searchingController,actionController);
         npc.setController(controller);
         map.add(npc, new Location(9,9,2));
-        ModelTime.getInstance().registerTickable(controller);
+        AITime.getInstance().registerController(controller);
     }
 
     public void weaponNPC(Map map) {
@@ -412,7 +413,7 @@ public class DemoLevelFactory extends LevelFactory {
         npc.pickup(i);
         npc.equipItem(i);
         map.add(npc, new Location(7,3,15));
-        ModelTime.getInstance().registerTickable(controller);
+        AITime.getInstance().registerController(controller);
     }
 
     public void dialogNPC(Map map) {

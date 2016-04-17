@@ -16,6 +16,7 @@ import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
+import com.wecanteven.Models.Occupation.*;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Models.Storage.ItemStorage.Equipment;
@@ -35,7 +36,7 @@ import java.util.Locale;
 /**
  * Created by Joshua Kegley on 4/4/2016.
  */
-public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor, EntityVisitor, StatsVisitor, ItemStorageVisitor, ItemVisitor, AreaOfEffectVisitor{
+public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor, EntityVisitor, StatsVisitor, ItemStorageVisitor, ItemVisitor, AreaOfEffectVisitor, OccupationVisitor {
 
     SaveFile save;
     private Avatar avatar;
@@ -282,6 +283,47 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     public void setLevelFactory(LevelFactory levelFactory) {
         this.levelFactory = levelFactory;
+    }
+
+    @Override
+    public void visitOccupation(Occupation occupation) {
+        Iterator<Tuple<Skill, Integer>> iter = occupation.getSkillIterator();
+
+        while (iter.hasNext()) {
+            Tuple<Skill, Integer> tuple = iter.next();
+
+
+        }
+    }
+
+    @Override
+    public void visitEnemy(Enemy enemy) {
+        visitOccupation(enemy);
+    }
+
+    @Override
+    public void visitFriendly(Friendly friendly) {
+        visitOccupation(friendly);
+    }
+
+    @Override
+    public void visitPet(Pet pet) {
+        visitOccupation(pet);
+    }
+
+    @Override
+    public void visitSmasher(Smasher smasher) {
+        visitOccupation(smasher);
+    }
+
+    @Override
+    public void visitSneak(Sneak sneak) {
+        visitOccupation(sneak);
+    }
+
+    @Override
+    public void visitSummoner(Summoner summoner) {
+        visitOccupation(summoner);
     }
 }
 
