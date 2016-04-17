@@ -844,7 +844,7 @@ public class UIViewFactory {
 
         controller.setMenuState(swappableView.getMenuViewContainer());
         //This ACTIVE boolean serves the purpose of knowing whether or not draw the selector in the buy window
-        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame John
+        //or sell window... It's probably a huge hack and introduces alternate cohesion... :O Blame Josh
         if(!active) {
             swappableView.getMenuViewContainer().swap();
         }
