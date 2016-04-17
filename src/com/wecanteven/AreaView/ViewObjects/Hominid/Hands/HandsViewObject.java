@@ -6,7 +6,7 @@ import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
-import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.*;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
@@ -113,38 +113,27 @@ public class HandsViewObject implements ViewObject, Observer {
     private class ViewWeaponVisitor implements WeaponsVisitor{
 
         @Override
-        public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {
-            swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), subject ,oneHandedWeapon.getName(), entity, color));
+        public void visitFistWeapon(FistWeapon f) {
+            factory.createDualWieldMeleeWeaponState(getPosition(), handState.getDirection(), subject, f.getName(), entity, color);
+        }
+
+        @Override
+        public void visitOneHandWeapon(OneHandWeapon o) {
 
         }
 
         @Override
-        public void visitDualWieldWeapon() {
+        public void visitRangedWeapon(RangedWeaponEquipableItem r) {
 
         }
 
         @Override
-        public void visitDualWieldMeleeWeapon(DualWieldMeleeWeapon dualWieldMeleeWeapon) {
-            swapHandsState(factory.createDualWieldMeleeWeaponState(getPosition(), handState.getDirection(), subject ,dualWieldMeleeWeapon.getName(), entity, color));
-        }
-
-        @Override
-        public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon) {
-            swapHandsState(factory.createOneHandedWeaponState(getPosition(), handState.getDirection(), subject , oneHandedMeleeWeapon.getName(), entity, color));
-
+        public void visitStaveWeapon(StaveWeapon s) {
 
         }
 
         @Override
-        public void visitOneHandedRangedWeapon(OneHandedRangedWeapon oneHandedRangedWeapon) {
-            handState.equip(oneHandedRangedWeapon);
-
-
-        }
-
-        @Override
-        public void visitWeapon(WeaponEquipableItem weapon) {
-            handState.equip(weapon);
+        public void visitTwoHandWeapon(TwoHandedWeapon t) {
 
         }
     }

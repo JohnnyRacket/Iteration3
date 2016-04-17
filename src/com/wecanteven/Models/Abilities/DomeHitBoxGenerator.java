@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Abilities;
 
+import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
@@ -15,9 +16,9 @@ public class DomeHitBoxGenerator implements HitBoxGenerator {
     private Character caster;
     private HitBox hitbox;
     private int distance,size;
-    private StatsAddable effect;
+    private Effects effect;
 
-    public DomeHitBoxGenerator(Character caster,StatsAddable effect){
+    public DomeHitBoxGenerator(Character caster,Effects effect){
         distance = 1;
         this.effect = effect;
         this.caster = caster;

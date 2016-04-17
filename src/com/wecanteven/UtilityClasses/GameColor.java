@@ -6,6 +6,7 @@ import java.awt.*;
  * Created by Alex on 4/16/2016.
  */
 public enum GameColor {
+
     /*
     CHARACTER NAMES
         Periwinkle
@@ -20,14 +21,17 @@ public enum GameColor {
     GREEN(0x6fc4a9, 0x55ae92, "Green", "Shamrock"),
     GRAY(0x9f9f9f, 0x6f6f6f, "Gray", "Ash");
 
+
     public final Color light;
     public final String name;
     public final Color dark;
+    public final String race;
 
     GameColor(int lightColorCode, int darkColorCode, String standardName, String race) {
         this.light = new Color(lightColorCode);
         this.name = standardName;
         this.dark = new Color(darkColorCode);
+        this.race = race;
     }
     @Override
     public String toString() {

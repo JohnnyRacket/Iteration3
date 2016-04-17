@@ -95,17 +95,25 @@ public class ItemMap {
 
     private void initializeEquipable() {
         EquipableItemFactory factory = new EquipableItemFactory();
+        //Real Shit right here
+
+        EquipableItemMap.put("Antenna", () -> factory.vendHeadEquipableItem("Antenna", 100, new StatsAddable(0,0,0,5,0,0,0,0,0)));
+        EquipableItemMap.put("Growth", () -> factory.vendHeadEquipableItem("Growth", 100, new StatsAddable(0,0,0,0,5,0,0,0,0)));
+        EquipableItemMap.put("Halo", () -> factory.vendHeadEquipableItem("Halo", 100, new StatsAddable(0,5,0,0,0,0,0,0,0)));
+
+        EquipableItemMap.put("Expand", () -> factory.vendFistWeapon("Expand", 100, new StatsAddable(0,10,0,0,0,0,0,0,0)));
+
         //These are real items that are in the game: oh really....
-        EquipableItemMap.put("Top Hat", () -> factory.vendHeadEquipableItem("Top Hat", 100, new StatsAddable(0,0,0,0,0,0,2,0,0)));
-        EquipableItemMap.put("THE GAME CRASHER", () -> factory.vendHeadEquipableItem("THE GAME CRASHER", 1000, new StatsAddable(2,0,0,0,0,0,0,0,0)));
-        EquipableItemMap.put("Katar", () -> factory.vendOneHandedMeleeWeapon("Katar", 50,  new StatsAddable(0,0,0,0,0,0,0,4,0)));
-
-        EquipableItemMap.put("Buyable Chestplate", () -> factory.vendChestplate("Buyable Chestplate", 10,  new StatsAddable(0,0,0,0,0,0,0,4,0)));
-        EquipableItemMap.put("Buyable Penis", () -> factory.vendChestplate("Buyable Penis", 2,  new StatsAddable(0,0,0,0,0,0,0,4,0)));
-
-        EquipableItemMap.put("Merp Boots", () -> factory.vendBoots("Merp Boots", 3, new StatsAddable(0,0,0,0,0,0,10,0,0)));
-
-        EquipableItemMap.put("Fez", () -> factory.vendHeadEquipableItem("Fez", 69, new StatsAddable(1,1,1,1,1,1,1,1,1)));
+//        EquipableItemMap.put("Top Hat", () -> factory.vendHeadEquipableItem("Top Hat", 100, new StatsAddable(0,0,0,0,0,0,2,0,0)));
+//        EquipableItemMap.put("THE GAME CRASHER", () -> factory.vendHeadEquipableItem("THE GAME CRASHER", 1000, new StatsAddable(2,0,0,0,0,0,0,0,0)));
+//        EquipableItemMap.put("Katar", () -> factory.vendOneHandedMeleeWeapon("Katar", 50,  new StatsAddable(0,0,0,0,0,0,0,4,0)));
+//
+//        EquipableItemMap.put("Buyable Chestplate", () -> factory.vendChestplate("Buyable Chestplate", 10,  new StatsAddable(0,0,0,0,0,0,0,4,0)));
+//        EquipableItemMap.put("Buyable Penis", () -> factory.vendChestplate("Buyable Penis", 2,  new StatsAddable(0,0,0,0,0,0,0,4,0)));
+//
+//        EquipableItemMap.put("Merp Boots", () -> factory.vendBoots("Merp Boots", 3, new StatsAddable(0,0,0,0,0,0,10,0,0)));
+//
+//        EquipableItemMap.put("Fez", () -> factory.vendHeadEquipableItem("Fez", 69, new StatsAddable(1,1,1,1,1,1,1,1,1)));
 
         usedNames.addAll(EquipableItemMap.keySet());
     }

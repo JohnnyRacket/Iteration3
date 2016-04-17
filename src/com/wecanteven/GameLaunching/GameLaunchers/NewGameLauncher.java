@@ -1,20 +1,13 @@
 package com.wecanteven.GameLaunching.GameLaunchers;
 
-import com.sun.prism.paint.Color;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.LevelFactories.DemoLevelFactory;
-import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
-import com.wecanteven.GameLaunching.LevelFactories.TSMBlowsLevelFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
-import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.DualWieldMeleeWeapon;
-import com.wecanteven.Models.Items.Takeable.Equipable.HeadEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
 import com.wecanteven.Models.Map.Map;
-import com.wecanteven.Models.Stats.StatsAddable;
+import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
@@ -27,10 +20,12 @@ public class NewGameLauncher extends GameLauncher {
 
     private LevelFactory levelFactory = new DemoLevelFactory();
     //private LevelFactory levelFactory = new DopeAssLevelFactory();
+    private Occupation occupation;
 
-    public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine){
+    public NewGameLauncher(MainController controller, ModelEngine modelEngine, ViewEngine viewEngine, Occupation occupation, String face, GameColor color){
         super(controller, modelEngine, viewEngine);
         setLevelFactory(levelFactory);
+        this.occupation = occupation;
     }
 
     /*
@@ -43,7 +38,7 @@ public class NewGameLauncher extends GameLauncher {
     public void launch(){
 
         createMap();
-        createAvatar("test");
+        createAvatar();
         populateMap(getMap());
         initializeAreaView();
         initializeUIView();
@@ -55,11 +50,11 @@ public class NewGameLauncher extends GameLauncher {
     }
 
     @Override
-    protected void createAvatar(String occupation){
-        Character player = new Character(getMap(), Direction.SOUTH, GameColor.GREEN);
+    protected void createAvatar(){
+        Character player = new Character(getMap(), Direction.SOUTH, occupation, GameColor.GREEN);
 
-        player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
-        player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
+        //player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
+        //player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.pickup(new OneHandedMeleeWeapon("Katar", 4, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.pickup(new DualWieldMeleeWeapon("Katar", 5, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.getItemStorage().equip(new ChestEquipableItem("Mediocre Top", 3, new StatsAddable(1,1,1,1,1,1,1,1,1)));

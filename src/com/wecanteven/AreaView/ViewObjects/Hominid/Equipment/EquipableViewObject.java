@@ -2,7 +2,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Equipment;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DecoratorViewObject;
-import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
+import com.wecanteven.AreaView.ViewObjects.Factories.EquipableItemVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
@@ -16,17 +16,15 @@ import java.awt.*;
  * Created by Alex on 4/7/2016.
  */
 public class EquipableViewObject extends DecoratorViewObject implements Observer {
-    private ViewObject defaultEquipment;
     private ViewObject equipment;
     private EquipmentSlot subject;
-    private ViewObjectFactory factory;
+    private EquipableItemVOFactory factory;
 
     private Entity entitySubject;
     private GameColor color;
 
-    public EquipableViewObject(ViewObject child, ViewObject defaultEquipment, EquipmentSlot subject, ViewObjectFactory factory, Entity entitySubject, GameColor color) {
+    public EquipableViewObject(ViewObject child, EquipmentSlot subject, EquipableItemVOFactory factory, Entity entitySubject, GameColor color) {
         super(child);
-        this.defaultEquipment = defaultEquipment;
         this.subject = subject;
         this.entitySubject = entitySubject;
         this.factory = factory;
@@ -64,11 +62,6 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
             return;
         if (subject.hasItem()) {
             equipment = factory.createEquipment(getPosition(),entitySubject, subject.getItem().getName(), color);
-        } else {
-            if(hasEquipment()) {
-                equipment = defaultEquipment;
-                defaultEquipment.setPosition(getPosition());
-            }
         }
     }
 

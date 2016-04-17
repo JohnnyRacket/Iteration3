@@ -16,8 +16,6 @@ import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.*;
 
-import java.util.ArrayList;
-
 /**
  * Created by John on 3/31/2016.
  */

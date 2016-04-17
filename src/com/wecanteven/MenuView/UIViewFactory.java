@@ -16,8 +16,7 @@ import com.wecanteven.MenuView.DrawableLeafs.HUDview.HUDview;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
 
-import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
-import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGridWithCenterTitle;
+import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.*;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
 import com.wecanteven.MenuView.DrawableLeafs.Toaster.Toast;
 import com.wecanteven.MenuView.UIObjectCreationVisitors.BuyableUIObjectCreationVisitor;
@@ -32,11 +31,16 @@ import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Occupation.Skill;
+import com.wecanteven.Models.Occupation.Occupation;
+import com.wecanteven.Models.Occupation.Smasher;
+import com.wecanteven.Models.Occupation.Sneak;
+import com.wecanteven.Models.Occupation.Summoner;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
 import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.UtilityClasses.Tuple;
+import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.ViewEngine;
 
 import javax.swing.*;
@@ -81,9 +85,6 @@ public class UIViewFactory {
             vEngine.getManager().addPermView(view);
         },0);
     }
-    public void createAbilityView(){
-
-    }
     public void createMainMenuView(){
         //make menu
         ScrollableMenu menu = new ScrollableMenu(400, 400);
@@ -93,9 +94,9 @@ public class UIViewFactory {
         NavigatableList list = new NavigatableList();
         list.addItem(
                 new ScrollableMenuItem("New Game", () -> {
-                    NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine);
-                    template.launch();
-                    resumeGame();
+                    controller.popView();
+                    createCreateCharacterMenuView();
+
             })
         );
         list.addItem(createLoadMenu(menu, list));
@@ -122,6 +123,151 @@ public class UIViewFactory {
 
     public void createSkillList(Character character, NavigatableList list, TitleBarDecorator title) {
         title.setTitle("Available Points: " + character.getAvailablePoints());
+
+    public void createCreateCharacterMenuView() {
+        NavigatableGrid classSelection = new NavigatableGrid(300, 100, 3, 1);
+        NavigatableGrid faceSelection = new NavigatableGrid(300, 100, 2, 1);
+        NavigatableGrid colorSelection = new NavigatableGrid(300, 100, 4, 1);
+        ScrollableMenu startGameSelection = new ScrollableMenu(400, 400);
+
+        classSelection.setBgColor(Config.TRANSMEDIUMGREY);
+        faceSelection.setBgColor(Config.TRANSMEDIUMGREY);
+        colorSelection.setBgColor(Config.TRANSMEDIUMGREY);
+        startGameSelection.setSelectedColor(Color.cyan);
+        startGameSelection.setBgColor(Config.TRANSMEDIUMGREY);
+        //make menu list
+
+        NavigatableList classList = new NavigatableList();
+        NavigatableList faceList = new NavigatableList();
+        NavigatableList colorList = new NavigatableList();
+        NavigatableList startList = new NavigatableList();
+
+        classSelection.setList(classList);
+        faceSelection.setList(faceList);
+        colorSelection.setList(colorList);
+        startGameSelection.setList(startList);
+
+        //make swappable view
+        SwappableView view = new SwappableView();
+        //add decorators to center the menu
+
+        view.addNavigatable(classSelection);
+        view.addNavigatable(faceSelection);
+        view.addNavigatable(colorSelection);
+        view.addNavigatable(startGameSelection);
+
+        RowedCompositeContainer row = new RowedCompositeContainer(500, 450);
+
+        row.addDrawable(classSelection);
+        row.addDrawable(faceSelection);
+        row.addDrawable(colorSelection);
+        row.addDrawable(startGameSelection);
+
+
+
+        TitleBarDecorator title = new TitleBarDecorator(row,"Create Character", Config.DARK_PINK);
+        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
+        VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
+
+        view.addDrawable(vertCenter);
+        controller.setMainMenuState(view.getMenuViewContainer());
+
+        ViewTime.getInstance().register(()->{
+            this.getController().clearViews();
+            this.getvEngine().clear();
+            vEngine.getManager().addView(view);
+        },0);
+        //THIS IS SO HACKY! HELP
+        Object menuItems[] = new Object[3];
+        Occupation occupation;
+        classList.addItem(new GridString("Smasher", ()->{
+            menuItems[0] = new Smasher();
+            view.getMenuViewContainer().swap();
+            classList.setCurrentIndex(0);
+            classSelection.setActive(true);
+        }));
+        classList.addItem(new GridString("Sneak", ()->{
+            menuItems[0] = new Sneak();
+            view.getMenuViewContainer().swap();
+            classList.setCurrentIndex(1);
+            classSelection.setActive(true);
+        }));
+        classList.addItem(new GridString("Summoner", ()->{
+            menuItems[0] = new Summoner();
+            view.getMenuViewContainer().swap();
+            classList.setCurrentIndex(2);
+            classSelection.setActive(true);
+        }));
+
+        faceList.addItem(new GridFace("Connery", () -> {
+            //set
+            menuItems[1] = "Connery";
+            view.getMenuViewContainer().swap();
+            faceList.setCurrentIndex(0);
+            faceSelection.setActive(true);
+            System.out.println("Selected Connery Face");
+        }));
+        faceList.addItem(new GridFace("Test Face", () -> {
+            //set Face
+            menuItems[1] = "TestFace";
+            view.getMenuViewContainer().swap();
+            faceList.setCurrentIndex(1);
+            faceSelection.setActive(true);
+            System.out.println("Selected Test Face");
+
+        }));
+
+        //CREATING LIST
+        colorList.addItem(new GridColor(GameColor.BLUE, () -> {
+            //setColor to ace
+            menuItems[2] = GameColor.BLUE;
+            title.setBgColor(GameColor.BLUE.dark);
+            view.getMenuViewContainer().swap();
+            colorList.setCurrentIndex(0);
+            colorSelection.setActive(true);
+        }));
+        colorList.addItem(new GridColor(GameColor.GREEN, () -> {
+            //setColor to ace
+            menuItems[2] = GameColor.GREEN;
+            title.setBgColor(GameColor.GREEN.dark);
+            view.getMenuViewContainer().swap();
+            colorList.setCurrentIndex(1);
+            colorSelection.setActive(true);
+
+        }));
+        colorList.addItem(new GridColor(GameColor.PINK, () -> {
+            //setColor to ace
+            menuItems[2] = GameColor.PINK;
+            title.setBgColor(GameColor.PINK.dark);
+            view.getMenuViewContainer().swap();
+            colorList.setCurrentIndex(2);
+            colorSelection.setActive(true);
+
+        }));
+        colorList.addItem(new GridColor(GameColor.YELLOW, () -> {
+            //setColor to ace
+            menuItems[2] = GameColor.YELLOW;
+            title.setBgColor(GameColor.YELLOW.dark);
+            view.getMenuViewContainer().swap();
+            colorList.setCurrentIndex(3);
+            colorSelection.setActive(true);
+
+        }));
+
+        //START GAME LIST
+        startList.addItem(
+                new ScrollableMenuItem("Start Game", () -> {
+                    if(menuItems[0] == null || menuItems[1] == null || menuItems[2] == null) {view.getMenuViewContainer().swap(); return; }
+                    NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine, (Occupation)menuItems[0], (String)menuItems[1], (GameColor)menuItems[2]);
+                    template.launch();
+                    resumeGame();
+                })
+        );
+
+    }
+
+
+    public void createStatsView(Character character){
 
         Iterator<Tuple<Skill, Integer>> iter = character.getOccupation().getSkillIterator();
         list.clear();
@@ -244,6 +390,9 @@ public class UIViewFactory {
             vEngine.getManager().addView(view);
         },0);
         controller.setMenuState(view.getMenuViewContainer());
+    }
+    public void createAbilityView(){
+
     }
 
     public void createEquippableItemMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, EquipableItem item){
@@ -667,6 +816,9 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
 
     }
+
+
+
 
 
     public ScrollableMenuItem createLoadMenu(ScrollableMenu menu, NavigatableList list){

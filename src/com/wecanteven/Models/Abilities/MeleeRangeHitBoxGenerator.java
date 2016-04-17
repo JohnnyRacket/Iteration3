@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Abilities;
 
+import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
@@ -12,7 +13,7 @@ public class MeleeRangeHitBoxGenerator implements HitBoxGenerator {
     private Character caster;
     HitBox hitbox;
 
-    public MeleeRangeHitBoxGenerator(Character caster,StatsAddable effect){
+    public MeleeRangeHitBoxGenerator(Character caster,Effects effect){
         this.caster = caster;
         hitbox = new HitBox("Punch",caster.getLocation(),effect,caster.getActionHandler(),300);
     }

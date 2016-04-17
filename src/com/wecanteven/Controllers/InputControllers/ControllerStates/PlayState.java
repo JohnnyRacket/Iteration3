@@ -83,7 +83,7 @@ public class PlayState extends ControllerState {
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ATTACK), ()->{
 
-            avatar.attack();
+            avatar.attack(avatar.getCharacter().getDirection());
             //this.setContinuousCommandToExecute(()->avatar.useAbility(5));
         }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.ESCAPE), ()->{

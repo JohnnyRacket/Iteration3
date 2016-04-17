@@ -30,8 +30,11 @@ public class PetActionController extends AbstractActionController {
     @Override
     public void visitEnemyTarget(EnemyTarget target) {
         try {
-            System.out.println("moving");
-            this.getCharacter().move(getPathToTarget(target));
+            if(this.checkLocation(target,1)){
+                //attack
+            }else {
+                this.getCharacter().move(getPathToTarget(target));
+            }
 
         }catch (NullPointerException e){
             System.out.println("direction was null, this might mean john is bad a programming");
@@ -41,8 +44,11 @@ public class PetActionController extends AbstractActionController {
     @Override
     public void visitFriendlyTarget(FriendlyTarget target) {
         try {
-            System.out.println("moving");
-            this.getCharacter().move(getPathToTarget(target));
+            if(this.checkLocation(target,2)){
+                //idle
+            }else {
+                this.getCharacter().move(getPathToTarget(target));
+            }
 
         }catch (NullPointerException e){
             System.out.println("direction was null, this might mean john is bad a programming");

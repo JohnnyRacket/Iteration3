@@ -38,7 +38,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     private Direction direction;
     private CanMoveVisitor canMoveVisitor;
     private CanFallVisitor canFallVisitor;
-    private int movingTicks;
+    private int movingTicks, turningTicks;
     private boolean lock, isActive;
     private BuffManager buffmanager;
 
@@ -86,6 +86,9 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     public int getMovingTicks() {
         return movingTicks;
     }
+    public int getTurningTicks() {
+        return turningTicks;
+    }
 
     @Override
     public Direction getDirection() {
@@ -111,6 +114,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
             return getActionHandler().move(this,destination,moveTime);
         }else{
             setDirection(d);
+            updateTurningTicks(5);
             return false;
         }
     }
@@ -159,15 +163,24 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         tickTicks();
         notifyObserversOnNotDestroyed();
     }
-
+    public void updateTurningTicks(int ticks) {
+        setTurningTicks(ticks);
+        calculateActiveStatus();
+        tickTicks();
+        notifyObserversOnNotDestroyed();
+    }
     public void setMovingTicks(int movingTicks){
         this.movingTicks = movingTicks;
+    }
+    public void setTurningTicks(int turningTicks){
+        this.turningTicks = turningTicks;
     }
 
     protected void tickTicks(){
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
                 deIncrementMovingTick();
+                deIncrementTurningTick();
                 calculateActiveStatus();
                 tickTicks();
             }, 1);
@@ -177,6 +190,10 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     protected void deIncrementMovingTick(){
         if(getMovingTicks()>0)
         movingTicks--;
+    }
+    protected void deIncrementTurningTick(){
+        if(getTurningTicks()>0)
+            turningTicks--;
     }
 
     private int calculateMovementTicks(int movementStat){
@@ -275,7 +292,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     }
 
     protected boolean calculateActiveStatus(){
-        if(getMovingTicks() <= 0){
+        if(getMovingTicks() <= 0 && getMovingTicks() <= 0){
             setIsActive(false);
             return false;
         }

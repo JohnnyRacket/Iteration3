@@ -1,19 +1,13 @@
 package com.wecanteven.GameLaunching.GameLaunchers;
 
 import com.wecanteven.AreaView.AreaView;
-import com.wecanteven.AreaView.ViewObjects.Factories.PlainsViewObjectFactory;
-import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
-import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Map.Map;
-import com.wecanteven.SaveLoad.Save.SaveGame;
 import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
-import com.wecanteven.UtilityClasses.Direction;
-import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.ViewEngine;
 
 /**
@@ -37,7 +31,7 @@ public abstract class GameLauncher {
     abstract void launch();
     abstract void createMap();
 
-    abstract void createAvatar(String occupation);
+    abstract void createAvatar();
 
     abstract void populateMap(Map map);
     public LevelFactory getLevelFactory() {return levelFactory; }
