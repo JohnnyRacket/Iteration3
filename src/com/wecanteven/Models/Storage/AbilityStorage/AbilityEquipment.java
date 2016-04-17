@@ -4,6 +4,7 @@ import com.wecanteven.MenuView.UIObjectCreationVisitors.AbilityViewObjectCreatio
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Storage.StorageComponent;
 import com.wecanteven.UtilityClasses.Tuple;
+import com.wecanteven.Visitors.AbilityStorageVisitor;
 
 import java.util.Iterator;
 
@@ -59,7 +60,10 @@ public abstract class AbilityEquipment extends StorageComponent<AbilityStorage> 
     protected abstract int getSlot(Ability ability);
     protected abstract Ability getAbility(int slot);
 
-
     public abstract Iterator<Ability> getIterator();
     public abstract Iterator<Tuple<Ability, Integer>> getOrderedIterator();
+
+    public void accept(AbilityStorageVisitor visitor) {
+        visitor.visitAbilityEquiped(this);
+    }
 }

@@ -3,6 +3,7 @@ package com.wecanteven.Models.Abilities;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Occupation.Skill;
+import com.wecanteven.Visitors.AbilityVisitor;
 
 import java.util.Random;
 
@@ -95,4 +96,8 @@ public class Ability {
     //public void configure(Skill skill)  {
     //    this.skill = skill.getSkillPoints();
     //}
+
+    public void accept(AbilityVisitor visitor) {
+        visitor.visitAbility(this);
+    }
 }

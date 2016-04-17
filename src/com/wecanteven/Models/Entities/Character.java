@@ -177,6 +177,10 @@ public class Character extends Entity implements Actionable {
         abilityStorage.useAbility(index);
     }
 
+    public AbilityStorage getAbilityStorage() {
+        return this.abilityStorage;
+    }
+
     /**
      * Consumption
      */
