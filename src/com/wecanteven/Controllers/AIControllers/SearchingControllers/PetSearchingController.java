@@ -12,7 +12,7 @@ import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
-import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
+import com.wecanteven.Models.Items.Takeable.StatsModifyUseable;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
@@ -149,7 +149,7 @@ public class PetSearchingController extends AbstractSearchingController {
     }
 
     @Override
-    public void visitConsumableItem(ConsumeableItem consumable) {
+    public void visitStatsModifyItem(StatsModifyUseable consumable) {
         this.addNewTarget(new ItemTarget(1,consumable.getLocation()));
     }
 }

@@ -17,7 +17,8 @@ public abstract class UseableItem extends TakeableItem {
      * Visitation Rights
      * */
 
-    public void visit(ItemVisitor visitor) {
+    @Override
+    public void accept(ItemVisitor visitor) {
         visitor.visitUseableItem(this);
     }
 }

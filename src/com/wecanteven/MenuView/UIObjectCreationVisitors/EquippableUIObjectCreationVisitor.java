@@ -1,10 +1,8 @@
 package com.wecanteven.MenuView.UIObjectCreationVisitors;
 
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
-import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.NavigatableGrid;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableListHolder;
-import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.SelectableItem;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
@@ -15,7 +13,7 @@ import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
-import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
+import com.wecanteven.Models.Items.Takeable.StatsModifyUseable;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
@@ -26,7 +24,6 @@ import com.wecanteven.Visitors.EntityVisitor;
 import com.wecanteven.Visitors.ItemStorageVisitor;
 import com.wecanteven.Visitors.ItemVisitor;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -139,36 +136,34 @@ public class EquippableUIObjectCreationVisitor implements ItemStorageVisitor, It
     @Override
     public void visitEquipableItem(EquipableItem equipable) {
         if(inInv) {
-            inventoryItems.addItem(new GridItem(equipable.getName(), () -> {
-
-                factory.createEquippableItemMenu(character, invHolder, eqHolder, equipable);
-            }));
+            inventoryItems.addItem(new GridItem(equipable.getName(), () ->
+                factory.createEquippableItemMenu(character, invHolder, eqHolder, equipable)
+            ));
         }else{
-            equippedItems.addItem(new GridItem(equipable.getName(), () -> {
-
-                factory.createEquippedItemMenu(character, invHolder, eqHolder, equipable);
-            }));
+            equippedItems.addItem(new GridItem(equipable.getName(), () ->
+                factory.createEquippedItemMenu(character, invHolder, eqHolder, equipable)
+            ));
         }
     }
 
     @Override
     public void visitUseableItem(UseableItem useable) {
-        inventoryItems.addItem(new GridItem(useable.getName(), () ->{
-            factory.createUsableItemMenu();
-        }));
+        inventoryItems.addItem(new GridItem(useable.getName(), () ->
+            factory.createUsableItemMenu(character, invHolder, eqHolder, useable)
+        ));
     }
 
     @Override
     public void visitAbilityItem(AbilityItem ability) {
-        inventoryItems.addItem(new GridItem(ability.getName(), () ->{
-            factory.createAbilityItemMenu();
-        }));
+        inventoryItems.addItem(new GridItem(ability.getName(), () ->
+            factory.createUsableItemMenu(character, invHolder, eqHolder, ability)
+        ));
     }
 
     @Override
-    public void visitConsumableItem(ConsumeableItem consumable) {
-        inventoryItems.addItem(new GridItem(consumable.getName(), () ->{
-            factory.createConsumableItemMenu();
-        }));
+    public void visitStatsModifyItem(StatsModifyUseable consumable) {
+        inventoryItems.addItem(new GridItem(consumable.getName(), () ->
+            factory.createUsableItemMenu(character, invHolder, eqHolder, consumable)
+        ));
     }
 }
