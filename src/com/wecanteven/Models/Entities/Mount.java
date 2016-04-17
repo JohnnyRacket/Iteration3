@@ -1,7 +1,12 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Observers.Activatable;
+import com.wecanteven.Observers.Directional;
+import com.wecanteven.Observers.Positionable;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.Visitors.EntityVisitor;
@@ -12,21 +17,22 @@ import com.wecanteven.Visitors.EntityVisitor;
 public class Mount extends Character {
   Character mounter;
   ViewObject mountVO;
+  //SimpleVOFactory simpleVOFactory;
 
   public Mount(ActionHandler actionHandler, Direction direction) {
     super(actionHandler, direction, GameColor.BLUE);
+   // this.simpleVOFactory = simpleVOFactory;
   }
 
 
   public void mount(Character mounter) {
     this.mounter = mounter;
-    notifyObserversOnNotDestroyed();
-    try {
-      getFactory().setCenter(mountVO);
-    }
-    catch(Exception e) {
-      e.printStackTrace();
-    }
+//    try {
+//      getFactory().setCenter(mountVO);
+//    }
+//    catch(Exception e) {
+//      e.printStackTrace();
+//    }
     this.mounter.setDestroyed(true);
   }
 
@@ -53,7 +59,17 @@ public class Mount extends Character {
     avatar.mount(this);
   }
 
+//  public <T extends Positionable & ViewObservable> void setActiveView(int radius) {
+//    try {
+//      getFactory().makeLightSource(this, radius);
+//    }
+//    catch(Exception e) {
+//      e.printStackTrace();
+//    }
+//  }
+
   public String toString() {
     return "Mount instance!";
   }
+
 }

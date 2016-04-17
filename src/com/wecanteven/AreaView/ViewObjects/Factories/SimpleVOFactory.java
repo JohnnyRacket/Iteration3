@@ -67,9 +67,8 @@ public class SimpleVOFactory {
         hexDrawingStrategy.setCenterTarget(center);
     }
 
-    public <T extends Positionable & ViewObservable> void makeLightSource(ViewObject v, int radius, T subject) {
-
-        new VisibilitySourceViewObject(v, subject, areaView, radius);
+    public <T extends Positionable & ViewObservable> void makeLightSource(T subject, int radius) {
+        new VisibilitySourceViewObject(subject, areaView, radius);
     }
 
     public <T extends Directional & ViewObservable> DirectionalViewObject createDirectional(Position p, T d, String path) {
