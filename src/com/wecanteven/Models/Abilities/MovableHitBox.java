@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Abilities;
 
 import com.wecanteven.AreaView.VOCreationVisitor;
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
@@ -18,20 +19,24 @@ import java.util.ArrayList;
  */
 public class MovableHitBox extends HitBox implements Moveable, ViewObservable, Directional, Destroyable {
     private CanMoveVisitor canMoveVisitor;
-    private int movingTicks=0;
+    private int movingTicks;
     private boolean isActive;
-    private Direction direction;
-    private int speed,distance;
-    private int count = 0;
-    private boolean canMove = true;
+    private int count;
+    private boolean canMove;
     private ArrayList<Observer> observers;
+    private int speed,distance;
 
-    public MovableHitBox(String name, Location source, Effects effect, ActionHandler actionHandler){
-        super(name,source,effect,actionHandler,0);
-        observers = new ArrayList<>();
+    private Direction direction;
 
+    public MovableHitBox(String name, Location location, Effects effect, ActionHandler actionHandler){
+        super(name, location, effect, actionHandler, 0);
         setCanMoveVisitor(new TerranianCanMoveVisitor());
+        setMovingTicks(0);
         setIsActive(false);
+        setCount(0);
+        setCanMove(true);
+        setIsDestroyed(false);
+        observers = new ArrayList<>();
     }
 
     @Override
@@ -43,76 +48,31 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
         this.distance = distance;
         this.direction = direction;
         this.speed = speed;
-        accept(getVoCreationVisitor());
-        move(getLocation().add(direction.getCoords), speed);
+        ViewTime viewTime = ViewTime.getInstance();
+        viewTime.register(new ViewTime.vCommand() {
+            @Override
+            public void execute() {
+                accept(voCreationVisitor);
+            }
+        },10);
+        move(getLocation(), speed);
     }
     private void move(Location destination,int speed){
         if(count >= distance || !canMove){
             getActionHandler().remove(this,getLocation());
-            isDestroyed = true;
+            setIsDestroyed(true);
             notifyObservers();
             return;
         }
         canMove = getActionHandler().move(this,destination,speed);
         count++;
-
     }
-
-    public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor){
-        this.canMoveVisitor = canMoveVisitor;
-    }
-    public CanMoveVisitor getCanMoveVisitor(){
-        return canMoveVisitor;
-    }
-
-    private void setIsActive(boolean isActive){
-        this.isActive = isActive;
-    }
-    public boolean isActive(){
-        return isActive;
-    }
-    public void setMovingTicks(int movingTicks){
-        setIsActive(true);
-        this.movingTicks = movingTicks;
-        notifyObservers();
-    }
-
-    @Override
-    public Direction getDirection() {
-        return direction;
-    }
-
-    @Override
-    public int getMovingTicks() {
-        return movingTicks;
-    }
-
-    @Override
-    public boolean move(Direction d) {
-        return false;
-    }
-
-    @Override
-    public boolean move(Location l) {
-        return false;
-    }
-
-    @Override
-    public boolean fall() {
-        return false;
-    }
-
-    @Override
-    public void setDirection(Direction d) {
-
-    }
-
     public void updateMovingTicks(int ticks) {
         setMovingTicks(calculateMovementTicks(ticks));
+        notifyObservers();
         calculateActiveStatus();
         tickTicks();
     }
-
     private void tickTicks(){
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
@@ -143,9 +103,60 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
         visitor.visitMovableHitBox(this);
     }
 
-    private boolean isDestroyed = false;
+
+    public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor){
+        this.canMoveVisitor = canMoveVisitor;
+    }
+    public void setMovingTicks(int movingTicks){
+        setIsActive(true);
+        this.movingTicks = movingTicks;
+    }
+    private void setIsActive(boolean isActive){
+        this.isActive = isActive;
+    }
+    public void setCount(int count){
+        this.count = count;
+    }
+    public void setCanMove(boolean canMove){
+        this.canMove = canMove;
+    }
+
+    public CanMoveVisitor getCanMoveVisitor(){
+        return canMoveVisitor;
+    }
     @Override
-    public boolean isDestroyed() {
-        return isDestroyed;
+    public int getMovingTicks() {
+        return movingTicks;
+    }
+    public boolean isActive(){
+        return isActive;
+    }
+    public int getCount(){
+        return count;
+    }
+    public boolean getCanMove(){
+        return canMove;
+    }
+
+
+    @Override
+    public void setDirection(Direction d) {
+        direction = d;
+    }
+    @Override
+    public Direction getDirection() {
+        return direction;
+    }
+    @Override
+    public boolean move(Direction d) {
+        return false;
+    }
+    @Override
+    public boolean move(Location l) {
+        return false;
+    }
+    @Override
+    public boolean fall() {
+        return false;
     }
 }

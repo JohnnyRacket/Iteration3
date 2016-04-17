@@ -8,22 +8,39 @@ import com.wecanteven.UtilityClasses.Location;
 /**
  * Created by Brandon on 4/7/2016.
  */
-public class ProjectileHitBoxGenerator implements HitBoxGenerator {
-    private Character caster;
+public class ProjectileHitBoxGenerator extends HitBoxGenerator {
     private MovableHitBox hitbox;
+    private int distance,speed;
 
-    public ProjectileHitBoxGenerator(Character caster,Effects effect){
-        this.caster = caster;
-        hitbox = new MovableHitBox("WaterBolt",caster.getLocation().adjacent(caster.getDirection()),effect,caster.getActionHandler());
+    public ProjectileHitBoxGenerator(String name, Character caster,Effects effect){
+        setCaster(caster);
+        setMovableHitbox(new MovableHitBox(name,caster.getLocation().adjacent(caster.getDirection()),effect,caster.getActionHandler()));
     }
     public void generate(){
-        int distance = 5;
-        int speed = 30;
-        Direction direction = caster.getDirection();
-        Location destination = hitbox.getLocation();
-        for(int i = 0; i < distance; i++){
+        Direction direction = getCaster().getDirection();
+        Location destination = getMovableHitbox().getLocation();
+        for(int i = 0; i < getDistance(); i++){
             destination = destination.add(direction.getCoords);
         }
-        hitbox.addToMap(distance,speed,direction);
+        getMovableHitbox().addToMap(getDistance(), getSpeed(), direction);
+    }
+
+    public void setMovableHitbox(MovableHitBox hitbox){
+        this.hitbox = hitbox;
+    }
+    public void setDistance(int distance){
+        this.distance = distance;
+    }
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+    public MovableHitBox getMovableHitbox(){
+        return hitbox;
+    }
+    public int getDistance(){
+        return distance;
+    }
+    public int getSpeed(){
+        return speed;
     }
 }
