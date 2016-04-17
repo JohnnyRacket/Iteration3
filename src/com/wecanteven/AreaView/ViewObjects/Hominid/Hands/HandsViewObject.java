@@ -12,6 +12,7 @@ import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
+import com.wecanteven.UtilityClasses.Sound;
 import com.wecanteven.Visitors.WeaponsVisitor;
 
 import java.awt.*;

@@ -79,6 +79,10 @@ public class Sound {
         SOUNDS.put("gameTheme",
                 new Sound("resources/Sounds/Game/GameTheme.wav", Volume.LOW)
         );
+
+        SOUNDS.put("Punch",
+                new Sound("resources/Sounds/Abilities/Punch.wav", Volume.HIGH)
+        );
     }
 
     public static void play(String sound) {
