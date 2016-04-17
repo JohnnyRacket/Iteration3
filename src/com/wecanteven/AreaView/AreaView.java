@@ -30,9 +30,9 @@ public class AreaView extends JPanel {
 
     public AreaView(Map map, LevelFactory levelFactory) {
         setDoubleBuffered(true);
-        this.factory = new PlainsViewObjectFactory(this, map);
+        this.factory = new ViewObjectFactory(this, map);
         Biome biome = levelFactory.createBiomes(factory);
-        VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory, biome);
+        VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory.getSimpleVOFactory(), factory, biome);
         map.accept(voCreationVisitor);
         map.setVOCreationVisitor(voCreationVisitor);
 
