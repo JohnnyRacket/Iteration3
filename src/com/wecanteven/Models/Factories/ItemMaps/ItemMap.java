@@ -78,8 +78,8 @@ public class ItemMap {
                 () -> factory.vendOneShot("Major Health Orb", new StatsAddable(0,0,0,0,0,0,0,20,0)));
         OneShotItemMap.put("Major Mana Orb",
                 () -> factory.vendOneShot("Major Mana Orb", new StatsAddable(0,0,0,0,0,0,0,0,20)));
-        OneShotItemMap.put("Major Movement Buff",
-                () -> factory.vendMovementSpeedBuffOneShot("Major Movement Buff", 60, 300));
+         OneShotItemMap.put("Major Movement Buff",
+                 () -> factory.vendMovementSpeedBuffOneShot("Major Movement Buff", 60, 300));
         OneShotItemMap.put("Its Superman",
                 () -> factory.vendFlyingBuffOneShot("Its Superman", 600));
 
