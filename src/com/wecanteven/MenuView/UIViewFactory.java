@@ -20,6 +20,7 @@ import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.*;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.*;
 import com.wecanteven.MenuView.DrawableLeafs.Toaster.Toast;
+import com.wecanteven.MenuView.UIObjectCreationVisitors.AbilityViewObjectCreationVisitor;
 import com.wecanteven.MenuView.UIObjectCreationVisitors.BuyableUIObjectCreationVisitor;
 import com.wecanteven.MenuView.UIObjectCreationVisitors.EquippableUIObjectCreationVisitor;
 import com.wecanteven.ModelEngine;
@@ -86,9 +87,7 @@ public class UIViewFactory {
             vEngine.getManager().addPermView(view);
         },0);
     }
-    public void createAbilityView(Character character){
-
-    }
+    public void createAbilityItemMenu(){}
 
     public void createMainMenuView(){
         //make menu
@@ -457,8 +456,14 @@ public class UIViewFactory {
         },0);
         controller.setMenuState(view.getMenuViewContainer());
     }
-    public void createAbilityView(){
+    public void createAbilityView(Character character){
+        NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
+        NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
+        AbilityViewObjectCreationVisitor visitor = new AbilityViewObjectCreationVisitor(); //add params
 
+        //character.accept(visitor);
+        NavigatableList list = visitor.getInventory();
+        NavigatableList equiplist = visitor.getEquipped();
     }
 
     public void createEquippableItemMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, EquipableItem item){
@@ -595,9 +600,6 @@ public class UIViewFactory {
         return null;
     }
     public SwappableView createConsumableItemMenu(){
-        return null;
-    }
-    public SwappableView createAbilityItemMenu(){
         return null;
     }
     //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER

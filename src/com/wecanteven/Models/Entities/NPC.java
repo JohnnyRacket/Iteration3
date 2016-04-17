@@ -35,7 +35,12 @@ public class NPC extends Character {
         this.interaction = interaction;
         this.interaction.setOwner(this);
     }
-
+    @Override
+    public void loseLife(){
+        super.loseLife();
+        controller.kill();
+        controller = null;
+    }
     @Override
     public void interact(Character c){
         interaction.interact(c);
