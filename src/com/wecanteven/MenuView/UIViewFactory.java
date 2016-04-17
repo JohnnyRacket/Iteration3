@@ -88,7 +88,8 @@ public class UIViewFactory {
             vEngine.getManager().addPermView(view);
         },0);
     }
-    public void createAbilityItemMenu(){}
+    public void createAbilityItemMenu(){
+    }
 
     public void createMainMenuView(){
         //make menu
