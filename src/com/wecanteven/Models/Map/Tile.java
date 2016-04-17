@@ -198,6 +198,7 @@ public class Tile implements MapVisitable {
             System.out.println(i.getName());
             if (!character.getItemStorage().inventoryIsFull()) {
                 i.extractItem().interact(character);
+                i.setIsDestoryed(true);
             } else {
                 leftover.add(i);
             }
