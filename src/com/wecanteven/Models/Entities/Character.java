@@ -157,7 +157,6 @@ public class Character extends Entity {
         return itemStorage;
     }
 
-
     public boolean buy(int value) {
         return itemStorage.buy(value);
     }
