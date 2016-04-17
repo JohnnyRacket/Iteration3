@@ -1,7 +1,7 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
-import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
@@ -9,6 +9,7 @@ import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Occupation.Occupation;
+import com.wecanteven.Models.Occupation.Skill;
 import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
@@ -26,7 +27,9 @@ public class Character extends Entity {
     private Occupation occupation;
     private ItemStorage itemStorage, abilityItemStorage;
     private int windUpTicks, coolDownTicks;
-    private ViewObjectFactory factory;
+    private SimpleVOFactory factory;
+
+    private int availableSkillPoints = 0;
 
     public Character(ActionHandler actionHandler, Direction direction, GameColor color) {
         super(actionHandler, direction, color);
@@ -62,22 +65,22 @@ public class Character extends Entity {
         coolDownTicks = 0;
     }
 
-    public void setFactory(ViewObjectFactory factory) {
+    public void setFactory(SimpleVOFactory factory) {
         this.factory = factory;
     }
 
-    public ViewObjectFactory getFactory() throws Exception {
+    public SimpleVOFactory getFactory() throws Exception {
         if(factory == null)
             throw new Exception("No View Object Factory Exists");
         else
             return factory;
     }
 
-    public void attack() {
+    public void attack(Direction dir) {
         if(!isActive()){
-
+            this.setDirection(dir);
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendRadialAttack(this);
+            Ability attack = factory.vendMeleeAttack(this);
             attack.cast();
         }
     }
@@ -147,6 +150,7 @@ public class Character extends Entity {
     /**
      * Consumption
      */
+    // TODO hook up with items
     public boolean consume(String id) {
         return false;
     }
@@ -201,12 +205,12 @@ public class Character extends Entity {
     }
     @Override
     protected void tickTicks(){
-        if(isActive()){
+        if(calculateActiveStatus()){
             ModelTime.getInstance().registerAlertable(() -> {
                 deIncrementMovingTick();
                 deIncrementWindUpTick();
                 deIncrementCoolDownTicks();
-                calculateActiveStatus();
+                deIncrementTurningTick();
                 tickTicks();
             }, 1);
         }
@@ -219,7 +223,8 @@ public class Character extends Entity {
         return windUpTicks;
     }
     private void deIncrementWindUpTick(){
-        windUpTicks--;
+        if(getWindUpTicks()>0)
+            windUpTicks--;
     }
 
     public  void setCoolDownTicks(int ticks){
@@ -229,16 +234,58 @@ public class Character extends Entity {
         return coolDownTicks;
     }
     private void deIncrementCoolDownTicks(){
-        coolDownTicks--;
+        if(getCoolDownTicks()>0)
+            coolDownTicks--;
     }
 
     @Override
-    protected void calculateActiveStatus(){
-        if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0){
+    protected boolean calculateActiveStatus(){
+        if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0 && getTurningTicks() <= 0){
             setIsActive(false);
+            return false;
         }
         else{
             setIsActive(true);
+            return true;
         }
+    }
+
+    /**
+     * Skill Thingses
+     * */
+
+    private void allocateAvailablePoints(int points) {
+        if (points > 0) {
+            this.availableSkillPoints += points;
+        }
+    }
+    private void decrementAvailablePoints(int points) {
+        if (points > 0) {
+            this.availableSkillPoints -= points;
+        }
+    }
+    public int getAvailablePoints() {
+        return this.availableSkillPoints;
+    }
+
+    public boolean allocateSkillPoint(Skill skill, int points) {
+        if (points > 0) {
+            try {
+                occupation.addSkillPoints(skill, points);
+                decrementAvailablePoints(points);
+                return true;
+            } catch (IllegalArgumentException ex) {
+                ex.printStackTrace();
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void levelUp() {
+        super.levelUp();
+
+        allocateAvailablePoints(3);
     }
 }

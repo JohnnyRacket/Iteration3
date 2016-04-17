@@ -22,8 +22,8 @@ public class MountState extends AvatarState {
         boolean moved = true;
         moved = mount.move(d) && moved;
 
-        avatar.move(mount.getLocation());
-        //avatar.setLocation(mount.getLocation());
+        //davatar.move(mount.getLocation());
+        avatar.setLocation(mount.getLocation());
         //updatePlayerLocation();
         System.out.println("Avatar Location:" + avatar.getLocation());
         return moved;
@@ -35,7 +35,7 @@ public class MountState extends AvatarState {
         avatarLocation.setS(mount.getLocation().getS());
         avatarLocation.setZ(mount.getLocation().getZ());
     }
-    public void attack(){}
+    public void attack(Direction dir){}
     public void useAbility(int index){}
     public boolean equipItem(String id){
         return false;

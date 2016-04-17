@@ -11,7 +11,8 @@ public class Filled3DHex {
 
     public Filled3DHex(Location center, int radius) {
         Location loc = new Location(center.getR(),center.getS(),center.getZ());
-        for (int j = 0; j < 20; ++j) {
+        int bottom = ((loc.getZ() - radius) >= 0)? loc.getZ()-radius : 0;
+        for ( int j = bottom; j < center.getZ() + radius; ++j) {
 
             loc.setZ(j);
 

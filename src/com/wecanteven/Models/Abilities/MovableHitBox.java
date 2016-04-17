@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Abilities;
 
 import com.wecanteven.AreaView.VOCreationVisitor;
+import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Stats.StatsAddable;
@@ -25,7 +26,7 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
     private boolean canMove = true;
     private ArrayList<Observer> observers;
 
-    public MovableHitBox(String name, Location source, StatsAddable effect, ActionHandler actionHandler){
+    public MovableHitBox(String name, Location source, Effects effect, ActionHandler actionHandler){
         super(name,source,effect,actionHandler,0);
         observers = new ArrayList<>();
 

@@ -5,9 +5,7 @@ import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Avatar;
-import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
-import com.wecanteven.Models.Interactions.InteractionVisitor;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
@@ -17,8 +15,6 @@ import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.*;
-
-import java.util.ArrayList;
 
 /**
  * Created by John on 3/31/2016.
@@ -80,6 +76,8 @@ public class Map implements MapVisitable, ActionHandler {
         while(visitor.isCanMove()){
             destination.setZ(destination.getZ()-1);
             if(destination.getZ() <0){
+                destination.setZ(destination.getZ()+2);
+                move(entity,destination,2*tilesCount);
                 entity.loseLife();
                 return false;
             }

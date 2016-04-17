@@ -8,7 +8,7 @@ import com.wecanteven.UtilityClasses.Direction;
  */
 public abstract class AvatarState {
     public abstract boolean move(Direction d);
-    public abstract void attack();
+    public abstract void attack(Direction dir);
     public abstract void useAbility(int index);
     public abstract boolean equipItem(String id);
     public abstract boolean unequipItem(String id);

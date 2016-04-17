@@ -1,8 +1,7 @@
 package com.wecanteven.Models.Abilities;
 
-import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.Entities.Character;
-import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
@@ -13,7 +12,7 @@ public class ProjectileHitBoxGenerator implements HitBoxGenerator {
     private Character caster;
     private MovableHitBox hitbox;
 
-    public ProjectileHitBoxGenerator(Character caster,StatsAddable effect){
+    public ProjectileHitBoxGenerator(Character caster,Effects effect){
         this.caster = caster;
         hitbox = new MovableHitBox("WaterBolt",caster.getLocation().adjacent(caster.getDirection()),effect,caster.getActionHandler());
     }

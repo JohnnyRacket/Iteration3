@@ -74,6 +74,11 @@ public class PetSearchingController extends AbstractSearchingController {
     }
 
     @Override
+    public void visitOccupation(Occupation occupation) {
+
+    }
+
+    @Override
     public void visitEnemy(Enemy enemy) {
         this.addNewTarget(new EnemyTarget(2,this.getTarget().getLocation()));
     }
