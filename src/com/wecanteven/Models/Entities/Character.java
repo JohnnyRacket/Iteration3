@@ -25,9 +25,7 @@ import com.wecanteven.Visitors.EntityVisitor;
 public class Character extends Entity implements Actionable {
     private Occupation occupation;
     private ItemStorage itemStorage, abilityItemStorage;
-    private int windUpTicks, coolDownTicks;
     private int windUpTicks = 0, coolDownTicks = 0;
-    private SimpleVOFactory factory;
 
     private int availableSkillPoints = 0;
 
