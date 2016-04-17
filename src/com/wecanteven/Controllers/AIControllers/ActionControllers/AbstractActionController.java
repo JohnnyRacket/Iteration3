@@ -4,10 +4,7 @@ import com.wecanteven.Controllers.AIControllers.AIController;
 import com.wecanteven.Controllers.AIControllers.Targets.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Map.*;
-import com.wecanteven.UtilityClasses.Direction;
-import com.wecanteven.UtilityClasses.DirectionFinder;
-import com.wecanteven.UtilityClasses.HexRing;
-import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.UtilityClasses.*;
 import com.wecanteven.Visitors.CanMoveVisitor;
 import com.wecanteven.Visitors.TargetVisitor;
 import com.wecanteven.Visitors.TerranianCanMoveVisitor;
@@ -95,6 +92,19 @@ public abstract class AbstractActionController implements TargetVisitor{
         }
         System.out.println("this should not happen");
         return null;
+    }
+
+    protected boolean checkLocation(Target target, int distance){
+        if(target != null) {
+            Iterator<Location> iter = new Filled3DHex(this.getCharacter().getLocation(), distance).iterator();
+            while(iter.hasNext()){
+                if(iter.next().equals(target.getLocation())){
+                    return true;
+                }
+            }
+            //will only get here to return true if the target is in desired location
+            return false;
+        }else{return false;}
     }
 
     public Character getCharacter() {

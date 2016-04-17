@@ -64,11 +64,11 @@ public class Character extends Entity {
             return factory;
     }
 
-    public void attack() {
+    public void attack(Direction dir) {
         if(!isActive()){
-
+            this.setDirection(dir);
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendRadialAttack(this);
+            Ability attack = factory.vendMeleeAttack(this);
             attack.cast();
         }
     }
