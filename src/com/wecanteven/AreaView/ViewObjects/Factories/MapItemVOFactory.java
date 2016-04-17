@@ -20,6 +20,7 @@ import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
+import com.wecanteven.UtilityClasses.Sound;
 
 /**
  * Created by adamfortier on 4/17/16.
@@ -65,6 +66,7 @@ public class MapItemVOFactory {
 
     public ViewObject createHitBox(HitBox hitBox) {
         String path = "Effects/" + hitBox.getName() + "/" + hitBox.getName() + ".xml";
+        Sound.play(hitBox.getName());
         Position p = hitBox.getLocation().toPosition();
         StartableViewObject hitBoxVO = simpleVOFactory.createStartableViewObject(p, path);
         hitBoxVO.start(hitBox.getDuration());

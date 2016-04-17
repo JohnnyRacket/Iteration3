@@ -17,7 +17,7 @@ public class Sound {
 
     public enum Volume {
         MUTE(-80),
-        LOW(-32),
+        LOW(-30),
         MEDIUM(-16),
         HIGH(6);
         private float gain;
@@ -26,7 +26,7 @@ public class Sound {
             this.gain = gain;
         }
     }
-    public static boolean mute = false;
+    public static boolean mute = true;
     public Volume volume = Volume.LOW;
 
     private Clip clip;
@@ -78,6 +78,10 @@ public class Sound {
 
         SOUNDS.put("gameTheme",
                 new Sound("resources/Sounds/Game/GameTheme.wav", Volume.LOW)
+        );
+
+        SOUNDS.put("Punch",
+                new Sound("resources/Sounds/Abilities/Punch.wav", Volume.HIGH)
         );
     }
 
