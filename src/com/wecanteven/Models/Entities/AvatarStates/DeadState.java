@@ -13,7 +13,7 @@ public class DeadState extends AvatarState {
     }
 
     @Override
-    public void attack() {
+    public void attack(Direction dir) {
 
     }
 

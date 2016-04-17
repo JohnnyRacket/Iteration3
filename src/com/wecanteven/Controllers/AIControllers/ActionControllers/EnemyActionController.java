@@ -3,6 +3,7 @@ package com.wecanteven.Controllers.AIControllers.ActionControllers;
 import com.wecanteven.Controllers.AIControllers.Targets.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Map.Map;
+import com.wecanteven.UtilityClasses.DirectionFinder;
 import com.wecanteven.UtilityClasses.HexRing;
 import com.wecanteven.UtilityClasses.Location;
 
@@ -25,8 +26,11 @@ public class EnemyActionController extends AbstractActionController {
     @Override
     public void visitEnemyTarget(EnemyTarget target) {
         try {
-            //System.out.println("moving");
-            this.getCharacter().move(getPathToTarget(target));
+            if(this.checkLocation(target,2)){
+                this.getCharacter().attack(DirectionFinder.getDirection(this.getCharacter().getLocation(),target.getLocation()));
+            }else {
+                this.getCharacter().move(getPathToTarget(target));
+            }
 
         }catch (NullPointerException e){
             System.out.println("direction was null, this might mean john is bad a programming");

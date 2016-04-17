@@ -17,8 +17,8 @@ public class EntityState extends AvatarState {
     public boolean move(Direction d){
        return avatar.move(d);
     }
-    public void attack(){
-        avatar.attack();
+    public void attack(Direction dir){
+        avatar.attack(dir);
     }
     public void useAbility(int index){
         avatar.useAbility(index);

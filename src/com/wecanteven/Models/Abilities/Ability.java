@@ -19,14 +19,14 @@ public class Ability {
         this.hitBoxGenerator = hitBoxGenerator;
     }
     public void cast(){
-        int windUpTime = 120;
+        int windUpTime = 30;
         caster.updateWindUpTicks(windUpTime);
         System.out.println("Activating the spell");
         activateAbility();
 
     }
     private void activateAbility(){
-        int coolDown = 120;
+        int coolDown = 30;
         ModelTime.getInstance().registerAlertable(() -> {
             System.out.println("The spell was activated");
             hitBoxGenerator.generate();
