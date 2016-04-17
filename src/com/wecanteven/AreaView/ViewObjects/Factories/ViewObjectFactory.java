@@ -305,6 +305,7 @@ public abstract class ViewObjectFactory {
 
 
     public <T extends Positionable & ViewObservable> void makeLightSource(ViewObject v, int radius, T subject) {
+
         new VisibilitySourceViewObject(v, subject, areaView, radius);
     }
 

@@ -22,8 +22,8 @@ public class MountState extends AvatarState {
         boolean moved = true;
         moved = mount.move(d) && moved;
 
-        avatar.move(mount.getLocation());
-        //avatar.setLocation(mount.getLocation());
+        //davatar.move(mount.getLocation());
+        avatar.setLocation(mount.getLocation());
         //updatePlayerLocation();
         System.out.println("Avatar Location:" + avatar.getLocation());
         return moved;
