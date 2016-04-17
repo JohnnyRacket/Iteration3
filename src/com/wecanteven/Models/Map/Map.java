@@ -96,7 +96,12 @@ public class Map implements MapVisitable, ActionHandler {
             if(tilesCount > 5 && moved){
                 int time = tilesCount;
                 ModelTime.getInstance().registerAlertable(()->{
-                    entity.takeDamage(time-4);
+                    Entity e = getTile(destination.subtract(new Location(0,0,1))).getEntity();
+                    if(e != null){
+                        e.takeDamage(time - 4);
+                    }else {
+                        entity.takeDamage(time - 4);
+                    }
                 },2*time);
             }
             return moved;
