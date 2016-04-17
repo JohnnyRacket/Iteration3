@@ -164,7 +164,6 @@ public class Map implements MapVisitable, ActionHandler {
 
         //checks if you are moving outside the bounds of the map
         if(isOutOfBounds(destination)){
-
             return false;
         }
 
@@ -184,7 +183,7 @@ public class Map implements MapVisitable, ActionHandler {
 
                 //Interact visitor to be called here!
 
-              //  InteractionVisitor interactionVisitor = new InteractionVisitor(tile.getEntity());
+              //InteractionVisitor interactionVisitor = new InteractionVisitor(tile.getEntity());
                 hitBox.setLocation(destination);
                 hitBox.updateMovingTicks(moveSpeed);
                 remove(hitBox, source);

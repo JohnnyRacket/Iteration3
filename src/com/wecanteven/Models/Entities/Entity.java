@@ -12,6 +12,7 @@ import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.*;
 import com.wecanteven.Visitors.CanFallVisitors.CanFallVisitor;
+import com.wecanteven.Visitors.CanFallVisitors.FlyingCanFallVisitor;
 import com.wecanteven.Visitors.CanFallVisitors.TerranianCanFallVisitor;
 import com.wecanteven.Visitors.CanMoveVisitors.CanMoveVisitor;
 import com.wecanteven.Visitors.CanMoveVisitors.TerranianCanMoveVisitor;
@@ -62,7 +63,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         setActionHandler(actionHandler);
         setDirection(direction);
         setCanMoveVisitor(new TerranianCanMoveVisitor());
-        setCanFallVisitor(new TerranianCanFallVisitor());
+        setCanFallVisitor(new FlyingCanFallVisitor());
         setMovingTicks(0);
         setIsActive(false);
         this.color = color;

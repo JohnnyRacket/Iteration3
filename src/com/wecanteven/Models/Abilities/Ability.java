@@ -9,7 +9,7 @@ import com.wecanteven.Models.ModelTime.ModelTime;
  */
 public class Ability {
     private String name;
-    private int castTicks,cooldownTicks;
+    private int windUpTicks,cooldownTicks;
     private int baseFailChance;
     private int skill;
     private HitBoxGenerator hitBoxGenerator;
@@ -21,27 +21,37 @@ public class Ability {
         this.hitBoxGenerator = hitBoxGenerator;
     }
     public void cast(){
-        int windUpTime = 30;
-        caster.updateWindUpTicks(windUpTime);
+        caster.updateWindUpTicks(windUpTicks);
         System.out.println("Activating the spell");
         activateAbility();
 
     }
     private void activateAbility(){
-        int coolDown = 30;
         ModelTime.getInstance().registerAlertable(() -> {
             System.out.println("The spell was activated");
             hitBoxGenerator.generate();
-            caster.updateCoolDownTicks(coolDown);
+            caster.updateCoolDownTicks(cooldownTicks);
         },caster.getWindUpTicks());
     }
 
     public String getName() {
         return name;
     }
+    public int getCooldownTicks(){
+        return cooldownTicks;
+    }
+    public int getWindUpTicks(){
+        return windUpTicks;
+    }
 
     public void setName(String name) {
         this.name = name;
+    }
+    public void setCooldownTicks(int ticks){
+        cooldownTicks = ticks;
+    }
+    public  void setWindUpTicks(int ticks){
+        windUpTicks = ticks;
     }
 
     //public void configure(Skill skill)  {

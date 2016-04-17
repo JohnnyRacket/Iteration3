@@ -42,7 +42,7 @@ public class HitBox implements Destroyable{
                 accept(voCreationVisitor);
             }
         },0);
-                       // accept(voCreationVisitor);
+        // accept(voCreationVisitor);
 
         ModelTime modelTime = ModelTime.getInstance();
         modelTime.registerAlertable(new Alertable() {

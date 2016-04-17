@@ -79,7 +79,7 @@ public class Character extends Entity {
         if(!isActive()){
             this.setDirection(dir);
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendDomeAttack(this);
+            Ability attack = factory.vendPunchAttack(this);
             attack.cast();
         }
     }
