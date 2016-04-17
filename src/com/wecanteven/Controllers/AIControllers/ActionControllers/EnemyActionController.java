@@ -25,7 +25,7 @@ public class EnemyActionController extends AbstractActionController {
     @Override
     public void visitEnemyTarget(EnemyTarget target) {
         try {
-            System.out.println("moving");
+            //System.out.println("moving");
             this.getCharacter().move(getPathToTarget(target));
 
         }catch (NullPointerException e){

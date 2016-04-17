@@ -100,6 +100,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
 
     @Override
     public boolean move(Direction d){
+        System.out.println("Im in control of my own destiny");
         int movementStat = getStats().getMovement();
         if(movementStat == 0 || isActive()){
             return false;
@@ -164,7 +165,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         this.movingTicks = movingTicks;
     }
 
-    private void tickTicks(){
+    protected void tickTicks(){
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
                 deIncrementMovingTick();
@@ -174,7 +175,8 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
     }
 
-    private void deIncrementMovingTick(){
+    protected void deIncrementMovingTick(){
+        if(getMovingTicks()>0)
         movingTicks--;
     }
 
@@ -272,12 +274,14 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         calculateActiveStatus();
     }
 
-    private void calculateActiveStatus(){
+    protected boolean calculateActiveStatus(){
         if(getMovingTicks() <= 0){
             setIsActive(false);
+            return false;
         }
         else{
             setIsActive(true);
+            return true;
         }
     }
 

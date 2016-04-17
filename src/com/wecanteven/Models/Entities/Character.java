@@ -7,6 +7,7 @@ import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
@@ -156,7 +157,6 @@ public class Character extends Entity {
         return itemStorage;
     }
 
-
     public boolean buy(int value) {
         return itemStorage.buy(value);
     }
@@ -165,6 +165,75 @@ public class Character extends Entity {
         itemStorage.addMoney(new MoneyItem(value));
     }
 
+    public void setOccupation(Occupation occupation) {
+        this.occupation = occupation;
+    }
+
+    @Override
+    public String toString() {
+        return "Character: " + getOccupation();
+    }
 
 
+    public void updateWindUpTicks(int ticks){
+        setWindUpTicks(ticks);
+        calculateActiveStatus();
+        tickTicks();
+        notifyObservers();
+    }
+    public void updateCoolDownTicks(int ticks){
+        setCoolDownTicks(ticks);
+        calculateActiveStatus();
+        tickTicks();
+        notifyObservers();
+    }
+    @Override
+    protected void tickTicks(){
+        System.out.println("MovingTicks "+getMovingTicks());
+        System.out.println("WindUpTicks "+getWindUpTicks());
+        System.out.println("CoolDownTicks "+getCoolDownTicks());
+        if(calculateActiveStatus()){
+            ModelTime.getInstance().registerAlertable(() -> {
+                deIncrementMovingTick();
+                deIncrementWindUpTick();
+                deIncrementCoolDownTicks();
+                tickTicks();
+            }, 1);
+        }
+    }
+
+    public void setWindUpTicks(int ticks){
+        windUpTicks = ticks;
+    }
+    public int getWindUpTicks(){
+        return windUpTicks;
+    }
+    private void deIncrementWindUpTick(){
+        if(getWindUpTicks()>0)
+            windUpTicks--;
+    }
+
+    public  void setCoolDownTicks(int ticks){
+        coolDownTicks = ticks;
+    }
+    public int getCoolDownTicks(){
+        return coolDownTicks;
+    }
+    private void deIncrementCoolDownTicks(){
+        if(getCoolDownTicks()>0)
+            coolDownTicks--;
+    }
+
+    @Override
+    protected boolean calculateActiveStatus(){
+        System.out.println("Active status: " + isActive());
+        if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0){
+            setIsActive(false);
+            return false;
+        }
+        else{
+            setIsActive(true);
+            return true;
+        }
+    }
 }
