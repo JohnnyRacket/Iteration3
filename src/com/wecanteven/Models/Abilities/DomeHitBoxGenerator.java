@@ -17,6 +17,7 @@ public class DomeHitBoxGenerator implements HitBoxGenerator {
     private HitBox hitbox;
     private int distance,size;
     private Effects effect;
+    private String name;
 
     public DomeHitBoxGenerator(Character caster,Effects effect){
         distance = 1;

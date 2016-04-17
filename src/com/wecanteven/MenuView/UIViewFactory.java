@@ -85,6 +85,10 @@ public class UIViewFactory {
             vEngine.getManager().addPermView(view);
         },0);
     }
+    public void createAbilityView(Character character){
+
+    }
+
     public void createMainMenuView(){
         //make menu
         ScrollableMenu menu = new ScrollableMenu(400, 400);
@@ -195,6 +199,7 @@ public class UIViewFactory {
             classList.setCurrentIndex(2);
             classSelection.setActive(true);
         }));
+
 
         faceList.addItem(new GridFace("Connery", () -> {
             //set
@@ -376,7 +381,6 @@ public class UIViewFactory {
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
         AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
 //        view.addDrawable(vertCenter);
-
 
         view.addDrawable(animation);
         view.addNavigatable(menu);
