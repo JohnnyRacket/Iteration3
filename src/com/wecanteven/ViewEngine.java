@@ -48,7 +48,7 @@ public class ViewEngine extends JFrame implements Runnable{
     private void initUI(JPanel target) {
         //this.target = target;
         add(target);
-        setTitle("We Cant Even");
+        setTitle("Can Periwinkle Even?");
         setResizable(true);
         //Maximized the window
         //This is cool and all, but I need the console for debugging

@@ -5,6 +5,7 @@ import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.MenuView.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.UtilityClasses.Config;
+import com.wecanteven.UtilityClasses.Sound;
 
 public class Main {
 
@@ -16,8 +17,7 @@ public class Main {
         engine.setBackground(Config.BACKGROUNDBLUE);
         UIViewFactory factory = UIViewFactory.getInstance();
         MainController controller = new MainController(engine);
-
-
+        Sound.init();
         ModelTime.getInstance().registerUnstoppable(controller);
         //engine.setVisible(true);
         ModelEngine mEngine = new ModelEngine();
@@ -33,5 +33,7 @@ public class Main {
         aiEngine.start();
         engine.start();
         mEngine.start();
+
+        Sound.play("menuTheme");
     }
 }
