@@ -10,7 +10,6 @@ import com.wecanteven.Controllers.AIControllers.ActionControllers.EnemyActionCon
 import com.wecanteven.Controllers.AIControllers.ActionControllers.PetActionController;
 import com.wecanteven.Controllers.AIControllers.SearchingControllers.EnemySearchingController;
 import com.wecanteven.Controllers.AIControllers.SearchingControllers.PetSearchingController;
-import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
@@ -19,10 +18,9 @@ import com.wecanteven.Models.Interactions.NoInteractionStrategy;
 import com.wecanteven.Models.Interactions.QuestDialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
 import com.wecanteven.Models.Items.Takeable.QuestedItem;
 import com.wecanteven.Models.Map.Aoe.*;
-import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
@@ -405,7 +403,7 @@ public class DemoLevelFactory extends LevelFactory {
         //"Creating an NPC and Giving him a chest Plate
         NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), new Enemy(), GameColor.GRAY);
         npc.setOccupation(new Enemy());
-        OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
+        FistWeapon i = new FistWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
         EnemySearchingController esc = new EnemySearchingController(npc,map,3);
         EnemyActionController eac = new EnemyActionController(npc,map);
         AIController controller = new AIController(esc,eac);
@@ -432,7 +430,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void questNPC(Map map) {
         QuestedItem questItem = new QuestedItem("Quest Item", 0);
-        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Top Hat"), new Location(18, 18, 1));
+        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(18, 18, 1));
         ArrayList<String> startQuestDialog = new ArrayList<>();
         startQuestDialog.add("HELLO QUESTER!");
         startQuestDialog.add("This is an example of how quests work");
@@ -483,7 +481,10 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsOneShot("Major Health Orb"), new Location(5,15,3));
 
 
-        map.add(ItemMap.getInstance().getItemAsTakeable("Fez"), new Location(11, 14,2));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,3));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Growth"), new Location(11, 13,3));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,3));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Expand"), new Location(9,13,3));
         //Interactive Item??????
         /* TODO implement this */
 
@@ -492,11 +493,11 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(2,14,2));
 
         //Equipable
-        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
-        map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
-        map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
-        map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3, 14, 2));
+//        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
+//        map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
+//        map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
+//        map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
+//        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3, 14, 2));
 
 
         //Consumeable

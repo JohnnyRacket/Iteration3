@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Storage.ItemStorage;
 
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.WeaponEquipableItem;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Observer;
 

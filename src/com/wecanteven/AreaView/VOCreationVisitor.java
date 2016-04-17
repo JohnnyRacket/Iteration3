@@ -20,6 +20,7 @@ import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
 import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Map.Aoe.*;
@@ -257,35 +258,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitTeleportAoe(TeleportAoe aoe) {
         areaView.addViewObject(viewObjectFactory.createAoe(currentPosition, "TeleportAoe"));
-    }
-
-    @Override
-    public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {
-
-    }
-
-    @Override
-    public void visitDualWieldWeapon() {
-
-    }
-
-    @Override
-    public void visitDualWieldMeleeWeapon(DualWieldMeleeWeapon dualWieldMeleeWeapon) {
-
-    }
-
-    public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon) {
-        visitTakeableItem(oneHandedMeleeWeapon);
-    }
-
-    @Override
-    public void visitOneHandedRangedWeapon(OneHandedRangedWeapon oneHandedRangedWeapon) {
-        visitTakeableItem(oneHandedRangedWeapon);
-    }
-
-    @Override
-    public void visitWeapon(WeaponEquipableItem weapon) {
-        visitTakeableItem(weapon);
     }
 
     @Override

@@ -5,24 +5,16 @@ import com.wecanteven.AreaView.Biomes.DefaultBiome;
 import com.wecanteven.AreaView.ViewObjects.Factories.PlainsFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.Models.Entities.*;
-import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.NoInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
-import com.wecanteven.Models.Items.InteractiveItem;
-import com.wecanteven.Models.Items.Obstacle;
-import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
-import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
-import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
-import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
@@ -98,26 +90,24 @@ public class DopeAssLevelFactory extends LevelFactory{
         weaponNPC(map);
 
 
-        OneHandedMeleeWeapon katar = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(1,1,1,1,1,1,1,1,1));
-        map.add(katar, new Location(0,0,1));
 
-
-        map.add(new ConsumeableItem("Death Potion", 10), new Location(1, 2, 1));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3,3,1));
-        map.add(ItemMap.getInstance().getItemAsInteractive("Button"), new Location(5, 5, 1));
-        map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(8,2,1));
-
-        HealingAreaOfEffect aoe = new HealingAreaOfEffect(1);
-        map.add(aoe, new Location(8,6,1));
-
-        TakeDamageAreaOfEffect dmgAoe = new TakeDamageAreaOfEffect(1);
-        map.add(dmgAoe, new Location(8,5,1));
-
-        InstaDeathAoe aoeDed = new InstaDeathAoe();
-        map.add(aoeDed, new Location(8,4,1));
-
-        LevelUpAoe aoeLvl = new LevelUpAoe(500, false);
-        map.add(aoeLvl, new Location(8,3,1));
+//
+//        map.add(new ConsumeableItem("Death Potion", 10), new Location(1, 2, 1));
+//        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3,3,1));
+//        map.add(ItemMap.getInstance().getItemAsInteractive("Button"), new Location(5, 5, 1));
+//        map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(8,2,1));
+//
+//        HealingAreaOfEffect aoe = new HealingAreaOfEffect(1);
+//        map.add(aoe, new Location(8,6,1));
+//
+//        TakeDamageAreaOfEffect dmgAoe = new TakeDamageAreaOfEffect(1);
+//        map.add(dmgAoe, new Location(8,5,1));
+//
+//        InstaDeathAoe aoeDed = new InstaDeathAoe();
+//        map.add(aoeDed, new Location(8,4,1));
+//
+//        LevelUpAoe aoeLvl = new LevelUpAoe(500, false);
+//        map.add(aoeLvl, new Location(8,3,1));
 
         //TeleportAoe aoe = new TeleportAoe(new Location(8,3,1));
         //map.add(aoe, new Location(8,6,1));
@@ -131,12 +121,12 @@ public class DopeAssLevelFactory extends LevelFactory{
     }
 
     public void weaponNPC(Map map) {
-        //"Creating an NPC and Giving him a chest Plate
-        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.PINK);
-        OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
-        npc.pickup(i);
-        npc.equipItem(i);
-        map.add(npc, new Location(2,2,1));
+//        //"Creating an NPC and Giving him a chest Plate
+//        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.PINK);
+//        OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
+//        npc.pickup(i);
+//        npc.equipItem(i);
+//        map.add(npc, new Location(2,2,1));
     }
 
     public void dialogNPC(Map map) {
