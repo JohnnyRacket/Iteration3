@@ -1,7 +1,6 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
-import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
@@ -193,12 +192,11 @@ public class Character extends Entity {
     }
     @Override
     protected void tickTicks(){
-        if(isActive()){
+        if(calculateActiveStatus()){
             ModelTime.getInstance().registerAlertable(() -> {
                 deIncrementMovingTick();
                 deIncrementWindUpTick();
                 deIncrementCoolDownTicks();
-                calculateActiveStatus();
                 tickTicks();
             }, 1);
         }
@@ -211,7 +209,8 @@ public class Character extends Entity {
         return windUpTicks;
     }
     private void deIncrementWindUpTick(){
-        windUpTicks--;
+        if(getWindUpTicks()>0)
+            windUpTicks--;
     }
 
     public  void setCoolDownTicks(int ticks){
@@ -221,16 +220,19 @@ public class Character extends Entity {
         return coolDownTicks;
     }
     private void deIncrementCoolDownTicks(){
-        coolDownTicks--;
+        if(getCoolDownTicks()>0)
+            coolDownTicks--;
     }
 
     @Override
-    protected void calculateActiveStatus(){
+    protected boolean calculateActiveStatus(){
         if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0){
             setIsActive(false);
+            return false;
         }
         else{
             setIsActive(true);
+            return true;
         }
     }
 

@@ -106,7 +106,6 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
         if(getDirection() == d){
             setDirection(d);
-            System.out.println("Going to " + getLocation().add(d.getCoords));
             Location destination = getLocation().add(d.getCoords);
             int moveTime = calculateMovementTicks(movementStat);
             return getActionHandler().move(this,destination,moveTime);
@@ -176,6 +175,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     }
 
     protected void deIncrementMovingTick(){
+        if(getMovingTicks()>0)
         movingTicks--;
     }
 
@@ -274,12 +274,14 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         calculateActiveStatus();
     }
 
-    protected void calculateActiveStatus(){
+    protected boolean calculateActiveStatus(){
         if(getMovingTicks() <= 0){
             setIsActive(false);
+            return false;
         }
         else{
             setIsActive(true);
+            return true;
         }
     }
 

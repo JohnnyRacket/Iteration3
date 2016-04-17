@@ -1,6 +1,5 @@
 package com.wecanteven.Models.Abilities;
 
-import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.ModelTime.ModelTime;
 
