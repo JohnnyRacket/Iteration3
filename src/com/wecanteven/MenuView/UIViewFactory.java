@@ -1,6 +1,7 @@
 package com.wecanteven.MenuView;
 
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.Controllers.AIControllers.AITime;
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.ControllerStates.ControllerState;
 import com.wecanteven.Controllers.InputControllers.MainController;
@@ -1071,11 +1072,13 @@ public class UIViewFactory {
     public void pauseGame(){
         ModelTime.getInstance().pause();
         ViewTime.getInstance().pause();
+        AITime.getInstance().pause();
     }
 
     public void resumeGame(){
         ModelTime.getInstance().resume();
         ViewTime.getInstance().resume();
+        AITime.getInstance().resume();
     }
 
     public void resetGame() {
