@@ -1,9 +1,11 @@
 package com.wecanteven.Models.Occupation;
 
 import com.wecanteven.Models.Stats.StatsAddable;
+import com.wecanteven.UtilityClasses.Tuple;
 import com.wecanteven.Visitors.CanMoveVisitor;
+import com.wecanteven.Visitors.OccupationVisitor;
 
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by Brandon on 3/31/2016.
@@ -58,5 +60,19 @@ public abstract class Occupation implements OccupationVisitable{
             skillMap.put(skill, 0);
             return true;
         }
+    }
+
+    public void accept(OccupationVisitor visitor) {
+        visitor.visitOccupation(this);
+    }
+
+    public Iterator<Tuple<Skill, Integer>> getSkillIterator() {
+        List<Tuple<Skill, Integer>> skillList = new ArrayList<>();
+
+        for (Map.Entry<Skill, Integer> e : skillMap.entrySet()) {
+            skillList.add(new Tuple<>(e.getKey(), e.getValue()));
+        }
+
+        return skillList.iterator();
     }
 }
