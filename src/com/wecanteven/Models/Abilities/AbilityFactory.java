@@ -18,8 +18,8 @@ public class AbilityFactory {
         int duration = 1;
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator("Punch",caster,effect,duration);
         Ability ability = new Ability("Punch",caster,generator);
-        ability.setCooldownTicks(5);
-        ability.setWindUpTicks(5);
+        ability.setCooldownTicks(20);
+        ability.setWindUpTicks(20);
         return ability;
     }
     //projectile ability example

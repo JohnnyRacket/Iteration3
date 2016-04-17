@@ -20,6 +20,7 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.*;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Map.Map;
@@ -98,8 +99,8 @@ public class SimpleVOFactory {
     }
 
 
-    public HominidViewObject createHominid(Position position, Entity entity, ViewObject body, ViewObject head, HandsViewObject hands, FeetViewObject feet, BuffRingViewObject buffs, JumpDetector jumpDetector){
-        return new HominidViewObject(position, entity, body, head, hands, feet, buffs, jumpDetector);
+    public HominidViewObject createHominid(Position position, Character character, ViewObject body, ViewObject head, HandsViewObject hands, FeetViewObject feet, BuffRingViewObject buffs, JumpDetector jumpDetector){
+        return new HominidViewObject(position, character, body, head, hands, feet, buffs, jumpDetector);
     }
 
 

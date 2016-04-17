@@ -13,6 +13,7 @@ import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
+import com.wecanteven.Observers.Actionable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
@@ -22,10 +23,10 @@ import com.wecanteven.Visitors.EntityVisitor;
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Character extends Entity {
+public class Character extends Entity implements Actionable {
     private Occupation occupation;
     private ItemStorage itemStorage, abilityItemStorage;
-    private int windUpTicks, coolDownTicks;
+    private int windUpTicks = 0, coolDownTicks = 0;
     private SimpleVOFactory factory;
 
     private int availableSkillPoints = 0;

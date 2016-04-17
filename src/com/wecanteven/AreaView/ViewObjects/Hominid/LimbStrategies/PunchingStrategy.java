@@ -8,6 +8,7 @@ import com.wecanteven.AreaView.ViewObjects.LeafVOs.StartableViewObject;
  */
 public class PunchingStrategy extends LimbStrategy {
     private double distance;
+    private double absDistance;
     private MicroPositionableViewObject leftHand;
     private MicroPositionableViewObject rightHand;
     private StartableViewObject leftWeapon;
@@ -23,8 +24,8 @@ public class PunchingStrategy extends LimbStrategy {
     public PunchingStrategy(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand, double distance) {
         this.leftHand = leftHand;
         this.rightHand = rightHand;
-        this.distance = distance;
-
+        this.distance = -distance;
+        this.absDistance = distance;
         this.currentHand = rightHand;
 
         this.a = 2*(distance - v);
@@ -39,7 +40,10 @@ public class PunchingStrategy extends LimbStrategy {
     protected void complete() {
         currentHand.setTangent(distance);
 
-        if (currentHand == leftHand) currentHand = rightHand;
+        if (currentHand == leftHand) {
+            currentHand = rightHand;
+            distance = 
+        }
         else currentHand = leftHand;
     }
 }
