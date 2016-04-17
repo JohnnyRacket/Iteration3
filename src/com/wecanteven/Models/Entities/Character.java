@@ -191,7 +191,6 @@ public class Character extends Entity implements Actionable {
     public void updateCoolDownTicks(int ticks){
         setCoolDownTicks(ticks);
         calculateActiveStatus();
-        tickTicks();
         notifyObservers();
     }
     @Override
@@ -204,7 +203,9 @@ public class Character extends Entity implements Actionable {
                 System.out.println("CoolDown ticks "+getCoolDownTicks());
                 deIncrementMovingTick();
                 deIncrementWindUpTick();
-                deIncrementCoolDownTicks();
+                if(getWindUpTicks()==0){
+                    deIncrementCoolDownTicks();
+                }
                 deIncrementTurningTick();
                 tickTicks();
             }, 1);
@@ -234,9 +235,10 @@ public class Character extends Entity implements Actionable {
     }
 
     @Override
-    protected boolean calculateActiveStatus(){
+    public boolean calculateActiveStatus(){
         if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0 && getTurningTicks() <= 0){
             setIsActive(false);
+            System.out.println("The entity is no longer active");
             return false;
         }
         else{
