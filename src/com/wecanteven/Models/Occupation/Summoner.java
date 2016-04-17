@@ -9,9 +9,25 @@ import com.wecanteven.Visitors.TerranianCanMoveVisitor;
  */
 public class Summoner extends Occupation {
     public Summoner(){
+        super();
         this.setCanMoveVisitor(new TerranianCanMoveVisitor());
         statsAddable = new StatsAddable(0,1,1,5,1,0,0,0,0);
     }
+
+    @Override
+    protected void initSkills() {
+        // General Skills
+        addSkill(Skill.BIND_WOUNDS);
+        addSkill(Skill.BARGAIN);
+        addSkill(Skill.OBSERVATION);
+
+        // Summoner Skills
+        addSkill(Skill.ENCHANTMENT);
+        addSkill(Skill.BANE);
+        addSkill(Skill.BOON);
+        addSkill(Skill.STAFF);
+    }
+
     @Override
     public void accept(OccupationVisitor visitor) {
         visitor.visitSummoner(this);
