@@ -52,7 +52,7 @@ public abstract class Occupation implements OccupationVisitable{
         if (skillMap.containsKey(skill)) {
             return skillMap.get(skill);
         }
-        throw new IllegalArgumentException("This skill is not supported for this occupation: " + skill);
+        return 0;
     }
     protected abstract void initSkills();
     protected boolean addSkill(Skill skill) {

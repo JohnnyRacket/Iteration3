@@ -37,11 +37,6 @@ public abstract class EquipableItem extends TakeableItem {
     /**
      * Visitation Rights
      * */
-    public void visit(ItemVisitor visitor)
-    {
-        visitor.visitEquipableItem(this);
-    }
-
     public void accept(ItemVisitor visitor){
         visitor.visitEquipableItem(this);
     }

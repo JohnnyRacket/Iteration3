@@ -254,9 +254,10 @@ public class Map implements MapVisitable, ActionHandler {
     @Override
     public boolean drop(TakeableItem item, Location location) {
         item.setLocation(location);
-        item.setIsDestoryed(false);
         item.accept(voCreationVisitor);
-        getTile(location).add(new TakeableMoveable(item.getName(), item.getValue(), item, this, location));
+        TakeableMoveable newItem = new TakeableMoveable(item.getName(), item.getValue(), item, this, location);
+        newItem.setIsDestoryed(false);
+        getTile(location).add(newItem);
         return true;
     }
 //    @Override
