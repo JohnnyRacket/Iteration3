@@ -139,6 +139,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     public void killEntity(){
         getStats().loseLife();
     }
+
     public void loseLife(){
 
         //setLocation(new Location(3, 9, 1));
@@ -201,6 +202,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     public void levelUp(){
         getStats().levelUp();
     }
+
     public StatsAddable getLevelUpStats(){
         return new StatsAddable(0, 1, 1, 1, 1, 0, 0, 0, 0);
     }

@@ -28,4 +28,15 @@ public enum Skill {
     public String toString() {
         return name;
     }
+
+    public static Skill fromString(String skill) {
+        if (skill != null) {
+            for (Skill s : Skill.values()) {
+                if (s.toString().equalsIgnoreCase(skill)) {
+                    return s;
+                }
+            }
+        }
+        throw new IllegalArgumentException("That skill is not supported: " + skill);
+    }
 }

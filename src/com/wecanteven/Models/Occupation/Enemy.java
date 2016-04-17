@@ -16,7 +16,7 @@ public class Enemy extends Occupation {
 
     @Override
     protected void initSkills() {
-
+        // TODO maybe add some stuff for AI targeting
     }
 
     @Override
