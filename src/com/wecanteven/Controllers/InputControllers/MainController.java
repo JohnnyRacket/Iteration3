@@ -19,6 +19,7 @@ public class MainController implements Tickable{
     private MainMenuState mainMenuState;
     private MenuState menuState;
     private PlayState playState;
+    private KeyBindState keyBindState;
     private DialogState dialogState;
 
     public MainController(ViewEngine window){
@@ -65,6 +66,14 @@ public class MainController implements Tickable{
     }
 
     public void setPlayState(){
+        removeState();
+        playState.setAvatar(avatar);
+        playState.createKeybindings();
+        System.out.println("Starting PLay State");
+        this.state = playState;
+    }
+
+    public void setKeyBindState(ActionEnum actionEnum){
         removeState();
         playState.setAvatar(avatar);
         playState.createKeybindings();
