@@ -8,7 +8,7 @@ import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
-import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
+import com.wecanteven.Models.Items.Takeable.StatsModifyUseable;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
@@ -18,7 +18,6 @@ import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Models.Occupation.*;
 import com.wecanteven.Models.Stats.Stats;
-import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Models.Storage.ItemStorage.Equipment;
 import com.wecanteven.Models.Storage.ItemStorage.Inventory;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
@@ -30,7 +29,6 @@ import com.wecanteven.UtilityClasses.Tuple;
 import com.wecanteven.Visitors.*;
 
 import java.util.Iterator;
-import java.util.Locale;
 
 
 /**
@@ -231,7 +229,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     }
 
     @Override
-    public void visitConsumableItem(ConsumeableItem item) {
+    public void visitStatsModifyItem(StatsModifyUseable item) {
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 

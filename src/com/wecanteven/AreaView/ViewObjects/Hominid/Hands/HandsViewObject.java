@@ -2,6 +2,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
+import com.wecanteven.AreaView.ViewObjects.Factories.HandStateFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
@@ -19,31 +20,28 @@ public class HandsViewObject implements ViewObject, Observer {
     private HandState handState;
     private Position position;
     private EquipmentSlot subject;
-    private ViewObjectFactory factory;
-    private Entity entity;
+    private HandStateFactory factory;
     private WeaponsVisitor weaponsVisitor = new ViewWeaponVisitor();
+    private Entity entity;
    // private Equipment --dont have it yet..
 
-    private HandStateCreator defaultHandState;
+
 
     private GameColor color;
 
-    public HandsViewObject(MicroPositionableViewObject leftHand,
-                           MicroPositionableViewObject rightHand,
-                           Direction direction,
-                           Position position,
+    public HandsViewObject(Position position,
                            EquipmentSlot subject,
-                           ViewObjectFactory factory,
+                           HandStateFactory factory,
                            Entity entity,
-                           HandStateCreator defaultHandState,
                            GameColor color) {
         this.position = position;
         this.subject = subject;
         this.factory = factory;
-        this.entity = entity;
         this.color = color;
+        this.entity = entity;
         registerToSubject();
-        handState = defaultHandState.changeHandState(direction, leftHand, rightHand);
+
+        update();
     }
 
     private void registerToSubject() {
@@ -100,8 +98,11 @@ public class HandsViewObject implements ViewObject, Observer {
     }
 
     public void update() {
-
-        subject.getItem().accept(weaponsVisitor);
+        if (subject.getItem() == null) {
+            swapHandsState(factory.createFistState(position, subject, entity, color));
+        } else {
+            subject.getItem().accept(weaponsVisitor);
+        }
 
     }
 
@@ -114,7 +115,7 @@ public class HandsViewObject implements ViewObject, Observer {
 
         @Override
         public void visitFistWeapon(FistWeapon f) {
-            factory.createDualWieldMeleeWeaponState(getPosition(), handState.getDirection(), subject, f.getName(), entity, color);
+            swapHandsState(factory.createFistState(getPosition(), subject,  entity, color));
         }
 
         @Override

@@ -4,12 +4,16 @@ import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
+import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.GameColor;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Created by adamfortier on 4/16/16.
@@ -26,17 +30,18 @@ public class EquipableItemVOFactory {
         return new EquipableViewObject(child, subject, this, entity, color);
     }
 
-    public <T extends Directional & ViewObservable> ViewObject createEquipment(Position p, T character, String name, GameColor color) {
+    public <T extends Directional & ViewObservable> ViewObject createEquipment(Position p, T subject, String name, GameColor color) {
         //First we try to find a nondirectional equipment
-        try {
-            return simpleVOFactory.createSimpleViewObject(p, "Equipment/" + color + "/" + name + ".xml");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String path = "Equipment/" + color + "/" + name + ".xml";
+        if (fileExists("resources/" + path))
+            return viewObjectFactory.createSimpleViewObject(p, path);
 
-        DirectionalViewObject directionalViewObject =  simpleVOFactory.createDirectional(p, character, "Equipment/" +color.name + "/" + name + "/");
-        character.attach(directionalViewObject);
-        return directionalViewObject;
+        return  viewObjectFactory.createDirectional(p, subject, "Equipment/" +color.name + "/" + name + "/");
+
+    }
+
+    private boolean fileExists(String path) {
+        return (new File(path)).exists();
     }
 
     public MicroPositionableViewObject createBuff(Position p, String name) {

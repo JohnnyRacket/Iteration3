@@ -315,9 +315,14 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
     }
 
-    public void modifyStats(StatsAddable addable){
+    public void modifyStatsAdditive(StatsAddable addable){
 
         this.stats.addStats(addable);
+    }
+
+    public void modifyStatsSubtractive(StatsAddable addable){
+
+        this.stats.subtractStats(addable);
     }
 
     @Override
@@ -340,6 +345,14 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
 
     public void buff(Buff buff) {
         buffmanager.addBuff(buff);
+    }
+
+    public void pauseBuffs() {
+        getBuffmanager().disable();
+    }
+
+    public void resumeBuffs() {
+        getBuffmanager().enable();
     }
 
     public void interact(Character character) {}

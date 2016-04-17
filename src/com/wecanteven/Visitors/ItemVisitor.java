@@ -23,5 +23,5 @@ public interface ItemVisitor {
 
     // Useable hierarchy
     void visitAbilityItem(AbilityItem ability);
-    void visitConsumableItem(ConsumeableItem consumable);
+    void visitStatsModifyItem(StatsModifyUseable consumable);
 }

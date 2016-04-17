@@ -1,6 +1,5 @@
 package com.wecanteven.AreaView;
 
-import com.sun.glass.ui.View;
 import com.wecanteven.AreaView.Biomes.Biome;
 import com.wecanteven.AreaView.ViewObjects.Factories.BiomeFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.MapItemVOFactory;
@@ -19,7 +18,7 @@ import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
-import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
+import com.wecanteven.Models.Items.Takeable.StatsModifyUseable;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
@@ -149,7 +148,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     }
 
     @Override
-    public void visitConsumableItem(ConsumeableItem consumable) {
+    public void visitStatsModifyItem(StatsModifyUseable consumable) {
 
     }
 

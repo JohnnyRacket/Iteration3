@@ -55,8 +55,8 @@ public class SimpleVOFactory {
         this.mapItemVOFactory = new MapItemVOFactory(this);
     }
 
-    public EquipableViewObject createEquipable(ViewObject child, EquipmentSlot slot, EquipableItemVOFactory equipableItemVOFactory, Entity entity, GameColor color) {
-        return new EquipableViewObject(child, slot, equipableItemVOFactory, entity, color);
+    public EquipableViewObject createEquipable(ViewObject child, EquipmentSlot slot, EquipableItemVOFactory equipableItemVOFactory, Entity weaponSubject, GameColor color) {
+        return new EquipableViewObject(child, slot, equipableItemVOFactory, weaponSubject, color);
     }
 
     public NullViewObject createNullViewObject() {
