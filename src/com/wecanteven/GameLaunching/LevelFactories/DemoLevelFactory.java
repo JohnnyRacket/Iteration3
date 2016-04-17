@@ -402,7 +402,7 @@ public class DemoLevelFactory extends LevelFactory {
         //"Creating an NPC and Giving him a chest Plate
         NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), new Enemy(), GameColor.GRAY);
         npc.setOccupation(new Enemy());
-        FistWeapon i = new FistWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
+        FistWeapon i = new FistWeapon("Sword", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
         EnemySearchingController esc = new EnemySearchingController(npc,map,3);
         EnemyActionController eac = new EnemyActionController(npc,map);
         AIController controller = new AIController(esc,eac);
@@ -483,7 +483,7 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Growth"), new Location(11, 13,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,3));
-        map.add(ItemMap.getInstance().getItemAsTakeable("Expand"), new Location(9,13,3));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
         //Interactive Item??????
         /* TODO implement this */
 

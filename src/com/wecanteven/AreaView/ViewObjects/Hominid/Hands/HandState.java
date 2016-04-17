@@ -32,7 +32,7 @@ public abstract class HandState {
         rightHand.setDirection(direction);
     }
 
-    public abstract void attack(long durationOfAttack);
+    public abstract void attack(long windUp, long coolDown);
 
     public abstract void fall(long duration);
 

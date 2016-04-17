@@ -12,22 +12,26 @@ import java.util.Iterator;
 /**
  * Created by Brandon on 4/16/2016.
  */
-public class DomeHitBoxGenerator implements HitBoxGenerator {
-    private Character caster;
-    private HitBox hitbox;
+public class DomeHitBoxGenerator extends HitBoxGenerator {
     private int distance,size;
-    private Effects effect;
-    private String name;
 
-    public DomeHitBoxGenerator(Character caster,Effects effect){
-        distance = 1;
+    private String name;
+    private Location location;
+    private Effects effect;
+
+    public DomeHitBoxGenerator(String name, Character caster,Effects effect,int duration){
+        setDuration(duration);
+        setCaster(caster);
+        setDistance(1);
+        setHitBox(new HitBox(name,caster.getLocation(),effect,caster.getActionHandler(),1200));
+
+        this.name = name;
+        this.location = caster.getLocation();
         this.effect = effect;
-        this.caster = caster;
 
     }
     public void generate(){
-        size = 5;
-        generateDome(caster.getLocation(),size);
+        generateDome(getCaster().getLocation(),size);
     }
 
     private void generateDome(Location location,int ringSize){
@@ -35,9 +39,9 @@ public class DomeHitBoxGenerator implements HitBoxGenerator {
         Iterator<Location> iterator = filledHex.iterator();
         while(iterator.hasNext()){
             Location tileLocation = iterator.next();
-            if(!tileLocation.equals(caster.getLocation())){
-                hitbox = new HitBox("Punch",tileLocation, effect, caster.getActionHandler(), 1200);
-                hitbox.addToMap(1, tileLocation);
+            if(!tileLocation.equals(getCaster().getLocation())){
+                HitBox temp = new HitBox(name,location,effect,getCaster().getActionHandler(),1200);
+                temp.addToMap(1, tileLocation);
             }
         }
         --size;
@@ -45,6 +49,11 @@ public class DomeHitBoxGenerator implements HitBoxGenerator {
         if (size > 0) {
             generateDome(location,size);
         }
-
+    }
+    public void setDistance(int distance){
+        this.distance = distance;
+    }
+    public void setSize(int size){
+        this.size = size;
     }
 }

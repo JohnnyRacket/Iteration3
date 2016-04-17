@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Abilities;
 
 import com.wecanteven.AreaView.VOCreationVisitor;
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Entity;
@@ -30,23 +31,35 @@ public class HitBox implements Destroyable{
         setIsDestroyed(false);
     }
 
-    public void addToMap(int duration, Location destination){
+    public void addToMap(int removeTime, Location destination){
         HitBox hitBox = this;
-        actionHandler.add(hitBox,destination);
+        getActionHandler().add(hitBox, destination);
         setLocation(destination);
-        accept(voCreationVisitor);
+        ViewTime viewTime = ViewTime.getInstance();
+        viewTime.register(new ViewTime.vCommand() {
+            @Override
+            public void execute() {
+                accept(voCreationVisitor);
+            }
+        },0);
+                       // accept(voCreationVisitor);
+
         ModelTime modelTime = ModelTime.getInstance();
         modelTime.registerAlertable(new Alertable() {
             @Override
             public void alert() {
-                actionHandler.remove(hitBox, destination);
+                getActionHandler().remove(hitBox, destination);
                 setIsDestroyed(true);
             }
-        }, duration);
+        }, removeTime);
     }
 
     public void interact(Entity entity){
         effect.interact(entity);
+    }
+
+    public void setDuration(int duration){
+        this.duration = duration;
     }
     public void setName(String name){
         this.name = name;
@@ -67,6 +80,9 @@ public class HitBox implements Destroyable{
         voCreationVisitor = visitor;
     }
 
+    public int getDuration(){
+        return duration;
+    }
     public String getName(){
         return name;
     }
@@ -79,20 +95,14 @@ public class HitBox implements Destroyable{
     public ActionHandler getActionHandler(){
         return actionHandler;
     }
-
-    public VOCreationVisitor getVoCreationVisitor(){
-        return voCreationVisitor;
-    }
-    public void accept(VOCreationVisitor visitor) {
-        visitor.visitHitBox(this);
-    }
     public boolean isDestroyed(){
         return isDestroyed;
     }
-    public int getDuration(){
-        return duration;
+    public VOCreationVisitor getVoCreationVisitor(){
+        return voCreationVisitor;
     }
-    public void setDuration(int duration){
-        this.duration = duration;
+
+    public void accept(VOCreationVisitor visitor) {
+        visitor.visitHitBox(this);
     }
 }

@@ -9,21 +9,18 @@ import com.wecanteven.UtilityClasses.Location;
 /**
  * Created by Brandon on 4/7/2016.
  */
-public class MeleeRangeHitBoxGenerator implements HitBoxGenerator {
-    private Character caster;
-    HitBox hitbox;
+public class MeleeRangeHitBoxGenerator extends HitBoxGenerator {
 
 
-    public MeleeRangeHitBoxGenerator(String name, Character caster,Effects effect){
-        this.caster = caster;
-        hitbox = new HitBox(name,caster.getLocation(),effect,caster.getActionHandler(),300);
+    public MeleeRangeHitBoxGenerator(String name, Character caster,Effects effect,int duration){
+        setDuration(duration);
+        setCaster(caster);
+        setHitBox(new HitBox(name,caster.getLocation(),effect,caster.getActionHandler(),300));
     }
     public void generate(){
-        int duration = 1;
-
-        Direction casterDirection = caster.getDirection();
-        Location startLocation = caster.getLocation();
+        Direction casterDirection = getCaster().getDirection();
+        Location startLocation = getCaster().getLocation();
         Location destination = startLocation.add(casterDirection.getCoords);
-        hitbox.addToMap(duration,destination);
+        getHitBox().addToMap(getDuration(), destination);
     }
 }

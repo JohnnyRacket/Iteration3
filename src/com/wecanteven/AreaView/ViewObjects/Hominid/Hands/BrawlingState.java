@@ -6,6 +6,7 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandWalkingStr
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandsFallingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandsYJumpingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.LimbStrategy;
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
@@ -21,6 +22,8 @@ public class BrawlingState extends HandState {
     private LimbStrategy walkingStrategy;
     private LimbStrategy jumpingStrategy;
     private LimbStrategy fallingStrategy;
+    private LimbStrategy punchingStrategy;
+    private LimbStrategy retractingStrategy;
 
     public BrawlingState(Direction direction, MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
         super(leftHand, rightHand);
@@ -53,8 +56,10 @@ public class BrawlingState extends HandState {
         fallingStrategy.execute(duration);
     }
 
-    public void attack(long durationOfAttack) {
-        //TODO
+    @Override
+    public void attack(long windUp, long coolDown) {
+        punchingStrategy.execute(windUp);
+        ViewTime.getInstance().register( () -> retractingStrategy.execute(coolDown), windUp);
     }
 
     public void equip(/*add weapon param model doesnt exist*/) {
