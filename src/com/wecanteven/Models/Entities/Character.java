@@ -1,7 +1,6 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
-import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
@@ -189,9 +188,6 @@ public class Character extends Entity {
     }
     @Override
     protected void tickTicks(){
-        System.out.println("MovingTicks "+getMovingTicks());
-        System.out.println("WindUpTicks "+getWindUpTicks());
-        System.out.println("CoolDownTicks "+getCoolDownTicks());
         if(calculateActiveStatus()){
             ModelTime.getInstance().registerAlertable(() -> {
                 deIncrementMovingTick();
@@ -226,7 +222,6 @@ public class Character extends Entity {
 
     @Override
     protected boolean calculateActiveStatus(){
-        System.out.println("Active status: " + isActive());
         if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0){
             setIsActive(false);
             return false;

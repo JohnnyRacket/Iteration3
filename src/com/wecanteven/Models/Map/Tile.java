@@ -20,7 +20,6 @@ import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by John on 3/31/2016.

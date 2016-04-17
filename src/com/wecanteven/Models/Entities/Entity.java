@@ -100,14 +100,12 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
 
     @Override
     public boolean move(Direction d){
-        System.out.println("Im in control of my own destiny");
         int movementStat = getStats().getMovement();
         if(movementStat == 0 || isActive()){
             return false;
         }
         if(getDirection() == d){
             setDirection(d);
-            System.out.println("Going to " + getLocation().add(d.getCoords));
             Location destination = getLocation().add(d.getCoords);
             int moveTime = calculateMovementTicks(movementStat);
             return getActionHandler().move(this,destination,moveTime);
