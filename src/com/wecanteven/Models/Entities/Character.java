@@ -1,7 +1,6 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
-import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
@@ -80,7 +79,7 @@ public class Character extends Entity {
         if(!isActive()){
             this.setDirection(dir);
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendMeleeAttack(this);
+            Ability attack = factory.vendPunchAttack(this);
             attack.cast();
         }
     }

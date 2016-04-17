@@ -12,24 +12,48 @@ import com.wecanteven.Models.Stats.StatsAddable;
  * Created by Brandon on 4/11/2016.
  */
 public class AbilityFactory {
-    public Ability vendMeleeAttack(Character caster) {
+    //melee ability example
+    public Ability vendPunchAttack(Character caster) {
         StatsEffect effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-        MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator("Punch",caster,effect);
-        return new Ability("Punch",caster,generator);
+        int duration = 1;
+        MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator("Punch",caster,effect,duration);
+        Ability ability = new Ability("Punch",caster,generator);
+        ability.setCooldownTicks(5);
+        ability.setWindUpTicks(5);
+        return ability;
     }
-//    public Ability vendRangedAttack(Character caster) {
-//        StatsEffect effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-//        ProjectileHitBoxGenerator generator = new ProjectileHitBoxGenerator(caster,effect);
-//        return new Ability(caster,generator);
-//    }
-//    public Ability vendRadialAttack(Character caster) {
-//        StatsEffect effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-//        RadialHitBoxGenerator generator = new RadialHitBoxGenerator(caster,effect);
-//        return new Ability(caster,generator);
-//    }
-//    public Ability vendDomeAttack(Character caster) {
-//        StatsEffect effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-//        DomeHitBoxGenerator generator = new DomeHitBoxGenerator(caster,effect);
-//        return new Ability(caster,generator);
-//    }
+    //projectile ability example
+    public Ability vendWaterBolt(Character caster) {
+        StatsEffect effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        ProjectileHitBoxGenerator generator = new ProjectileHitBoxGenerator("WaterBolt",caster,effect);
+        generator.setDistance(5);
+        generator.setSpeed(30);
+        Ability ability = new Ability("WaterBolt",caster,generator);
+        ability.setCooldownTicks(15);
+        ability.setWindUpTicks(15);
+        return ability;
+    }
+    //radial ability example
+    public Ability vendRadialAttack(Character caster) {
+        StatsEffect effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        int duration = 1;
+        RadialHitBoxGenerator generator = new RadialHitBoxGenerator("Punch",caster,effect,duration);
+        generator.setSize(3);
+        Ability ability = new Ability("Punch",caster,generator);
+        ability.setCooldownTicks(15);
+        ability.setWindUpTicks(15);
+        return ability;
+    }
+    //dome ability example
+    public Ability vendDomeAttack(Character caster) {
+        StatsEffect effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        int duration = 1;
+        DomeHitBoxGenerator generator = new DomeHitBoxGenerator("Punch",caster,effect,duration);
+        generator.setDistance(1);
+        generator.setSize(5);
+        Ability ability = new Ability("Punch",caster,generator);
+        ability.setCooldownTicks(15);
+        ability.setWindUpTicks(15);
+        return ability;
+    }
 }

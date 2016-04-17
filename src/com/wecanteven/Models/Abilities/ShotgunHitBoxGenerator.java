@@ -1,9 +1,7 @@
 package com.wecanteven.Models.Abilities;
 
 import com.wecanteven.Models.Abilities.Effects.Effects;
-import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
-import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.FilledHex;
 import com.wecanteven.UtilityClasses.Location;
@@ -13,8 +11,8 @@ import java.util.Iterator;
 /**
  * Created by Brandon on 4/16/2016.
  */
-public class ShotgunHitBoxGenerator implements HitBoxGenerator {
-    private com.wecanteven.Models.Entities.Character caster;
+public class ShotgunHitBoxGenerator extends HitBoxGenerator {
+    private Character caster;
     private HitBox hitbox;
     private int distance,size;
     private Effects effect;

@@ -121,8 +121,16 @@ public class TileViewObject implements ViewObject {
     private class VisibleState implements TileState {
         @Override
         public void draw(Graphics2D g) {
-            for (ViewObject vo: children) {
-                vo.draw(g);
+            //Concurrent Modification Error Fix
+//            for (ViewObject vo: children) {
+//                vo.draw(g);
+//            }
+            try{
+                for(int i=0;i<children.size();i++){
+                    children.get(i).draw(g);
+                }
+            }catch (IndexOutOfBoundsException e){
+                System.out.println("CONCURRENT MODIFICATION CATCH: TilViewObject.java");
             }
         }
         @Override
