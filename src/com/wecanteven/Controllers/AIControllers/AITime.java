@@ -3,6 +3,7 @@ package com.wecanteven.Controllers.AIControllers;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.ModelTime.Tickable;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,9 +12,8 @@ import java.util.List;
  */
 public class AITime implements Tickable{
 
-    private Map map;
-    private Thread aiThread = null;
-    private List<Tickable> aiControllers;
+   // private Map map;
+    private ArrayList<Tickable> aiControllers;
     private boolean paused = false;
 
     private static AITime ourInstance = new AITime();
@@ -22,15 +22,9 @@ public class AITime implements Tickable{
     }
 
     private AITime() {
-
+        aiControllers = new ArrayList<>();
     }
 
-    private void start(){
-        if(aiThread == null){
-            aiThread = new Thread();
-            aiThread.start();
-        }
-    }
 
     @Override
     public void tick() {
@@ -44,9 +38,7 @@ public class AITime implements Tickable{
     public void pause(){
         paused = true;
     }
-    public void resume(){
-        paused = false;
-    }
+    public void resume(){ paused = false; }
     public void registerController(Tickable tickable){aiControllers.add(tickable);}
     public void removeController(Tickable tickable){aiControllers.remove(tickable);}
 }

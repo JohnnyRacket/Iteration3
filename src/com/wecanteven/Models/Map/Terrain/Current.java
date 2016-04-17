@@ -24,6 +24,7 @@ public class Current extends Terrain {
 
     @Override
     public void interact(Moveable moveable) {
+
         moveable.setDirection(direction);
         moveable.move(direction);
     }

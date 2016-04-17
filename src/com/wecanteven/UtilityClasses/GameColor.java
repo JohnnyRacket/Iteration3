@@ -6,6 +6,7 @@ import java.awt.*;
  * Created by Alex on 4/16/2016.
  */
 public enum GameColor {
+
     /*
     CHARACTER NAMES
         Periwinkle
@@ -19,6 +20,7 @@ public enum GameColor {
     YELLOW(0xffcc00, 0xefbf00, "Yellow", "Marigold"),
     GREEN(0x6fc4a9, 0x55ae92, "Green", "Shamrock"),
     GRAY(0x9f9f9f, 0x6f6f6f, "Gray", "Ash");
+
 
     public final Color light;
     public final String name;
