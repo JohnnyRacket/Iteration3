@@ -14,7 +14,6 @@ import com.wecanteven.Models.Stats.StatsAddable;
  * Created by Brandon on 4/11/2016.
  */
 public class AbilityFactory {
-<<<<<<< HEAD
     private String abilityName, abilityImage;
     private int duration;
     private Effects baseEffect;
