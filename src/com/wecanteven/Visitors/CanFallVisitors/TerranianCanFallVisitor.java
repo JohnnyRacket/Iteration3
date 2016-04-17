@@ -1,4 +1,4 @@
-package com.wecanteven.Visitors;
+package com.wecanteven.Visitors.CanFallVisitors;
 
 import com.wecanteven.Models.Map.Terrain.*;
 

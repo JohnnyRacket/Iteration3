@@ -64,8 +64,10 @@ public class SaveFile {
 
     public Element createSaveElement(String elementName, ArrayList<Attr> attributes) {
         Element el = doc.createElement(elementName);
-        for (Attr a:attributes) {
-            el.setAttributeNode(a);
+        if (attributes != null) {
+            for (Attr a : attributes) {
+                el.setAttributeNode(a);
+            }
         }
         return el;
     }

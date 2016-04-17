@@ -2,14 +2,11 @@ package com.wecanteven.AreaView;
 
 
 import com.wecanteven.AreaView.Biomes.Biome;
-import com.wecanteven.AreaView.ViewObjects.Factories.PlainsViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.Tiles.TileViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
-import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Map.Map;
-import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.UtilityClasses.Location;
 
 import javax.swing.*;
@@ -30,9 +27,9 @@ public class AreaView extends JPanel {
 
     public AreaView(Map map, LevelFactory levelFactory) {
         setDoubleBuffered(true);
-        this.factory = new PlainsViewObjectFactory(this, map);
-        Biome biome = levelFactory.createBiomes(factory);
-        VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory, biome);
+        this.factory = new ViewObjectFactory(this, map);
+        Biome biome = levelFactory.createBiomes(factory.getSimpleVOFactory());
+        VOCreationVisitor voCreationVisitor = new VOCreationVisitor(this, factory.getSimpleVOFactory(), factory, biome);
         map.accept(voCreationVisitor);
         map.setVOCreationVisitor(voCreationVisitor);
 

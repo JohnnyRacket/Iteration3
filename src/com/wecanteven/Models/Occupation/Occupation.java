@@ -2,7 +2,7 @@ package com.wecanteven.Models.Occupation;
 
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Tuple;
-import com.wecanteven.Visitors.CanMoveVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.CanMoveVisitor;
 import com.wecanteven.Visitors.OccupationVisitor;
 
 import java.util.*;
@@ -42,6 +42,8 @@ public abstract class Occupation implements OccupationVisitable{
         } else if (skillMap.containsKey(skill)) {
             int newAmt = skillMap.get(skill) + amount;
             skillMap.replace(skill, newAmt);
+
+            System.out.println("Added " + amount + " skill points to " + skill);
         } else {
             throw new IllegalArgumentException("This skill is not supported for this occupation: " + skill);
         }
@@ -50,7 +52,7 @@ public abstract class Occupation implements OccupationVisitable{
         if (skillMap.containsKey(skill)) {
             return skillMap.get(skill);
         }
-        throw new IllegalArgumentException("This skill is not supported for this occupation: " + skill);
+        return 0;
     }
     protected abstract void initSkills();
     protected boolean addSkill(Skill skill) {

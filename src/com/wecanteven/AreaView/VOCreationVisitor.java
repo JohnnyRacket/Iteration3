@@ -1,7 +1,10 @@
 package com.wecanteven.AreaView;
 
+import com.sun.glass.ui.View;
 import com.wecanteven.AreaView.Biomes.Biome;
 import com.wecanteven.AreaView.ViewObjects.Factories.BiomeFactory;
+import com.wecanteven.AreaView.ViewObjects.Factories.MapItemVOFactory;
+import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Abilities.HitBox;
@@ -18,7 +21,6 @@ import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
 import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
-import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Map.Aoe.*;
@@ -35,17 +37,21 @@ import java.util.Iterator;
 /**
  * Created by alexs on 4/1/2016.
  */
-public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, DecalVisitor, MovableHitBoxVisitor,HitBoxVisitor {
-    private ViewObjectFactory factory;
+public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, DecalVisitor,MovableHitBoxVisitor,HitBoxVisitor {
+    private SimpleVOFactory simpleVOFactory;
+    private ViewObjectFactory viewObjectFactory;
+    private  MapItemVOFactory mapItemVOFactory;
     private AreaView areaView;
     private Biome biome;
     private BiomeFactory currentBiomeFactory;
 
     private boolean[][] foundTop;
 
-    public VOCreationVisitor(AreaView areaView, ViewObjectFactory factory, Biome biome) {
+    public VOCreationVisitor(AreaView areaView, SimpleVOFactory simpleVOFactory, ViewObjectFactory viewObjectFactory, Biome biome) {
         this.areaView = areaView;
-        this.factory = factory;
+        this.simpleVOFactory = simpleVOFactory;
+        this.viewObjectFactory = viewObjectFactory;
+        this.mapItemVOFactory = this.simpleVOFactory.getMapItemVOFactory();
         this.biome = biome;
         visitFutureObjects();
     }
@@ -57,13 +63,13 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitHitBox(HitBox hitBox){
-        areaView.addViewObject(factory.createHitBox(hitBox));
+        areaView.addViewObject(viewObjectFactory.createHitBox(hitBox));
 
         //areaView.addViewObject(factory.createSimpleViewObject(hitBox.getLocation().toPosition(),"Decals/Cactus1.xml"));
     }
     @Override
     public void visitMovableHitBox(MovableHitBox hitBox){
-        ViewObject mvo = factory.createRangedEffect(hitBox);
+        ViewObject mvo = viewObjectFactory.createRangedEffect(hitBox);
 
         areaView.addViewObject(mvo);
     }
@@ -77,27 +83,27 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitCharacter(Character c) {
         System.out.println("adding character to areaview");
-        ViewObject avatar = factory.createBaseHominoid(currentPosition, c, "Connery");
-        factory.makeLightSource(avatar, 5, c);
-        factory.setCenter(avatar);
+        ViewObject avatar = viewObjectFactory.createBaseHominoid(currentPosition, c, "Connery");
+        simpleVOFactory.makeLightSource(avatar, 5, c);
+        simpleVOFactory.setCenter(avatar);
         areaView.addViewObject(avatar);
-        areaView.setBackground(factory.createBackgroundDrawable(avatar));
-        c.setFactory(factory);
+        areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
+        c.setFactory(simpleVOFactory);
     }
 
     @Override
     public void visitNPC(NPC c) {
 
-        areaView.addViewObject(factory.createBaseHominoid(currentPosition, c,  "TestFace"));
+        areaView.addViewObject(viewObjectFactory.createBaseHominoid(currentPosition, c,  "TestFace"));
 
     }
 
     @Override
     public void visitMount(Mount mount) {
         System.out.println("adding mount to areaview");
-        ViewObject mountVO = factory.createBaseHominoid(currentPosition, mount, "mounty");
+        ViewObject mountVO = viewObjectFactory.createBaseHominoid(currentPosition, mount, "mounty");
         mount.addVO(mountVO);
-        mount.setFactory(factory);
+        mount.setFactory(simpleVOFactory);
         areaView.addViewObject(mountVO);
 
     }
@@ -109,22 +115,22 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitObstacle(Obstacle obstacle) {
-        areaView.addViewObject(factory.createObstacle(currentPosition, obstacle));
+        areaView.addViewObject(viewObjectFactory.createObstacle(currentPosition, obstacle));
     }
 
     @Override
     public void visitInteractiveItem(InteractiveItem interactable) {
-        areaView.addViewObject(factory.createInteractableItem(currentPosition, interactable));
+        areaView.addViewObject(viewObjectFactory.createInteractableItem(currentPosition, interactable));
     }
 
     @Override
     public void visitOneShotItem(OneShot oneshot) {
-        areaView.addViewObject(factory.createOneShotItem(currentPosition, oneshot));
+        areaView.addViewObject(viewObjectFactory.createOneShotItem(currentPosition, oneshot));
     }
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-        areaView.addViewObject(factory.createTakeableItem(takeable.getLocation().toPosition(), takeable));
+        areaView.addViewObject(viewObjectFactory.createTakeableItem(takeable.getLocation().toPosition(), takeable));
     }
 
     @Override
@@ -196,7 +202,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitWater(Water water) {
-        areaView.addViewObject(factory.createWater(currentPosition));
+        areaView.addViewObject(viewObjectFactory.createWater(currentPosition));
     }
 
     @Override
@@ -216,7 +222,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitCurrent(Current current) {
-        areaView.addViewObject(factory.createCurrent(currentPosition));
+        areaView.addViewObject(viewObjectFactory.createCurrent(currentPosition));
     }
 
     @Override
@@ -227,12 +233,12 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitTickableHealAoe(HealingAreaOfEffect aoe) {
-        areaView.addViewObject(factory.createAoe(currentPosition, "HealAoe"));
+        areaView.addViewObject(mapItemVOFactory.createAoe(currentPosition, "HealAoe"));
     }
 
     @Override
     public void visitTickableTakeDamageAoe(TakeDamageAreaOfEffect aoe) {
-        areaView.addViewObject(factory.createAoe(currentPosition, "DamageAoe"));
+        areaView.addViewObject(mapItemVOFactory.createAoe(currentPosition, "DamageAoe"));
     }
 
     @Override
@@ -240,7 +246,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitInstaDeathAoe(InstaDeathAoe aoe) {
-        areaView.addViewObject(factory.createAoe(currentPosition, "InstaDeathAoe"));
+        areaView.addViewObject(mapItemVOFactory.createAoe(currentPosition, "InstaDeathAoe"));
     }
 
     @Override
@@ -248,16 +254,16 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitLevelUpAoe(LevelUpAoe aoe) {
-        areaView.addViewObject(factory.createAoe(currentPosition, "LevelUpActive"));
+        areaView.addViewObject(mapItemVOFactory.createAoe(currentPosition, "LevelUpActive"));
     }
 
     @Override
     public void visitTeleportAoe(TeleportAoe aoe) {
-        areaView.addViewObject(factory.createAoe(currentPosition, "TeleportAoe"));
+        areaView.addViewObject(mapItemVOFactory.createAoe(currentPosition, "TeleportAoe"));
     }
 
     @Override
     public void visitDecal(Decal d) {
-        areaView.addViewObject(factory.createDecalViewObject(currentPosition, d));
+        areaView.addViewObject(viewObjectFactory.createDecalViewObject(currentPosition, d));
     }
 }

@@ -35,7 +35,7 @@ public class MountState extends AvatarState {
         avatarLocation.setS(mount.getLocation().getS());
         avatarLocation.setZ(mount.getLocation().getZ());
     }
-    public void attack(){}
+    public void attack(Direction dir){}
     public void useAbility(int index){}
     public boolean equipItem(String id){
         return false;

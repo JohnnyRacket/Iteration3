@@ -43,28 +43,6 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
         this.radius = 0D;
     }
 
-    public MicroPositionableViewObject(Direction direction, Position position, Position offsetPosition, ViewObject viewObject, double offsetAngle, double height, double tangent) {
-        super(viewObject);
-        this.direction = direction;
-        this.position = position;
-        this.offsetPosition = offsetPosition;
-        this.offsetAngle = offsetAngle;
-        this.height = height;
-        this.tangent = tangent;
-        this.radius = radius;
-    }
-
-    public MicroPositionableViewObject(Direction direction, Position position, Position offsetPosition, ViewObject viewObject, double offsetAngle, double height, double tangent, double radius) {
-        super(viewObject);
-        this.direction = direction;
-        this.position = position;
-        this.offsetPosition = offsetPosition;
-        this.offsetAngle = offsetAngle;
-        this.height = height;
-        this.tangent = tangent;
-        this.radius = radius;
-    }
-
     public Direction getDirection() {
         return direction;
     }

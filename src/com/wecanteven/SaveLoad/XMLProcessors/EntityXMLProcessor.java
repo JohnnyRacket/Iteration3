@@ -9,6 +9,8 @@ import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Smasher;
+import com.wecanteven.Models.Occupation.Sneak;
+import com.wecanteven.Models.Occupation.Summoner;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.UtilityClasses.Direction;
@@ -44,6 +46,7 @@ public class EntityXMLProcessor extends XMLProcessor {
         attr.add(sf.saveAttr("Occupation", e.getOccupation().getClass().getSimpleName()));
         attr.add(sf.saveAttr("Height", e.getHeight()));
         attr.add(sf.saveAttr("Color", e.getColor().ordinal()));
+        attr.add(sf.saveAttr("AvailableSkillPts", e.getAvailablePoints()));
         sf.appendObjectTo(parent, sf.createSaveElement("Character",attr));
         formatLocation(sf, e);
     }
@@ -51,11 +54,12 @@ public class EntityXMLProcessor extends XMLProcessor {
     public static Character parseCharacter(Map map, Element el) {
         Character c =  new Character(map,
                 parseDirection(sf.getElemenetById(el, "Direction", 0)),
-                parseOccupation(sf.getStrAttr(el, "Occupation")),
+                parseOccupation(sf.getStrAttr(el, "Occupation"), sf.getElementsById(el, "Skill")),
                 StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0)),
                 GameColor.values()[sf.getIntAttr(el, "Color")]
         );
         parseStats(c, sf.getElemenetById(el, "Stats", 0));
+        c.setAvailableSkillPoints(Integer.parseInt(sf.getStrAttr(el, "AvailableSkillPts")));
         map.add(c, parseLocation(sf.getElemenetById(el, "Location", 0)));
         return c;
     }
@@ -87,7 +91,7 @@ public class EntityXMLProcessor extends XMLProcessor {
         NPC npc  = new NPC(map,
                 parseDirection(sf.getElemenetById(el, "Direction", 0)),
                 parseInteraction(sf.getElemenetById(el, "Interaction", 0)),
-                parseOccupation(sf.getStrAttr(el, "Occupation")),
+                parseOccupation(sf.getStrAttr(el, "Occupation"), sf.getElementsById(el, "Skill")),
                 StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0)),
                 GameColor.values()[sf.getIntAttr(el, "Color")] );
         map.add(npc, parseLocation(sf.getElemenetById(el, "Location", 0)));
@@ -143,19 +147,28 @@ public class EntityXMLProcessor extends XMLProcessor {
         return Direction.values()[sf.getIntAttr(el, "enum")];
     }
 
-    public static Occupation parseOccupation(String o) {
+    public static Occupation parseOccupation(String o, NodeList skills) {
+        Occupation occupation;
+        // TODO support the other occupations
         switch(o){
             case "Smasher":
-                return new Smasher();
+                occupation =  new Smasher();
+                break;
             case "Summoner":
-                //new Summoner();
-                return null;
+                occupation = new Summoner();
+                break;
             case "Sneak":
-                //new Sneak();
-                return null;
+                occupation =  new Sneak();
+                break;
             default:
-                return new Smasher();
+                occupation =  new Smasher();
         }
+
+        return parseSkills(skills, occupation);
+    }
+
+    private static Occupation parseSkills(NodeList skills, Occupation occupation) {
+        return OccupationSkillXMLProcessor.configureOccuationSkills(skills, occupation);
     }
 
     public static void formatInteraction(InteractionStrategy i) {
