@@ -190,7 +190,9 @@ public class Tile implements MapVisitable {
 
     private void interactWithCharacter(Character character) {
         ArrayList<TakeableMoveable> leftover = new ArrayList<>();
+        System.out.println("Trying to pick up item");
         for (TakeableMoveable i : takeableItems) {
+            System.out.println(i.getName());
             if (!character.getItemStorage().inventoryIsFull()) {
                 i.extractItem().interact(character);
             } else {
@@ -205,7 +207,7 @@ public class Tile implements MapVisitable {
         if(hasEntity())
         interactWithTile(getEntity());
     }
-    
+
 //    public void interact(Character character) {
 //        if(hasEntity()) {
 //            InteractionVisitor visitor = new InteractionVisitor(character);

@@ -34,6 +34,7 @@ public class TakeableItem extends Item implements Destroyable, ViewObservable {
     public void interact(Character character) {
         isDestroyed = true;
         notifyObservers();
+        System.out.println("Picking up this item" + this.getName());
         character.pickup(this);
     }
 

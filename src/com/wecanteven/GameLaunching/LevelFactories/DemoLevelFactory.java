@@ -6,7 +6,9 @@ import com.wecanteven.AreaView.Biomes.DefaultBiome;
 import com.wecanteven.AreaView.ViewObjects.Factories.*;
 import com.wecanteven.Controllers.AIControllers.AIController;
 import com.wecanteven.Controllers.AIControllers.ActionControllers.EnemyActionController;
+import com.wecanteven.Controllers.AIControllers.ActionControllers.PetActionController;
 import com.wecanteven.Controllers.AIControllers.SearchingControllers.EnemySearchingController;
+import com.wecanteven.Controllers.AIControllers.SearchingControllers.PetSearchingController;
 import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
@@ -15,18 +17,20 @@ import com.wecanteven.Models.Interactions.NoInteractionStrategy;
 import com.wecanteven.Models.Interactions.QuestDialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.OneHandedMeleeWeapon;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
 import com.wecanteven.Models.Items.Takeable.QuestedItem;
 import com.wecanteven.Models.Map.Aoe.*;
-import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
+import com.wecanteven.Models.Occupation.Enemy;
+import com.wecanteven.Models.Occupation.Pet;
 import com.wecanteven.Models.Quests.QuestableItemReward;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.*;
 
 import java.util.ArrayList;
+
 
 /**
  * Created by alexs on 4/14/2016.
@@ -38,7 +42,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     private final int mapWidth = 40;
     private final int mapLength = 40;
-    private final int mapHeight = 20;
+    private final int mapHeight = 22;
 
     private ArrayList<Location> desertLocations = new ArrayList<>();
     private ArrayList<Location> snowLocations = new ArrayList<>();
@@ -214,9 +218,9 @@ public class DemoLevelFactory extends LevelFactory {
         map.getTile(getLocation(12,3,7)).setTerrain(new Current(Direction.SOUTH));
         map.getTile(getLocation(12,3,6)).setTerrain(new Current(Direction.SOUTH));
         map.getTile(getLocation(12,3,5)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,4)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,3)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,2)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,3,4)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(12,3,3)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(12,3,2)).setTerrain(new Current(Direction.NORTHWEST));
 
         //MAKES TUNNEL
         map.getTile(getLocation(9, 4, 2)).setTerrain(new Air());
@@ -254,14 +258,14 @@ public class DemoLevelFactory extends LevelFactory {
         map.getTile(getLocation(12,8,1)).setTerrain(new Current(Direction.SOUTH));
         map.getTile(getLocation(12,9,1)).setTerrain(new Current(Direction.SOUTH));
         map.getTile(getLocation(12,10,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
+        //smap.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
 
-        (new FilledHex(getLocation(16,6,0), 6)).iterator().forEachRemaining( (location) -> {
-            map.getTile(location).setTerrain(new Ground());
-        });
-        (new HexLine(getLocation(11,5,0), Direction.NORTHEAST, 4 )).iterator().forEachRemaining( (location) -> {
-            map.getTile(location).setTerrain(new Ground());
-        });
+        //sand under Lake
+        biomePaint = desertLocations;
+        filled(16,7,0,7, groundMaker);
+        line(14 ,2, 0, Direction.SOUTHWEST, 4, groundMaker);
+
+
 
 //        (new HexColumn(getLocation(7,13, 2), 6)).iterator().forEachRemaining( (location) -> {
 //            map.getTile(location).setTerrain(new Ground());
@@ -306,6 +310,7 @@ public class DemoLevelFactory extends LevelFactory {
         line(23,13,2,Direction.SOUTH, 2, groundMaker);
         line(22,17,1,Direction.NORTHWEST, 2, groundMaker);
         line(18,15,2,Direction.SOUTHEAST, 2, groundMaker);
+        line(3,19,0,Direction.SOUTHWEST, 4, groundMaker);
 
 
 
@@ -370,21 +375,40 @@ public class DemoLevelFactory extends LevelFactory {
         dialogNPC(map);
         tradeNPC(map);
         questNPC(map);
+        petNPC(map);
     }
 
     public void mount(Map map) {
         Mount mount = new Mount(map, Direction.SOUTH);
+        mount.setJumpHeight(5);
         System.out.println("ADDING THE MOUNT TO THE MAPPPPP");
         map.add(mount, new Location(16,10,2));
+    }
+
+    public void petNPC(Map map){
+        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.PINK);
+        npc.setOccupation(new Pet());
+        PetSearchingController searchingController = new PetSearchingController(npc, map, 4);
+        PetActionController actionController = new PetActionController(npc, map);
+        AIController controller = new AIController(searchingController,actionController);
+        npc.setController(controller);
+        map.add(npc, new Location(9,9,2));
+        ModelTime.getInstance().registerTickable(controller);
     }
 
     public void weaponNPC(Map map) {
         //"Creating an NPC and Giving him a chest Plate
         NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.GRAY);
-        OneHandedMeleeWeapon i = new OneHandedMeleeWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
+        npc.setOccupation(new Enemy());
+        FistWeapon i = new FistWeapon("Katar", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
+        EnemySearchingController esc = new EnemySearchingController(npc,map,3);
+        EnemyActionController eac = new EnemyActionController(npc,map);
+        AIController controller = new AIController(esc,eac);
+        npc.setController(controller);
         npc.pickup(i);
         npc.equipItem(i);
         map.add(npc, new Location(7,3,15));
+        ModelTime.getInstance().registerTickable(controller);
     }
 
     public void dialogNPC(Map map) {
@@ -393,12 +417,7 @@ public class DemoLevelFactory extends LevelFactory {
         dialog.add("You're an idiot and you're playing a dumb game");
         dialog.add("GTFO");
         NPC npc = new NPC(map, Direction.SOUTHWEST, new DialogInteractionStrategy(dialog), GameColor.YELLOW);
-        EnemySearchingController esc = new EnemySearchingController(npc,map,3);
-        EnemyActionController eac = new EnemyActionController(npc,map);
-        AIController controller = new AIController(esc,eac);
-        npc.setController(controller);
         map.add(npc, new Location(9,8,2));
-        ModelTime.getInstance().registerTickable(controller);
     }
 
     public void questNPC(Map map) {
@@ -410,9 +429,9 @@ public class DemoLevelFactory extends LevelFactory {
         startQuestDialog.add("Go and get the questable item!");
 
         ArrayList<String> endQuestDialog = new ArrayList<>();
-        endQuestDialog.add("HELLO QUESTER!");
-        endQuestDialog.add("This is an example of how quests work");
-        endQuestDialog.add("Go and get the questable item!");
+        endQuestDialog.add("Oh! My! Lawd!");
+        endQuestDialog.add("You found the item I was looking for!");
+        endQuestDialog.add("Here, take this top hat! Goodbye!");
 
         QuestDialogInteractionStrategy questIter = new QuestDialogInteractionStrategy(startQuestDialog, endQuestDialog, quest);
 
@@ -457,6 +476,7 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Growth"), new Location(11, 13,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,3));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Expand"), new Location(9,13,3));
         //Interactive Item??????
         /* TODO implement this */
 

@@ -101,6 +101,8 @@ public class ItemMap {
         EquipableItemMap.put("Growth", () -> factory.vendHeadEquipableItem("Growth", 100, new StatsAddable(0,0,0,0,5,0,0,0,0)));
         EquipableItemMap.put("Halo", () -> factory.vendHeadEquipableItem("Halo", 100, new StatsAddable(0,5,0,0,0,0,0,0,0)));
 
+        EquipableItemMap.put("Expand", () -> factory.vendFistWeapon("Expand", 100, new StatsAddable(0,10,0,0,0,0,0,0,0)));
+
         //These are real items that are in the game: oh really....
 //        EquipableItemMap.put("Top Hat", () -> factory.vendHeadEquipableItem("Top Hat", 100, new StatsAddable(0,0,0,0,0,0,2,0,0)));
 //        EquipableItemMap.put("THE GAME CRASHER", () -> factory.vendHeadEquipableItem("THE GAME CRASHER", 1000, new StatsAddable(2,0,0,0,0,0,0,0,0)));

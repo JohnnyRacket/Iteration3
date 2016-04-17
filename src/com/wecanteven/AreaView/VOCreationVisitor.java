@@ -9,6 +9,7 @@ import com.wecanteven.Models.Abilities.MovableHitBox;
 import com.wecanteven.Models.Decals.Decal;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
@@ -17,6 +18,7 @@ import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
 import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Map.Aoe.*;
@@ -33,7 +35,7 @@ import java.util.Iterator;
 /**
  * Created by alexs on 4/1/2016.
  */
-public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, WeaponsVisitor, DecalVisitor,MovableHitBoxVisitor,HitBoxVisitor {
+public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, DecalVisitor, MovableHitBoxVisitor,HitBoxVisitor {
     private ViewObjectFactory factory;
     private AreaView areaView;
     private Biome biome;
@@ -80,13 +82,23 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
         factory.setCenter(avatar);
         areaView.addViewObject(avatar);
         areaView.setBackground(factory.createBackgroundDrawable(avatar));
-
+        c.setFactory(factory);
     }
 
     @Override
     public void visitNPC(NPC c) {
 
         areaView.addViewObject(factory.createBaseHominoid(currentPosition, c,  "TestFace"));
+
+    }
+
+    @Override
+    public void visitMount(Mount mount) {
+        System.out.println("adding mount to areaview");
+        ViewObject mountVO = factory.createBaseHominoid(currentPosition, mount, "mounty");
+        mount.addVO(mountVO);
+        mount.setFactory(factory);
+        areaView.addViewObject(mountVO);
 
     }
 
@@ -242,35 +254,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitTeleportAoe(TeleportAoe aoe) {
         areaView.addViewObject(factory.createAoe(currentPosition, "TeleportAoe"));
-    }
-
-    @Override
-    public void visitOneHandedWeapon(OneHandedWeapon oneHandedWeapon) {
-
-    }
-
-    @Override
-    public void visitDualWieldWeapon() {
-
-    }
-
-    @Override
-    public void visitDualWieldMeleeWeapon(DualWieldMeleeWeapon dualWieldMeleeWeapon) {
-
-    }
-
-    public void visitOneHandedMeleeWeapon(OneHandedMeleeWeapon oneHandedMeleeWeapon) {
-        visitTakeableItem(oneHandedMeleeWeapon);
-    }
-
-    @Override
-    public void visitOneHandedRangedWeapon(OneHandedRangedWeapon oneHandedRangedWeapon) {
-        visitTakeableItem(oneHandedRangedWeapon);
-    }
-
-    @Override
-    public void visitWeapon(WeaponEquipableItem weapon) {
-        visitTakeableItem(weapon);
     }
 
     @Override

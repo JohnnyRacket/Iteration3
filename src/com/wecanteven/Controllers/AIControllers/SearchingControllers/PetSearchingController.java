@@ -1,6 +1,8 @@
 package com.wecanteven.Controllers.AIControllers.SearchingControllers;
 
 import com.wecanteven.Controllers.AIControllers.Targets.EnemyTarget;
+import com.wecanteven.Controllers.AIControllers.Targets.FriendlyTarget;
+import com.wecanteven.Controllers.AIControllers.Targets.ItemTarget;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Entities.Mount;
@@ -18,16 +20,15 @@ import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Models.Occupation.*;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
- * Created by John on 4/13/2016.
+ * Created by John on 4/16/2016.
  */
-public class EnemySearchingController extends AbstractSearchingController {
-    @Override
-    public void visitMount(Mount mount) {
+public class PetSearchingController extends AbstractSearchingController {
 
-    }
-
-    public EnemySearchingController(Character character, Map map, int searchRadius) {
+    public PetSearchingController(Character character, Map map, int searchRadius) {
         super(character, map, searchRadius);
     }
 
@@ -40,13 +41,17 @@ public class EnemySearchingController extends AbstractSearchingController {
     public void visitCharacter(Character c) {
         this.setTarget(c);
         c.getOccupation().accept(this);
-
     }
 
     @Override
     public void visitNPC(NPC n) {
         this.setTarget(n);
         n.getOccupation().accept(this);
+    }
+
+    @Override
+    public void visitMount(Mount mount) {
+
     }
 
     @Override
@@ -61,31 +66,36 @@ public class EnemySearchingController extends AbstractSearchingController {
             System.out.println(character);
             character.accept(this);
         }
+        ArrayList<TakeableItem> items = tile.getTakeableItems();
+        Iterator<TakeableItem> iter = items.iterator();
+        while(iter.hasNext()){
+            iter.next().accept(this);
+        }
     }
 
     @Override
     public void visitEnemy(Enemy enemy) {
-
-    }
-
-    @Override
-    public void visitPet(Pet pet) {
         this.addNewTarget(new EnemyTarget(2,this.getTarget().getLocation()));
     }
 
     @Override
+    public void visitPet(Pet pet) {
+
+    }
+
+    @Override
     public void visitSmasher(Smasher smasher) {
-        this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
+        this.addNewTarget(new FriendlyTarget(3,this.getTarget().getLocation()));
     }
 
     @Override
     public void visitSneak(Sneak sneak) {
-        this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
+        this.addNewTarget(new FriendlyTarget(3,this.getTarget().getLocation()));
     }
 
     @Override
     public void visitSummoner(Summoner summoner) {
-        this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
+        this.addNewTarget(new FriendlyTarget(3,this.getTarget().getLocation()));
     }
 
     @Override
@@ -110,26 +120,26 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-
+        this.addNewTarget(new ItemTarget(1,takeable.getLocation()));
     }
 
     @Override
     public void visitEquipableItem(EquipableItem equipable) {
-
+        this.addNewTarget(new ItemTarget(1,equipable.getLocation()));
     }
 
     @Override
     public void visitUseableItem(UseableItem useable) {
-
+        this.addNewTarget(new ItemTarget(1,useable.getLocation()));
     }
 
     @Override
     public void visitAbilityItem(AbilityItem ability) {
-
+        this.addNewTarget(new ItemTarget(1,ability.getLocation()));
     }
 
     @Override
     public void visitConsumableItem(ConsumeableItem consumable) {
-
+        this.addNewTarget(new ItemTarget(1,consumable.getLocation()));
     }
 }

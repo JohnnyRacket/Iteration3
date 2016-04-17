@@ -3,10 +3,9 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
-import com.wecanteven.Models.Items.Takeable.Equipable.WeaponEquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.WeaponEquipableItem;
 import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.UtilityClasses.Direction;
-import com.wecanteven.UtilityClasses.Location;
 
 import java.awt.*;
 

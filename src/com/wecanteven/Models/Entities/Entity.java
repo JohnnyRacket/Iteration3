@@ -136,11 +136,14 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         return false;
     }
 
+    public void killEntity(){
+        getStats().loseLife();
+    }
     public void loseLife(){
 
         //setLocation(new Location(3, 9, 1));
         isDestroyed = true;
-        notifyObservers();
+        notifyObserversOnNotDestroyed();
         modelNotifyObservers();
         getActionHandler().death(this);
         getStats().refreshStats();
@@ -154,14 +157,14 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         setMovingTicks(ticks);
         calculateActiveStatus();
         tickTicks();
-        notifyObservers();
+        notifyObserversOnNotDestroyed();
     }
 
     public void setMovingTicks(int movingTicks){
         this.movingTicks = movingTicks;
     }
 
-    private void tickTicks(){
+    protected void tickTicks(){
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
                 deIncrementMovingTick();
@@ -171,7 +174,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
     }
 
-    private void deIncrementMovingTick(){
+    protected void deIncrementMovingTick(){
         movingTicks--;
     }
 
@@ -181,17 +184,25 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-        notifyObservers();
+        notifyObserversOnNotDestroyed();
     }
 
     public void setLocation(Location location) {
 
         this.location = location;
-        notifyObservers();
+        notifyObserversOnNotDestroyed();
+    }
+
+    public void notifyObserversOnNotDestroyed() {
+        if(!isDestroyed())
+            notifyObservers();
     }
 
     public void levelUp(){
-        getStats().addStats(new StatsAddable(0, 1, 1, 1, 1, 0, 0, 0, 0));
+        getStats().levelUp();
+    }
+    public StatsAddable getLevelUpStats(){
+        return new StatsAddable(0, 1, 1, 1, 1, 0, 0, 0, 0);
     }
 
     public Stats getStats(){
@@ -261,7 +272,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         calculateActiveStatus();
     }
 
-    private void calculateActiveStatus(){
+    protected void calculateActiveStatus(){
         if(getMovingTicks() <= 0){
             setIsActive(false);
         }
@@ -288,6 +299,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
 
     public void setDestroyed(boolean isDestroyed) {
         this.isDestroyed = isDestroyed;
+        notifyObservers();
     }
 
     public void takeDamage(int dmgAmount) {

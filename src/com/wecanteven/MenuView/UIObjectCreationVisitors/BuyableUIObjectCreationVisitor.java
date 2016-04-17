@@ -8,6 +8,7 @@ import com.wecanteven.MenuView.Navigatable;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
@@ -84,6 +85,11 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
     public void visitNPC(NPC npc) {
 
         npc.getItemStorage().accept(this);
+    }
+
+    @Override
+    public void visitMount(Mount mount) {
+
     }
 
     @Override

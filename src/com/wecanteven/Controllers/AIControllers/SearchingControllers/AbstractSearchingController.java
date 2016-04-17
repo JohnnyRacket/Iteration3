@@ -11,6 +11,7 @@ import com.wecanteven.UtilityClasses.FilledHex;
 import com.wecanteven.UtilityClasses.HexRing;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.EntityVisitor;
+import com.wecanteven.Visitors.ItemVisitor;
 import com.wecanteven.Visitors.MapVisitor;
 import com.wecanteven.Visitors.OccupationVisitor;
 
@@ -20,7 +21,7 @@ import java.util.Iterator;
 /**
  * Created by John on 4/5/2016.
  */
-public abstract class AbstractSearchingController implements MapVisitor, EntityVisitor, OccupationVisitor{
+public abstract class AbstractSearchingController implements MapVisitor, EntityVisitor, OccupationVisitor, ItemVisitor{
 
     private Target highPriorityTarget = new NullTarget();
     private Character character;
@@ -52,8 +53,10 @@ public abstract class AbstractSearchingController implements MapVisitor, EntityV
         while (iter.hasNext()) {
             Location current = iter.next();
             //System.out.println(current);
-            Tile currentTile = map.getTile(current);
-            currentTile.accept(this);
+            if(current.getR() >= 0 && current.getR() < map.getrSize() && current.getS() >= 0 && current.getS() < map.getsSize()) {
+                Tile currentTile = map.getTile(current);
+                currentTile.accept(this);
+            }
         }
         return highPriorityTarget;
     }

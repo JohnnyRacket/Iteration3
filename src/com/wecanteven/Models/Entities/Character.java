@@ -1,13 +1,17 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
+import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
+import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
@@ -22,6 +26,7 @@ public class Character extends Entity {
     private Occupation occupation;
     private ItemStorage itemStorage, abilityItemStorage;
     private int windUpTicks, coolDownTicks;
+    private ViewObjectFactory factory;
 
     public Character(ActionHandler actionHandler, Direction direction, GameColor color) {
         super(actionHandler, direction, color);
@@ -43,6 +48,17 @@ public class Character extends Entity {
         this.occupation = occupation;
         this.itemStorage = itemStorage;
         getItemStorage().setOwner(this);
+    }
+
+    public void setFactory(ViewObjectFactory factory) {
+        this.factory = factory;
+    }
+
+    public ViewObjectFactory getFactory() throws Exception {
+        if(factory == null)
+            throw new Exception("No View Object Factory Exists");
+        else
+            return factory;
     }
 
     public void attack() {
@@ -84,6 +100,9 @@ public class Character extends Entity {
 
     public void pickup(TakeableItem item) {
         itemStorage.addItem(item);
+        if(itemStorage.hasItem(item)){
+            System.out.println("Item was added");
+        }
     }
 
     public void interact() {
@@ -121,8 +140,8 @@ public class Character extends Entity {
     }
 
     @Override
-    public void levelUp() {
-        getStats().addStats(occupation.getStatsAddable());
+    public StatsAddable getLevelUpStats() {
+        return occupation.getStatsAddable();
     }
 
     public Occupation getOccupation() {
@@ -147,6 +166,68 @@ public class Character extends Entity {
         itemStorage.addMoney(new MoneyItem(value));
     }
 
+    public void setOccupation(Occupation occupation) {
+        this.occupation = occupation;
+    }
+
+    @Override
+    public String toString() {
+        return "Character: " + getOccupation();
+    }
 
 
+    public void updateWindUpTicks(int ticks){
+        setWindUpTicks(ticks);
+        calculateActiveStatus();
+        tickTicks();
+        notifyObservers();
+    }
+    public void updateCoolDownTicks(int ticks){
+        setCoolDownTicks(ticks);
+        calculateActiveStatus();
+        tickTicks();
+        notifyObservers();
+    }
+    @Override
+    protected void tickTicks(){
+        if(isActive()){
+            ModelTime.getInstance().registerAlertable(() -> {
+                deIncrementMovingTick();
+                deIncrementWindUpTick();
+                deIncrementCoolDownTicks();
+                calculateActiveStatus();
+                tickTicks();
+            }, 1);
+        }
+    }
+
+    public void setWindUpTicks(int ticks){
+        windUpTicks = ticks;
+    }
+    public int getWindUpTicks(){
+        return windUpTicks;
+    }
+    private void deIncrementWindUpTick(){
+        windUpTicks--;
+    }
+
+    public  void setCoolDownTicks(int ticks){
+        coolDownTicks = ticks;
+    }
+    public int getCoolDownTicks(){
+        return coolDownTicks;
+    }
+    private void deIncrementCoolDownTicks(){
+        coolDownTicks--;
+    }
+
+    @Override
+    protected void calculateActiveStatus(){
+        if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0){
+            setIsActive(false);
+        }
+        else{
+            setIsActive(true);
+        }
+    }
 }

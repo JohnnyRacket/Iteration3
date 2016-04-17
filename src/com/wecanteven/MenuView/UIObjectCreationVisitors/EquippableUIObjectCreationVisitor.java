@@ -8,6 +8,7 @@ import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.SelectableItem;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
@@ -77,6 +78,11 @@ public class EquippableUIObjectCreationVisitor implements ItemStorageVisitor, It
     }
 
     @Override
+    public void visitMount(Mount mount) {
+
+    }
+
+    @Override
     public void visitItemStorage(ItemStorage itemStorage) {
         inInv = true;
         inventoryItems = new NavigatableList();
@@ -125,7 +131,9 @@ public class EquippableUIObjectCreationVisitor implements ItemStorageVisitor, It
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-
+        inventoryItems.addItem(new GridItem(takeable.getName(), () ->{
+            factory.createDropableItemMenu(character, invHolder, eqHolder, takeable);
+        }));
     }
 
     @Override

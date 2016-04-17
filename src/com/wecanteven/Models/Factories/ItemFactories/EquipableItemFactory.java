@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Factories.ItemFactories;
 
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.*;
 import com.wecanteven.Models.Stats.StatsAddable;
 
 /**
@@ -16,32 +17,8 @@ public class EquipableItemFactory {
         return new ChestEquipableItem(name, value, stats);
     }
 
-    public DualWieldMeleeWeapon vendDualMeleeWeapon(String name, int value, StatsAddable stats) {
-        return new DualWieldMeleeWeapon(name, value, stats);
-    }
-
-    public DualWieldWeapon vendDualWieldWeapon(String name, int value, StatsAddable stats) {
-        return new DualWieldWeapon(name, value, stats);
-    }
-
     public HeadEquipableItem vendHeadEquipableItem(String name, int value, StatsAddable stats) {
         return new HeadEquipableItem(name, value, stats);
-    }
-
-    public MeleeWeaponEquipableItem vendMeleeWeaponEquipable(String name, int value, StatsAddable stats) {
-        return new MeleeWeaponEquipableItem(name, value, stats);
-    }
-
-    public OneHandedMeleeWeapon vendOneHandedMeleeWeapon(String name, int value, StatsAddable stats) {
-        return new OneHandedMeleeWeapon(name, value, stats);
-    }
-
-    public OneHandedRangedWeapon vendOneHandedRangedWeapon(String name, int value, StatsAddable stats) {
-        return new OneHandedRangedWeapon(name, value, stats);
-    }
-
-    public OneHandedWeapon vendOneHandedWeapon(String name, int value, StatsAddable stats) {
-        return new OneHandedWeapon(name, value, stats);
     }
 
     public RangedWeaponEquipableItem vendRangedWeaponEquipableItem(String name, int value, StatsAddable stats) {
@@ -52,8 +29,15 @@ public class EquipableItemFactory {
         return new TwoHandedWeapon(name, value, stats);
     }
 
-    public WeaponEquipableItem vendWeaponEquipableItem(String name, int value, StatsAddable stats) {
-        return new WeaponEquipableItem(name, value, stats);
+    public OneHandWeapon vendOneHandWeapon(String name, int value, StatsAddable stats) {
+        return new OneHandWeapon(name, value, stats);
     }
 
+    public FistWeapon vendFistWeapon(String name, int value, StatsAddable stats) {
+        return new FistWeapon(name, value, stats);
+    }
+
+    public StaveWeapon vendStaveWeapon(String name, int value, StatsAddable stats) {
+        return new StaveWeapon(name, value, stats);
+    }
 }
