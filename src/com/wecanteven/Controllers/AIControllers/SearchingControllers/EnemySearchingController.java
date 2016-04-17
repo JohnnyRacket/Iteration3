@@ -45,7 +45,8 @@ public class EnemySearchingController extends AbstractSearchingController {
 
     @Override
     public void visitNPC(NPC n) {
-
+        this.setTarget(n);
+        n.getOccupation().accept(this);
     }
 
     @Override
@@ -68,13 +69,17 @@ public class EnemySearchingController extends AbstractSearchingController {
     }
 
     @Override
+    public void visitFriendly(Friendly friendly) {
+
+    }
+
+    @Override
     public void visitPet(Pet pet) {
         this.addNewTarget(new EnemyTarget(2,this.getTarget().getLocation()));
     }
 
     @Override
     public void visitSmasher(Smasher smasher) {
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
     }
 

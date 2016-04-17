@@ -7,6 +7,7 @@ import com.wecanteven.Models.Occupation.*;
  */
 public interface OccupationVisitor {
     void visitEnemy(Enemy enemy);
+    void visitFriendly(Friendly friendly);
     void visitPet(Pet pet);
     void visitSmasher(Smasher smasher);
     void visitSneak(Sneak sneak);

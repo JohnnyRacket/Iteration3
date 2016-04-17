@@ -157,7 +157,6 @@ public class Character extends Entity {
         return itemStorage;
     }
 
-
     public boolean buy(int value) {
         return itemStorage.buy(value);
     }
@@ -166,6 +165,14 @@ public class Character extends Entity {
         itemStorage.addMoney(new MoneyItem(value));
     }
 
+    public void setOccupation(Occupation occupation) {
+        this.occupation = occupation;
+    }
+
+    @Override
+    public String toString() {
+        return "Character: " + getOccupation();
+    }
 
 
     public void updateWindUpTicks(int ticks){

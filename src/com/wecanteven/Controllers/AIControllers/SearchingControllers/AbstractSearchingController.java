@@ -53,8 +53,10 @@ public abstract class AbstractSearchingController implements MapVisitor, EntityV
         while (iter.hasNext()) {
             Location current = iter.next();
             //System.out.println(current);
-            Tile currentTile = map.getTile(current);
-            currentTile.accept(this);
+            if(current.getR() >= 0 && current.getR() < map.getrSize() && current.getS() >= 0 && current.getS() < map.getsSize()) {
+                Tile currentTile = map.getTile(current);
+                currentTile.accept(this);
+            }
         }
         return highPriorityTarget;
     }
