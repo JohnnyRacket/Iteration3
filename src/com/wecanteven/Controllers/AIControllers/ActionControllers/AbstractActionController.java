@@ -3,14 +3,11 @@ package com.wecanteven.Controllers.AIControllers.ActionControllers;
 import com.wecanteven.Controllers.AIControllers.AIController;
 import com.wecanteven.Controllers.AIControllers.Targets.*;
 import com.wecanteven.Models.Entities.Character;
-import com.wecanteven.Models.Map.*;
 import com.wecanteven.UtilityClasses.*;
-import com.wecanteven.Visitors.CanMoveVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.CanMoveVisitor;
 import com.wecanteven.Visitors.TargetVisitor;
-import com.wecanteven.Visitors.TerranianCanMoveVisitor;
 
 import java.util.*;
-import java.util.Map;
 
 /**
  * Created by John on 4/5/2016.

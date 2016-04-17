@@ -69,11 +69,11 @@ public class Tile implements MapVisitable {
     }
 
     public boolean add(Entity entity){
-
         if(this.entity.add(entity)){
+            interactWithTileEarly(entity);
             entity.lock();
             ModelTime.getInstance().registerAlertable(
-                    () -> interactWithTile(entity)
+                    () -> interactWithTileLate(entity)
                     , entity.getMovingTicks() + 1);
             return true;
         }else{
@@ -166,11 +166,8 @@ public class Tile implements MapVisitable {
         this.terrain = terrain;
     }
 
-    private void interactWithTile(Entity entity){
-        //This interacts with tile you're on
-        entity.unlock();
+    private void interactWithTileEarly(Entity entity){
         hitBoxes.forEach(effect -> effect.interact(entity));
-        terrain.interact(entity);
         if (!oneShot.isEmpty()) {
             oneShot.getToken().interact(entity);
             remove(oneShot.getToken());
@@ -179,11 +176,19 @@ public class Tile implements MapVisitable {
             interactiveItem.getToken().trigger();
         }
 
+
+
+        interactWithCharacter((Character) entity);
+    }
+
+    private void interactWithTileLate(Entity entity){
+        //This interacts with tile you're on
+        entity.unlock();
         for (AreaOfEffect aoe : areasOfEffect) {
             aoe.apply(entity);
         }
+        terrain.interact(entity);
 
-        interactWithCharacter((Character) entity);
     }
 
 
@@ -193,6 +198,7 @@ public class Tile implements MapVisitable {
             System.out.println(i.getName());
             if (!character.getItemStorage().inventoryIsFull()) {
                 i.extractItem().interact(character);
+                i.setIsDestoryed(true);
             } else {
                 leftover.add(i);
             }
@@ -203,7 +209,7 @@ public class Tile implements MapVisitable {
 
     public void update(){
         if(hasEntity())
-        interactWithTile(getEntity());
+        interactWithTileLate(getEntity());
     }
 
 //    public void interact(Character character) {

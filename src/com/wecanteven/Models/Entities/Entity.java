@@ -11,6 +11,10 @@ import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.*;
+import com.wecanteven.Visitors.CanFallVisitors.CanFallVisitor;
+import com.wecanteven.Visitors.CanFallVisitors.TerranianCanFallVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.CanMoveVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.TerranianCanMoveVisitor;
 
 import java.util.ArrayList;
 
@@ -41,6 +45,8 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     private int movingTicks, turningTicks;
     private boolean lock, isActive;
     private BuffManager buffmanager;
+
+    private CanFallVisitor cachedCanFall;
 
     private GameColor color;
 
@@ -338,4 +344,12 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     public void interact(Character character) {}
 
     public void interact() {}
+
+    public void cacheCanFall() {
+        cachedCanFall = getCanFallVisitor();
+    }
+
+    public void restoreCanFall() {
+        setCanFallVisitor(cachedCanFall);
+    }
 }

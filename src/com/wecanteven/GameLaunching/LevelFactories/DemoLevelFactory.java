@@ -359,7 +359,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     private void point(int r, int s, int z, TerrainMaker terrainMaker) {
         map.getTile(getLocation(r,s,z)).setTerrain(terrainMaker.makeTerrain());
-        biomePaint.add(getLocation(r,s,z));
+        biomePaint.add(getLocation(r, s, z));
     }
 
     private Location getLocation(int r, int s, int z) {
@@ -443,7 +443,7 @@ public class DemoLevelFactory extends LevelFactory {
         QuestDialogInteractionStrategy questIter = new QuestDialogInteractionStrategy(startQuestDialog, endQuestDialog, quest);
 
         NPC npc = new NPC(map, Direction.SOUTHWEST, questIter,new Friendly(),GameColor.PINK);
-        map.add(npc, new Location(14,14,2));
+        map.add(npc, new Location(14, 14, 2));
     }
 
     public void tradeNPC(Map map) {
@@ -475,7 +475,7 @@ public class DemoLevelFactory extends LevelFactory {
         //One shot
         map.add(ItemMap.getInstance().getItemAsOneShot("Major Movement Buff"), new Location(1,15,2));
         map.add(ItemMap.getInstance().getItemAsOneShot("Minor Mana Orb"), new Location(2,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Major Mana Orb"), new Location(3,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Its Superman"), new Location(3,15,2));
         map.add(ItemMap.getInstance().getItemAsOneShot("Minor Health Orb"), new Location(4,15,2));
         map.add(ItemMap.getInstance().getItemAsOneShot("Major Health Orb"), new Location(5,15,3));
 
@@ -489,7 +489,7 @@ public class DemoLevelFactory extends LevelFactory {
 
         //Obstacle
         map.add(ItemMap.getInstance().getItemAsObstacle("Crate"), new Location(1,14,2));
-        map.add(ItemMap.getInstance().getItemAsObstacle("Box"), new Location(2,14,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(2,14,2));
 
         //Equipable
 //        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));

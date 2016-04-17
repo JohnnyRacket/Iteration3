@@ -30,6 +30,7 @@ import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.ModelTime.ModelTime;
+import com.wecanteven.Models.Occupation.Skill;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Occupation.Sneak;
@@ -38,6 +39,7 @@ import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
 import com.wecanteven.UtilityClasses.Config;
+import com.wecanteven.UtilityClasses.Tuple;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.ViewEngine;
 
@@ -83,6 +85,10 @@ public class UIViewFactory {
             vEngine.getManager().addPermView(view);
         },0);
     }
+    public void createAbilityView(Character character){
+
+    }
+
     public void createMainMenuView(){
         //make menu
         ScrollableMenu menu = new ScrollableMenu(400, 400);
@@ -118,7 +124,6 @@ public class UIViewFactory {
         },0);
 
     }
-
 
     public void createCreateCharacterMenuView() {
 
@@ -228,6 +233,7 @@ public class UIViewFactory {
             classSelection.setActive(true);
         }));
 
+
         faceList.addItem(new GridFace("Connery", () -> {
             //set
             menuItems[1] = "Connery";
@@ -309,17 +315,36 @@ public class UIViewFactory {
 
     }
 
+    public void createSkillList(Character character, NavigatableList list, TitleBarDecorator title) {
+        title.setTitle("Available Points: " + character.getAvailablePoints());
+
+        Iterator<Tuple<Skill, Integer>> iter = character.getOccupation().getSkillIterator();
+        list.clear();
+        while (iter.hasNext()) {
+            Tuple<Skill, Integer> skill = iter.next();
+            list.addItem(new ScrollableMenuItem(skill.x + ": " + skill.y, () -> {
+                character.allocateSkillPoint(skill.x, 1);
+                createSkillList(character, list, title);
+            }));
+        }
+    }
 
     public void createStatsView(Character character){
 
-
-        NavigatableList skillList = new NavigatableList();
-        skillList.addItem(new ScrollableMenuItem("placeholder skill", ()->{
-
-        }));
+        NavigatableList skillsList = new NavigatableList();
 
         ScrollableMenu skillMenu = new ScrollableMenu(300,650);
-        skillMenu.setList(skillList);
+
+        TitleBarDecorator skillTitle = new TitleBarDecorator(
+                skillMenu, "Available Points: " + character.getAvailablePoints(), Config.CINNIBAR);
+
+        HorizontalCenterContainer horizSkill = new HorizontalCenterContainer(skillTitle);
+        VerticalCenterContainer vertSkill = new VerticalCenterContainer(horizSkill);
+
+        createSkillList(character, skillsList, skillTitle);
+        skillMenu.setList(skillsList);
+
+
 
         Stats stats = character.getStats();
         NavigatableList statsList = new NavigatableList();
@@ -349,7 +374,7 @@ public class UIViewFactory {
         columns.setWidth(600);
         columns.setHeight(550);
         columns.addDrawable(menu);
-        columns.addDrawable(skillMenu);
+        columns.addDrawable(skillTitle);
 
         TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats", Config.TEAL);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
@@ -403,7 +428,6 @@ public class UIViewFactory {
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
         AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
 //        view.addDrawable(vertCenter);
-
 
         view.addDrawable(animation);
         view.addNavigatable(menu);

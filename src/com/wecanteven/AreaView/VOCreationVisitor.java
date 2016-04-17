@@ -3,6 +3,7 @@ package com.wecanteven.AreaView;
 import com.sun.glass.ui.View;
 import com.wecanteven.AreaView.Biomes.Biome;
 import com.wecanteven.AreaView.ViewObjects.Factories.BiomeFactory;
+import com.wecanteven.AreaView.ViewObjects.Factories.MapItemVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
@@ -39,6 +40,7 @@ import java.util.Iterator;
 public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, DecalVisitor,MovableHitBoxVisitor,HitBoxVisitor {
     private SimpleVOFactory simpleVOFactory;
     private ViewObjectFactory viewObjectFactory;
+    private  MapItemVOFactory mapItemVOFactory;
     private AreaView areaView;
     private Biome biome;
     private BiomeFactory currentBiomeFactory;
@@ -49,6 +51,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
         this.areaView = areaView;
         this.simpleVOFactory = simpleVOFactory;
         this.viewObjectFactory = viewObjectFactory;
+        this.mapItemVOFactory = this.simpleVOFactory.getMapItemVOFactory();
         this.biome = biome;
         visitFutureObjects();
     }
@@ -230,12 +233,12 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitTickableHealAoe(HealingAreaOfEffect aoe) {
-        areaView.addViewObject(viewObjectFactory.createAoe(currentPosition, "HealAoe"));
+        areaView.addViewObject(mapItemVOFactory.createAoe(currentPosition, "HealAoe"));
     }
 
     @Override
     public void visitTickableTakeDamageAoe(TakeDamageAreaOfEffect aoe) {
-        areaView.addViewObject(viewObjectFactory.createAoe(currentPosition, "DamageAoe"));
+        areaView.addViewObject(mapItemVOFactory.createAoe(currentPosition, "DamageAoe"));
     }
 
     @Override
@@ -243,7 +246,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitInstaDeathAoe(InstaDeathAoe aoe) {
-        areaView.addViewObject(viewObjectFactory.createAoe(currentPosition, "InstaDeathAoe"));
+        areaView.addViewObject(mapItemVOFactory.createAoe(currentPosition, "InstaDeathAoe"));
     }
 
     @Override
@@ -251,12 +254,12 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitLevelUpAoe(LevelUpAoe aoe) {
-        areaView.addViewObject(viewObjectFactory.createAoe(currentPosition, "LevelUpActive"));
+        areaView.addViewObject(mapItemVOFactory.createAoe(currentPosition, "LevelUpActive"));
     }
 
     @Override
     public void visitTeleportAoe(TeleportAoe aoe) {
-        areaView.addViewObject(viewObjectFactory.createAoe(currentPosition, "TeleportAoe"));
+        areaView.addViewObject(mapItemVOFactory.createAoe(currentPosition, "TeleportAoe"));
     }
 
     @Override

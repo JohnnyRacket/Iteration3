@@ -267,9 +267,13 @@ public class Character extends Entity {
     public int getAvailablePoints() {
         return this.availableSkillPoints;
     }
-
+    public void setAvailableSkillPoints(int points) {
+        if (points >= 0) {
+            this.availableSkillPoints = points;
+        }
+    }
     public boolean allocateSkillPoint(Skill skill, int points) {
-        if (points > 0) {
+        if (points > 0 && points <= getAvailablePoints()) {
             try {
                 occupation.addSkillPoints(skill, points);
                 decrementAvailablePoints(points);
@@ -280,6 +284,9 @@ public class Character extends Entity {
             }
         }
         return false;
+    }
+    public int getSkillPoints(Skill skill) {
+        return getOccupation().getSkillPoints(skill);
     }
 
     @Override
