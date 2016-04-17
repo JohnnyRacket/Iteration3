@@ -182,6 +182,9 @@ public class Character extends Entity {
     }
     @Override
     protected void tickTicks(){
+        System.out.println("MovingTicks "+getMovingTicks());
+        System.out.println("WindUpTicks "+getWindUpTicks());
+        System.out.println("CoolDownTicks "+getCoolDownTicks());
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
                 deIncrementMovingTick();
@@ -200,7 +203,8 @@ public class Character extends Entity {
         return windUpTicks;
     }
     private void deIncrementWindUpTick(){
-        windUpTicks--;
+        if(getWindUpTicks()>0)
+            windUpTicks--;
     }
 
     public  void setCoolDownTicks(int ticks){
@@ -210,11 +214,13 @@ public class Character extends Entity {
         return coolDownTicks;
     }
     private void deIncrementCoolDownTicks(){
-        coolDownTicks--;
+        if(getCoolDownTicks()>0)
+            coolDownTicks--;
     }
 
     @Override
     protected void calculateActiveStatus(){
+        System.out.println("Active status: " + isActive());
         if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0){
             setIsActive(false);
         }
