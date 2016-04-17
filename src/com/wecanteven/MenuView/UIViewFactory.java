@@ -339,7 +339,7 @@ public class UIViewFactory {
             Tuple<Skill, Integer> skill = iter.next();
             list.addItem(new ScrollableMenuItem(skill.x + ": " + skill.y, () -> {
                 if (!character.allocateSkillPoint(skill.x, 1)) {
-                    createToast(30, "You're out of skill points!");
+                    createToast(2, "You're out of skill points!");
                 }
                 createSkillList(character, list, title);
             }));
