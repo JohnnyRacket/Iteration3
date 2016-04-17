@@ -9,9 +9,16 @@ import com.wecanteven.Visitors.TerranianCanMoveVisitor;
  */
 public class Pet extends Occupation {
     public Pet(){
+        super();
         this.setCanMoveVisitor(new TerranianCanMoveVisitor());
         statsAddable = new StatsAddable(0,1,1,1,1,0,0,0,0);
     }
+
+    @Override
+    protected void initSkills() {
+        // TODO maybe add some stuff for AI targeting
+    }
+
     @Override
     public void accept(OccupationVisitor visitor) {
         visitor.visitPet(this);

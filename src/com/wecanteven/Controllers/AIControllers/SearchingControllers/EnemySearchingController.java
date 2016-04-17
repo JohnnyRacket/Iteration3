@@ -64,7 +64,17 @@ public class EnemySearchingController extends AbstractSearchingController {
     }
 
     @Override
+    public void visitOccupation(Occupation occupation) {
+
+    }
+
+    @Override
     public void visitEnemy(Enemy enemy) {
+
+    }
+
+    @Override
+    public void visitFriendly(Friendly friendly) {
 
     }
 

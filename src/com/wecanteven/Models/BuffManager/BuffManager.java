@@ -59,9 +59,6 @@ public class BuffManager implements ViewObservable {
         buffList.remove(buff);
 
         notifyObservers();
-        System.out.println("Buff manager notified of buff expiration");
-        System.out.println("Number of buffs: " + buffList.size());
-
     }
 
     void notifyInterruptedExpired(InterruptableBuff buff) {

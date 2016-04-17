@@ -20,7 +20,6 @@ import com.wecanteven.Visitors.MapVisitor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by John on 3/31/2016.
@@ -190,7 +189,6 @@ public class Tile implements MapVisitable {
 
     private void interactWithCharacter(Character character) {
         ArrayList<TakeableMoveable> leftover = new ArrayList<>();
-        System.out.println("Trying to pick up item");
         for (TakeableMoveable i : takeableItems) {
             System.out.println(i.getName());
             if (!character.getItemStorage().inventoryIsFull()) {
