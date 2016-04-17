@@ -16,6 +16,7 @@ import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
@@ -68,6 +69,12 @@ public class MapItemVOFactory {
         StartableViewObject hitBoxVO = simpleVOFactory.createStartableViewObject(p, path);
         hitBoxVO.start(hitBox.getDuration());
         return hitBoxVO;
+    }
+
+    public DestroyableViewObject createTakableItem(Position position, TakeableItem takeableItem) {
+        String path = "Items/" + takeableItem.getName() + "/" + takeableItem.getName() + ".xml";
+        return simpleVOFactory.createDestroyableViewObject(simpleVOFactory.createSimpleViewObject(position, path),
+                                                            simpleVOFactory.createStartableViewObject(position, path), takeableItem, 1);
     }
 
 }

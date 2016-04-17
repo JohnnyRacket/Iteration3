@@ -95,9 +95,8 @@ public class ViewObjectFactory {
         EquipmentSlot hatSlot = character.getItemStorage().getEquipped().getHead();
 
         //Create the body and decorate it with body armor
-        SimpleViewObject body = new SimpleViewObject(p,
-                factory.loadDynamicImage("Entities/Beans/" + color + ".xml"),
-                hexDrawingStrategy);
+        SimpleViewObject body = simpleVOFactory.createSimpleViewObject(p, "Entities/Beans/" + color + ".xml");
+
         EquipableViewObject bodyArmor = equipableItemVOFactory.createEquipable(body, chestSlot, character, color);
 
         //Create the face and decorate it with a hat
@@ -142,15 +141,11 @@ public class ViewObjectFactory {
         BipedMovingViewObject moivingHominoidWithHUD = hominidVOFactory.createBipedMovingObjectWithCharacterSubject(character, homioidWithHUD);
 
         //Now give him a death animation
-        StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
+        StartableViewObject startableViewObject = simpleVOFactory.createStartableViewObject(p, "Death/Light Blue.xml");
 
         //And return the new destroyable VO
-        DestroyableViewObject destroyableViewObject = new DestroyableViewObject(
-                moivingHominoidWithHUD,
-                startableViewObject,
-                character,
-                areaView,
-                800);
+        DestroyableViewObject destroyableViewObject = simpleVOFactory.createDestroyableViewObject(moivingHominoidWithHUD, startableViewObject,
+                                                                                                    character, 800);
 
         //Finally return a moving avatar
         return hominoid;
@@ -287,7 +282,7 @@ public class ViewObjectFactory {
      */
 
     public HandState createDualWieldMeleeWeaponState(Position position, Direction direction, EquipmentSlot slot, String weaponName, Entity entity, GameColor color) {
-        return new DualWieldState(direction, createLeftHandWeapon(position, direction, weaponName, slot, entity, color), createRightHandWeaponObject(position, direction, weaponName, slot, entity, color), entity);
+        return new BrawlingState(direction, createLeftHandWeapon(position, direction, weaponName, slot, entity, color), createRightHandWeaponObject(position, direction, weaponName, slot, entity, color));
     }
 
     public MicroPositionableViewObject createLeftHandWeapon(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {

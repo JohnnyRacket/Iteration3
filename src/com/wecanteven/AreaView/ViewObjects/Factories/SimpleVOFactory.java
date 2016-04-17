@@ -29,12 +29,10 @@ import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
-import com.wecanteven.Observers.Directional;
-import com.wecanteven.Observers.Moveable;
-import com.wecanteven.Observers.Positionable;
-import com.wecanteven.Observers.ViewObservable;
+import com.wecanteven.Observers.*;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
+import javafx.geometry.Pos;
 
 import java.awt.*;
 
@@ -135,6 +133,11 @@ public class SimpleVOFactory {
         StartableViewObject interalVO = new StartableViewObject(position, animation, hexDrawingStrategy);
         return new DestroyableViewObject(interalVO, interalVO, oneShot, areaView, 1000);
     }
+
+    public  <T extends Destroyable & ViewObservable> DestroyableViewObject createDestroyableViewObject(ViewObject  simpleVO, StartableViewObject startableVO, T subject, long duration)  {
+        return new DestroyableViewObject(simpleVO, startableVO, subject, areaView, duration);
+    }
+
 
 
     public EquipableItemVOFactory getEquipableItemVOFactory() {

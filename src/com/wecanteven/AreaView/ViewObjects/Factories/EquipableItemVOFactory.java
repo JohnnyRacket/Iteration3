@@ -7,6 +7,8 @@ import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
+import com.wecanteven.Observers.Directional;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.GameColor;
 
 /**
@@ -24,7 +26,7 @@ public class EquipableItemVOFactory {
         return new EquipableViewObject(child, subject, this, entity, color);
     }
 
-    public ViewObject createEquipment(Position p, Entity entity, String name, GameColor color) {
+    public <T extends Directional & ViewObservable> ViewObject createEquipment(Position p, T character, String name, GameColor color) {
         //First we try to find a nondirectional equipment
         try {
             return simpleVOFactory.createSimpleViewObject(p, "Equipment/" + color + "/" + name + ".xml");
@@ -32,8 +34,8 @@ public class EquipableItemVOFactory {
             e.printStackTrace();
         }
 
-        DirectionalViewObject directionalViewObject =  simpleVOFactory.createDirectional(p, entity, "Equipment/" +color.name + "/" + name + "/");
-        entity.attach(directionalViewObject);
+        DirectionalViewObject directionalViewObject =  simpleVOFactory.createDirectional(p, character, "Equipment/" +color.name + "/" + name + "/");
+        character.attach(directionalViewObject);
         return directionalViewObject;
     }
 

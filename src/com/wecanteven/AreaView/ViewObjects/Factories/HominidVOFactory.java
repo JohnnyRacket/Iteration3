@@ -41,11 +41,11 @@ public class HominidVOFactory {
 
 
     public MicroPositionableViewObject createHandWithWeapon(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
-        return simpleVOFactory.createMicroPositionableViewObject(simpleVOFactory.createEquipable(createHand(position, slot, entity, color), slot, equipableItemVOFactory, entity, color));
+        return simpleVOFactory.createMicroPositionableViewObject(equipableItemVOFactory.createEquipable(equipableItemVOFactory.createEquipment(position, entity, weaponName, color), slot, entity, color));
     }
 
     public MicroPositionableViewObject createHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return simpleVOFactory.createMicroPositionableViewObject(simpleVOFactory.createEquipable(simpleVOFactory.createSimpleViewObject(position, "Hands/" + color + "/hand.xml"), slot, equipableItemVOFactory, entity, color));
+        return simpleVOFactory.createMicroPositionableViewObject(equipableItemVOFactory.createEquipable(simpleVOFactory.createSimpleViewObject(position, "Hands/" + color + "/hand.xml"), slot, entity, color));
 
     }
 
