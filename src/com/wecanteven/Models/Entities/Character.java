@@ -193,6 +193,7 @@ public class Character extends Entity {
                 deIncrementMovingTick();
                 deIncrementWindUpTick();
                 deIncrementCoolDownTicks();
+                deIncrementTurningTick();
                 tickTicks();
             }, 1);
         }
@@ -222,7 +223,7 @@ public class Character extends Entity {
 
     @Override
     protected boolean calculateActiveStatus(){
-        if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0){
+        if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0 && getTurningTicks() <= 0){
             setIsActive(false);
             return false;
         }
