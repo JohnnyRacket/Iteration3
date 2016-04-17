@@ -6,6 +6,8 @@ import com.wecanteven.Controllers.AIControllers.Targets.ItemTarget;
 import com.wecanteven.Controllers.AIControllers.Targets.NullTarget;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Map.Map;
+import com.wecanteven.UtilityClasses.Direction;
+import com.wecanteven.UtilityClasses.DirectionFinder;
 
 /**
  * Created by John on 4/16/2016.
@@ -30,12 +32,16 @@ public class PetActionController extends AbstractActionController {
     @Override
     public void visitEnemyTarget(EnemyTarget target) {
         try {
-            if(this.checkLocation(target,1)){
-                //attack
+            if(this.checkLocation(target,2)){
+                this.getCharacter().attack(DirectionFinder.getDirection(this.getCharacter().getLocation(),target.getLocation()));
             }else {
-                this.getCharacter().move(getPathToTarget(target));
+                Direction d;
+                if((d = getPathToTarget(target)) != null){
+                    this.getCharacter().move(d);
+                }else{
+                    //character is unreachable
+                }
             }
-
         }catch (NullPointerException e){
             System.out.println("direction was null, this might mean john is bad a programming");
         }
@@ -47,7 +53,12 @@ public class PetActionController extends AbstractActionController {
             if(this.checkLocation(target,2)){
                 //idle
             }else {
-                this.getCharacter().move(getPathToTarget(target));
+                Direction d;
+                if((d = getPathToTarget(target)) != null){
+                    this.getCharacter().move(d);
+                }else{
+                    //character is unreachable
+                }
             }
 
         }catch (NullPointerException e){
