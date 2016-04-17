@@ -3,6 +3,7 @@ package com.wecanteven.AreaView.ViewObjects.DecoratorVOs;
 import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.MenuComponentDrawingStrategy;
+import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.MenuView.DrawableLeafs.ProgressBars.RoundedHealthBar;
@@ -21,14 +22,14 @@ public class HUDDecorator extends DecoratorViewObject implements Observer{
     private RoundedHealthBar manaBar;
     private MenuComponentDrawingStrategy drawingStrategy;
 
-    private ViewObjectFactory factory;
+    private SimpleVOFactory factory;
     private AreaView areaView;
 
     private int currentHealth = 0;
 
     private Position healthBarOffset = new Position(0,0,4);
 
-    public HUDDecorator(ViewObject child, Stats subject, MenuComponentDrawingStrategy drawingStrategy, ViewObjectFactory factory, AreaView areaView) {
+    public HUDDecorator(ViewObject child, Stats subject, MenuComponentDrawingStrategy drawingStrategy, SimpleVOFactory factory, AreaView areaView) {
         super(child);
         this.subject = subject;
         healthBar = new RoundedHealthBar(60, 6);

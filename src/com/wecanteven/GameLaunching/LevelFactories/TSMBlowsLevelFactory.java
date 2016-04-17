@@ -178,7 +178,7 @@ public class TSMBlowsLevelFactory extends LevelFactory {
     }
 
     @Override
-    public Biome createBiomes(ViewObjectFactory factory) {
+    public Biome createBiomes(SimpleVOFactory factory) {
         Biome defaultBiome = new DefaultBiome(new PlainsFactory(factory));
 
         ArrayList<Location> tundraLocations = new ArrayList<>();

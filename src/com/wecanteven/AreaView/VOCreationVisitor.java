@@ -20,7 +20,6 @@ import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
 import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
-import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Map.Aoe.*;
@@ -37,7 +36,7 @@ import java.util.Iterator;
 /**
  * Created by alexs on 4/1/2016.
  */
-public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, WeaponsVisitor, DecalVisitor,MovableHitBoxVisitor,HitBoxVisitor {
+public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, DecalVisitor,MovableHitBoxVisitor,HitBoxVisitor {
     private SimpleVOFactory simpleVOFactory;
     private ViewObjectFactory viewObjectFactory;
     private AreaView areaView;

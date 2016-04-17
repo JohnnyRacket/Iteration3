@@ -8,9 +8,9 @@ import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
  * Created by alexs on 4/13/2016.
  */
 public class AutumnFactory implements BiomeFactory {
-    private ViewObjectFactory factory;
+    private SimpleVOFactory factory;
 
-    public AutumnFactory(ViewObjectFactory factory) {
+    public AutumnFactory(SimpleVOFactory factory) {
         this.factory = factory;
     }
 

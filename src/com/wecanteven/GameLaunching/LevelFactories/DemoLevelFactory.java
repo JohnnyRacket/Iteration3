@@ -323,8 +323,7 @@ public class DemoLevelFactory extends LevelFactory {
         return map;
     }
 
-    @Override
-    public Biome createBiomes(ViewObjectFactory factory) {
+    public Biome createBiomes(SimpleVOFactory factory) {
         Biome plainsBiome = new DefaultBiome(new PlainsFactory(factory));
 
         Biome tundraBiome = new CustomBiome(new TundraFactory(factory), snowLocations, plainsBiome);
