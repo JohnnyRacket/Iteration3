@@ -34,9 +34,9 @@ public class EquipableItemVOFactory {
         //First we try to find a nondirectional equipment
         String path = "Equipment/" + color + "/" + name + ".xml";
         if (fileExists("resources/" + path))
-            return viewObjectFactory.createSimpleViewObject(p, path);
+            return simpleVOFactory.createSimpleViewObject(p, path);
 
-        return  viewObjectFactory.createDirectional(p, subject, "Equipment/" +color.name + "/" + name + "/");
+        return  simpleVOFactory.createDirectional(p, subject, "Equipment/" +color.name + "/" + name + "/");
 
     }
 
