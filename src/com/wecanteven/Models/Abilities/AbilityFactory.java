@@ -14,8 +14,8 @@ import com.wecanteven.Models.Stats.StatsAddable;
 public class AbilityFactory {
     public Ability vendMeleeAttack(Character caster) {
         StatsEffect effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-        MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(caster,effect);
-        return new Ability(caster,generator);
+        MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator("Punch",caster,effect);
+        return new Ability("Punch",caster,generator);
     }
     public Ability vendRangedAttack(Character caster) {
         StatsEffect effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));

@@ -79,7 +79,7 @@ public class UIViewFactory {
             vEngine.getManager().addPermView(view);
         },0);
     }
-    public void createAbilityView(){
+    public void createAbilityView(Character character){
 
     }
     public void createMainMenuView(){
@@ -119,7 +119,6 @@ public class UIViewFactory {
     }
 
     public void createStatsView(Character character){
-
 
         NavigatableList skillList = new NavigatableList();
         skillList.addItem(new ScrollableMenuItem("placeholder skill", ()->{
@@ -211,7 +210,6 @@ public class UIViewFactory {
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
         AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
 //        view.addDrawable(vertCenter);
-
 
         view.addDrawable(animation);
         view.addNavigatable(menu);
