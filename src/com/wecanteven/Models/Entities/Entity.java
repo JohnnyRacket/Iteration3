@@ -345,6 +345,14 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         buffmanager.addBuff(buff);
     }
 
+    public void pauseBuffs() {
+        getBuffmanager().disable();
+    }
+
+    public void resumeBuffs() {
+        getBuffmanager().enable();
+    }
+
     public void interact(Character character) {}
 
     public void interact() {}

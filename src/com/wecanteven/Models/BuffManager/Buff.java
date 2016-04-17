@@ -35,6 +35,10 @@ public class Buff implements Alertable {
         active = false;
     }
 
+    public void enable() {
+        active = true;
+    }
+
     @Override
     public void alert() {
         if (active) {
