@@ -204,7 +204,7 @@ public class Map implements MapVisitable, ActionHandler {
 
 
     @Override
-    public boolean move(TakeableItem item, Location location, int movespeed) {
+    public boolean move(TakeableMoveable item, Location location, int movespeed) {
         Location source = item.getLocation();
 
         if(isOutOfBounds(location)){
@@ -228,7 +228,7 @@ public class Map implements MapVisitable, ActionHandler {
         if(canMove) {//move if you can
             item.setLocation(location);
             remove(item, source);
-            add(item, location);
+            add(item.extractItem(), location);
             return true;
         }
 
@@ -236,7 +236,7 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
-    public boolean fall(TakeableItem item, Location location) {
+    public boolean fall(TakeableMoveable item, Location location) {
         CanFallVisitor visitor = new TerranianCanFallVisitor();
         getTile(location).accept(visitor);
         int tilesCount = 0;

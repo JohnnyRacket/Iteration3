@@ -54,8 +54,6 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     private boolean isDestroyed = false;
 
     public Entity(ActionHandler actionHandler, Direction direction, GameColor color){
-
-
         setStats(new Stats(this));
         setHeight(3);
         setJumpHeight(25);
@@ -63,7 +61,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         setActionHandler(actionHandler);
         setDirection(direction);
         setCanMoveVisitor(new TerranianCanMoveVisitor());
-        setCanFallVisitor(new FlyingCanFallVisitor());
+        setCanFallVisitor(new TerranianCanFallVisitor());
         setMovingTicks(0);
         setIsActive(false);
         this.color = color;
