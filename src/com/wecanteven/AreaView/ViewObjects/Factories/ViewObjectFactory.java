@@ -109,8 +109,8 @@ public class ViewObjectFactory {
                 color);
 
         //Create a pair of hands
-        MicroPositionableViewObject leftHand = createHand(p, weaponSlot, character, color);
-        MicroPositionableViewObject rightHand = createHand(p, weaponSlot, character, color);
+        MicroPositionableViewObject leftHand = simpleVOFactory.createHand(p, weaponSlot, character, color);
+        MicroPositionableViewObject rightHand = simpleVOFactory.createHand(p, weaponSlot, character, color);
         HandsViewObject hands = new HandsViewObject(leftHand, rightHand,
                 Direction.SOUTH, p,
                 weaponSlot, this,
@@ -119,10 +119,8 @@ public class ViewObjectFactory {
                 color);
 
         //Create some feet
-        MicroPositionableViewObject leftFoot = createMicroPositionableViewObject(p,
-                        "Feet/" + color + "/Foot.xml");
-        MicroPositionableViewObject rightFoot = createMicroPositionableViewObject(p,
-                "Feet/" + color + "/Foot.xml");
+        MicroPositionableViewObject leftFoot = simpleVOFactory.createFoot(p, color);
+        MicroPositionableViewObject rightFoot = simpleVOFactory.createFoot(p, color);
         FeetViewObject feet = new FeetViewObject(Direction.SOUTH, leftFoot, rightFoot,
                 new FeetWalkingStrategy(0.1, leftFoot, rightFoot),
                 new FeetJumpingStrategy(0, 2, leftFoot, rightFoot),
@@ -291,9 +289,6 @@ public class ViewObjectFactory {
         return destroyableVO;
     }
 
-    private MicroPositionableViewObject createHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color.name + "/hand.xml"), hexDrawingStrategy), slot, entity, color));
-    }
 
     private MicroPositionableViewObject createWing(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
         return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Wings/" + color.name + "/hand.xml"), hexDrawingStrategy), slot, entity, color));
@@ -316,28 +311,6 @@ public class ViewObjectFactory {
 
     public MicroPositionableViewObject createBuff(Position p, String name) {
         return createMicroPositionableViewObject(p, "Buffs/" + name + ".xml");
-    }
-
-    @Deprecated
-    private MicroPositionableViewObject createLeftFoot(Position position, Direction direction, Entity entity) {
-        DirectionalViewObject leftFootDirectional = simpleVOFactory.createDirectional(position, entity, "Feet/Brown/Left/");
-        entity.attach(leftFootDirectional);
-        return new MicroPositionableViewObject(leftFootDirectional);
-    }
-
-    @Deprecated
-    private MicroPositionableViewObject createRightFoot(Position position, Direction direction, Entity entity) {
-        DirectionalViewObject rightFootDirectional = simpleVOFactory.createDirectional(position, entity, "Feet/Brown/Right/");
-        entity.attach(rightFootDirectional);
-        return new MicroPositionableViewObject(rightFootDirectional);
-    }
-
-    private MicroPositionableViewObject createSimpleRightHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), slot, entity, color));
-    }
-
-    public MicroPositionableViewObject createSimpleLeftHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), slot, entity, color));
     }
 
     public ViewObject createInteractableItem(Position p, InteractiveItem interactiveItem) {
@@ -389,28 +362,23 @@ public class ViewObjectFactory {
     *
      */
 
-    public HandState createOneHandedWeaponState(Position position, Direction direction, EquipmentSlot slot, String weaponName, Entity entity, GameColor color) {
-        return new OneHandedWeaponState(direction, createRightHandWeaponObject(position, direction, weaponName, slot, entity, color), createHand(position, null, entity, color), this, entity);
-    }
-
     public HandState createDualWieldMeleeWeaponState(Position position, Direction direction, EquipmentSlot slot, String weaponName, Entity entity, GameColor color) {
         return new DualWieldState(direction, createLeftHandWeapon(position, direction, weaponName, slot, entity, color), createRightHandWeaponObject(position, direction, weaponName, slot, entity, color), entity);
     }
-
-
-    public MicroPositionableViewObject createLeftHandWeapon(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(createSimpleLeftHand(position, slot, entity, color), slot, entity, color));
-    }
-
-    public MicroPositionableViewObject createRightHandWeaponObject(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(createSimpleRightHand(position, slot, entity, color), slot, entity, color));
-    }
-
 
     public MicroPositionableViewObject createMicroPositionableViewObject(Position position, String path) {
         SimpleViewObject simpleViewObject = simpleVOFactory.createSimpleViewObject(position, path);
         return new MicroPositionableViewObject(simpleViewObject);
     }
+
+    public MicroPositionableViewObject createLeftHandWeapon(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
+        return simpleVOFactory.createHandWithWeapon(position, direction, weaponName, slot, entity, color);  //new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(createSimpleRightHand(position, slot, entity, color), slot, entity, color));
+    }
+
+    public MicroPositionableViewObject createRightHandWeaponObject(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
+        return simpleVOFactory.createHandWithWeapon(position, direction, weaponName, slot, entity, color);  //new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(createSimpleRightHand(position, slot, entity, color), slot, entity, color));
+    }
+
 
 
     public HexDrawingStrategy getDrawingStrategy() {

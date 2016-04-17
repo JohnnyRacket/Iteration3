@@ -29,6 +29,7 @@ public class SimpleVOFactory {
     private HexDrawingStrategy hexDrawingStrategy;
     private AreaView areaView;
     private DynamicImageFactory dynamicImageFactory = DynamicImageFactory.getInstance();
+    private EquipableItemVOFactory equipableItemVOFactory = new EquipableItemVOFactory(this);
 
 
     public  SimpleVOFactory(HexDrawingStrategy hexDrawingStrategy, AreaView areaView) {
@@ -36,7 +37,7 @@ public class SimpleVOFactory {
         this.areaView = areaView;
     }
 
-    public EquipableViewObject createEquipable(ViewObject child, EquipmentSlot slot, EquipableItemVOFactory equipableItemVOFactory, EquipmentSlot subject, Entity entity, GameColor color) {
+    public EquipableViewObject createEquipable(ViewObject child, EquipmentSlot slot, EquipableItemVOFactory equipableItemVOFactory, Entity entity, GameColor color) {
         return new EquipableViewObject(child, slot, equipableItemVOFactory, entity, color);
     }
 
@@ -76,8 +77,20 @@ public class SimpleVOFactory {
         return new SimpleViewObject(p, dynamicImageFactory.loadDynamicImage(path), hexDrawingStrategy);
     }
 
-//    public MicroPositionableViewObject createHandWithWeapon(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
-//        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(createSimpleRightHand(position, slot, entity, color), simpleVOFactory.createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity, color));
-//    }
+    public MicroPositionableViewObject createHandWithWeapon(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
+        return new MicroPositionableViewObject(createEquipable(createHand(position, slot, entity, color), slot, equipableItemVOFactory, entity, color));
+    }
+
+    public MicroPositionableViewObject createHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
+        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, dynamicImageFactory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), slot, equipableItemVOFactory, entity, color));
+
+    }
+
+    public MicroPositionableViewObject createFoot(Position position, GameColor color) {
+       // SimpleViewObject simpleViewObject = createSimpleViewObject(position, path);
+        return new MicroPositionableViewObject(new SimpleViewObject(position, dynamicImageFactory.loadDynamicImage("Feet/" + color + "/Foot.xml"), hexDrawingStrategy));
+    }
+
+
 
 }
