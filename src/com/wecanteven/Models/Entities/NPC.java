@@ -41,7 +41,9 @@ public class NPC extends Character {
     @Override
     public void loseLife(){
         super.loseLife();
-        controller.kill();
+        if(controller != null) {
+            controller.kill();
+        }
         controller = null;
         Iterator<TakeableItem> iter = this.getItemStorage().getInventory().getIterator();
         while(iter.hasNext()){

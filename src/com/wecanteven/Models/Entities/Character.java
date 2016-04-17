@@ -199,6 +199,7 @@ public class Character extends Entity implements Actionable {
     protected void tickTicks(){
         if(calculateActiveStatus()){
             ModelTime.getInstance().registerAlertable(() -> {
+                System.out.println(this.getLocation());
                 System.out.println("Stuck in an endless loop");
                 System.out.println("Moving ticks "+getMovingTicks());
                 System.out.println("WingUp ticks "+getWindUpTicks());
