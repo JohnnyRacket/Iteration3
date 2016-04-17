@@ -121,9 +121,6 @@ public class UIViewFactory {
 
     }
 
-    public void createSkillList(Character character, NavigatableList list, TitleBarDecorator title) {
-        title.setTitle("Available Points: " + character.getAvailablePoints());
-
     public void createCreateCharacterMenuView() {
         NavigatableGrid classSelection = new NavigatableGrid(300, 100, 3, 1);
         NavigatableGrid faceSelection = new NavigatableGrid(300, 100, 2, 1);
@@ -266,8 +263,8 @@ public class UIViewFactory {
 
     }
 
-
-    public void createStatsView(Character character){
+    public void createSkillList(Character character, NavigatableList list, TitleBarDecorator title) {
+        title.setTitle("Available Points: " + character.getAvailablePoints());
 
         Iterator<Tuple<Skill, Integer>> iter = character.getOccupation().getSkillIterator();
         list.clear();
