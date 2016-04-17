@@ -32,7 +32,6 @@ public class HitBox implements Destroyable{
     }
 
     public void addToMap(int removeTime, Location destination){
-        System.out.println("adding to map");
         HitBox hitBox = this;
         getActionHandler().add(hitBox, destination);
         setLocation(destination);
