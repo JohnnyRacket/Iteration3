@@ -99,7 +99,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         movement.subtract(statsAddable.getMovement());
         currentHealth.subtract(statsAddable.getHealth());
         currentMana.subtract(statsAddable.getMana());
-        
+
         if(currentHealth.getStat()>maxHealth.getStat()){
             currentHealth.setStat(maxHealth.getStat());
         }
