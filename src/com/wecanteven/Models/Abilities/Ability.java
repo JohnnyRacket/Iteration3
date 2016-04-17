@@ -32,18 +32,19 @@ public class Ability {
         if (caster.isActive()) {
             return;
         }
-            calculateFailChance(getSkillLevel());
-            Random randomGenerator = new Random();
-            if (cast || getFailChance()<=randomGenerator.nextInt(100)) {
-                System.out.println("windup"+getWindUpTicks());
-                caster.updateWindUpTicks(windUpTicks);
-                caster.updateCoolDownTicks(windUpTicks+cooldownTicks);
-                System.out.println("Activating the spell");
-                activateAbility();
-                return;
-            }
-            caster.updateCoolDownTicks(cooldownTicks);
-            System.out.println("The ability has failed");
+        System.out.println("ACTIVE STATUS: "+caster.isActive());
+        calculateFailChance(getSkillLevel());
+        Random randomGenerator = new Random();
+        if (cast || getFailChance()<=randomGenerator.nextInt(100)) {
+            System.out.println("windup"+getWindUpTicks());
+            caster.updateWindUpTicks(getWindUpTicks());
+            caster.updateCoolDownTicks(getCooldownTicks());
+            System.out.println("Activating the spell");
+            activateAbility();
+            return;
+        }
+        caster.updateCoolDownTicks(cooldownTicks);
+        System.out.println("The ability has failed");
 
     }
     private void activateAbility(){
