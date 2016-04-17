@@ -274,12 +274,14 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         calculateActiveStatus();
     }
 
-    protected void calculateActiveStatus(){
+    protected boolean calculateActiveStatus(){
         if(getMovingTicks() <= 0){
             setIsActive(false);
+            return false;
         }
         else{
             setIsActive(true);
+            return true;
         }
     }
 

@@ -192,12 +192,11 @@ public class Character extends Entity {
         System.out.println("MovingTicks "+getMovingTicks());
         System.out.println("WindUpTicks "+getWindUpTicks());
         System.out.println("CoolDownTicks "+getCoolDownTicks());
-        if(isActive()){
+        if(calculateActiveStatus()){
             ModelTime.getInstance().registerAlertable(() -> {
                 deIncrementMovingTick();
                 deIncrementWindUpTick();
                 deIncrementCoolDownTicks();
-                calculateActiveStatus();
                 tickTicks();
             }, 1);
         }
@@ -226,13 +225,15 @@ public class Character extends Entity {
     }
 
     @Override
-    protected void calculateActiveStatus(){
+    protected boolean calculateActiveStatus(){
         System.out.println("Active status: " + isActive());
         if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0){
             setIsActive(false);
+            return false;
         }
         else{
             setIsActive(true);
+            return true;
         }
     }
 }
