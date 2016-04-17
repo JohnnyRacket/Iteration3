@@ -17,6 +17,7 @@ import com.wecanteven.Visitors.EntityVisitor;
 public class Mount extends Character {
   Character mounter;
   ViewObject mountVO;
+  private boolean mounted = false;
   //SimpleVOFactory simpleVOFactory;
 
   public Mount(ActionHandler actionHandler, Direction direction) {
@@ -27,6 +28,7 @@ public class Mount extends Character {
 
   public void mount(Character mounter) {
     this.mounter = mounter;
+    this.mounted = true;
 //    try {
 //      getFactory().setCenter(mountVO);
 //    }
@@ -37,10 +39,11 @@ public class Mount extends Character {
   }
 
   public void dismount() {
-
+    mounted = false;
   }
 
   public void accept(EntityVisitor visitor) {
+
     visitor.visitMount(this);
   }
 
