@@ -51,6 +51,7 @@ public abstract class ViewObjectFactory {
     private AreaView areaView;
     private DynamicImageFactory factory = DynamicImageFactory.getInstance();
     private JumpDetector jumpDetector;
+    private ItemVOFactory itemVOFactory = new ItemVOFactory(this);
 
 
     public ViewObjectFactory(AreaView areaView, Map gameMap) {
@@ -142,11 +143,11 @@ public abstract class ViewObjectFactory {
         SimpleViewObject body = new SimpleViewObject(p,
                 factory.loadDynamicImage("Entities/Beans/" + color + ".xml"),
                 hexDrawingStrategy);
-        EquipableViewObject bodyArmor = createEquipable(body, createNullViewObject(), chestSlot, character, color);
+        EquipableViewObject bodyArmor = itemVOFactory.createEquipable(body, createNullViewObject(), chestSlot, character, color);
 
         //Create the face and decorate it with a hat
         DirectionalViewObject head = createDirectional(p, character, "Face/" + face + "/");
-        EquipableViewObject hatArmor = createEquipable(
+        EquipableViewObject hatArmor = itemVOFactory.createEquipable(
                 head,
                 createNullViewObject(),
                 hatSlot,
@@ -228,11 +229,11 @@ public abstract class ViewObjectFactory {
         SimpleViewObject body = new SimpleViewObject(p,
                 factory.loadDynamicImage("Entities/MiniBeans/" + color.light + ".xml"),
                 hexDrawingStrategy);
-        EquipableViewObject bodyArmor = createEquipable(body, createNullViewObject(), chestSlot, character, character.getColor());
+        EquipableViewObject bodyArmor = itemVOFactory.createEquipable(body, createNullViewObject(), chestSlot, character, character.getColor());
 
         //Create the face and decorate it with a hat
         DirectionalViewObject head = createDirectional(p, character, "Face/" + face + "/");
-        EquipableViewObject hatArmor = createEquipable(
+        EquipableViewObject hatArmor = itemVOFactory.createEquipable(
                 head,
                 createEquipment(p, character, "Shaved", color),
                 hatSlot,
@@ -376,11 +377,11 @@ public abstract class ViewObjectFactory {
     }
 
     private MicroPositionableViewObject createHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color.name + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
+        return new MicroPositionableViewObject(itemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color.name + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
     }
 
     private MicroPositionableViewObject createWing(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Wings/" + color.name + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
+        return new MicroPositionableViewObject(itemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Wings/" + color.name + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
     }
 
     public SimpleViewObject createObstacle(Position position, Obstacle obstacle) {
@@ -417,11 +418,11 @@ public abstract class ViewObjectFactory {
     }
 
     private MicroPositionableViewObject createSimpleRightHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
+        return new MicroPositionableViewObject(itemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
     }
 
     public MicroPositionableViewObject createSimpleLeftHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
+        return new MicroPositionableViewObject(itemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
     }
 //    private FeetViewObject createFeet(Position p, Direction d, String name) {
 //        FootViewObject leftFoot = createFoot(p, d, name + "/Left");
@@ -490,11 +491,11 @@ public abstract class ViewObjectFactory {
 
 
     public MicroPositionableViewObject createLeftHandWeapon(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(createEquipable(createSimpleLeftHand(position, slot, entity, color), createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity, color));
+        return new MicroPositionableViewObject(itemVOFactory.createEquipable(createSimpleLeftHand(position, slot, entity, color), createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity, color));
     }
 
     public MicroPositionableViewObject createRightHandWeaponObject(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(createEquipable(createSimpleRightHand(position, slot, entity, color), createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity, color));
+        return new MicroPositionableViewObject(itemVOFactory.createEquipable(createSimpleRightHand(position, slot, entity, color), createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity, color));
     }
 
     public MicroPositionableViewObject createMicroPositionableViewObject(Position position, String path) {
@@ -511,9 +512,6 @@ public abstract class ViewObjectFactory {
         return factory;
     }
 
-    public EquipableViewObject createEquipable(ViewObject child, ViewObject equipment, EquipmentSlot subject, Entity entity, GameColor color) {
-        return new EquipableViewObject(child, equipment, subject, this, entity, color);
-    }
 
     public NullViewObject createNullViewObject() {
         return new NullViewObject(new Position(0,0,0));

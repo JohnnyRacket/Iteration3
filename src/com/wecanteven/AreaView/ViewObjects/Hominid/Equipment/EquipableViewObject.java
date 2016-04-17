@@ -2,10 +2,12 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Equipment;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DecoratorViewObject;
+import com.wecanteven.AreaView.ViewObjects.Factories.ItemVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.GameColor;
@@ -19,12 +21,12 @@ public class EquipableViewObject extends DecoratorViewObject implements Observer
     private ViewObject defaultEquipment;
     private ViewObject equipment;
     private EquipmentSlot subject;
-    private ViewObjectFactory factory;
+    private ItemVOFactory factory;
 
     private Entity entitySubject;
     private GameColor color;
 
-    public EquipableViewObject(ViewObject child, ViewObject defaultEquipment, EquipmentSlot subject, ViewObjectFactory factory, Entity entitySubject, GameColor color) {
+    public EquipableViewObject(ViewObject child, ViewObject defaultEquipment, EquipmentSlot subject, ItemVOFactory factory, Entity entitySubject, GameColor color) {
         super(child);
         this.defaultEquipment = defaultEquipment;
         this.subject = subject;
