@@ -58,15 +58,15 @@ public class ViewObjectFactory {
 
     public ViewObjectFactory(AreaView areaView, Map gameMap) {
         //this.hexDrawingStrategy = new HexDrawingStrategy();
+        this.areaView = areaView;
+        this.jumpDetector = new JumpDetector(gameMap);
+        this.simpleVOFactory = new SimpleVOFactory(hexDrawingStrategy, areaView);
         this.hexDrawingStrategy.setCenterTarget(
-                createSimpleViewObject(
+                simpleVOFactory.createSimpleViewObject(
                         new Position(0,0,0),
                         "null.xml"
                 )
         );
-        this.areaView = areaView;
-        this.jumpDetector = new JumpDetector(gameMap);
-        this.simpleVOFactory = new SimpleVOFactory(hexDrawingStrategy, areaView);
         this.equipableItemVOFactory = new EquipableItemVOFactory(simpleVOFactory);
     }
 
@@ -75,74 +75,17 @@ public class ViewObjectFactory {
     }
 
     public ViewObject createGround(Position p) {
-        return createSimpleViewObject(p, "Terrain/Grass.xml");
+        return simpleVOFactory.createSimpleViewObject(p, "Terrain/Grass.xml");
     }
 
     public ViewObject createWater(Position p) {
-        return createSimpleViewObject(p, "Terrain/Water.xml");
+        return simpleVOFactory.createSimpleViewObject(p, "Terrain/Water.xml");
     }
 
     public ViewObject createCurrent(Position p) {
-        return createSimpleViewObject(p, "Terrain/Current.xml");
+        return simpleVOFactory.createSimpleViewObject(p, "Terrain/Current.xml");
     }
 
-//    public ViewObject createSneak(Position p, Direction d, Character subject) {
-////        EquipmentSlot chestSlot = subject.getItemStorage().getEquipped().getChest();
-////        EquipmentSlot weaponSlot = subject.getItemStorage().getEquipped().getWeapon();
-////        EquipmentSlot hatSlot = subject.getItemStorage().getEquipped().getHead();
-////
-////
-////        SimpleViewObject body = new SimpleViewObject(p, factory.loadDynamicImage("Entities/Beans/Light Blue.xml"), hexDrawingStrategy);
-////        EquipableViewObject bodyArmor = createEquipable(body, createNullViewObject(), chestSlot, subject);
-////
-////
-////        DirectionalViewObject face = createDirectional(p, subject, "Face/TestFace/");
-////        subject.attach(face);
-////        EquipableViewObject hatArmor = createEquipable(face, createEquipment(p, subject, "Shaved"), hatSlot, subject);
-////
-////        chestSlot.attach(bodyArmor);
-////        hatSlot.attach(hatArmor);
-////
-////
-////        MicroPositionableViewObject leftHand = createHand(p, weaponSlot, subject, "Light Blue");
-////        MicroPositionableViewObject rightHand = createHand(p, weaponSlot, subject, "Light Blue");
-////        HandsViewObject hands = new HandsViewObject(leftHand, rightHand, d, p, weaponSlot, this, subject);
-////
-////        weaponSlot.attach(hands);
-////
-//////        MicroPositionableViewObject leftFoot = createLeftFoot(p, d, subject);
-//////        MicroPositionableViewObject rightFoot = createRightFoot(p, d, subject);
-////
-////        MicroPositionableViewObject leftFoot = createMicroPositionableViewObject(p, "Feet/Light Blue/Foot.xml");
-////        MicroPositionableViewObject rightFoot = createMicroPositionableViewObject(p, "Feet/Light Blue/Foot.xml");
-////
-////
-////        FeetViewObject feet = new FeetViewObject(d, leftFoot, rightFoot);
-////        HominidViewObject stationarySneak = new  HominidViewObject(p, d, subject, subject, bodyArmor, hatArmor, hands, feet, jumpDetector);
-////        HUDDecorator sneakWithHUD = new HUDDecorator(stationarySneak, subject.getStats(), hexDrawingStrategy);
-////        subject.attach(stationarySneak);
-////        //subject.attach(body);
-////        subject.getStats().attach(sneakWithHUD);
-////
-////        VisibilitySourceViewObject visibilitySourceViewObject = new VisibilitySourceViewObject(sneakWithHUD, subject, areaView, 5);
-////        subject.attach(visibilitySourceViewObject);
-////
-////        StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
-////        DestroyableViewObject destroyableViewObject = new DestroyableViewObject(
-////                visibilitySourceViewObject,
-////                startableViewObject,
-////                subject,
-////                areaView,
-////                800);
-////        subject.attach(destroyableViewObject);
-////
-////        //TEMPORARY TESTING WORKAROUND
-////        //TODO: make better
-////        hexDrawingStrategy.setCenterTarget(stationarySneak);
-////
-////
-////        return createBipedMovingViewObject(subject, destroyableViewObject);
-//    }
 
     //This method is OG
     public ViewObject createBaseHominoid(Position p, Character character, String face) {
@@ -155,13 +98,12 @@ public class ViewObjectFactory {
         SimpleViewObject body = new SimpleViewObject(p,
                 factory.loadDynamicImage("Entities/Beans/" + color + ".xml"),
                 hexDrawingStrategy);
-        EquipableViewObject bodyArmor = equipableItemVOFactory.createEquipable(body, simpleVOFactory.createNullViewObject(), chestSlot, character, color);
+        EquipableViewObject bodyArmor = equipableItemVOFactory.createEquipable(body, chestSlot, character, color);
 
         //Create the face and decorate it with a hat
         DirectionalViewObject head = simpleVOFactory.createDirectional(p, character, "Face/" + face + "/");
         EquipableViewObject hatArmor = equipableItemVOFactory.createEquipable(
                 head,
-                simpleVOFactory.createNullViewObject(),
                 hatSlot,
                 character,
                 color);
@@ -205,7 +147,7 @@ public class ViewObjectFactory {
                 hominoid,
                 character.getStats(),
                 hexDrawingStrategy,
-                this,
+                simpleVOFactory,
                 areaView);
 
 
@@ -241,13 +183,12 @@ public class ViewObjectFactory {
         SimpleViewObject body = new SimpleViewObject(p,
                 factory.loadDynamicImage("Entities/MiniBeans/" + color.light + ".xml"),
                 hexDrawingStrategy);
-        EquipableViewObject bodyArmor = equipableItemVOFactory.createEquipable(body, simpleVOFactory.createNullViewObject(), chestSlot, character, character.getColor());
+        EquipableViewObject bodyArmor = equipableItemVOFactory.createEquipable(body, chestSlot, character, character.getColor());
 
         //Create the face and decorate it with a hat
         DirectionalViewObject head = simpleVOFactory.createDirectional(p, character, "Face/" + face + "/");
         EquipableViewObject hatArmor = equipableItemVOFactory.createEquipable(
                 head,
-                createEquipment(p, character, "Shaved", color),
                 hatSlot,
                 character,
                 color);
@@ -291,7 +232,7 @@ public class ViewObjectFactory {
                 hominoid,
                 character.getStats(),
                 hexDrawingStrategy,
-                this,
+                simpleVOFactory,
                 areaView);
 
 
@@ -316,39 +257,6 @@ public class ViewObjectFactory {
         return hominoid;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public DestroyableViewObject createTakeableItem(Position position, TakeableItem takeableItem) {
         String name = takeableItem.getName();
         DestroyableViewObject destroyableViewObject =  new DestroyableViewObject(
@@ -371,7 +279,7 @@ public class ViewObjectFactory {
     public ViewObject createRangedEffect(MovableHitBox m) {
         ViewObject vo = simpleVOFactory.createDirectional(m.getLocation().toPosition(), m, "Effects/WaterBolt/");
         SimpleMovingViewObject viewObject = createSimpleMovingViewObject(m, vo);
-        DestroyableViewObject destroyableMovingDirectionVO = new DestroyableViewObject(viewObject, createStartableViewObject(m.getLocation().toPosition(), "null.xml"), m, areaView, 100);
+        DestroyableViewObject destroyableMovingDirectionVO = new DestroyableViewObject(viewObject, simpleVOFactory.createStartableViewObject(m.getLocation().toPosition(), "null.xml"), m, areaView, 100);
         return destroyableMovingDirectionVO;
     }
 
@@ -384,11 +292,11 @@ public class ViewObjectFactory {
     }
 
     private MicroPositionableViewObject createHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color.name + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
+        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color.name + "/hand.xml"), hexDrawingStrategy), slot, entity, color));
     }
 
     private MicroPositionableViewObject createWing(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Wings/" + color.name + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
+        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Wings/" + color.name + "/hand.xml"), hexDrawingStrategy), slot, entity, color));
     }
 
     public SimpleViewObject createObstacle(Position position, Obstacle obstacle) {
@@ -400,7 +308,7 @@ public class ViewObjectFactory {
 
     public DecalViewObject createDecalViewObject(Position position, Decal decal) {
         return new DecalViewObject(
-                createSimpleViewObject(position, "Decals/" + decal.getName() + ".xml"),
+                simpleVOFactory.createSimpleViewObject(position, "Decals/" + decal.getName() + ".xml"),
                 decal.getR(),
                 decal.getS()
         );
@@ -425,17 +333,12 @@ public class ViewObjectFactory {
     }
 
     private MicroPositionableViewObject createSimpleRightHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
+        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), slot, entity, color));
     }
 
     public MicroPositionableViewObject createSimpleLeftHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), null, slot, entity, color));
+        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Hands/" + color + "/hand.xml"), hexDrawingStrategy), slot, entity, color));
     }
-//    private FeetViewObject createFeet(Position p, Direction d, String name) {
-//        FootViewObject leftFoot = createFoot(p, d, name + "/Left");
-//        FootViewObject rightFoot = createFoot(p, d, name + "/Right");
-//        return new FeetViewObject(leftFoot, rightFoot, p, d);
-//    }
 
     public ViewObject createInteractableItem(Position p, InteractiveItem interactiveItem) {
         ActivatableViewObject vo = new ActivatableViewObject(p,
@@ -450,12 +353,12 @@ public class ViewObjectFactory {
     public ViewObject createEquipment(Position p, Entity entity, String name, GameColor color) {
         //First we try to find a nondirectional equipment
         try {
-            return createSimpleViewObject(p, "Equipment/" + color + "/" + name + ".xml");
+            return simpleVOFactory.createSimpleViewObject(p, "Equipment/" + color + "/" + name + ".xml");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        DirectionalViewObject directionalViewObject =  createDirectional(p, entity, "Equipment/" +color.name + "/" + name + "/");
+        DirectionalViewObject directionalViewObject =  simpleVOFactory.createDirectional(p, entity, "Equipment/" +color.name + "/" + name + "/");
         entity.attach(directionalViewObject);
         return directionalViewObject;
     }
@@ -468,15 +371,6 @@ public class ViewObjectFactory {
         return new DarkenedViewObject(p);
     }
 
-//    public <T extends Directional & ViewObservable> DirectionalViewObject createDirectional(Position p, T d, String path) {
-//        SimpleDynamicImage bodyNorth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "north.xml");
-//        SimpleDynamicImage bodySouth = DynamicImageFactory.getInstance().loadDynamicImage(path +  "south.xml");
-//        SimpleDynamicImage bodyNorthEast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northeast.xml");
-//        SimpleDynamicImage bodyNorthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "northwest.xml");
-//        SimpleDynamicImage bodySoutheast = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southeast.xml");
-//        SimpleDynamicImage bodySouthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southwest.xml");
-//        return new DirectionalViewObject(p, d, hexDrawingStrategy, bodyNorth, bodySouth, bodyNorthEast, bodyNorthWest, bodySoutheast, bodySouthWest);
-//    }
 
     public <T extends Moveable & ViewObservable> BipedMovingViewObject createBipedMovingViewObject(T subject, ViewObject child) {
         BipedMovingViewObject mvo = new BipedMovingViewObject(child, subject, areaView, jumpDetector);
@@ -505,15 +399,16 @@ public class ViewObjectFactory {
 
 
     public MicroPositionableViewObject createLeftHandWeapon(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(createSimpleLeftHand(position, slot, entity, color), simpleVOFactory.createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity, color));
+        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(createSimpleLeftHand(position, slot, entity, color), slot, entity, color));
     }
 
     public MicroPositionableViewObject createRightHandWeaponObject(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
-        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(createSimpleRightHand(position, slot, entity, color), simpleVOFactory.createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity, color));
+        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(createSimpleRightHand(position, slot, entity, color), slot, entity, color));
     }
 
+
     public MicroPositionableViewObject createMicroPositionableViewObject(Position position, String path) {
-        SimpleViewObject simpleViewObject = createSimpleViewObject(position, path);
+        SimpleViewObject simpleViewObject = simpleVOFactory.createSimpleViewObject(position, path);
         return new MicroPositionableViewObject(simpleViewObject);
     }
 
@@ -527,28 +422,17 @@ public class ViewObjectFactory {
     }
 
 
-    public SimpleViewObject createSimpleViewObject(Position p, String path) {
-        return new SimpleViewObject(p, factory.loadDynamicImage(path), hexDrawingStrategy);
-    }
-
     public SimpleViewObject createAoe(Position position, String name) {
-        return createSimpleViewObject(position, "AreaOfEffects/" + name + ".xml");
-    }
-
-    public StartableViewObject createStartableViewObject(Position p, String path) {
-        StartableDynamicImage startableDynamicImage = factory.loadActiveDynamicImage(path);
-        return new StartableViewObject(p, startableDynamicImage, hexDrawingStrategy);
+        return simpleVOFactory.createSimpleViewObject(position, "AreaOfEffects/" + name + ".xml");
     }
 
     public ViewObject createHitBox(HitBox hitBox) {
         String path = "Effects/" + hitBox.getName() + "/" + hitBox.getName() + ".xml";
         Position p = hitBox.getLocation().toPosition();
-        StartableViewObject hitBoxVO = createStartableViewObject(p, path);
+        StartableViewObject hitBoxVO = simpleVOFactory.createStartableViewObject(p, path);
         hitBoxVO.start(hitBox.getDuration());
         return hitBoxVO;
     }
 
-    public ViewObject createFloatingTextViewObject(Position position, String text, long duration, Color color, double distance) {
-        return new FloatingTextViewObject(position, text, distance, duration, color, hexDrawingStrategy);
-    }
+
 }

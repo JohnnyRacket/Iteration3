@@ -3,6 +3,7 @@ package com.wecanteven.GameLaunching.LevelFactories;
 import com.wecanteven.AreaView.Biomes.Biome;
 import com.wecanteven.AreaView.Biomes.DefaultBiome;
 import com.wecanteven.AreaView.ViewObjects.Factories.PlainsFactory;
+import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
@@ -116,7 +117,7 @@ public class DopeAssLevelFactory extends LevelFactory{
     }
 
     @Override
-    public Biome createBiomes(ViewObjectFactory factory) {
+    public Biome createBiomes(SimpleVOFactory factory) {
         return new DefaultBiome(new PlainsFactory(factory));
     }
 

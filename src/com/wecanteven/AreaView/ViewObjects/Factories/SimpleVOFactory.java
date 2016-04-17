@@ -3,12 +3,13 @@ package com.wecanteven.AreaView.ViewObjects.Factories;
 import com.wecanteven.AreaView.AreaView;
 import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.DynamicImages.SimpleDynamicImage;
+import com.wecanteven.AreaView.DynamicImages.StartableDynamicImage;
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.VisibilitySourceViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
-import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
-import com.wecanteven.AreaView.ViewObjects.LeafVOs.NullViewObject;
+import com.wecanteven.AreaView.ViewObjects.LeafVOs.*;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
@@ -16,7 +17,10 @@ import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Positionable;
 import com.wecanteven.Observers.ViewObservable;
+import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
+
+import java.awt.*;
 
 /**
  * Created by adamfortier on 4/16/16.
@@ -24,6 +28,7 @@ import com.wecanteven.UtilityClasses.GameColor;
 public class SimpleVOFactory {
     private HexDrawingStrategy hexDrawingStrategy;
     private AreaView areaView;
+    private DynamicImageFactory dynamicImageFactory = DynamicImageFactory.getInstance();
 
 
     public  SimpleVOFactory(HexDrawingStrategy hexDrawingStrategy, AreaView areaView) {
@@ -31,8 +36,8 @@ public class SimpleVOFactory {
         this.areaView = areaView;
     }
 
-    public EquipableViewObject createEquipable(ViewObject child, ViewObject equipment, EquipableItemVOFactory equipableItemVOFactory, EquipmentSlot subject, Entity entity, GameColor color) {
-        return new EquipableViewObject(child, equipment, subject, equipableItemVOFactory, entity, color);
+    public EquipableViewObject createEquipable(ViewObject child, EquipmentSlot slot, EquipableItemVOFactory equipableItemVOFactory, EquipmentSlot subject, Entity entity, GameColor color) {
+        return new EquipableViewObject(child, slot, equipableItemVOFactory, entity, color);
     }
 
     public NullViewObject createNullViewObject() {
@@ -57,5 +62,22 @@ public class SimpleVOFactory {
         SimpleDynamicImage bodySouthWest = DynamicImageFactory.getInstance().loadDynamicImage(path +  "southwest.xml");
         return new DirectionalViewObject(p, d, hexDrawingStrategy, bodyNorth, bodySouth, bodyNorthEast, bodyNorthWest, bodySoutheast, bodySouthWest);
     }
+
+    public ViewObject createFloatingTextViewObject(Position position, String text, long duration, Color color, double distance) {
+        return new FloatingTextViewObject(position, text, distance, duration, color, hexDrawingStrategy);
+    }
+
+    public StartableViewObject createStartableViewObject(Position p, String path) {
+        StartableDynamicImage startableDynamicImage = dynamicImageFactory.loadActiveDynamicImage(path);
+        return new StartableViewObject(p, startableDynamicImage, hexDrawingStrategy);
+    }
+
+    public SimpleViewObject createSimpleViewObject(Position p, String path) {
+        return new SimpleViewObject(p, dynamicImageFactory.loadDynamicImage(path), hexDrawingStrategy);
+    }
+
+//    public MicroPositionableViewObject createHandWithWeapon(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
+//        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(createSimpleRightHand(position, slot, entity, color), simpleVOFactory.createDirectional(position, entity, "Equipment/" + weaponName + "/" ), slot, entity, color));
+//    }
 
 }

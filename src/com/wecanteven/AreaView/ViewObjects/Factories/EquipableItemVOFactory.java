@@ -20,11 +20,11 @@ public class EquipableItemVOFactory {
 
 
     public EquipableViewObject createBodyArmor(ViewObject body, ViewObject bodyArmor, EquipmentSlot subject, Entity entity, GameColor color) {
-        return viewObjectFactory.createEquipable(body, bodyArmor, this, subject, entity, color);
+        return viewObjectFactory.createEquipable(body, subject, this, subject, entity, color);
     }
 
-    public EquipableViewObject createEquipable(ViewObject child, ViewObject equipment, EquipmentSlot subject, Entity entity, GameColor color) {
-        return new EquipableViewObject(child, equipment, subject, this, entity, color);
+    public EquipableViewObject createEquipable(ViewObject child, EquipmentSlot subject, Entity entity, GameColor color) {
+        return new EquipableViewObject(child, subject, this, entity, color);
     }
 
 

@@ -8,9 +8,9 @@ import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
  * Created by alexs on 4/13/2016.
  */
 public class TundraFactory implements BiomeFactory {
-    private ViewObjectFactory factory;
+    private SimpleVOFactory factory;
 
-    public TundraFactory(ViewObjectFactory factory) {
+    public TundraFactory(SimpleVOFactory factory) {
         this.factory = factory;
     }
 
