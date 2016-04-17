@@ -45,8 +45,8 @@ public class HexDrawingStrategy implements DynamicImageDrawingStrategy, StringDr
     @Override
     public void draw(Graphics g, String text, Position position) {
         g.drawString(text,
-                findX(position)  - findX(centerTarget.getPosition()) + Config.SCREEN_WIDTH/2,
-                findY(position)  - findY(centerTarget.getPosition()) + Config.SCREEN_HEIGHT/2);
+                findX(position) - findX(centerTarget.getPosition()) + Config.SCREEN_WIDTH/2,
+                findY(position) - findY(centerTarget.getPosition()) + Config.SCREEN_HEIGHT/2);
     }
 
     @Override

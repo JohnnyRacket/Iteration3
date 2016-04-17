@@ -25,7 +25,7 @@ public class LoadGameLauncher extends GameLauncher {
     }
 
     @Override
-    void createAvatar(String occupation) {
+    void createAvatar() {
 
     }
 

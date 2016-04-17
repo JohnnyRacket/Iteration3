@@ -39,11 +39,21 @@ public class Character extends Entity {
         coolDownTicks = 0;
     }
 
+    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, GameColor color) {
+        super(actionHandler, direction, color);
+        this.occupation = occupation;
+        setStats(new Stats(this));
+        this.itemStorage = new ItemStorage(this, 5);
+        windUpTicks = 0;
+        coolDownTicks = 0;
+    }
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats, GameColor color) {
         super(actionHandler, direction, color);
         this.occupation = occupation;
         setStats(stats);
         this.itemStorage = new ItemStorage(this, 5);
+        windUpTicks = 0;
+        coolDownTicks = 0;
     }
 
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage, GameColor color) {
@@ -51,6 +61,8 @@ public class Character extends Entity {
         this.occupation = occupation;
         this.itemStorage = itemStorage;
         getItemStorage().setOwner(this);
+        windUpTicks = 0;
+        coolDownTicks = 0;
     }
 
     public void setFactory(SimpleVOFactory factory) {
@@ -255,9 +267,15 @@ public class Character extends Entity {
     public int getAvailablePoints() {
         return this.availableSkillPoints;
     }
+    public void setAvailableSkillPoints(int points) {
+        if (points >= 0) {
+            this.availableSkillPoints = points;
+        }
 
+        System.out.println("Character has " + getAvailablePoints() + " skill points");
+    }
     public boolean allocateSkillPoint(Skill skill, int points) {
-        if (points > 0) {
+        if (points > 0 && points <= getAvailablePoints()) {
             try {
                 occupation.addSkillPoints(skill, points);
                 decrementAvailablePoints(points);
