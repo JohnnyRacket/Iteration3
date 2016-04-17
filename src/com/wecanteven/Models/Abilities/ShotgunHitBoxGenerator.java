@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Abilities;
 
 import com.wecanteven.Models.Abilities.Effects.Effects;
+import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
@@ -12,21 +13,21 @@ import java.util.Iterator;
 /**
  * Created by Brandon on 4/16/2016.
  */
-public class DomeHitBoxGenerator implements HitBoxGenerator {
-    private Character caster;
+public class ShotgunHitBoxGenerator implements HitBoxGenerator {
+    private com.wecanteven.Models.Entities.Character caster;
     private HitBox hitbox;
     private int distance,size;
     private Effects effect;
 
-    public DomeHitBoxGenerator(Character caster,Effects effect){
-        distance = 1;
+    public ShotgunHitBoxGenerator(Character caster,Effects effect){
         this.effect = effect;
         this.caster = caster;
 
     }
     public void generate(){
-        size = 5;
-        generateDome(caster.getLocation(),size);
+        for(int a=0;a<3;a++){
+
+        }
     }
 
     private void generateDome(Location location,int ringSize){

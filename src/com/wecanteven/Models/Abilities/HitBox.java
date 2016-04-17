@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Abilities;
 
 import com.wecanteven.AreaView.VOCreationVisitor;
+import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.ModelTime.Alertable;
@@ -14,18 +15,18 @@ import com.wecanteven.UtilityClasses.Location;
  */
 public class HitBox implements Destroyable{
     private String name;
-    private StatsAddable effect;
+    private Effects effect;
     private Location location;
     private ActionHandler actionHandler;
     static VOCreationVisitor voCreationVisitor;
     private boolean isDestroyed;
     private int duration;
 
-    public HitBox(String name,Location location, StatsAddable effect, ActionHandler actionHandler,int duration){
+    public HitBox(String name,Location location, Effects effect, ActionHandler actionHandler,int duration){
         setDuration(duration);
         setName(name);
         setLocation(location);
-        setEffect(effect);
+        setEffects(effect);
         setActionHandler(actionHandler);
         setIsDestroyed(false);
     }
@@ -46,7 +47,7 @@ public class HitBox implements Destroyable{
     }
 
     public void interact(Entity entity){
-        entity.modifyStats(effect);
+        effect.interact(entity);
     }
     public void setName(String name){
         this.name = name;
@@ -54,7 +55,7 @@ public class HitBox implements Destroyable{
     public void setLocation(Location location){
         this.location = location;
     }
-    public void setEffect(StatsAddable effect){
+    public void setEffects(Effects effect){
         this.effect = effect;
     }
     public void setActionHandler(ActionHandler actionHandler){
@@ -73,7 +74,7 @@ public class HitBox implements Destroyable{
     public Location getLocation(){
         return location;
     }
-    public StatsAddable getEffect(){
+    public Effects getEffect(){
         return effect;
     }
     public ActionHandler getActionHandler(){
