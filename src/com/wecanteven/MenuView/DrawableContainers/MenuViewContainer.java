@@ -2,6 +2,7 @@ package com.wecanteven.MenuView.DrawableContainers;
 
 import com.wecanteven.MenuView.Drawable;
 import com.wecanteven.MenuView.Navigatable;
+import com.wecanteven.UtilityClasses.Sound;
 
 import java.util.ArrayList;
 
@@ -15,32 +16,35 @@ public class MenuViewContainer implements Navigatable {
 
     @Override
     public void up() {
+        Sound.play("menuMove");
         menus.get(current).up();
     }
 
     @Override
     public void down() {
+        Sound.play("menuMove");
         menus.get(current).down();
     }
 
     @Override
     public void left() {
+        Sound.play("menuMove");
         menus.get(current).left();
     }
 
     @Override
     public void right() {
+        Sound.play("menuMove");
         menus.get(current).right();
     }
 
     @Override
     public void select() {
-
+        Sound.play("menuConfirm");
         menus.get(current).select();
     }
 
     public void swap() {
-
         menus.get(current).active(false);
         if (current < menus.size() - 1) {
             ++current;
