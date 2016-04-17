@@ -8,26 +8,44 @@ import com.wecanteven.Models.Abilities.Ability;
 public class AbilityStorage
 {
     private AbilityEquipment equipment;
+    private AbilityInventory inventory;
 
-
-
-    public void learnAbility(Ability ability) {
-
+    public AbilityStorage() {
+        equipment = new FourSlotAbilityEquipment(this);
+        inventory = new InfiniteAbilityInventory(this);
     }
 
-    public void equipAbility(Ability ability, int index) {
+    public AbilityStorage(AbilityEquipment eq, AbilityInventory inv) {
+        this.equipment = eq;
+        this.inventory = inv;
+    }
 
+
+    public void equipAbility(Ability ability, int index) {
+        if (inventory.containsAbility(ability)) {
+            equipment.equipAbility(ability, index);
+        }
+    }
+
+    public void equipAbility(Ability ability) {
+        if (inventory.containsAbility(ability)) {
+            equipment.equipAbility(ability);
+        }
     }
 
     public void useAbility(Ability ability) {
-
+        if (equipment.isEquipped(ability)) {
+            ability.cast();
+        }
     }
 
     public void useAbility(int index) {
-
+        if (equipment.isEquipped(index)) {
+            equipment.getAbility(index).cast();
+        }
     }
 
     public void storeAbility(Ability ability) {
-
+        inventory.addAbility(ability);
     }
 }

@@ -18,8 +18,11 @@ public class InfiniteAbilityInventory extends AbilityInventory {
 
     @Override
     public boolean addAbility(Ability ability) {
-        abilities.add(ability);
-        return true;
+        if (!containsAbility(ability)) {
+            abilities.add(ability);
+            return true;
+        }
+        return false;
     }
 
     @Override
