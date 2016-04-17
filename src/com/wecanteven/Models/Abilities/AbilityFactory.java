@@ -17,7 +17,10 @@ public class AbilityFactory {
         StatsEffect effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
         int duration = 1;
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator("Punch",caster,effect,duration);
-        return new Ability("Punch",caster,generator);
+        Ability ability = new Ability("Punch",caster,generator);
+        ability.setCooldownTicks(5);
+        ability.setWindUpTicks(5);
+        return ability;
     }
     //projectile ability example
     public Ability vendWaterBolt(Character caster) {
@@ -25,7 +28,10 @@ public class AbilityFactory {
         ProjectileHitBoxGenerator generator = new ProjectileHitBoxGenerator("WaterBolt",caster,effect);
         generator.setDistance(5);
         generator.setSpeed(30);
-        return new Ability("WaterBolt",caster,generator);
+        Ability ability = new Ability("WaterBolt",caster,generator);
+        ability.setCooldownTicks(15);
+        ability.setWindUpTicks(15);
+        return ability;
     }
     //radial ability example
     public Ability vendRadialAttack(Character caster) {
@@ -33,7 +39,10 @@ public class AbilityFactory {
         int duration = 1;
         RadialHitBoxGenerator generator = new RadialHitBoxGenerator("Punch",caster,effect,duration);
         generator.setSize(3);
-        return new Ability("Punch",caster,generator);
+        Ability ability = new Ability("Punch",caster,generator);
+        ability.setCooldownTicks(15);
+        ability.setWindUpTicks(15);
+        return ability;
     }
     //dome ability example
     public Ability vendDomeAttack(Character caster) {
@@ -42,6 +51,9 @@ public class AbilityFactory {
         DomeHitBoxGenerator generator = new DomeHitBoxGenerator("Punch",caster,effect,duration);
         generator.setDistance(1);
         generator.setSize(5);
-        return new Ability("Punch",caster,generator);
+        Ability ability = new Ability("Punch",caster,generator);
+        ability.setCooldownTicks(15);
+        ability.setWindUpTicks(15);
+        return ability;
     }
 }
