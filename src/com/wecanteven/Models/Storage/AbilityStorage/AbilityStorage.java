@@ -20,7 +20,6 @@ public class AbilityStorage
         this.inventory = inv;
     }
 
-
     public void equipAbility(Ability ability, int index) {
         if (inventory.containsAbility(ability)) {
             equipment.equipAbility(ability, index);
@@ -31,6 +30,14 @@ public class AbilityStorage
         if (inventory.containsAbility(ability)) {
             equipment.equipAbility(ability);
         }
+    }
+
+    public void unequipAbility(Ability ability) {
+        equipment.unequipAbility(ability);
+    }
+
+    public void unequipAbility(int slot) {
+        equipment.unequipSlot(slot);
     }
 
     public void useAbility(Ability ability) {
@@ -48,4 +55,6 @@ public class AbilityStorage
     public void storeAbility(Ability ability) {
         inventory.addAbility(ability);
     }
+
+    public void removeAbility(Ability ability) { inventory.removeAbilty(ability); }
 }
