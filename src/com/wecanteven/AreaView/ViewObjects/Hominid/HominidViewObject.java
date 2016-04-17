@@ -6,7 +6,9 @@ import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Observers.Actionable;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.Observer;
@@ -27,20 +29,25 @@ public class HominidViewObject implements ViewObject, Observer{
 
     private Directional directionSubject;
     private Moveable movingSubject;
+    private Actionable actionTarget;
 
     private HandsViewObject hands;
     private FeetViewObject feet;
     private BuffRingViewObject buffs;
     private JumpDetector jumpDetector;
 
+    private long endMoveTime = 0;
+    private long endAttackTime = 0;
+
     //private FeetViewObject feet;
 
     private Location lastLocation;
 
-    public HominidViewObject(Position position, Entity entity, ViewObject body, ViewObject head, HandsViewObject hands, FeetViewObject feet, BuffRingViewObject buffs, JumpDetector jumpDetector) {
+    public HominidViewObject(Position position, Character entity, ViewObject body, ViewObject head, HandsViewObject hands, FeetViewObject feet, BuffRingViewObject buffs, JumpDetector jumpDetector) {
         this.position = position;
         this.directionSubject = entity;
         this.movingSubject = entity;
+        this.actionTarget = entity;
         this.body = body;
         this.head = head;
         this.hands = hands;
@@ -114,6 +121,9 @@ public class HominidViewObject implements ViewObject, Observer{
             }
             lastLocation = movingSubject.getLocation();
         }
+        if (subjectHasAttacked()) {
+            hands.attack(actionTarget.getWindUpTicks()* Config.MODEL_TICK, actionTarget.getCoolDownTicks() * Config.MODEL_TICK);
+        }
     }
 
 
@@ -121,6 +131,15 @@ public class HominidViewObject implements ViewObject, Observer{
         long currentTime = ViewTime.getInstance().getCurrentTime();
         if (currentTime >= endMoveTime && movingSubject.getMovingTicks() > 0) {
             endMoveTime = currentTime + movingSubject.getMovingTicks()* Config.MODEL_TICK;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean subjectHasAttacked() {
+        long currentTime = ViewTime.getInstance().getCurrentTime();
+        if (currentTime >= endAttackTime && actionTarget.getAttackingTicks() > 0) {
+            endAttackTime = currentTime + actionTarget.getAttackingTicks()* Config.MODEL_TICK;
             return true;
         }
         return false;
@@ -180,7 +199,6 @@ public class HominidViewObject implements ViewObject, Observer{
         return jumpDetector.isJumping(lastLocation, movingSubject.getLocation());
     }
 
-    private long endMoveTime = 0;
 
 }
 

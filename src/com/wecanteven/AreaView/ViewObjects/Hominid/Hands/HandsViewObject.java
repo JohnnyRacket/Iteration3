@@ -81,6 +81,9 @@ public class HandsViewObject implements ViewObject, Observer {
         drawForeground(graphic);
     }
 
+    public void attack(long windUp, long coolDown) {
+        handState.attack(windUp, coolDown);
+    }
 
 
     @Override

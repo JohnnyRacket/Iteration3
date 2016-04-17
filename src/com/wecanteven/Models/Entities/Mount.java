@@ -16,37 +16,30 @@ import com.wecanteven.Visitors.EntityVisitor;
  */
 public class Mount extends Character {
   Character mounter;
-  ViewObject mountVO;
-  //SimpleVOFactory simpleVOFactory;
+
+
 
   public Mount(ActionHandler actionHandler, Direction direction) {
     super(actionHandler, direction, GameColor.BLUE);
-   // this.simpleVOFactory = simpleVOFactory;
   }
 
 
   public void mount(Character mounter) {
     this.mounter = mounter;
-//    try {
-//      getFactory().setCenter(mountVO);
-//    }
-//    catch(Exception e) {
-//      e.printStackTrace();
-//    }
     this.mounter.setDestroyed(true);
   }
 
   public void dismount() {
-
+    mounter = null;
   }
 
   public void accept(EntityVisitor visitor) {
-    visitor.visitMount(this);
+      visitor.visitMount(this);
+      if(mounter != null) {
+          visitor.visitCharacter(mounter);
+      }
   }
 
-  public void addVO(ViewObject mountVO) {
-    this.mountVO = mountVO;
-  }
 
   @Override
   public void interact(Character character) {
@@ -58,15 +51,6 @@ public class Mount extends Character {
     System.out.println("Interacting with Avatar");
     avatar.mount(this);
   }
-
-//  public <T extends Positionable & ViewObservable> void setActiveView(int radius) {
-//    try {
-//      getFactory().makeLightSource(this, radius);
-//    }
-//    catch(Exception e) {
-//      e.printStackTrace();
-//    }
-//  }
 
   public String toString() {
     return "Mount instance!";
