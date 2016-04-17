@@ -41,6 +41,7 @@ import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.Load.LoadFromXMLFile;
 import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
 import com.wecanteven.UtilityClasses.Config;
+import com.wecanteven.UtilityClasses.Sound;
 import com.wecanteven.UtilityClasses.Tuple;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.ViewEngine;
@@ -315,9 +316,11 @@ public class UIViewFactory {
         startList.addItem(
                 new ScrollableMenuItem("Start Game", () -> {
                     if(menuItems[0] == null || menuItems[1] == null || menuItems[2] == null) {view.getMenuViewContainer().swap(); return; }
+                    Sound.play("startGame");
                     NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine, (Occupation)menuItems[0], (String)menuItems[1], (GameColor)menuItems[2]);
                     template.launch();
                     resumeGame();
+                    Sound.stopAll();
                 })
         );
         startList.addItem(
