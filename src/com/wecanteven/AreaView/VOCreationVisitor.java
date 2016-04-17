@@ -87,7 +87,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
         simpleVOFactory.setCenter(avatar);
         areaView.addViewObject(avatar);
         areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
-        c.setFactory(simpleVOFactory);
     }
 
     @Override
@@ -101,8 +100,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     public void visitMount(Mount mount) {
         System.out.println("adding mount to areaview");
         ViewObject mountVO = viewObjectFactory.createBaseHominoid(currentPosition, mount, "mounty");
-        mount.addVO(mountVO);
-        mount.setFactory(simpleVOFactory);
         areaView.addViewObject(mountVO);
 
     }

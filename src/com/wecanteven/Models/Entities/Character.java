@@ -1,6 +1,5 @@
 package com.wecanteven.Models.Entities;
 
-import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
@@ -26,7 +25,6 @@ public class Character extends Entity {
     private Occupation occupation;
     private ItemStorage itemStorage, abilityItemStorage;
     private int windUpTicks, coolDownTicks;
-    private SimpleVOFactory factory;
 
     private int availableSkillPoints = 0;
 
@@ -62,17 +60,6 @@ public class Character extends Entity {
         getItemStorage().setOwner(this);
         windUpTicks = 0;
         coolDownTicks = 0;
-    }
-
-    public void setFactory(SimpleVOFactory factory) {
-        this.factory = factory;
-    }
-
-    public SimpleVOFactory getFactory() throws Exception {
-        if(factory == null)
-            throw new Exception("No View Object Factory Exists");
-        else
-            return factory;
     }
 
     public void attack(Direction dir) {
