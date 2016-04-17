@@ -1,4 +1,4 @@
-package com.wecanteven.Visitors;
+package com.wecanteven.Visitors.CanFallVisitors;
 
 import com.wecanteven.Models.Map.Terrain.Air;
 import com.wecanteven.Models.Map.Terrain.Current;
@@ -6,33 +6,32 @@ import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
 
 /**
- * Created by John on 4/1/2016.
+ * Created by Cachorrita on 4/17/2016.
  */
-public class TerranianCanMoveVisitor extends CanMoveVisitor {
-    //no difference from default
-
+public class FlyingCanFallVisitor extends CanFallVisitor {
+    private boolean visitedCurrent;
 
     @Override
     public void visitWater(Water water) {
-        setCanMove(true);
-        setCanMoveBelow(true);
+        this.setCanMove(false);
+        visitedCurrent = false;
     }
 
     @Override
     public void visitGround(Ground ground) {
-        setCanMove(false);
-        setCanMoveBelow(true);
+        this.setCanMove(false);
+        visitedCurrent = false;
     }
 
     @Override
     public void visitAir(Air air) {
-        setCanMove(true);
-        setCanMoveBelow(true);
+        this.setCanMove(false);
+        visitedCurrent = false;
     }
 
     @Override
     public void visitCurrent(Current current) {
-        setCanMove(true);
-        setCanMoveBelow(true);
+        this.setCanMove(false);
+        visitedCurrent = true;
     }
 }

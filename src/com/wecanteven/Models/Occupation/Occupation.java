@@ -2,7 +2,7 @@ package com.wecanteven.Models.Occupation;
 
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Tuple;
-import com.wecanteven.Visitors.CanMoveVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.CanMoveVisitor;
 import com.wecanteven.Visitors.OccupationVisitor;
 
 import java.util.*;

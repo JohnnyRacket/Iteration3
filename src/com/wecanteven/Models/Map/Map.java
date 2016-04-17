@@ -15,6 +15,10 @@ import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.*;
+import com.wecanteven.Visitors.CanFallVisitors.CanFallVisitor;
+import com.wecanteven.Visitors.CanFallVisitors.TerranianCanFallVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.CanMoveVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.TerranianCanMoveVisitor;
 
 /**
  * Created by John on 3/31/2016.

@@ -4,12 +4,11 @@ import com.wecanteven.AreaView.VOCreationVisitor;
 import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
-import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Observers.*;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
-import com.wecanteven.Visitors.CanMoveVisitor;
-import com.wecanteven.Visitors.TerranianCanMoveVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.CanMoveVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.TerranianCanMoveVisitor;
 
 import java.util.ArrayList;
 
