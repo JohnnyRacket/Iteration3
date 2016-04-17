@@ -59,6 +59,7 @@ public class NewGameLauncher extends GameLauncher {
     protected void createAvatar(){
         Character player = new Character(getMap(), Direction.SOUTH, occupation, GameColor.GREEN);
         player.setColor(playerColor);
+        //DONT INITIALIZE AN EQUIPPABLE THAT INCREASES THE LIVES
         //player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.pickup(ItemMap.getInstance().getItemAsEquipable("Sword"));

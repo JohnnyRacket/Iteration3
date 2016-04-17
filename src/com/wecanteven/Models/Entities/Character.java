@@ -79,7 +79,7 @@ public class Character extends Entity {
         if(!isActive()){
             this.setDirection(dir);
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendPunchAttack(this);
+            Ability attack = factory.vendBrawling(this);
             attack.cast();
         }
     }
@@ -210,6 +210,10 @@ public class Character extends Entity {
     protected void tickTicks(){
         if(calculateActiveStatus()){
             ModelTime.getInstance().registerAlertable(() -> {
+                System.out.println("Stuck in an endless loop");
+                System.out.println("Moving ticks "+getMovingTicks());
+                System.out.println("WingUp ticks "+getWindUpTicks());
+                System.out.println("CoolDown ticks "+getCoolDownTicks());
                 deIncrementMovingTick();
                 deIncrementWindUpTick();
                 deIncrementCoolDownTicks();

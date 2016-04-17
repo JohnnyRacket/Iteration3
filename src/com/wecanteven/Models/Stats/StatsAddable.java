@@ -7,7 +7,16 @@ public class StatsAddable {
     private PrimaryStat strength,agility,intellect, hardiness, experience, movement;
     private PrimaryStat lives,health,mana;
 
+
     public StatsAddable(int lives, int strength, int agility, int intellect, int hardiness, int experience, int movement, int health, int mana){
+        init(lives,strength,agility,intellect,hardiness,experience,movement,health,mana);
+    }
+
+    public StatsAddable(){
+        init(0,0,0,0,0,0,0,0,0);
+    }
+
+    private void init(int lives, int strength, int agility, int intellect, int hardiness, int experience, int movement, int health, int mana){
         this.lives = new PrimaryStat("Lives",lives);
         this.strength = new PrimaryStat("Strength",strength);
         this.agility = new PrimaryStat("Agility",agility);
@@ -48,6 +57,18 @@ public class StatsAddable {
         return mana.getStat();
     }
 
+    public void add(StatsAddable statsAddable){
+        System.out.println("adding: "+statsAddable);
+        lives.add(statsAddable.getLives());
+        strength.add(statsAddable.getStrength());
+        agility.add(statsAddable.getAgility());
+        intellect.add(statsAddable.getIntellect());
+        hardiness.add(statsAddable.getHardiness());
+        experience.add(statsAddable.getExperience());
+        movement.add(statsAddable.getMovement());
+        health.add(statsAddable.getHealth());
+        mana.add(statsAddable.getMana());
+    }
 
     public String toString(){
         String s = "";
