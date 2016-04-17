@@ -3,6 +3,7 @@ package com.wecanteven.SaveLoad.Save;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Map.*;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.SaveLoad.SaveVisitors.XMLSaveVisitor;
 import com.wecanteven.SaveLoad.XMLProcessors.EntityXMLProcessor;
@@ -34,9 +35,11 @@ public class SaveToXMLFile implements SaveGame {
 
     @Override
     public void saveGame() {
+        avatar.getCharacter().pauseBuffs();
         avatar.accept(saveVisitor);
         map.accept(saveVisitor);
         saveFile.writeSaveFile();
+        avatar.getCharacter().resumeBuffs();
     }
 
     public static void setMap(Map map) {

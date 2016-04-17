@@ -31,7 +31,7 @@ public abstract class MovingViewObject extends DecoratorViewObject implements Ob
 
     private TileViewObject owner;
 
-    private Position realPosition;
+    //private Position realPosition;
 
     public <T extends Moveable & ViewObservable> MovingViewObject(ViewObject child, T subject, AreaView areaView) {
         super(child);
@@ -39,7 +39,7 @@ public abstract class MovingViewObject extends DecoratorViewObject implements Ob
         this.areaView = areaView;
         this.source = child.getPosition();
         this.destination = child.getPosition();
-        this.realPosition = child.getPosition();
+        //this.realPosition = child.getPosition();
 
         owner = areaView.getTileViewObject(source);
         subject.attach(this);
@@ -47,10 +47,10 @@ public abstract class MovingViewObject extends DecoratorViewObject implements Ob
     }
 
 
-    @Override
-    public Position getPosition() {
-        return realPosition;
-    }
+//    @Override
+//    public Position getPosition() {
+//        return realPosition;
+//    }
 
     protected abstract Position calculateCurrentPosition(Position source, Position destination, long startTime, long endTime);
 
@@ -90,7 +90,7 @@ public abstract class MovingViewObject extends DecoratorViewObject implements Ob
         areaView.addViewObject(this, destination);
         owner = areaView.getTileViewObject(destination);
 
-        realPosition = destination;
+        //realPosition = destination;
     }
 
     private boolean shouldSwapNow() {

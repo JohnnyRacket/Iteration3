@@ -37,10 +37,14 @@ public class PlayState extends ControllerState {
         mappings.put(ActionEnum.ESCAPE, KeyEvent.VK_ESCAPE);
         mappings.put(ActionEnum.UP, KeyEvent.VK_J);
         mappings.put(ActionEnum.DOWN, KeyEvent.VK_H);
+        mappings.put(ActionEnum.DISMOUNT, KeyEvent.VK_SHIFT);
         this.setMappings(mappings);
     }
     @Override
     public void createKeybindings() {
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.DISMOUNT), ()->{
+            this.setContinuousCommandToExecute(()->avatar.dismount());
+        }, this.getjFrame(), this.getController()));
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.NORTH), ()->{
             this.setContinuousCommandToExecute(()->avatar.move(Direction.NORTH));
         }, this.getjFrame(), this.getController()));

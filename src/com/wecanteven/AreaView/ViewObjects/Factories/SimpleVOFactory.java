@@ -7,6 +7,7 @@ import com.wecanteven.AreaView.DynamicImages.SimpleDynamicImage;
 import com.wecanteven.AreaView.DynamicImages.StartableDynamicImage;
 import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DestroyableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.HUDDecorator;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving.BipedMovingViewObject;
@@ -20,17 +21,18 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.*;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Items.InteractiveItem;
+import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
-import com.wecanteven.Observers.Directional;
-import com.wecanteven.Observers.Moveable;
-import com.wecanteven.Observers.Positionable;
-import com.wecanteven.Observers.ViewObservable;
+import com.wecanteven.Observers.*;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
+import javafx.geometry.Pos;
 
 import java.awt.*;
 
@@ -53,8 +55,8 @@ public class SimpleVOFactory {
         this.mapItemVOFactory = new MapItemVOFactory(this);
     }
 
-    public EquipableViewObject createEquipable(ViewObject child, EquipmentSlot slot, EquipableItemVOFactory equipableItemVOFactory, Entity entity, GameColor color) {
-        return new EquipableViewObject(child, slot, equipableItemVOFactory, entity, color);
+    public EquipableViewObject createEquipable(ViewObject child, EquipmentSlot slot, EquipableItemVOFactory equipableItemVOFactory, Entity weaponSubject, GameColor color) {
+        return new EquipableViewObject(child, slot, equipableItemVOFactory, weaponSubject, color);
     }
 
     public NullViewObject createNullViewObject() {
@@ -65,9 +67,8 @@ public class SimpleVOFactory {
         hexDrawingStrategy.setCenterTarget(center);
     }
 
-    public <T extends Positionable & ViewObservable> void makeLightSource(ViewObject v, int radius, T subject) {
-
-        new VisibilitySourceViewObject(v, subject, areaView, radius);
+    public <T extends Positionable & ViewObservable> void makeLightSource(T subject, int radius) {
+        new VisibilitySourceViewObject(subject, areaView, radius);
     }
 
     public <T extends Directional & ViewObservable> DirectionalViewObject createDirectional(Position p, T d, String path) {
@@ -119,6 +120,23 @@ public class SimpleVOFactory {
         SimpleMovingViewObject mvo = new SimpleMovingViewObject(child, subject, areaView);
         return mvo;
     }
+
+    public ActivatableViewObject createActivatableViewObject(Position position, InteractiveItem interactiveItem) {
+        return new ActivatableViewObject(position, interactiveItem,
+                dynamicImageFactory.loadDynamicImage("Items/" + interactiveItem.getName() + "/Active.xml"),
+                dynamicImageFactory.loadDynamicImage("Items/" + interactiveItem.getName() + "/Inactive.xml"),
+                hexDrawingStrategy);
+    }
+
+    public DestroyableViewObject createOneShotItem(Position position, StartableDynamicImage animation, OneShot oneShot) {
+        StartableViewObject interalVO = new StartableViewObject(position, animation, hexDrawingStrategy);
+        return new DestroyableViewObject(interalVO, interalVO, oneShot, areaView, 1000);
+    }
+
+    public  <T extends Destroyable & ViewObservable> DestroyableViewObject createDestroyableViewObject(ViewObject  simpleVO, StartableViewObject startableVO, T subject, long duration)  {
+        return new DestroyableViewObject(simpleVO, startableVO, subject, areaView, duration);
+    }
+
 
 
     public EquipableItemVOFactory getEquipableItemVOFactory() {

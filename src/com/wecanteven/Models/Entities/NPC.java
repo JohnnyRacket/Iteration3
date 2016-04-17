@@ -5,11 +5,14 @@ import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.InteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.Visitors.EntityVisitor;
+
+import java.util.Iterator;
 
 /**
  * Created by Brandon on 3/31/2016.
@@ -35,18 +38,23 @@ public class NPC extends Character {
         this.interaction = interaction;
         this.interaction.setOwner(this);
     }
-
+    @Override
+    public void loseLife(){
+        super.loseLife();
+        controller.kill();
+        controller = null;
+        Iterator<TakeableItem> iter = this.getItemStorage().getInventory().getIterator();
+        while(iter.hasNext()){
+            this.drop(iter.next());
+        }
+    }
     @Override
     public void interact(Character c){
         interaction.interact(c);
     }
 
-//    public void interact(Avatar c){
-//        interaction.interact(c);
-//    }
 
     public void accept(EntityVisitor visitor) {
-
         visitor.visitNPC(this);
     }
 

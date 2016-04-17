@@ -71,13 +71,23 @@ public class BuffManager implements ViewObservable {
         }
     }
 
-    public void clearAll() {
+    public void disable() {
         Iterator<Buff> iter = getIterator();
 
         while (iter.hasNext()) {
             Buff buff = iter.next();
             buff.debuff();
             buff.disable();
+        }
+    }
+
+    public void enable() {
+        Iterator<Buff> iter = getIterator();
+
+        while (iter.hasNext()) {
+            Buff buff = iter.next();
+            buff.buff();
+            buff.enable();
         }
     }
 
