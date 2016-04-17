@@ -26,7 +26,6 @@ public class Current extends Terrain {
     @Override
     public void interact(Moveable moveable) {
         System.out.println("Moveable entered Current");
-
         //TODO need to update entity direction
         moveable.setDirection(direction);
         moveable.move(direction);

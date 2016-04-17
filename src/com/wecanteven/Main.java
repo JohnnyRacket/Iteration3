@@ -1,5 +1,6 @@
 package com.wecanteven;
 
+import com.wecanteven.Controllers.AIControllers.AIEngine;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.MenuView.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
@@ -28,6 +29,8 @@ public class Main {
 
         factory.createMainMenuView();
 
+        AIEngine aiEngine = new AIEngine();
+        aiEngine.start();
         engine.start();
         mEngine.start();
     }

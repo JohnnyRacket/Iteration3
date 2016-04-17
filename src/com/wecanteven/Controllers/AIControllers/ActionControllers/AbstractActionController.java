@@ -63,7 +63,7 @@ public abstract class AbstractActionController implements TargetVisitor{
                         prev = curr;
                         curr = parentMap.get(curr);
                     }
-                    System.out.println("Direction returned is: " + DirectionFinder.getDirection(character.getLocation(), prev));
+                    //System.out.println("Direction returned is: " + DirectionFinder.getDirection(character.getLocation(), prev));
                     return DirectionFinder.getDirection(character.getLocation(), prev);
                 }
                 for(int i = 0; i < character.getJumpHeight(); ++i) {
