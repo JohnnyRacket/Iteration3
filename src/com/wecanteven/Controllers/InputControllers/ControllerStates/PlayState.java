@@ -4,22 +4,12 @@ import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
 import com.wecanteven.Controllers.InputControllers.MainController;
-import com.wecanteven.GameLaunching.GameLaunchers.GameLauncher;
 import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Avatar;
-import com.wecanteven.Models.Entities.Character;
-import com.wecanteven.Models.Entities.NPC;
-import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
-import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
-import com.wecanteven.Models.Items.Takeable.ConsumeableItem;
-import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
-import com.wecanteven.Models.Items.Takeable.TakeableItem;
-import com.wecanteven.SaveLoad.Save.SaveToXMLFile;
 import com.wecanteven.UtilityClasses.Direction;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

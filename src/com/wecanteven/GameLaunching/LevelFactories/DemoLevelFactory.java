@@ -17,6 +17,7 @@ import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.NoInteractionStrategy;
 import com.wecanteven.Models.Interactions.QuestDialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
+import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
 import com.wecanteven.Models.Items.Takeable.QuestedItem;
@@ -448,8 +449,10 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void tradeNPC(Map map) {
         NPC npc = new NPC(map, Direction.SOUTHEAST, new TradeInteractionStrategy(),new Friendly(), GameColor.YELLOW);
-        npc.pickup(new ChestEquipableItem("Buyable Chestplate", 5, null));
-        npc.pickup(new ChestEquipableItem("Buyable Penis", 5, null));
+        npc.pickup(ItemMap.getInstance().getItemAsEquipable("Antenna"));
+        npc.pickup(ItemMap.getInstance().getItemAsUseable("Intellect Buff"));
+        npc.pickup(ItemMap.getInstance().getItemAsUseable("Intellect Buff"));
+        npc.pickup(ItemMap.getInstance().getItemAsUseable("Intellect Buff"));
         map.add(npc, new Location(13, 14, 2));
     }
 
@@ -484,6 +487,8 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsTakeable("Growth"), new Location(11, 13,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
+
+        map.add(ItemMap.getInstance().getItemAsTakeable("Intellect Buff"), new Location(8,13,3));
         //Interactive Item??????
         /* TODO implement this */
 

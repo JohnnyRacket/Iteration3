@@ -28,6 +28,7 @@ public class AITime implements Tickable{
 
     @Override
     public void tick() {
+        System.out.println("bwoop");
         if(!paused) {
             for (Iterator<Tickable> iterator = aiControllers.iterator(); iterator.hasNext(); ) {
                 Tickable object = iterator.next();

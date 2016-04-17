@@ -1,6 +1,7 @@
 package com.wecanteven.MenuView;
 
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.Controllers.AIControllers.AITime;
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.ControllerStates.ControllerState;
 import com.wecanteven.Controllers.InputControllers.MainController;
@@ -29,6 +30,7 @@ import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Occupation.Skill;
 import com.wecanteven.Models.Occupation.Occupation;
@@ -598,15 +600,57 @@ public class UIViewFactory {
 
     }
 
-    public SwappableView createUsableItemMenu(){
-        return null;
+    public void createUsableItemMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, UseableItem item){
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this,invHolder,eqHolder);
+        NavigatableList list = new NavigatableList();
+        MenuViewContainer container = controller.getMenuState().getMenus();
+        list.addItem(new ScrollableMenuItem("Use", () ->{
+
+            character.consume(item);
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                //createInventoryView(avatar.getCharacter());
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventoryItems());
+                eqHolder.setList(visitor.getEquippedItems());
+            },0);
+
+            controller.setMenuState(container);
+        }));
+        list.addItem(new ScrollableMenuItem("Drop", () ->{
+
+            character.drop(item);
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventoryItems());
+                eqHolder.setList(visitor.getEquippedItems());
+            },0);
+            controller.setMenuState(container);
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+
+            },0);
+            controller.setMenuState(container);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        menu.setBgColor(Config.CINNIBAR);
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(anim);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
     }
-    public SwappableView createConsumableItemMenu(){
-        return null;
-    }
-    public SwappableView createAbilityItemMenu(){
-        return null;
-    }
+
     //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
     public void createBuyableItemMenu(BuyableUIObjectCreationVisitor visitor, NPC shopOwner, Character buyer, TakeableItem item){
         NavigatableList list = new NavigatableList();
@@ -1094,11 +1138,13 @@ public class UIViewFactory {
     public void pauseGame(){
         ModelTime.getInstance().pause();
         ViewTime.getInstance().pause();
+        AITime.getInstance().pause();
     }
 
     public void resumeGame(){
         ModelTime.getInstance().resume();
         ViewTime.getInstance().resume();
+        AITime.getInstance().resume();
     }
 
     public void resetGame() {

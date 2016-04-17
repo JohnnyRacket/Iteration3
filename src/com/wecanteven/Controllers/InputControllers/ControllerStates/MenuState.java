@@ -1,6 +1,7 @@
 package com.wecanteven.Controllers.InputControllers.ControllerStates;
 
 import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.Controllers.AIControllers.AITime;
 import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
 import com.wecanteven.Controllers.InputControllers.MainController;
@@ -59,6 +60,7 @@ public class MenuState extends ControllerState {
             ViewTime.getInstance().register(()->{
                 ViewTime.getInstance().resume();
                 ModelTime.getInstance().resume();
+                AITime.getInstance().resume();
                 this.getController().clearViews();
             },0);
         }, this.getjFrame(), this.getController()));
