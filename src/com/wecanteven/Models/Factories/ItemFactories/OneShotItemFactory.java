@@ -37,7 +37,10 @@ public class OneShotItemFactory {
                     entity1.cacheCanFall();
                     entity1.setCanFallVisitor(new FlyingCanFallVisitor());
                 },
-                (entity1) -> entity1.restoreCanFall()
+                (entity1) -> {
+                    entity1.restoreCanFall();
+                    entity1.fall();
+                }
         )));
     }
 }
