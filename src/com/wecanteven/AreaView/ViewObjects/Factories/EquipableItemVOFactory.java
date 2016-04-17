@@ -32,7 +32,7 @@ public class EquipableItemVOFactory {
     public <T extends Directional & ViewObservable> ViewObject createEquipment(Position p, T subject, String name, GameColor color) {
         //First we try to find a nondirectional equipment
         String path = "Equipment/" + color + "/" + name + ".xml";
-        if (fileExists(path))
+        if (fileExists("resources/" + path))
             return viewObjectFactory.createSimpleViewObject(p, path);
 
         return  viewObjectFactory.createDirectional(p, subject, "Equipment/" +color.name + "/" + name + "/");
