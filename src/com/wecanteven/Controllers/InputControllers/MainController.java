@@ -5,6 +5,7 @@ import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 import com.wecanteven.MenuView.SwappableView;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.ModelTime.Tickable;
+import com.wecanteven.UtilityClasses.Sound;
 import com.wecanteven.ViewEngine;
 
 /**
@@ -67,6 +68,7 @@ public class MainController implements Tickable{
         removeState();
         playState.setAvatar(avatar);
         playState.createKeybindings();
+        System.out.println("Starting PLay State");
         this.state = playState;
     }
 

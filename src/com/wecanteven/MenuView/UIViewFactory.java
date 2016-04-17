@@ -318,9 +318,9 @@ public class UIViewFactory {
                     if(menuItems[0] == null || menuItems[1] == null || menuItems[2] == null) {view.getMenuViewContainer().swap(); return; }
                     Sound.play("startGame");
                     NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine, (Occupation)menuItems[0], (String)menuItems[1], (GameColor)menuItems[2]);
+                    Sound.stopAll();
                     template.launch();
                     resumeGame();
-                    Sound.stopAll();
                 })
         );
         startList.addItem(
@@ -790,6 +790,10 @@ public class UIViewFactory {
         }));
 
         NavigatableList windowOptions = new NavigatableList();
+        ScrollableMenuItem soundOpt =  new ScrollableMenuItem("Toggle Sound", ()->{
+            Sound.toggleMute();
+        });
+        windowOptions.addItem(soundOpt);
         windowOptions.addItem(new ScrollableMenuItem("Fullscreen", ()->{
 
             ViewTime.getInstance().register(()->{
@@ -800,6 +804,7 @@ public class UIViewFactory {
                 device.setFullScreenWindow(vEngine);
                 vEngine.pack();
                 vEngine.setExtendedState(vEngine.MAXIMIZED_BOTH);
+
 
             },0);
         }));
@@ -1152,6 +1157,9 @@ public class UIViewFactory {
     }
 
     public void resumeGame(){
+        if(!Sound.mute){
+            Sound.play("gameTheme");
+        }
         ModelTime.getInstance().resume();
         ViewTime.getInstance().resume();
         AITime.getInstance().resume();

@@ -26,7 +26,7 @@ public class Sound {
             this.gain = gain;
         }
     }
-    public static boolean mute = true;
+    public static boolean mute = false;
     public Volume volume = Volume.LOW;
 
     private Clip clip;
@@ -75,6 +75,10 @@ public class Sound {
         SOUNDS.put("startGame",
                 new Sound("resources/Sounds/MenuSounds/StartGame.wav", Volume.MEDIUM)
         );
+
+        SOUNDS.put("gameTheme",
+                new Sound("resources/Sounds/Game/GameTheme.wav", Volume.LOW)
+        );
     }
 
     public static void play(String sound) {
@@ -82,6 +86,11 @@ public class Sound {
     }
     public static void stop(String sound) {
         SOUNDS.get(sound).stop();
+    }
+
+    public static void toggleMute() {
+        stopAll();
+        mute = !mute;
     }
 
     public static void stopAll() {
