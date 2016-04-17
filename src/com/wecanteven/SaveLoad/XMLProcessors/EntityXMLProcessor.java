@@ -9,6 +9,7 @@ import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Occupation.*;
 import com.wecanteven.Models.Stats.Stats;
+import com.wecanteven.Models.Storage.AbilityStorage.AbilityStorage;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
@@ -53,6 +54,7 @@ public class EntityXMLProcessor extends XMLProcessor {
                 parseDirection(sf.getElemenetById(el, "Direction", 0)),
                 parseOccupation(sf.getStrAttr(el, "Occupation"), sf.getElementsById(el, "Skill")),
                 StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0)),
+                new AbilityStorage(), //TODO parse out the real abilities
                 GameColor.values()[sf.getIntAttr(el, "Color")]
         );
         parseStats(c, sf.getElemenetById(el, "Stats", 0));

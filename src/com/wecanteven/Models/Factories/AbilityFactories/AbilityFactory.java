@@ -1,11 +1,15 @@
-package com.wecanteven.Models.Abilities;
+package com.wecanteven.Models.Factories.AbilityFactories;
 
 /**
  * Created by Brandon on 4/11/2016.
  */
 
+import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.Abilities.Effects.StatsEffect;
+import com.wecanteven.Models.Abilities.HitBoxGenerator;
+import com.wecanteven.Models.Abilities.MeleeRangeHitBoxGenerator;
+import com.wecanteven.Models.Abilities.SelfHitBoxGenerator;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Occupation.Skill;
 import com.wecanteven.Models.Stats.StatsAddable;
