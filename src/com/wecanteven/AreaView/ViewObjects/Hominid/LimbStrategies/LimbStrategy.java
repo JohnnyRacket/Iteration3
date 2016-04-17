@@ -13,9 +13,12 @@ public abstract class LimbStrategy {
     private boolean isStopped = false;
     private boolean isExecuting = false;
 
+    private long duration;
+
     public final void execute(long duration) {
         long startTime = ViewTime.getInstance().getCurrentTime();
         isExecuting = true;
+        this.duration = duration;
         step(startTime, duration);
     }
 
@@ -40,6 +43,10 @@ public abstract class LimbStrategy {
             complete();
         }
 
+    }
+
+    protected long getDuration() {
+        return duration;
     }
 
     private double calculatePercentage(long startTime, long duration) {

@@ -55,7 +55,7 @@ public class WingState extends HandState {
 
 
     @Override
-    public void attack(long durationOfAttack) {
+    public void attack(long windUp, long coolDwon) {
 
     }
 
