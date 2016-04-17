@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.Factories;
 
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
@@ -12,10 +13,10 @@ import com.wecanteven.UtilityClasses.GameColor;
  * Created by adamfortier on 4/16/16.
  */
 public class EquipableItemVOFactory {
-    private SimpleVOFactory viewObjectFactory;
+    private SimpleVOFactory simpleVOFactory;
 
     public EquipableItemVOFactory(SimpleVOFactory viewObjectFactory) {
-        this.viewObjectFactory = viewObjectFactory;
+        this.simpleVOFactory = viewObjectFactory;
     }
 
 
@@ -26,13 +27,17 @@ public class EquipableItemVOFactory {
     public ViewObject createEquipment(Position p, Entity entity, String name, GameColor color) {
         //First we try to find a nondirectional equipment
         try {
-            return viewObjectFactory.createSimpleViewObject(p, "Equipment/" + color + "/" + name + ".xml");
+            return simpleVOFactory.createSimpleViewObject(p, "Equipment/" + color + "/" + name + ".xml");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        DirectionalViewObject directionalViewObject =  viewObjectFactory.createDirectional(p, entity, "Equipment/" +color.name + "/" + name + "/");
+        DirectionalViewObject directionalViewObject =  simpleVOFactory.createDirectional(p, entity, "Equipment/" +color.name + "/" + name + "/");
         entity.attach(directionalViewObject);
         return directionalViewObject;
+    }
+
+    public MicroPositionableViewObject createBuff(Position p, String name) {
+        return simpleVOFactory.createMicroPositionableViewObject(simpleVOFactory.createSimpleViewObject(p, "Buffs/" + name + ".xml"));
     }
 }

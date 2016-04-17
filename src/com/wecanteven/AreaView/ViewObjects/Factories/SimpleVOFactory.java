@@ -7,6 +7,7 @@ import com.wecanteven.AreaView.DynamicImages.SimpleDynamicImage;
 import com.wecanteven.AreaView.DynamicImages.StartableDynamicImage;
 import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DestroyableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.HUDDecorator;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving.BipedMovingViewObject;
@@ -20,7 +21,10 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.*;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
+import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Items.InteractiveItem;
+import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Stats.Stats;
@@ -118,6 +122,18 @@ public class SimpleVOFactory {
     public <T extends Moveable & ViewObservable> SimpleMovingViewObject createSimpleMovingViewObject(T subject, ViewObject child) {
         SimpleMovingViewObject mvo = new SimpleMovingViewObject(child, subject, areaView);
         return mvo;
+    }
+
+    public ActivatableViewObject createActivatableViewObject(Position position, InteractiveItem interactiveItem) {
+        return new ActivatableViewObject(position, interactiveItem,
+                dynamicImageFactory.loadDynamicImage("Items/" + interactiveItem.getName() + "/Active.xml"),
+                dynamicImageFactory.loadDynamicImage("Items/" + interactiveItem.getName() + "/Inactive.xml"),
+                hexDrawingStrategy);
+    }
+
+    public DestroyableViewObject createOneShotItem(Position position, StartableDynamicImage animation, OneShot oneShot) {
+        StartableViewObject interalVO = new StartableViewObject(position, animation, hexDrawingStrategy);
+        return new DestroyableViewObject(interalVO, interalVO, oneShot, areaView, 1000);
     }
 
 

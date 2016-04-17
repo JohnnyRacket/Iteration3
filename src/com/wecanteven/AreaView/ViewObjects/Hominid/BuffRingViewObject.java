@@ -2,6 +2,8 @@ package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
+import com.wecanteven.AreaView.ViewObjects.Factories.EquipableItemVOFactory;
+import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
 import com.wecanteven.AreaView.ViewObjects.Parallel.ParallelViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
@@ -19,7 +21,7 @@ import java.util.Random;
 public class BuffRingViewObject implements ViewObject, Observer{
     private ArrayList<Pair> buffs = new ArrayList<>();
 
-    private ViewObjectFactory factory;
+    private EquipableItemVOFactory factory;
 
     private double r = 0.7;
     private double height = 4;
@@ -30,7 +32,7 @@ public class BuffRingViewObject implements ViewObject, Observer{
     private Position position;
     private BuffManager subject;
 
-    public BuffRingViewObject(Position p, ViewObjectFactory factory, BuffManager subject) {
+    public BuffRingViewObject(Position p, EquipableItemVOFactory factory, BuffManager subject) {
         this.factory = factory;
         this.position = p;
 

@@ -123,7 +123,7 @@ public class ViewObjectFactory {
                 new FeetJumpingStrategy(0, 2, leftFoot, rightFoot));
 
         //Create the buff thingy
-        BuffRingViewObject buffs = new BuffRingViewObject(p, this, character.getBuffmanager());
+        BuffRingViewObject buffs = new BuffRingViewObject(p, simpleVOFactory.getEquipableItemVOFactory(), character.getBuffmanager());
 
         //Finnally create the Hominoid
         HominidViewObject hominoid = hominidVOFactory.createHominid(
@@ -266,64 +266,13 @@ public class ViewObjectFactory {
         return destroyableMovingDirectionVO;
     }
 
-    public DestroyableViewObject createOneShotItem(Position position, OneShot oneShot) {
-        StartableDynamicImage animation = factory.loadActiveDynamicImage("Items/" + oneShot.getName() + "/" + oneShot.getName() + ".xml");
-
-        StartableViewObject internalVO = new StartableViewObject(position, animation, hexDrawingStrategy);
-        DestroyableViewObject destroyableVO = new DestroyableViewObject(internalVO, internalVO, oneShot, areaView, 1000);
-        return destroyableVO;
-    }
-
 
     private MicroPositionableViewObject createWing(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
         return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(new SimpleViewObject(position, factory.loadDynamicImage("Wings/" + color.name + "/hand.xml"), hexDrawingStrategy), slot, entity, color));
     }
 
-    public SimpleViewObject createObstacle(Position position, Obstacle obstacle) {
-        return new SimpleViewObject(
-                position,
-                factory.loadDynamicImage("Items/" + obstacle.getName() + "/" + obstacle.getName() + ".xml"),
-                hexDrawingStrategy);
-    }
 
-    public DecalViewObject createDecalViewObject(Position position, Decal decal) {
-        return new DecalViewObject(
-                simpleVOFactory.createSimpleViewObject(position, "Decals/" + decal.getName() + ".xml"),
-                decal.getR(),
-                decal.getS()
-        );
-    }
 
-    public MicroPositionableViewObject createBuff(Position p, String name) {
-        return simpleVOFactory.createMicroPositionableViewObject(simpleVOFactory.createSimpleViewObject(p, "Buffs/" + name + ".xml"));
-    }
-
-    public ViewObject createInteractableItem(Position p, InteractiveItem interactiveItem) {
-        ActivatableViewObject vo = new ActivatableViewObject(p,
-                interactiveItem,
-                factory.loadDynamicImage("Items/" + interactiveItem.getName() + "/Active.xml"),
-                factory.loadDynamicImage("Items/" + interactiveItem.getName() + "/Inactive.xml"),
-                hexDrawingStrategy);
-        interactiveItem.attach(vo);
-        return vo;
-    }
-
-    public ViewObject createEquipment(Position p, Entity entity, String name, GameColor color) {
-        //First we try to find a nondirectional equipment
-        try {
-            return simpleVOFactory.createSimpleViewObject(p, "Equipment/" + color + "/" + name + ".xml");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        DirectionalViewObject directionalViewObject =  simpleVOFactory.createDirectional(p, entity, "Equipment/" +color.name + "/" + name + "/");
-        entity.attach(directionalViewObject);
-        return directionalViewObject;
-    }
-
-    private <T extends  Directional & ViewObservable> DirectionalViewObject createBody(Position p, T d, String entityName) {
-        return simpleVOFactory.createDirectional(p, d, "Entities/" +  entityName + "/");
-    }
 
     public ParallelViewObject createFogOfWarViewObject(Position p) {
         return new DarkenedViewObject(p);
@@ -357,15 +306,6 @@ public class ViewObjectFactory {
 
     public DynamicImageFactory getDynamicImageFactory() {
         return factory;
-    }
-
-
-    public ViewObject createHitBox(HitBox hitBox) {
-        String path = "Effects/" + hitBox.getName() + "/" + hitBox.getName() + ".xml";
-        Position p = hitBox.getLocation().toPosition();
-        StartableViewObject hitBoxVO = simpleVOFactory.createStartableViewObject(p, path);
-        hitBoxVO.start(hitBox.getDuration());
-        return hitBoxVO;
     }
 
 

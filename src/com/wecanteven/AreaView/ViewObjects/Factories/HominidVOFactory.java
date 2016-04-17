@@ -11,12 +11,14 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.BuffRingViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
+import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Stats.Stat;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
+import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Moveable;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Direction;
@@ -63,6 +65,11 @@ public class HominidVOFactory {
     public <T extends Moveable & ViewObservable> BipedMovingViewObject createBipedMovingObjectWithCharacterSubject(T subject, ViewObject child) {
         return simpleVOFactory.createBipedMovingViewObject(subject, child, jumpDetector);
     }
+
+    private <T extends Directional & ViewObservable> DirectionalViewObject createBody(Position p, T d, String entityName) {
+        return simpleVOFactory.createDirectional(p, d, "Entities/" +  entityName + "/");
+    }
+
 
 
 
