@@ -12,6 +12,10 @@ public class RetractingStrategy extends LimbStrategy {
     private MicroData left0;
     private MicroData right0;
 
+    private MicroData leftStart;
+    private MicroData rightStart;
+    private boolean hasStarted = false;
+
     public RetractingStrategy(MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
         this.leftHand = leftHand;
         this.rightHand = rightHand;
@@ -28,24 +32,28 @@ public class RetractingStrategy extends LimbStrategy {
 
     @Override
     protected void animate(double percentage) {
-        MicroData leftMid = midPoint(left0, new MicroData(leftHand));
-        MicroData rightMid = midPoint(right0, new MicroData(rightHand));
+        if (!hasStarted) {
+            leftStart = new MicroData(leftHand);
+            rightStart = new MicroData(rightHand);
+        }
+        MicroData leftMid = midPoint(left0, leftStart, percentage);
+        MicroData rightMid = midPoint(right0, rightStart, percentage);
 
         leftMid.set(leftHand);
         rightMid.set(rightHand);
     }
 
-    private MicroData midPoint(MicroData a, MicroData b) {
+    private MicroData midPoint(MicroData a, MicroData b, double percentage) {
         return new MicroData(
-                midpoint(a.r, b.r),
-                midpoint(a.t, b.t),
-                midpoint(a.theta, b.theta),
-                midpoint(a.h, b.h)
+                midpoint(a.r, b.r, percentage),
+                midpoint(a.t, b.t, percentage),
+                midpoint(a.theta, b.theta, percentage),
+                midpoint(a.h, b.h, percentage)
         );
     }
 
-    private double midpoint(double a, double b) {
-        return (a + b)/2;
+    private double midpoint(double a, double b, double percentage) {
+        return (a*(percentage) + b*(1-percentage));
     }
 
     private class MicroData {

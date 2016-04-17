@@ -12,6 +12,7 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject
 import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
+import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Character;
@@ -51,11 +52,11 @@ public class HominidVOFactory {
 
     @Deprecated
     public MicroPositionableViewObject createHandWithWeapon(Position position, Direction direction, String weaponName, EquipmentSlot slot, Entity entity, GameColor color) {
-        return simpleVOFactory.createMicroPositionableViewObject(simpleVOFactory.createEquipable(createHand(position, slot, entity, color), slot, equipableItemVOFactory, entity, color));
+        return simpleVOFactory.createMicroPositionableViewObject(equipableItemVOFactory.createEquipable(equipableItemVOFactory.createEquipment(position, entity, weaponName, color), slot, entity, color));
     }
 
     public MicroPositionableViewObject createHand(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
-        return simpleVOFactory.createMicroPositionableViewObject(simpleVOFactory.createEquipable(simpleVOFactory.createSimpleViewObject(position, "Hands/" + color + "/hand.xml"), slot, equipableItemVOFactory, entity, color));
+        return simpleVOFactory.createMicroPositionableViewObject(equipableItemVOFactory.createEquipable(simpleVOFactory.createSimpleViewObject(position, "Hands/" + color + "/hand.xml"), slot, entity, color));
 
     }
 
@@ -79,6 +80,11 @@ public class HominidVOFactory {
     public HandsViewObject createHandsViewObject(Position p, EquipmentSlot slot, Entity entity, GameColor color) {
         return new HandsViewObject(p, slot, handStateFactory, entity, color);
     }
+
+    private <T extends Directional & ViewObservable> DirectionalViewObject createBody(Position p, T d, String entityName) {
+        return simpleVOFactory.createDirectional(p, d, "Entities/" +  entityName + "/");
+    }
+
 
 
 

@@ -10,6 +10,8 @@ import com.wecanteven.Observers.Observer;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.FilledHex;
 
+import java.awt.*;
+
 /**
  * Created by Alex on 4/7/2016.
  */
@@ -36,21 +38,30 @@ public class DestroyableViewObject extends DecoratorViewObject implements Observ
     @Override
     public void setPosition(Position p) {
         super.setPosition(p);
-        //destoyedViewObject.setPosition(p);
+        destoyedViewObject.setPosition(p);
     }
 
     @Override
     public void update() {
         if (subject.isDestroyed() && !isDestroyed) {
-            destoyedViewObject.setPosition(getPosition());
-            areaView.addViewObject(destoyedViewObject, getPosition());
+            activeChild = destoyedViewObject;
+
             destoyedViewObject.start(duration);
 
-
             //reallyRemove(ViewTime.getInstance().getCurrentTime());
-            areaView.removeViewObject(getChild(), getPosition());
+            //areaView.removeViewObject(getChild(), getPosition()); this comment is part of a refactorrrr... might need to put it back
             isDestroyed = true;
         }
+        else if(!subject.isDestroyed()) {
+            activeChild = getChild();
+            isDestroyed = false;
+        }
+    }
+
+    @Override
+    public void draw(Graphics2D g) {
+        if(!subject.isDestroyed())
+            super.draw(g);
     }
 
     private void reallyRemove(long startTime) {

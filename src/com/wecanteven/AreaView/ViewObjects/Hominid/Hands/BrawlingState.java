@@ -36,7 +36,7 @@ public class BrawlingState extends HandState {
         walkingStrategy = new HandWalkingStrategy(0.3, leftHand, rightHand);
         jumpingStrategy = new HandsYJumpingStrategy(height, 5, leftHand, rightHand);
         fallingStrategy = new HandsFallingStrategy(height, radius, leftHand, rightHand);
-        punchingStrategy = new PunchingStrategy(leftHand, rightHand, 1);
+        punchingStrategy = new PunchingStrategy(leftHand, rightHand, 0.7);
         retractingStrategy = new RetractingStrategy(leftHand, rightHand);
     }
 

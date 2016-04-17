@@ -461,9 +461,9 @@ public class UIViewFactory {
     public void createAbilityView(Character character){
         NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
         NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
-        AbilityViewObjectCreationVisitor visitor = new AbilityViewObjectCreationVisitor(); //add params
+        AbilityViewObjectCreationVisitor visitor = new AbilityViewObjectCreationVisitor(this, menu, equipMenu); //add params
 
-        //character.accept(visitor);
+        character.accept(visitor);
         NavigatableList list = visitor.getInventory();
         NavigatableList equiplist = visitor.getEquipped();
     }
