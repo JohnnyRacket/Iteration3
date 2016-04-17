@@ -17,7 +17,7 @@ public class Sound {
 
     public enum Volume {
         MUTE(-80),
-        LOW(-32),
+        LOW(-30),
         MEDIUM(-16),
         HIGH(6);
         private float gain;
