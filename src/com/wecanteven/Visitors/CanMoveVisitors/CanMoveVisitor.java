@@ -1,4 +1,4 @@
-package com.wecanteven.Visitors;
+package com.wecanteven.Visitors.CanMoveVisitors;
 
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Map.Map;
@@ -7,6 +7,8 @@ import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.Map.Tile;
+import com.wecanteven.Visitors.MapVisitor;
+import com.wecanteven.Visitors.TerrainVisitor;
 
 /**
  * Created by John on 4/1/2016.

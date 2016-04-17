@@ -2,7 +2,7 @@ package com.wecanteven.Models.Occupation;
 
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Visitors.OccupationVisitor;
-import com.wecanteven.Visitors.TerranianCanMoveVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.TerranianCanMoveVisitor;
 
 /**
  * Created by Joshua Kegley on 4/16/2016.

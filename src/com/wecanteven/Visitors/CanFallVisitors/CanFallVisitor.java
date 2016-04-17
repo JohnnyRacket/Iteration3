@@ -1,7 +1,9 @@
-package com.wecanteven.Visitors;
+package com.wecanteven.Visitors.CanFallVisitors;
 
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
+import com.wecanteven.Visitors.MapVisitor;
+import com.wecanteven.Visitors.TerrainVisitor;
 
 /**
  * Created by John on 4/4/2016.

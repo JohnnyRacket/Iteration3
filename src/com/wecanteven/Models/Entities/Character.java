@@ -271,8 +271,6 @@ public class Character extends Entity {
         if (points >= 0) {
             this.availableSkillPoints = points;
         }
-
-        System.out.println("Character has " + getAvailablePoints() + " skill points");
     }
     public boolean allocateSkillPoint(Skill skill, int points) {
         if (points > 0 && points <= getAvailablePoints()) {
@@ -286,6 +284,9 @@ public class Character extends Entity {
             }
         }
         return false;
+    }
+    public int getSkillPoints(Skill skill) {
+        return getOccupation().getSkillPoints(skill);
     }
 
     @Override

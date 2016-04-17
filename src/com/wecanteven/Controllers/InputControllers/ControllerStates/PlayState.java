@@ -45,6 +45,8 @@ public class PlayState extends ControllerState {
         mappings.put(ActionEnum.ATTACK, KeyEvent.VK_L);
         mappings.put(ActionEnum.INTERACT, KeyEvent.VK_ENTER);
         mappings.put(ActionEnum.ESCAPE, KeyEvent.VK_ESCAPE);
+        mappings.put(ActionEnum.UP, KeyEvent.VK_J);
+        mappings.put(ActionEnum.DOWN, KeyEvent.VK_H);
         this.setMappings(mappings);
     }
     @Override
@@ -96,6 +98,14 @@ public class PlayState extends ControllerState {
             ViewTime.getInstance().register(()->{
                 UIViewFactory.getInstance().createPauseMenu();
             },0);
+        }, this.getjFrame(), this.getController()));
+
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.UP), ()->{
+            this.setContinuousCommandToExecute(()->avatar.move(Direction.UP));
+        }, this.getjFrame(), this.getController()));
+
+        this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.DOWN), ()->{
+            this.setContinuousCommandToExecute(()->avatar.move(Direction.DOWN));
         }, this.getjFrame(), this.getController()));
     }
 

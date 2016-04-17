@@ -1,6 +1,5 @@
 package com.wecanteven.Models.Entities;
 
-import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Entities.AvatarStates.AvatarState;
 import com.wecanteven.Models.Entities.AvatarStates.DeadState;
 import com.wecanteven.Models.Entities.AvatarStates.EntityState;
@@ -8,16 +7,10 @@ import com.wecanteven.Models.Entities.AvatarStates.MountState;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.ModelTime.ModelTime;
-import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.AvatarVisitor;
-import com.wecanteven.Visitors.CanFallVisitor;
-import com.wecanteven.Visitors.CanMoveVisitor;
-import com.wecanteven.Visitors.EntityVisitor;
-
-import java.util.ArrayList;
 
 /**
  * Created by Brandon on 3/31/2016.
