@@ -52,6 +52,7 @@ public class Avatar implements Observer{
     }
     public void mount(Mount mount){
         avatar.setDestroyed(true);
+        //mount.setActiveView(5, );
         swapState(new MountState(avatar, mount));
     }
     public void dismount(){

@@ -1,7 +1,12 @@
 package com.wecanteven.Models.Entities;
 
+import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Observers.Activatable;
+import com.wecanteven.Observers.Directional;
+import com.wecanteven.Observers.Positionable;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.Visitors.EntityVisitor;
@@ -11,7 +16,8 @@ import com.wecanteven.Visitors.EntityVisitor;
  */
 public class Mount extends Character {
   Character mounter;
-  ViewObject mountVO;
+
+
 
   public Mount(ActionHandler actionHandler, Direction direction) {
     super(actionHandler, direction, GameColor.BLUE);
@@ -20,27 +26,20 @@ public class Mount extends Character {
 
   public void mount(Character mounter) {
     this.mounter = mounter;
-    notifyObserversOnNotDestroyed();
-    try {
-      getFactory().setCenter(mountVO);
-    }
-    catch(Exception e) {
-      e.printStackTrace();
-    }
     this.mounter.setDestroyed(true);
   }
 
   public void dismount() {
-
+    mounter = null;
   }
 
   public void accept(EntityVisitor visitor) {
-    visitor.visitMount(this);
+      visitor.visitMount(this);
+      if(mounter != null) {
+          visitor.visitCharacter(mounter);
+      }
   }
 
-  public void addVO(ViewObject mountVO) {
-    this.mountVO = mountVO;
-  }
 
   @Override
   public void interact(Character character) {
@@ -56,4 +55,5 @@ public class Mount extends Character {
   public String toString() {
     return "Mount instance!";
   }
+
 }

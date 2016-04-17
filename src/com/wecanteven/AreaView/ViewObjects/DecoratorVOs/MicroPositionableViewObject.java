@@ -116,4 +116,20 @@ public class MicroPositionableViewObject extends DecoratorViewObject {
     private double getS() {
         return (0 - getY() - getR() * (HEX_LENGTH/2)) / HEX_LENGTH;
     }
+
+    public double getOffsetAngle() {
+        return offsetAngle;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getTangent() {
+        return tangent;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
 }

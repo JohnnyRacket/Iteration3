@@ -1,6 +1,5 @@
 package com.wecanteven.Models.Entities;
 
-import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
@@ -13,6 +12,7 @@ import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
+import com.wecanteven.Observers.Actionable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
@@ -22,11 +22,10 @@ import com.wecanteven.Visitors.EntityVisitor;
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class Character extends Entity {
+public class Character extends Entity implements Actionable {
     private Occupation occupation;
     private ItemStorage itemStorage, abilityItemStorage;
-    private int windUpTicks, coolDownTicks;
-    private SimpleVOFactory factory;
+    private int windUpTicks = 0, coolDownTicks = 0;
 
     private int availableSkillPoints = 0;
 
@@ -62,17 +61,6 @@ public class Character extends Entity {
         getItemStorage().setOwner(this);
         windUpTicks = 0;
         coolDownTicks = 0;
-    }
-
-    public void setFactory(SimpleVOFactory factory) {
-        this.factory = factory;
-    }
-
-    public SimpleVOFactory getFactory() throws Exception {
-        if(factory == null)
-            throw new Exception("No View Object Factory Exists");
-        else
-            return factory;
     }
 
     public void attack(Direction dir) {

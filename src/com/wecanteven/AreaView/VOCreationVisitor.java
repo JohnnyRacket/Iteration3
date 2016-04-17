@@ -62,7 +62,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitHitBox(HitBox hitBox){
-        areaView.addViewObject(viewObjectFactory.createHitBox(hitBox));
+        areaView.addViewObject(mapItemVOFactory.createHitBox(hitBox));
 
         //areaView.addViewObject(factory.createSimpleViewObject(hitBox.getLocation().toPosition(),"Decals/Cactus1.xml"));
     }
@@ -83,11 +83,10 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     public void visitCharacter(Character c) {
         System.out.println("adding character to areaview");
         ViewObject avatar = viewObjectFactory.createBaseHominoid(currentPosition, c, "Connery");
-        simpleVOFactory.makeLightSource(avatar, 5, c);
+        simpleVOFactory.makeLightSource(c, 5);
         simpleVOFactory.setCenter(avatar);
         areaView.addViewObject(avatar);
         areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
-        c.setFactory(simpleVOFactory);
     }
 
     @Override
@@ -101,8 +100,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     public void visitMount(Mount mount) {
         System.out.println("adding mount to areaview");
         ViewObject mountVO = viewObjectFactory.createBaseHominoid(currentPosition, mount, "mounty");
-        mount.addVO(mountVO);
-        mount.setFactory(simpleVOFactory);
         areaView.addViewObject(mountVO);
 
     }
@@ -114,17 +111,17 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitObstacle(Obstacle obstacle) {
-        areaView.addViewObject(viewObjectFactory.createObstacle(currentPosition, obstacle));
+        areaView.addViewObject(mapItemVOFactory.createObstacle(currentPosition, obstacle));
     }
 
     @Override
     public void visitInteractiveItem(InteractiveItem interactable) {
-        areaView.addViewObject(viewObjectFactory.createInteractableItem(currentPosition, interactable));
+        areaView.addViewObject(mapItemVOFactory.createInteractableItem(currentPosition, interactable));
     }
 
     @Override
     public void visitOneShotItem(OneShot oneshot) {
-        areaView.addViewObject(viewObjectFactory.createOneShotItem(currentPosition, oneshot));
+        areaView.addViewObject(mapItemVOFactory.createOneShotItem(currentPosition, oneshot));
     }
 
     @Override
@@ -263,6 +260,6 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitDecal(Decal d) {
-        areaView.addViewObject(viewObjectFactory.createDecalViewObject(currentPosition, d));
+        areaView.addViewObject(mapItemVOFactory.createDecalViewObject(currentPosition, d));
     }
 }

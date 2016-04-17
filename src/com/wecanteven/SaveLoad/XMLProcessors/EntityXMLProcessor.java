@@ -7,10 +7,7 @@ import com.wecanteven.Models.Interactions.InteractionStrategy;
 import com.wecanteven.Models.Interactions.NoInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Map.Map;
-import com.wecanteven.Models.Occupation.Occupation;
-import com.wecanteven.Models.Occupation.Smasher;
-import com.wecanteven.Models.Occupation.Sneak;
-import com.wecanteven.Models.Occupation.Summoner;
+import com.wecanteven.Models.Occupation.*;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.UtilityClasses.Direction;
@@ -64,7 +61,6 @@ public class EntityXMLProcessor extends XMLProcessor {
         return c;
     }
 
-
     public static void formatAvatar(Avatar avatar) {
         ArrayList<Attr> attr = new ArrayList<>();
         sf.appendObjectTo("Tile", sf.createSaveElement("Avatar", attr));
@@ -74,7 +70,6 @@ public class EntityXMLProcessor extends XMLProcessor {
     public static Avatar parseAvatar(Map map, Element el) {
         return new Avatar(parseCharacter(map, sf.getElemenetById(el, "Character", 0)), map);
     }
-
 
     public static void formatNPC(NPC npc, String parent) {
         ArrayList<Attr> attr = new ArrayList<>();
@@ -123,7 +118,6 @@ public class EntityXMLProcessor extends XMLProcessor {
         );
     }
 
-
     public static void formatLocation(SaveFile save, Entity e) {
         ArrayList<Attr> attr = new ArrayList<>();
         attr.add(save.saveAttr("r", e.getLocation().getR()));
@@ -149,7 +143,6 @@ public class EntityXMLProcessor extends XMLProcessor {
 
     public static Occupation parseOccupation(String o, NodeList skills) {
         Occupation occupation;
-        // TODO support the other occupations
         switch(o){
             case "Smasher":
                 occupation =  new Smasher();
@@ -159,6 +152,15 @@ public class EntityXMLProcessor extends XMLProcessor {
                 break;
             case "Sneak":
                 occupation =  new Sneak();
+                break;
+            case "Pet":
+                occupation = new Pet();
+                break;
+            case "Friendly":
+                occupation = new Friendly();
+                break;
+            case "Enemy":
+                occupation = new Enemy();
                 break;
             default:
                 occupation =  new Smasher();

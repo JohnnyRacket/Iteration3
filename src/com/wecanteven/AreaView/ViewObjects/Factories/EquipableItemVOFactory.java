@@ -1,6 +1,7 @@
 package com.wecanteven.AreaView.ViewObjects.Factories;
 
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
@@ -18,10 +19,10 @@ import java.io.FileNotFoundException;
  * Created by adamfortier on 4/16/16.
  */
 public class EquipableItemVOFactory {
-    private SimpleVOFactory viewObjectFactory;
+    private SimpleVOFactory simpleVOFactory;
 
     public EquipableItemVOFactory(SimpleVOFactory viewObjectFactory) {
-        this.viewObjectFactory = viewObjectFactory;
+        this.simpleVOFactory = viewObjectFactory;
     }
 
 
@@ -33,13 +34,17 @@ public class EquipableItemVOFactory {
         //First we try to find a nondirectional equipment
         String path = "Equipment/" + color + "/" + name + ".xml";
         if (fileExists("resources/" + path))
-            return viewObjectFactory.createSimpleViewObject(p, path);
+            return simpleVOFactory.createSimpleViewObject(p, path);
 
-        return  viewObjectFactory.createDirectional(p, subject, "Equipment/" +color.name + "/" + name + "/");
+        return  simpleVOFactory.createDirectional(p, subject, "Equipment/" +color.name + "/" + name + "/");
 
     }
 
     private boolean fileExists(String path) {
         return (new File(path)).exists();
+    }
+
+    public MicroPositionableViewObject createBuff(Position p, String name) {
+        return simpleVOFactory.createMicroPositionableViewObject(simpleVOFactory.createSimpleViewObject(p, "Buffs/" + name + ".xml"));
     }
 }

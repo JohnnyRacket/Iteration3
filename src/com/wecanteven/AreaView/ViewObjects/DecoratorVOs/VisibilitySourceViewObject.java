@@ -10,14 +10,13 @@ import com.wecanteven.UtilityClasses.HexRing;
 /**
  * Created by alexs on 4/10/2016.
  */
-public class VisibilitySourceViewObject extends DecoratorViewObject implements Observer {
+public class VisibilitySourceViewObject implements Observer {
     private AreaView area;
     private int radius;
     private Position position;
     private Positionable subject;
 
-    public <T extends Positionable & ViewObservable> VisibilitySourceViewObject(ViewObject child, T subject, AreaView area, int radius) {
-        super(child);
+    public <T extends Positionable & ViewObservable> VisibilitySourceViewObject(T subject, AreaView area, int radius) {
         this.area = area;
         this.radius = radius;
         this.subject = subject;
