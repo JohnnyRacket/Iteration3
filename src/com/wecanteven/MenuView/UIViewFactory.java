@@ -160,23 +160,22 @@ public class UIViewFactory {
         SwappableView view = new SwappableView();
         //add decorators to center the menu
 
-        view.addNavigatable(classSelection);
-        view.addNavigatable(faceSelection);
         view.addNavigatable(colorSelection);
+        view.addNavigatable(faceSelection);
+        view.addNavigatable(classSelection);
         view.addNavigatable(startGameSelection);
 
         RowedCompositeContainer selectRow = new RowedCompositeContainer(500, 450);
 
 
-
-        selectRow.addDrawable(classSelection);
-        selectRow.addDrawable(faceSelection);
         selectRow.addDrawable(colorSelection);
+        selectRow.addDrawable(faceSelection);
+        selectRow.addDrawable(classSelection);
         selectRow.addDrawable(startGameSelection);
 
 
 
-        TitleBarDecorator title = new TitleBarDecorator(selectRow,"Configuration", Config.GRAY);
+        TitleBarDecorator title = new TitleBarDecorator(selectRow,"Select your Color:", Config.GRAY);
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
 
@@ -219,18 +218,21 @@ public class UIViewFactory {
             view.getMenuViewContainer().swap();
             classList.setCurrentIndex(0);
             classSelection.setActive(true);
+            title.setTitle("Start Game!");
         }));
         classList.addItem(new GridString("Sneak", ()->{
             menuItems[0] = new Sneak();
             view.getMenuViewContainer().swap();
             classList.setCurrentIndex(1);
             classSelection.setActive(true);
+            title.setTitle("Start Game!");
         }));
         classList.addItem(new GridString("Summoner", ()->{
             menuItems[0] = new Summoner();
             view.getMenuViewContainer().swap();
             classList.setCurrentIndex(2);
             classSelection.setActive(true);
+            title.setTitle("Start Game!");
         }));
 
 
@@ -241,7 +243,7 @@ public class UIViewFactory {
             view.getMenuViewContainer().swap();
             faceList.setCurrentIndex(0);
             faceSelection.setActive(true);
-            System.out.println("Selected Connery Face");
+            title.setTitle("Select your Class:");
         }));
         faceList.addItem(new GridFace("Test Face", () -> {
             //set Face
@@ -250,7 +252,7 @@ public class UIViewFactory {
             view.getMenuViewContainer().swap();
             faceList.setCurrentIndex(1);
             faceSelection.setActive(true);
-            System.out.println("Selected Test Face");
+            title.setTitle("Select your Class:");
 
         }));
 
@@ -265,6 +267,7 @@ public class UIViewFactory {
             view.getMenuViewContainer().swap();
             colorList.setCurrentIndex(0);
             colorSelection.setActive(true);
+            title.setTitle("Choose your Face:");
         }));
         colorList.addItem(new GridColor(GameColor.GREEN, () -> {
             //setColor to ace
@@ -276,6 +279,7 @@ public class UIViewFactory {
             view.getMenuViewContainer().swap();
             colorList.setCurrentIndex(1);
             colorSelection.setActive(true);
+            title.setTitle("Choose your Face:");
 
         }));
         colorList.addItem(new GridColor(GameColor.PINK, () -> {
@@ -288,6 +292,7 @@ public class UIViewFactory {
             view.getMenuViewContainer().swap();
             colorList.setCurrentIndex(2);
             colorSelection.setActive(true);
+            title.setTitle("Choose your Face:");
 
         }));
         colorList.addItem(new GridColor(GameColor.YELLOW, () -> {
@@ -300,6 +305,7 @@ public class UIViewFactory {
             view.getMenuViewContainer().swap();
             colorList.setCurrentIndex(3);
             colorSelection.setActive(true);
+            title.setTitle("Choose your Face:");
 
         }));
 
@@ -325,6 +331,8 @@ public class UIViewFactory {
                     classSelection.setActive(false);
                     colorSelection.setActive(false);
                     view.getMenuViewContainer().swap();
+                    title.setTitle("Select your Color:");
+                    startList.setCurrentIndex(0);
                 })
         );
 
