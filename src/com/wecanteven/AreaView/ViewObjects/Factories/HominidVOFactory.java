@@ -64,7 +64,7 @@ public class HominidVOFactory {
         return simpleVOFactory.createMicroPositionableViewObject(simpleVOFactory.createSimpleViewObject(position, "Feet/" + color + "/Foot.xml"));
     }
 
-    public HominidViewObject createHominid(Position position, Entity entity, ViewObject body, ViewObject head, HandsViewObject hands, FeetViewObject feet, BuffRingViewObject buffs){
+    public HominidViewObject createHominid(Position position, Character entity, ViewObject body, ViewObject head, HandsViewObject hands, FeetViewObject feet, BuffRingViewObject buffs){
         return simpleVOFactory.createHominid(position, entity, body, head, hands, feet, buffs, jumpDetector);
     }
 

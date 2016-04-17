@@ -45,7 +45,7 @@ public abstract class LimbStrategy {
 
     }
 
-    protected long getDuration() {
+    protected final long getDuration() {
         return duration;
     }
 
