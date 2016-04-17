@@ -176,13 +176,13 @@ public class UIViewFactory {
 
 
 
-        TitleBarDecorator title = new TitleBarDecorator(selectRow,"Configuration", Config.PINK);
+        TitleBarDecorator title = new TitleBarDecorator(selectRow,"Configuration", Config.GRAY);
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
 
         view.addDrawable(vertCenter);
 
-        TitleBarDecorator previewTitle = new TitleBarDecorator(characterView,"Preview", Config.PINK);
+        TitleBarDecorator previewTitle = new TitleBarDecorator(characterView,"Preview", Config.GRAY);
         HorizontalCenterContainer previewTitleH = new HorizontalCenterContainer(previewTitle);
         VerticalCenterContainer previewTitleV = new VerticalCenterContainer(previewTitleH);
 
@@ -192,7 +192,7 @@ public class UIViewFactory {
 
 
         //MAIN WINDOW TITLE
-        TitleBarDecorator mainView = new TitleBarDecorator(columns,"Create Character", Config.DARK_PINK);
+        TitleBarDecorator mainView = new TitleBarDecorator(columns,"Create Character", Config.DARK_GRAY);
         HorizontalCenterContainer mainViewC = new HorizontalCenterContainer(mainView);
         VerticalCenterContainer mainViewV = new VerticalCenterContainer(mainViewC);
 
@@ -310,6 +310,21 @@ public class UIViewFactory {
                     NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine, (Occupation)menuItems[0], (String)menuItems[1], (GameColor)menuItems[2]);
                     template.launch();
                     resumeGame();
+                })
+        );
+        startList.addItem(
+                new ScrollableMenuItem("Restart", () -> {
+                    menuItems[0] = null;
+                    menuItems[1] = null;
+                    menuItems[2] = null;
+                    preview.setColor(GameColor.GRAY);
+                    mainView.setBgColor(GameColor.GRAY.dark);
+                    title.setBgColor(GameColor.GRAY.light);
+                    previewTitle.setBgColor(GameColor.GRAY.light);
+                    faceSelection.setActive(false);
+                    classSelection.setActive(false);
+                    colorSelection.setActive(false);
+                    view.getMenuViewContainer().swap();
                 })
         );
 

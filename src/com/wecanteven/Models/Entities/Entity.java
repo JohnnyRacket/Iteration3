@@ -352,4 +352,8 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     public void restoreCanFall() {
         setCanFallVisitor(cachedCanFall);
     }
+
+    public void setColor(GameColor color){
+        this.color = color;
+    }
 }
