@@ -104,6 +104,7 @@ public abstract class AbstractActionController implements TargetVisitor{
         }else{return false;}
     }
 
+
     public Character getCharacter() {
         return character;
     }

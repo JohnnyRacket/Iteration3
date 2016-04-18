@@ -213,9 +213,11 @@ public class ViewObjectFactory {
         EquipmentSlot hatSlot = character.getItemStorage().getEquipped().getHead();
 
         //Create the body and decorate it with body armor
-        SimpleViewObject body = new SimpleViewObject(p,
-                factory.loadDynamicImage("Entities/MiniBeans/" + GameColor.BLUE + ".xml"),
-                hexDrawingStrategy);
+        SimpleViewObject body = simpleVOFactory.createSimpleViewObject(p, "Entities/MiniBeans/" + GameColor.BLUE + ".xml");
+
+//                new SimpleViewObject(p,
+//                factory.loadDynamicImage("Entities/MiniBeans/" + GameColor.BLUE + ".xml"),
+//                hexDrawingStrategy);
         EquipableViewObject bodyArmor = equipableItemVOFactory.createEquipable(body, chestSlot, character, character.getColor());
 
         //Create the face and decorate it with a hat
@@ -266,22 +268,22 @@ public class ViewObjectFactory {
 
 
         //Make a moving view object
-        BipedMovingViewObject moivingHominoidWithHUD = hominidVOFactory.createBipedMovingObjectWithCharacterSubject(character, homioidWithHUD);
-
 
         //Now give him a death animation
         StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Gray.xml"), hexDrawingStrategy);
 
         //And return the new destroyable VO
         DestroyableViewObject destroyableViewObject = new DestroyableViewObject(
-                moivingHominoidWithHUD,
+                homioidWithHUD,
                 startableViewObject,
                 character,
                 areaView,
                 800);
 
+        BipedMovingViewObject moivingHominoidWithHUD = hominidVOFactory.createBipedMovingObjectWithCharacterSubject(character, destroyableViewObject);
+
         //Finally return a moving avatar
-        return hominoid;
+        return moivingHominoidWithHUD;
     }
 
     public DestroyableViewObject createTakeableItem(Position position, TakeableItem takeableItem) {

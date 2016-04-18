@@ -90,8 +90,8 @@ public class AbilityFactory {
         abilityImage = "Punch";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
         Ability ability = new Ability(abilityName,caster,generator,skill);
-        ability.setCooldownTicks(5);
-        ability.setWindUpTicks(5);
+        ability.setCooldownTicks(55);
+        ability.setWindUpTicks(55);
         ability.setCast(true);
         return ability;
     }
@@ -148,7 +148,7 @@ public class AbilityFactory {
         generator.setDistance(duration);
         generator.setSpeed(30);
         Ability ability = new Ability(abilityName,caster,generator,skill);
-        ability.setCooldownTicks(15);
+        ability.setCooldownTicks(15*(duration));
         ability.setWindUpTicks(15);
         ability.setCast(true);
         return ability;

@@ -277,14 +277,14 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     public void visitEnemy(Enemy enemy) {
         ViewObject avatar = viewObjectFactory.createBaseHominoid(currentPosition, currentCharacter, "Connery");
             areaView.addViewObject(avatar);
-            areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
+         //   areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
     }
 
     @Override
     public void visitFriendly(Friendly friendly) {
             ViewObject avatar = viewObjectFactory.createBaseHominoid(currentPosition, currentCharacter, "Connery");
             areaView.addViewObject(avatar);
-            areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
+           // areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
     }
 
         @Override
