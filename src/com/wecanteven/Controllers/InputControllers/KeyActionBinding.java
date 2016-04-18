@@ -38,4 +38,28 @@ public class KeyActionBinding implements KeyListener{
     public void keyReleased(KeyEvent e) {
         controller.removeKeyActive();
     }
+
+    public Integer getKey() {
+        return key;
+    }
+
+    public void setKey(Integer key) {
+        this.key = key;
+    }
+
+    public KeyInteractionCommand getAction() {
+        return action;
+    }
+
+    public void setAction(KeyInteractionCommand action) {
+        this.action = action;
+    }
+
+    public MainController getController() {
+        return controller;
+    }
+
+    public void setController(MainController controller) {
+        this.controller = controller;
+    }
 }

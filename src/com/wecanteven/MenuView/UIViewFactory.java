@@ -858,7 +858,6 @@ public class UIViewFactory {
                 menu.setList(list);
             }));
             menu.setList(keyBindList);
-
         }));
 
         NavigatableList windowOptions = new NavigatableList();
@@ -1167,7 +1166,8 @@ public class UIViewFactory {
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
-        controller.setMenuState(view.getMenuViewContainer());
+
+        //controller.setMenuState(view.getMenuViewContainer());
 
     }
 
