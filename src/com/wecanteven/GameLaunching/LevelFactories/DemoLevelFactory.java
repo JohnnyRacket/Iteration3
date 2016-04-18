@@ -693,7 +693,7 @@ public class DemoLevelFactory extends LevelFactory {
     @Override
     public void populateMap(Map map) {
         areasOfEffect(map);
-        //items(map);
+        items(map);
         mount(map);
         weaponNPC(map);
         dialogNPC(map);
@@ -803,13 +803,13 @@ public class DemoLevelFactory extends LevelFactory {
     public void items(Map map) {
 
         //One shot
-        map.add(ItemMap.getInstance().getItemAsOneShot("Orange"), new Location(1,15,3));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Blue"), new Location(2,15,3));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Purple"), new Location(3,15,3));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Red"), new Location(4,15,3));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Green"), new Location(5,15,4));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Orange"), new Location(1,15,5));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Blue"), new Location(2,15,5));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Purple"), new Location(3,15,5));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Red"), new Location(4,15,5));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Green"), new Location(5,15,5));
 
-        map.add(ItemMap.getInstance().getItemAsAbility("BindWounds"), new Location(9,13,4));
+        map.add(ItemMap.getInstance().getItemAsAbility("SpeedUp"), new Location(9,13,5));
 
 
         map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,4));
