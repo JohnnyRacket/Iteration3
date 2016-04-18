@@ -808,7 +808,7 @@ public class UIViewFactory {
             },0);
             controller.setMenuState(container);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
+        ScrollableMenu menu = new ScrollableMenu(130,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
 
@@ -857,7 +857,7 @@ public class UIViewFactory {
                 createTradeView(shopOwner, buyer, false);
             },0);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
+        ScrollableMenu menu = new ScrollableMenu(130,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
 
