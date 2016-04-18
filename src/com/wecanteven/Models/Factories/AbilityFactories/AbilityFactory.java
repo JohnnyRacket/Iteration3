@@ -147,12 +147,10 @@ public class AbilityFactory {
         skillLevel = caster.getSkillPoints(skill);
         multiplier = skillLevel+statLevel;
         effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
-        duration = 1;
         abilityName = "Ranged_Weapon";
         abilityImage = "Punch";
         ProjectileHitBoxGenerator generator = new ProjectileHitBoxGenerator(abilityImage,caster,effect,duration);
-        int distance = 5;
-        generator.setDistance(distance);
+        generator.setDistance(duration);
         ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(10);
         ability.setWindUpTicks(10);

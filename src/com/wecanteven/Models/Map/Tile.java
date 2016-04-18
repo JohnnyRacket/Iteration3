@@ -222,7 +222,7 @@ public class Tile implements MapVisitable {
 //    }
 
     public boolean add(HitBox hitBox){
-
+System.out.print("GOT HERER");
         boolean wasAdded = false;
         if(hitBoxes.add(hitBox)){
             if (hasEntity()) {

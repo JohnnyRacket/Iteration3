@@ -388,6 +388,7 @@ public class Map implements MapVisitable, ActionHandler {
 
 
     public boolean add(HitBox hitbox, Location loc){
+        System.out.println("Trying to add the hitbox to the tile");
         if(columns[loc.getR()][loc.getS()].add(hitbox, loc.getZ())){
             System.out.println("Adding the hitbox to the tile");
             hitbox.setLocation(loc);

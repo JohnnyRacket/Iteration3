@@ -17,7 +17,7 @@ public class ProjectileHitBoxGenerator extends HitBoxGenerator {
 
     public ProjectileHitBoxGenerator(String name, Character caster,Effects effect,int duration){
         setCaster(caster);
-        setDuration(duration);
+        setDistance(duration);
         location = getCaster().getLocation();
         setHitBox(new HitBox(name,caster.getLocation(),effect,caster.getActionHandler(),300));
         traveled = 0;
@@ -35,6 +35,7 @@ public class ProjectileHitBoxGenerator extends HitBoxGenerator {
     }
 
     private void move(){
+        System.out.println("Projectile is on the move");
         if (traveled <= distance) {
             ViewTime.getInstance().register(()->{
                 location = location.add(getCaster().getDirection().getCoords);
