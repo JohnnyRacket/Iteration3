@@ -18,6 +18,7 @@ public class Air extends Terrain {
 
     @Override
     public void interact(Moveable moveable) {
+        System.out.println("Falling");
         moveable.fall();
     }
 }
