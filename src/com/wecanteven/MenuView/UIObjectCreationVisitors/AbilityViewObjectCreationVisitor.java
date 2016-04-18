@@ -9,19 +9,13 @@ import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
-import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
-import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Storage.AbilityStorage.AbilityEquipment;
 import com.wecanteven.Models.Storage.AbilityStorage.AbilityInventory;
 import com.wecanteven.Models.Storage.AbilityStorage.AbilityStorage;
-import com.wecanteven.Models.Storage.ItemStorage.Equipment;
-import com.wecanteven.Models.Storage.ItemStorage.Inventory;
-import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.UtilityClasses.Tuple;
 import com.wecanteven.Visitors.AbilityStorageVisitor;
 import com.wecanteven.Visitors.AbilityVisitor;
 import com.wecanteven.Visitors.EntityVisitor;
-import com.wecanteven.Visitors.ItemStorageVisitor;
 
 import java.util.Iterator;
 
@@ -73,7 +67,6 @@ public class AbilityViewObjectCreationVisitor implements EntityVisitor, AbilityS
 
     }
 
-
     @Override
     public void visitAbilityStorage(AbilityStorage itemStorage) {
         inInv = true;
@@ -81,7 +74,7 @@ public class AbilityViewObjectCreationVisitor implements EntityVisitor, AbilityS
         equippedItems = new NavigatableList();
 
         for (int i = 0; i < 4; i++) {
-            equippedItems.addItemToIndex(null, i);
+            equippedItems.addItem(new GridItem("Empty Slot", () -> {}));
         }
     }
 
@@ -115,6 +108,7 @@ public class AbilityViewObjectCreationVisitor implements EntityVisitor, AbilityS
             equippedItems.addItemToIndex(new GridItem(ability.getName(), () ->
                     factory.createAbilityMenu(character, invHolder, eqHolder, ability)
             ), currentSlot);
+
         }
     }
 }
