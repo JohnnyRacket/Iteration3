@@ -5,11 +5,13 @@ package com.wecanteven.Models.Factories.AbilityFactories;
  */
 
 import com.wecanteven.Models.Abilities.Ability;
+import com.wecanteven.Models.Abilities.Effects.BuffEffect;
 import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.Abilities.Effects.StatsEffect;
 import com.wecanteven.Models.Abilities.HitBoxGenerator;
 import com.wecanteven.Models.Abilities.MeleeRangeHitBoxGenerator;
 import com.wecanteven.Models.Abilities.SelfHitBoxGenerator;
+import com.wecanteven.Models.BuffManager.Buff;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Occupation.Skill;
 import com.wecanteven.Models.Stats.StatsAddable;
@@ -19,7 +21,7 @@ import com.wecanteven.Models.Stats.StatsAddable;
 public class AbilityFactory {
     private String abilityName, abilityImage;
     private int duration;
-    private Effects baseEffect;
+    private Effects effect;
     private HitBoxGenerator generator;
     private int statLevel;
     private Skill skill;
@@ -33,8 +35,8 @@ public class AbilityFactory {
         abilityImage = "Punch";
         skill = Skill.BIND_WOUNDS;
         statLevel = caster.getStats().getIntellect();
-        baseEffect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,1,0));
-        Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,1,0));
+        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
         generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
         ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(30);
@@ -46,8 +48,8 @@ public class AbilityFactory {
     public Ability vendOneHandedWeapon(Character caster) {
         skill = Skill.ONE_HANDED_WEAPON;
         statLevel = caster.getStats().getStrength();
-        baseEffect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-        Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
         duration = 1;
         abilityName = "OneHandedWeapon";
         abilityImage = "Punch";
@@ -63,8 +65,8 @@ public class AbilityFactory {
     public Ability vendTwoHandedWeapon(Character caster) {
         skill = Skill.TWO_HANDED_WEAPON;
         statLevel = caster.getStats().getStrength();
-        baseEffect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-        Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
         duration = 1;
         abilityName = "TwoHandedWeapon";
         abilityImage = "Punch";
@@ -80,8 +82,8 @@ public class AbilityFactory {
     public Ability vendBrawling(Character caster) {
         skill = Skill.BRAWLING;
         statLevel = caster.getStats().getStrength();
-        baseEffect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-        Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
         duration = 1;
         abilityName = "Brawling";
         abilityImage = "Punch";
@@ -93,6 +95,24 @@ public class AbilityFactory {
         return ability;
     }
 
+    //extra abilities
+
+    public Ability vendSpeedUp(Character caster){
+        duration = 1;
+        abilityName = "SpeedUp";
+        abilityImage = "Punch";
+        skill = Skill.BOON;
+        statLevel = caster.getStats().getIntellect();
+        effect = new BuffEffect(new Buff("Purple",
+                duration,
+                (target)-> target.modifyStatsAdditive((new StatsAddable(0, 0, 0, 0, 0, 0, 30, 0, 0))),
+                (target)-> target.modifyStatsSubtractive((new StatsAddable(0, 0, 0, 0, 0, 0, 30, 0, 0)))));
+        generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
+        ability = new Ability(abilityName,caster,generator,skill);
+        ability.setCooldownTicks(30);
+        ability.setWindUpTicks(30);
+        return ability;
+    }
 
 
 
