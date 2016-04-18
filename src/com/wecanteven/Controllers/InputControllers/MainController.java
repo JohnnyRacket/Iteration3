@@ -71,7 +71,7 @@ public class MainController implements Tickable{
         removeState();
         playState.setAvatar(avatar);
         playState.createKeybindings();
-        System.out.println("Starting PLay State");
+
         this.state = playState;
     }
 

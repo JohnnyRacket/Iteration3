@@ -44,15 +44,17 @@ public class Mount extends Character {
 
   @Override
   public void interact(Character character) {
-    System.out.println("MOUNT INTERACTION METHOD");
+
     character.mount(this);
   }
 
   public void interact(Avatar avatar) {
-    System.out.println("Interacting with Avatar");
+
     setMounted(true);
     avatar.mount(this);
   }
+
+
 
   private void setMounted(boolean mounted) {
     this.mounted = mounted;
@@ -65,5 +67,7 @@ public class Mount extends Character {
   public String toString() {
     return "Mount instance!";
   }
+
+
 
 }

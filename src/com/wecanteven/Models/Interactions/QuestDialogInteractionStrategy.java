@@ -77,13 +77,13 @@ public class QuestDialogInteractionStrategy implements InteractionStrategy {
     @Override
     public void interact(Character c) {
         if(questStarted){
-            System.out.println("Quest Started but not Ended");
+
             if(!questEnded){
                 //Quested Started, Lets try to end the quest
                 endQuest(c);
             }
         }else {
-            System.out.println("Quest Started");
+
             //Starting Quest
             startQuest(c);
         }

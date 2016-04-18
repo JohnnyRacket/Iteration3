@@ -1038,7 +1038,7 @@ public class UIViewFactory {
     }
 
     public void createPickPocketView(Character attacker, Character attackee, int ppSkillLevel){
-        System.out.println("Creating PickPocketView");
+
 
         NavigatableGrid inventory = new NavigatableGrid(400, 400, 5, 3);
         inventory.setBgColor(Config.TRANSMEDIUMGREY);
@@ -1089,7 +1089,7 @@ public class UIViewFactory {
                 int skillChance = ppSkillLevel*10;
                 int failChance = 90;
                 failChance -= skillChance + itemChance;
-                System.out.println(failChance);
+
                 Random randomGenerator = new Random();
                 if(!attacker.getItemStorage().inventoryIsFull() && failChance <= randomGenerator.nextInt(100)){
                     //Success

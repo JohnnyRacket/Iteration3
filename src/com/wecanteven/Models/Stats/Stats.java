@@ -55,7 +55,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void update(){
-        System.out.println("ENDLESS LOOP");
+
         levelUp();
     }
 
@@ -70,7 +70,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void addStats(StatsAddable statsAddable){
-        System.out.println("adding: "+statsAddable);
+
         lives.add(statsAddable.getLives());
         strength.add(statsAddable.getStrength());
         agility.add(statsAddable.getAgility());
@@ -93,7 +93,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void subtractStats(StatsAddable statsAddable){
-        System.out.println("subtracting: " +statsAddable);
+
         lives.subtract(statsAddable.getLives());
         strength.subtract(statsAddable.getStrength());
         agility.subtract(statsAddable.getAgility());

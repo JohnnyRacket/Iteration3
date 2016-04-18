@@ -14,7 +14,7 @@ public class AIEngine implements Runnable{
 
     @Override
     public void run() {
-        TimeKeeper timeKeeper = new TimeKeeper(225);
+        TimeKeeper timeKeeper = new TimeKeeper(150);
         while(true) {
             timeKeeper.startTick();
             aiTime.tick();

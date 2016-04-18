@@ -22,61 +22,86 @@ public class PetActionController extends AbstractActionController {
     @Override
     public void visitItemTarget(ItemTarget target) {
         try {
-            System.out.println("moving");
+
             if(this.getCharacter().getLocation().getZ() > target.getLocation().getZ()){
                 ModelTime.getInstance().registerAlertable(()->{
                     this.getCharacter().jump(Direction.DOWN);
                 },0);
-            }
-            if(this.getCharacter().getLocation().getZ() < target.getLocation().getZ()){
+            }else if(this.getCharacter().getLocation().getZ() < target.getLocation().getZ()){
                 ModelTime.getInstance().registerAlertable(()->{
                     this.getCharacter().jump(Direction.UP);
                 },0);
             }
+            Direction nextDir = getPathToTarget(target);
             ModelTime.getInstance().registerAlertable(()->{
-                this.getCharacter().move(getPathToTarget(target));
+                this.getCharacter().move(nextDir);
             },this.getCharacter().getMovingTicks() + 1);
 
 
         }catch (NullPointerException e){
-            System.out.println("direction was null, this might mean john is bad a programming");
+
         }
     }
 
     @Override
     public void visitEnemyTarget(EnemyTarget target) {
         try {
-            if(this.checkLocation(target,2)){
+            if(this.checkAttackLocation(target,2)){
                 this.getCharacter().attack(DirectionFinder.getDirection(this.getCharacter().getLocation(),target.getLocation()));
             }else {
                 Direction d;
                 if((d = getPathToTarget(target)) != null){
-                    this.getCharacter().move(d);
+                    if(this.getCharacter().getLocation().getZ() > target.getLocation().getZ()){
+                        ModelTime.getInstance().registerAlertable(()->{
+                            this.getCharacter().jump(Direction.DOWN);
+                        },0);
+                    }else if(this.getCharacter().getLocation().getZ() < target.getLocation().getZ()){
+                        ModelTime.getInstance().registerAlertable(()->{
+                            this.getCharacter().jump(Direction.UP);
+                        },0);
+                    }
+                    Direction nextDir = getPathToTarget(target);
+                    ModelTime.getInstance().registerAlertable(()->{
+                        this.getCharacter().move(nextDir);
+                    },this.getCharacter().getMovingTicks() + 1);
                 }else{
                     //character is unreachable
                 }
             }
         }catch (NullPointerException e){
-            System.out.println("direction was null, this might mean john is bad a programming");
+
         }
     }
 
     @Override
     public void visitFriendlyTarget(FriendlyTarget target) {
+
         try {
             if(this.checkLocation(target,2)){
                 //idle
             }else {
                 Direction d;
                 if((d = getPathToTarget(target)) != null){
-                    this.getCharacter().move(d);
+                    if(this.getCharacter().getLocation().getZ() > target.getLocation().getZ()){
+                        ModelTime.getInstance().registerAlertable(()->{
+                            this.getCharacter().jump(Direction.DOWN);
+                        },0);
+                    }else if(this.getCharacter().getLocation().getZ() < target.getLocation().getZ()){
+                        ModelTime.getInstance().registerAlertable(()->{
+                            this.getCharacter().jump(Direction.UP);
+                        },0);
+                    }
+                    Direction nextDir = getPathToTarget(target);
+                    ModelTime.getInstance().registerAlertable(()->{
+                        this.getCharacter().move(nextDir);
+                    },this.getCharacter().getMovingTicks() + 1);
                 }else{
                     //character is unreachable
                 }
             }
 
         }catch (NullPointerException e){
-            System.out.println("direction was null, this might mean john is bad a programming");
+
         }
     }
 

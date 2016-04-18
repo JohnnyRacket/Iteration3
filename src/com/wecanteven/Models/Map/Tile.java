@@ -195,7 +195,7 @@ public class Tile implements MapVisitable {
     private void interactWithCharacter(Character character) {
         ArrayList<TakeableMoveable> leftover = new ArrayList<>();
         for (TakeableMoveable i : takeableItems) {
-            System.out.println(i.getName());
+
             if (!character.getItemStorage().inventoryIsFull()) {
                 i.extractItem().interact(character);
                 i.setIsDestoryed(true);

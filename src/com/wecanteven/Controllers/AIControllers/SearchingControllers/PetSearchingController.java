@@ -74,7 +74,7 @@ public class PetSearchingController extends AbstractSearchingController {
     public void visitTile(Tile tile) {
         Character character = (Character) tile.getEntity();//this is dangerous
         if(character != null){
-            System.out.println(character);
+
             character.accept(this);
         }
         ArrayList<TakeableItem> items = tile.getTakeableItems();

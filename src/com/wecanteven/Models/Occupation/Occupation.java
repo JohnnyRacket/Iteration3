@@ -43,7 +43,7 @@ public abstract class Occupation implements OccupationVisitable{
             int newAmt = skillMap.get(skill) + amount;
             skillMap.replace(skill, newAmt);
 
-            System.out.println("Added " + amount + " skill points to " + skill);
+
         } else {
             throw new IllegalArgumentException("This skill is not supported for this occupation: " + skill);
         }
