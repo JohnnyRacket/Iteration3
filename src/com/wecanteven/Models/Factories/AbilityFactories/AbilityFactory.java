@@ -159,7 +159,7 @@ public class AbilityFactory {
 
         //radial ability example
     public Ability vendSlowAttack(Character caster) {
-        duration = 1;
+        duration = 3000;
         abilityName = "Slow";
         abilityImage = "Magic";
         skill = Skill.BANE;
