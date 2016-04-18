@@ -38,6 +38,12 @@ public class PlayState extends ControllerState {
         mappings.put(ActionEnum.UP, KeyEvent.VK_J);
         mappings.put(ActionEnum.DOWN, KeyEvent.VK_H);
         mappings.put(ActionEnum.DISMOUNT, KeyEvent.VK_SHIFT);
+
+        mappings.put(ActionEnum.ABILITYONE, KeyEvent.VK_1);
+        mappings.put(ActionEnum.ABILITYTWO, KeyEvent.VK_2);
+        mappings.put(ActionEnum.ABILITYTHREE, KeyEvent.VK_3);
+        mappings.put(ActionEnum.ABILITYFOUR, KeyEvent.VK_4);
+
         this.setMappings(mappings);
     }
     @Override
@@ -101,6 +107,22 @@ public class PlayState extends ControllerState {
         this.getKeyBindings().add( new KeyActionBinding(this.getMappings().get(ActionEnum.DOWN), ()->{
             this.setContinuousCommandToExecute(()->avatar.move(Direction.DOWN));
         }, this.getjFrame(), this.getController()));
+
+        this.getKeyBindings().add(new KeyActionBinding(
+                this.getMappings().get(ActionEnum.ABILITYONE),
+                () -> avatar.useAbility(1), this.getjFrame(), this.getController()));
+
+        this.getKeyBindings().add(new KeyActionBinding(
+                this.getMappings().get(ActionEnum.ABILITYTWO),
+                () -> avatar.useAbility(2), this.getjFrame(), this.getController()));
+
+        this.getKeyBindings().add(new KeyActionBinding(
+                this.getMappings().get(ActionEnum.ABILITYTHREE),
+                () -> avatar.useAbility(3), this.getjFrame(), this.getController()));
+
+        this.getKeyBindings().add(new KeyActionBinding(
+                this.getMappings().get(ActionEnum.ABILITYFOUR),
+                () -> avatar.useAbility(4), this.getjFrame(), this.getController()));
     }
 
     public Avatar getAvatar() {

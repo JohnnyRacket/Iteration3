@@ -93,6 +93,22 @@ public class HandsViewObject implements ViewObject, Observer {
         handState.addForegroundToFogOfWar(parallelViewObject);
     }
 
+    public EquipmentSlot getEquipmentSlot() {
+        return subject;
+    }
+
+    public Entity getEntity() {
+        return entity;
+    }
+
+    public GameColor getColor() {
+        return color;
+    }
+
+    public WeaponsVisitor getWeaponsVisitor() {
+        return weaponsVisitor;
+    }
+
     public void move(long duration) {
         handState.move(duration);
     }
@@ -110,12 +126,16 @@ public class HandsViewObject implements ViewObject, Observer {
 
     }
 
+    public HandStateFactory getFactory() {
+        return factory;
+    }
+
 
     public void swapHandsState(HandState handState) {
         this.handState = handState;
     }
 
-    private class ViewWeaponVisitor implements WeaponsVisitor{
+    protected class ViewWeaponVisitor implements WeaponsVisitor{
 
         @Override
         public void visitFistWeapon(FistWeapon f) {

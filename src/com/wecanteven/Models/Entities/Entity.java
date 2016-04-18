@@ -22,7 +22,6 @@ import java.util.ArrayList;
 /**
  * Created by Brandon on 3/31/2016.
  */
-
 public class Entity implements Moveable, Directional,Destroyable, ModelObservable, ViewObservable, Observer{
     private ArrayList<Observer> observers = new ArrayList<>();
     private ArrayList<Observer> modelObservers = new ArrayList<>();
@@ -307,7 +306,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
     }
 
-    protected void setIsActive(boolean isActive){
+    public void setIsActive(boolean isActive){
         if(!isLocked()){
             this.isActive = isActive;
         }

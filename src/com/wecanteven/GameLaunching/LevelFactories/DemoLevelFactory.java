@@ -489,12 +489,18 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
 
         map.add(ItemMap.getInstance().getItemAsTakeable("Intellect Buff"), new Location(8,13,3));
+
+        map.add(ItemMap.getInstance().getItemAsOneShot("Stun Buff"), new Location(2,13,2));
+
         //Interactive Item??????
         /* TODO implement this */
 
         //Obstacle
-        map.add(ItemMap.getInstance().getItemAsObstacle("Crate"), new Location(1,14,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(2,14,2));
+        //map.add(ItemMap.getInstance().getItemAsObstacle("Crate"), new Location(1,14,2));
+        //map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(2,14,2));
+
+        map.add(ItemMap.getInstance().getItemAsAbility("Brawling"), new Location(1,14,2));
+        map.add(ItemMap.getInstance().getItemAsAbility("One-handed weapon"), new Location(2,14,2));
 
         //Equipable
 //        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
