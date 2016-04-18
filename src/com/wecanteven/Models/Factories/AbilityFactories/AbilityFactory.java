@@ -4,13 +4,11 @@ package com.wecanteven.Models.Factories.AbilityFactories;
  * Created by Brandon on 4/11/2016.
  */
 
-import com.wecanteven.Models.Abilities.Ability;
+import com.wecanteven.Models.Abilities.*;
 import com.wecanteven.Models.Abilities.Effects.BuffEffect;
 import com.wecanteven.Models.Abilities.Effects.Effects;
+import com.wecanteven.Models.Abilities.Effects.InteractionEffect;
 import com.wecanteven.Models.Abilities.Effects.StatsEffect;
-import com.wecanteven.Models.Abilities.HitBoxGenerator;
-import com.wecanteven.Models.Abilities.MeleeRangeHitBoxGenerator;
-import com.wecanteven.Models.Abilities.SelfHitBoxGenerator;
 import com.wecanteven.Models.BuffManager.Buff;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Occupation.Skill;
@@ -23,7 +21,8 @@ public class AbilityFactory {
     private int duration;
     private Effects effect;
     private HitBoxGenerator generator;
-    private int statLevel;
+    private int statLevel,skillLevel;
+    private int multiplier;
     private Skill skill;
     private Ability ability;
 
@@ -35,8 +34,9 @@ public class AbilityFactory {
         abilityImage = "Punch";
         skill = Skill.BIND_WOUNDS;
         statLevel = caster.getStats().getIntellect();
-        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,1,0));
-        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
+        skillLevel = caster.getSkillPoints(skill);
+        multiplier = statLevel+skillLevel;
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,1*(multiplier),0));
         generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
         ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(30);
@@ -48,8 +48,7 @@ public class AbilityFactory {
     public Ability vendOneHandedWeapon(Character caster) {
         skill = Skill.ONE_HANDED_WEAPON;
         statLevel = caster.getStats().getStrength();
-        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
         duration = 1;
         abilityName = "OneHandedWeapon";
         abilityImage = "Punch";
@@ -65,8 +64,9 @@ public class AbilityFactory {
     public Ability vendTwoHandedWeapon(Character caster) {
         skill = Skill.TWO_HANDED_WEAPON;
         statLevel = caster.getStats().getStrength();
-        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
+        skillLevel = caster.getSkillPoints(skill);
+        multiplier = skillLevel+statLevel;
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
         duration = 1;
         abilityName = "TwoHandedWeapon";
         abilityImage = "Punch";
@@ -82,8 +82,9 @@ public class AbilityFactory {
     public Ability vendBrawling(Character caster) {
         skill = Skill.BRAWLING;
         statLevel = caster.getStats().getStrength();
-        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
+        skillLevel = caster.getSkillPoints(skill);
+        multiplier = skillLevel+statLevel;
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
         duration = 1;
         abilityName = "Brawling";
         abilityImage = "Punch";
@@ -103,12 +104,14 @@ public class AbilityFactory {
         abilityImage = "Punch";
         skill = Skill.BOON;
         statLevel = caster.getStats().getIntellect();
+        skillLevel = caster.getSkillPoints(skill);
+        multiplier = skillLevel+statLevel;
         effect = new BuffEffect(new Buff(
                 "Speed",
                 "Purple",
                 duration,
-                (target)-> target.modifyStatsAdditive((new StatsAddable(0, 0, 0, 0, 0, 0, 30, 0, 0))),
-                (target)-> target.modifyStatsSubtractive((new StatsAddable(0, 0, 0, 0, 0, 0, 30, 0, 0)))));
+                (target)-> target.modifyStatsAdditive((new StatsAddable(0, 0, 0, 0, 0, 0, 5*(multiplier), 0, 0))),
+                (target)-> target.modifyStatsSubtractive((new StatsAddable(0, 0, 0, 0, 0, 0, 5*(multiplier), 0, 0)))));
         generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
         ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(30);
@@ -116,6 +119,40 @@ public class AbilityFactory {
         return ability;
     }
 
+    //pickpocket ability
+    public Ability vendPickPocket(Character caster) {
+        skill = Skill.PICK_POCKET;
+        duration = 1;
+        effect = new InteractionEffect(caster,caster.getSkillPoints(skill));
+        abilityName = "PickPocket";
+        abilityImage = "Punch";
+        MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
+        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability.setCooldownTicks(5);
+        ability.setWindUpTicks(5);
+        ability.setCast(true);
+        return ability;
+    }
+
+    //range ability
+    public Ability vendRangedWeapon(Character caster) {
+        skill = Skill.RANGED_WEAPON;
+        duration = 5;
+        abilityImage = "WaterBolt";
+        abilityName = "Range";
+        statLevel = caster.getStats().getAgility();
+        skillLevel = caster.getSkillPoints(skill);
+        multiplier = skillLevel+statLevel;
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
+        ProjectileHitBoxGenerator generator = new ProjectileHitBoxGenerator(abilityImage,caster,effect);
+        generator.setDistance(duration);
+        generator.setSpeed(30);
+        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability.setCooldownTicks(15);
+        ability.setWindUpTicks(15);
+        ability.setCast(true);
+        return ability;
+    }
 
 
 //    //melee ability example

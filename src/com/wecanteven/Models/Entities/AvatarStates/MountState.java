@@ -24,10 +24,22 @@ public class MountState extends AvatarState {
 
         //avatar.move(mount.getLocation());
         avatar.setMovingTicks(mount.getMovingTicks());
+        avatar.setDirection(mount.getDirection());
+        avatar.setLocation(mount.getLocation());
+        //updatePlayerLocation();
+        //System.out.println("Avatar Location:" + avatar.getLocation());
+        return moved;
+    }
+    public boolean jump(Direction d){
+        boolean jumped = true;
+        jumped = mount.jump(d) && jumped;
+
+        //avatar.jump(mount.getLocation());
+        avatar.setMovingTicks(mount.getMovingTicks());
         avatar.setLocation(mount.getLocation());
         //updatePlayerLocation();
         System.out.println("Avatar Location:" + avatar.getLocation());
-        return moved;
+        return jumped;
     }
 
     private void updatePlayerLocation() {

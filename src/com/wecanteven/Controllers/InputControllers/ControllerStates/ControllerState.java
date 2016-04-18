@@ -31,11 +31,9 @@ public abstract class ControllerState {
 
     public abstract void createKeybindings();
     public void destroyKeyBindings(){
-
         for(KeyListener binding: this.getKeyBindings()){
             this.getjFrame().removeKeyListener(binding);
         }
-
     }
 
     public Map<ActionEnum, Integer> getMappings() {

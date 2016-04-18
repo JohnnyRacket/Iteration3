@@ -143,7 +143,7 @@ public class SimpleVOFactory {
     }
 
     public MicroPositionableViewObject createBubble(Position position, GameColor color) {
-        return createMicroPositionableViewObject(createSimpleViewObject(position, "Entities/Mount/" + color + ".xml" ));
+        return createMicroPositionableViewObject(createSimpleViewObject(position, "Entities/Mount/" + "MountBubble.xml" ));
     }
 
     public MountViewObject createMount(Position position, SimpleVOFactory simpleVOFactory, Mount mount) {
