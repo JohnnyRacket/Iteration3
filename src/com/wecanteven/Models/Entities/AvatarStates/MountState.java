@@ -4,6 +4,7 @@ import com.wecanteven.AreaView.Position;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Mount;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Observers.ModelObservable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
@@ -91,7 +92,9 @@ public class MountState extends AvatarState implements Observer {
         return false;
     }
     public void drop(){}
-    public void pickup(){}
+    public void pickup(TakeableItem item){
+        avatar.pickup(item);
+    }
     public void interactWith(){}
     public void mount(Avatar mounter){
         //avatar.setCanFallVisitor(mount.getCachedCanFall());

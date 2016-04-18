@@ -2,6 +2,7 @@ package com.wecanteven.Models.Entities.AvatarStates;
 
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Observers.Activatable;
 import com.wecanteven.UtilityClasses.Direction;
 
@@ -19,7 +20,7 @@ public abstract class AvatarState {
     public abstract boolean unequipAbility(String id);
     public abstract boolean consume(String id);
     public abstract void drop();
-    public abstract void pickup();
+    public abstract void pickup(TakeableItem item);
     public abstract void interactWith();
     public abstract void mount(Avatar mountee);
     public abstract void dismount();

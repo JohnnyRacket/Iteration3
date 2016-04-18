@@ -2,6 +2,7 @@ package com.wecanteven.Models.Entities.AvatarStates;
 
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
@@ -59,7 +60,7 @@ public class DeadState extends AvatarState {
     }
 
     @Override
-    public void pickup() {
+    public void pickup(TakeableItem item) {
 
     }
 
