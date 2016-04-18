@@ -107,7 +107,9 @@ public class ItemMap {
         EquipableItemMap.put("Halo", () -> factory.vendHeadEquipableItem("Halo", 100, new StatsAddable(0,5,0,0,0,0,0,0,0)));
 
         EquipableItemMap.put("Expand", () -> factory.vendFistWeapon("Expand", 100, new StatsAddable(0,10,0,0,0,0,0,0,0)));
-        EquipableItemMap.put("Sword", () -> factory.vendFistWeapon("Sword", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+        EquipableItemMap.put("Sword", () -> factory.vendOneHandWeapon("Sword", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+        EquipableItemMap.put("Club", () -> factory.vendTwoHandedWeapon("Club", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+
 
         //These are real items that are in the game: oh really....
 //        EquipableItemMap.put("Top Hat", () -> factory.vendHeadEquipableItem("Top Hat", 100, new StatsAddable(0,0,0,0,0,0,2,0,0)));

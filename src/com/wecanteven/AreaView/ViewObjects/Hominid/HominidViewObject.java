@@ -138,8 +138,9 @@ public class HominidViewObject implements ViewObject, Observer{
 
     private boolean subjectHasAttacked() {
         long currentTime = ViewTime.getInstance().getCurrentTime();
+
         if (currentTime >= endAttackTime && actionTarget.getAttackingTicks() > 0) {
-            endAttackTime = currentTime + actionTarget.getAttackingTicks()* Config.MODEL_TICK;
+            endAttackTime = currentTime + (actionTarget.getAttackingTicks()-1)* Config.MODEL_TICK;
             return true;
         }
         return false;

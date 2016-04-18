@@ -9,31 +9,33 @@ public class HandsYJumpingStrategy extends LimbStrategy {
 
     private MicroPositionableViewObject leftHand;
     private MicroPositionableViewObject rightHand;
-    private final double height0;
+    private final double leftHeight0;
+    private final double rightHeight0;
     private final double scalingFactor;
 
 
-    public HandsYJumpingStrategy(double height0, double scalingFactor, MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
+    public HandsYJumpingStrategy(double leftHeight0, double rightHeight0, double scalingFactor, MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
         this.leftHand = leftHand;
         this.rightHand = rightHand;
-        this.height0 = height0;
+        this.leftHeight0 = leftHeight0;
+        this.rightHeight0 = rightHeight0;
         this.scalingFactor = scalingFactor;
     }
 
     @Override
     protected void animate(double percentage) {
-        leftHand.setHeight(calcPosition(percentage));
-        rightHand.setHeight(calcPosition(percentage));
+        leftHand.setHeight(calcPosition(percentage, leftHeight0));
+        rightHand.setHeight(calcPosition(percentage, rightHeight0));
 
     }
 
     @Override
     protected void complete() {
-        leftHand.setHeight(height0);
-        rightHand.setHeight(height0);
+        leftHand.setHeight(leftHeight0);
+        rightHand.setHeight(rightHeight0);
     }
 
-    private double calcPosition(double percentage) {
+    private double calcPosition(double percentage, double height0) {
         return scalingFactor*percentage - scalingFactor*Math.pow(percentage, 2) + height0;
     }
 }
