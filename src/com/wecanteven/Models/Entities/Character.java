@@ -75,7 +75,7 @@ public class Character extends Entity implements Actionable {
         if(!isActive()){
             this.setDirection(dir);
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendBrawling(this);
+            Ability attack = factory.vendBindWounds(this);
             attack.cast();
         }
     }

@@ -20,6 +20,7 @@ import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.OneHandWeapon;
 import com.wecanteven.Models.Items.Takeable.QuestedItem;
 import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Map;
@@ -405,7 +406,7 @@ public class DemoLevelFactory extends LevelFactory {
         //"Creating an NPC and Giving him a chest Plate
         NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), new Enemy(), GameColor.GRAY);
         npc.setOccupation(new Enemy());
-        FistWeapon i = new FistWeapon("Sword", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
+        OneHandWeapon i = new OneHandWeapon("Sword", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
         EnemySearchingController esc = new EnemySearchingController(npc,map,3);
         EnemyActionController eac = new EnemyActionController(npc,map);
         AIController controller = new AIController(esc,eac);

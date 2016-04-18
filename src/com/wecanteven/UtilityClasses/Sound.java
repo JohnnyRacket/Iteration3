@@ -31,7 +31,7 @@ public class Sound  {
             this.gain = gain;
         }
     }
-    public static boolean mute = true;
+    public static boolean mute = false;
     public boolean loop = false;
     public Volume volume = Volume.LOW;
 
@@ -90,7 +90,7 @@ public class Sound  {
         );
 
         SOUNDS.put("gameTheme",
-                new Sound("resources/Sounds/Game/GameTheme.wav", Volume.LOW, true)
+                new Sound("resources/Sounds/Game/GameTheme.wav", Volume.MUTE, true)
         );
 
         SOUNDS.put("Punch",
@@ -101,6 +101,10 @@ public class Sound  {
         );
         SOUNDS.put("Magic",
                 new Sound("resources/Sounds/Abilities/Magic.wav", Volume.HIGH, false)
+        );
+
+        SOUNDS.put("BindWounds",
+                new Sound("resources/Sounds/Abilities/BindWounds.wav", Volume.HIGH, false)
         );
     }
 
