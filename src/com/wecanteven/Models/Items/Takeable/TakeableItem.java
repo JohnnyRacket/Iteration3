@@ -54,4 +54,5 @@ public class TakeableItem extends Item implements Destroyable, ViewObservable {
     public ArrayList<Observer> getObservers() {
         return observers;
     }
+
 }
