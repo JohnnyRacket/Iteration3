@@ -695,7 +695,7 @@ public class UIViewFactory {
     }
 
     public void createAbilityMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, Ability ability) {
-        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this,invHolder,eqHolder);
+        AbilityViewObjectCreationVisitor visitor = new AbilityViewObjectCreationVisitor(this,invHolder,eqHolder);
         NavigatableList list = new NavigatableList();
         MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Equip", () -> {
@@ -703,8 +703,8 @@ public class UIViewFactory {
             ViewTime.getInstance().register(() -> {
                 controller.popView();
                 visitor.visitCharacter(character);
-                invHolder.setList(visitor.getInventoryItems());
-                eqHolder.setList(visitor.getEquippedItems());
+                invHolder.setList(visitor.getInventory());
+                eqHolder.setList(visitor.getEquipped());
             }, 0);
             controller.setMenuState(container);
         }));
@@ -731,7 +731,42 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
     }
 
-    public void createEquippedAbilityMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, Ability ability) {}
+    public void createEquippedAbilityMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, Ability ability) {
+        AbilityViewObjectCreationVisitor visitor = new AbilityViewObjectCreationVisitor(this,invHolder,eqHolder);
+        NavigatableList list = new NavigatableList();
+        MenuViewContainer container = controller.getMenuState().getMenus();
+        list.addItem(new ScrollableMenuItem("Unequip", () -> {
+            character.unequipAbility(ability);
+            ViewTime.getInstance().register(() -> {
+                controller.popView();
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventory());
+                eqHolder.setList(visitor.getEquipped());
+            }, 0);
+            controller.setMenuState(container);
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+
+            },0);
+            controller.setMenuState(container);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        menu.setBgColor(Config.CINNIBAR);
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(anim);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+    }
 
     //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
     public void createBuyableItemMenu(BuyableUIObjectCreationVisitor visitor, NPC shopOwner, Character buyer, TakeableItem item){
@@ -1000,6 +1035,51 @@ public class UIViewFactory {
         if(!active) {
             swappableView.getMenuViewContainer().swap();
         }
+    }
+
+    public void createPickPocketView(Character attacker, Character attackee, int picketPoketLevel){
+        System.out.println("Creating PickPocketView");
+
+        NavigatableGrid inventory = new NavigatableGrid(400, 400, 5, 5);
+        Iterator invIter = attacker.getItemStorage().getInventory().getIterator();
+        NavigatableList inventoryItems = new NavigatableList();
+        while(invIter.hasNext()){
+            TakeableItem i = (TakeableItem) invIter.next();
+            inventoryItems.addItem(new ScrollableMenuItem(i.getName() ,()->{
+
+            }));
+        }
+
+        //make menu
+        inventory.setBgColor(Config.PAPYRUS);
+
+        //NavigatableList equiplist = new NavigatableList();
+        //equiplist.addItem();
+
+        inventory.setList(inventoryItems);
+        //make swappable view
+        SwappableView view = new SwappableView();
+        //add decorators to center the menu
+        CustomScaleColumnsContainer columns  = new CustomScaleColumnsContainer(new int[]{4,1});
+        columns.setHeight(400);
+        columns.setWidth(600);
+
+        columns.addDrawable(inventory);
+
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Pickpocket", attacker.getColor().dark);
+        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
+        VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
+        AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
+//        view.addDrawable(vertCenter);
+
+        view.addDrawable(animation);
+        view.addNavigatable(inventory);
+        //return created swappable view
+        ViewTime.getInstance().register(()->{
+            createGreyBackground();
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
     }
 
     //Triggers initial animation dialog window - afterwards, continue is used.

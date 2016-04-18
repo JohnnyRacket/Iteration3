@@ -1,10 +1,13 @@
 package com.wecanteven.Models.Factories.ItemMaps;
 
+import com.wecanteven.Models.Factories.ItemFactories.AbilityItemFactory;
+import com.wecanteven.Models.Factories.ItemFactories.CreateCommands.IAbilityItemCreateCommand;
 import com.wecanteven.Models.Factories.ItemFactories.*;
 import com.wecanteven.Models.Factories.ItemFactories.CreateCommands.*;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
+import com.wecanteven.Models.Items.Takeable.AbilityItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
@@ -25,6 +28,7 @@ public class ItemMap {
     private HashMap<String, IEquipableItemCreateCommand> EquipableItemMap;
     private HashMap<String, ITakeableItemCreateCommand> TakeableItemMap;
     private HashMap<String, IUseableItemCreateCommand> UseableItemMap;
+    private HashMap<String, IAbilityItemCreateCommand> AbilityItemMap;
 
     private HashSet<String> usedNames;
 
@@ -35,6 +39,7 @@ public class ItemMap {
         EquipableItemMap = new HashMap<>();
         TakeableItemMap = new HashMap<>();
         UseableItemMap = new HashMap<>();
+        AbilityItemMap = new HashMap<>();
 
         usedNames = new HashSet<>();
 
@@ -56,6 +61,7 @@ public class ItemMap {
         initializeEquipable();
         initializeTakeable();
         initializeUseable();
+        initializeAbility();
     }
 
     private void initializeObstacle() {
@@ -85,6 +91,8 @@ public class ItemMap {
                  () -> factory.vendMovementSpeedBuffOneShot("Major Movement Buff", 60, 300));
         OneShotItemMap.put("Its Superman",
                 () -> factory.vendFlyingBuffOneShot("Its Superman", 600));
+        OneShotItemMap.put("Stun Buff",
+                () -> factory.vendMovementStunBuffOneShot("Stun Buff", 200));
 
         usedNames.addAll(OneShotItemMap.keySet());
     }
@@ -109,6 +117,8 @@ public class ItemMap {
         EquipableItemMap.put("Expand", () -> factory.vendFistWeapon("Expand", 100, new StatsAddable(0,10,0,0,0,0,0,0,0)));
         EquipableItemMap.put("Sword", () -> factory.vendOneHandWeapon("Sword", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
         EquipableItemMap.put("Club", () -> factory.vendTwoHandedWeapon("Club", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+        EquipableItemMap.put("Arcane", () -> factory.vendStaveWeapon("Arcane", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+        EquipableItemMap.put("Blaster", () -> factory.vendRangedWeaponEquipableItem("Blaster", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
 
 
         //These are real items that are in the game: oh really....
@@ -141,6 +151,17 @@ public class ItemMap {
                 () -> factory.vendStatModifyingBuffItem("Intellect Buff", 25, new StatsAddable(0,0,0,15,0,0,0,0,0)));
 
         usedNames.addAll(UseableItemMap.keySet());
+    }
+
+    private void initializeAbility() {
+        AbilityItemFactory factory = new AbilityItemFactory();
+
+        AbilityItemMap.put("Bind Wounds Ability", () -> factory.vendBindWounds("Bind Wounds Ability", 100) );
+        AbilityItemMap.put("Observation", () -> factory.vendObservation("Observation", 100));
+
+        AbilityItemMap.put("One-handed weapon", () -> factory.vendOneHandedWeapon("One-handed weapon", 100));
+        AbilityItemMap.put("Two-handed weapon", () -> factory.vendTwoHandedWeapon("Two-handed weapon", 100));
+        AbilityItemMap.put("Brawling", () -> factory.vendBrawling("Brawling", 100));
     }
 
     public Obstacle getItemAsObstacle(String name) {
@@ -197,6 +218,14 @@ public class ItemMap {
         }
 
         throw new IllegalArgumentException("There is no Useable item with name: " + name);
+    }
+
+    public AbilityItem getItemAsAbility(String name) {
+        if (AbilityItemMap.containsKey(name)) {
+            return AbilityItemMap.get(name).create();
+        }
+
+        throw new IllegalArgumentException("There is no Ability item with name: " + name);
     }
     /**
      * Extensibility

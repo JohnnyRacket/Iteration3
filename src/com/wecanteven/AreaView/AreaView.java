@@ -17,9 +17,6 @@ import java.util.ArrayList;
  * Created by alexs on 3/29/2016.
  */
 public class AreaView extends JPanel {
-
-
-
     private xySorted3DArray backingArray = new xySorted3DArray();
     private ViewObjectFactory factory;
 

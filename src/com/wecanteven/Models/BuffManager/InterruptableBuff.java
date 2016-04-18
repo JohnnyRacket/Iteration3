@@ -8,8 +8,8 @@ import com.wecanteven.Models.ModelTime.ModelTime;
 public class InterruptableBuff extends Buff {
     private boolean interrupted;
 
-    public InterruptableBuff(String name, int tickDuration, BuffApply apply, BuffUnapply unapply) {
-        super(name, tickDuration, apply, unapply);
+    public InterruptableBuff(String type, String name, int tickDuration, BuffApply apply, BuffUnapply unapply) {
+        super(type, name, tickDuration, apply, unapply);
     }
 
     public void interrupt() {

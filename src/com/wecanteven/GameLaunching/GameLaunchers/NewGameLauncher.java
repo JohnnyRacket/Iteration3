@@ -10,6 +10,7 @@ import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Occupation.Occupation;
+import com.wecanteven.Models.Occupation.Pet;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
@@ -45,9 +46,15 @@ public class NewGameLauncher extends GameLauncher {
 
         createMap();
         createAvatar();
+        createPet();
         populateMap(getMap());
         initializeAreaView();
         initializeUIView();
+    }
+
+    public void createPet() {
+        Character pet = new Character(getMap(), Direction.SOUTH, new Pet(), GameColor.BLUE);
+        getMap().add(pet, new Location(16,6,2));
     }
 
     @Override
@@ -62,7 +69,11 @@ public class NewGameLauncher extends GameLauncher {
         //DONT INITIALIZE AN EQUIPPABLE THAT INCREASES THE LIVES
         //player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
+        player.pickup(ItemMap.getInstance().getItemAsEquipable("Blaster"));
+        player.pickup(ItemMap.getInstance().getItemAsEquipable("Arcane"));
         player.pickup(ItemMap.getInstance().getItemAsEquipable("Club"));
+        player.pickup(ItemMap.getInstance().getItemAsEquipable("Sword"));
+
         //player.pickup(new DualWieldMeleeWeapon("Katar", 5, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.getItemStorage().equip(new ChestEquipableItem("Mediocre Top", 3, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         setAvatar(new Avatar(player, getMap()));

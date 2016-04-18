@@ -10,8 +10,6 @@ import com.wecanteven.UtilityClasses.Sound;
 public class Main {
 
     public static void main(String[] args) {
-
-
         Thread.currentThread().setName("Main Thread (Controller)");
         ViewEngine engine = new ViewEngine();
         engine.setBackground(Config.BACKGROUNDBLUE);

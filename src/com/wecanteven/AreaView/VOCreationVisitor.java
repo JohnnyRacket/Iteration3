@@ -5,6 +5,10 @@ import com.wecanteven.AreaView.ViewObjects.Factories.BiomeFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.MapItemVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
+import com.wecanteven.AreaView.ViewObjects.Hominid.BuffRingViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Abilities.HitBox;
 import com.wecanteven.Models.Abilities.MovableHitBox;
@@ -29,6 +33,7 @@ import com.wecanteven.Models.Map.Terrain.Current;
 import com.wecanteven.Models.Map.Terrain.Ground;
 import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.Map.Tile;
+import com.wecanteven.Models.Occupation.*;
 import com.wecanteven.Visitors.*;
 
 import java.util.Iterator;
@@ -36,13 +41,14 @@ import java.util.Iterator;
 /**
  * Created by alexs on 4/1/2016.
  */
-public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, DecalVisitor,MovableHitBoxVisitor,HitBoxVisitor {
+public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor, TerrainVisitor, AreaOfEffectVisitor, DecalVisitor,MovableHitBoxVisitor,HitBoxVisitor, OccupationVisitor {
     private SimpleVOFactory simpleVOFactory;
     private ViewObjectFactory viewObjectFactory;
     private  MapItemVOFactory mapItemVOFactory;
     private AreaView areaView;
     private Biome biome;
     private BiomeFactory currentBiomeFactory;
+    private Character currentCharacter;
 
     private boolean[][] foundTop;
 
@@ -81,25 +87,23 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitCharacter(Character c) {
-        System.out.println("adding character to areaview");
-        ViewObject avatar = viewObjectFactory.createBaseHominoid(currentPosition, c, "Connery");
-        simpleVOFactory.makeLightSource(c, 5);
-        simpleVOFactory.setCenter(avatar);
-        areaView.addViewObject(avatar);
-        areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
+        currentCharacter = c;
+        c.getOccupation().accept(this);
     }
 
     @Override
     public void visitNPC(NPC c) {
+        currentCharacter = c;
 
-        areaView.addViewObject(viewObjectFactory.createBaseHominoid(currentPosition, c,  "TestFace"));
+        c.getOccupation().accept(this);
 
     }
 
     @Override
     public void visitMount(Mount mount) {
+        currentCharacter = mount;
         System.out.println("adding mount to areaview");
-        ViewObject mountVO = viewObjectFactory.createBaseHominoid(currentPosition, mount, "mounty");
+        ViewObject mountVO = viewObjectFactory.createMount(currentPosition, mount);
         areaView.addViewObject(mountVO);
 
     }
@@ -261,5 +265,61 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitDecal(Decal d) {
         areaView.addViewObject(mapItemVOFactory.createDecalViewObject(currentPosition, d));
+    }
+
+    @Override
+    public void visitOccupation(Occupation occupation) {
+
+    }
+
+    @Override
+    public void visitEnemy(Enemy enemy) {
+        ViewObject avatar = viewObjectFactory.createBaseHominoid(currentPosition, currentCharacter, "Connery");
+            simpleVOFactory.makeLightSource(currentCharacter, 5);
+            simpleVOFactory.setCenter(avatar);
+            areaView.addViewObject(avatar);
+            areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
+    }
+
+    @Override
+    public void visitFriendly(Friendly friendly) {
+            ViewObject avatar = viewObjectFactory.createBaseHominoid(currentPosition, currentCharacter, "Connery");
+            simpleVOFactory.makeLightSource(currentCharacter, 5);
+            simpleVOFactory.setCenter(avatar);
+            areaView.addViewObject(avatar);
+            areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
+    }
+
+        @Override
+    public void visitPet(Pet pet) {
+                Position position = new Position(currentCharacter.getLocation().getS(), currentCharacter.getLocation().getR(), currentCharacter.getLocation().getZ());
+                viewObjectFactory.createBird(position, currentCharacter, "Face/Small Bird/");
+    }
+
+    @Override
+    public void visitSmasher(Smasher smasher) {
+        ViewObject avatar = viewObjectFactory.createBaseHominoid(currentPosition, currentCharacter, "Connery");
+        simpleVOFactory.makeLightSource(currentCharacter, 5);
+        simpleVOFactory.setCenter(avatar);
+        areaView.addViewObject(avatar);
+        areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
+    }
+
+    @Override
+    public void visitSneak(Sneak sneak) {
+        ViewObject avatar = viewObjectFactory.createBaseHominoid(currentPosition, currentCharacter, "Connery");
+        simpleVOFactory.makeLightSource(currentCharacter, 5);
+        simpleVOFactory.setCenter(avatar);
+        areaView.addViewObject(avatar);
+        areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
+    }
+
+    @Override
+    public void visitSummoner(Summoner summoner) {
+        ViewObject avatar = viewObjectFactory.createBaseHominoid(currentPosition, currentCharacter, "Connery");
+        simpleVOFactory.makeLightSource(currentCharacter, 5);
+        simpleVOFactory.setCenter(avatar);
+        areaView.addViewObject(avatar);
+        areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
     }
 }
