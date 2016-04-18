@@ -18,6 +18,7 @@ import com.wecanteven.Models.Interactions.NoInteractionStrategy;
 import com.wecanteven.Models.Interactions.QuestDialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Item;
+import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
@@ -453,7 +454,11 @@ public class DemoLevelFactory extends LevelFactory {
             filled(33,21,i,2,groundMaker);
         }
 
-        
+        map.getTile(getLocation(23,28,4)).add(new Obstacle("StoneRock"));
+        map.getTile(getLocation(28,28,5)).add(new Obstacle("StoneRock"));
+        map.getTile(getLocation(33,24,4)).add(new Obstacle("StoneRock"));
+
+
     }
 
     @Override

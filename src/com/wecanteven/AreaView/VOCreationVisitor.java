@@ -21,11 +21,8 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
-import com.wecanteven.Models.Items.Takeable.AbilityItem;
-import com.wecanteven.Models.Items.Takeable.StatsModifyUseable;
+import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
-import com.wecanteven.Models.Items.Takeable.TakeableItem;
-import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Terrain.Air;
@@ -131,7 +128,12 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
-        areaView.addViewObject(viewObjectFactory.createTakeableItem(takeable.getLocation().toPosition(), takeable));
+        //
+    }
+
+    @Override
+    public void visitTakeaableMoveable(TakeableMoveable takeableMoveable) {
+        areaView.addViewObject(viewObjectFactory.createTakeableItem(takeableMoveable.getLocation().toPosition(), takeableMoveable, takeableMoveable.extractItem()));
     }
 
     @Override

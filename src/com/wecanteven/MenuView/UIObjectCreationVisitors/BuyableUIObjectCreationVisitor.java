@@ -12,11 +12,8 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
-import com.wecanteven.Models.Items.Takeable.AbilityItem;
-import com.wecanteven.Models.Items.Takeable.StatsModifyUseable;
+import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
-import com.wecanteven.Models.Items.Takeable.TakeableItem;
-import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Storage.ItemStorage.Equipment;
 import com.wecanteven.Models.Storage.ItemStorage.Inventory;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
@@ -147,6 +144,11 @@ public class BuyableUIObjectCreationVisitor implements ItemStorageVisitor, ItemV
                 factory.createBuyableItemMenu(this, shopOwner, buyer, takeable);
             }));
         }
+    }
+
+    @Override
+    public void visitTakeaableMoveable(TakeableMoveable takeableMoveable) {
+        visitTakeableItem(takeableMoveable.extractItem());
     }
 
     @Override
