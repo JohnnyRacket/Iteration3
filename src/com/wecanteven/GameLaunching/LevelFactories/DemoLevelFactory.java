@@ -213,24 +213,24 @@ public class DemoLevelFactory extends LevelFactory {
         });
 
         //River
-        map.getTile(getLocation(7,2,14)).setTerrain(new Current(Direction.NORTHWEST));
-        map.getTile(getLocation(8,2,14)).setTerrain(new Current(Direction.NORTHWEST));
-        map.getTile(getLocation(9,2,14)).setTerrain(new Current(Direction.NORTHWEST));
-        map.getTile(getLocation(10,2,12)).setTerrain(new Current(Direction.NORTHWEST));
-        map.getTile(getLocation(11,2,12)).setTerrain(new Current(Direction.NORTHWEST));
-        map.getTile(getLocation(12,2,12)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(7,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(8,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(9,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(10,2,12)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(11,2,12)).setTerrain(new Current(Direction.SOUTHEAST));
+        map.getTile(getLocation(12,2,12)).setTerrain(new Current(Direction.SOUTH));
         //WATERFALL
-        map.getTile(getLocation(12,3,12)).setTerrain(new Current(Direction.NORTHWEST));
-        map.getTile(getLocation(12,3,11)).setTerrain(new Current(Direction.UP));
-        map.getTile(getLocation(12,3,10)).setTerrain(new Current(Direction.UP));
-        map.getTile(getLocation(12,3,9)).setTerrain(new Current(Direction.UP));
-        map.getTile(getLocation(12,3,8)).setTerrain(new Current(Direction.UP));
-        map.getTile(getLocation(12,3,7)).setTerrain(new Current(Direction.UP));
-        map.getTile(getLocation(12,3,6)).setTerrain(new Current(Direction.UP));
-        map.getTile(getLocation(12,3,5)).setTerrain(new Current(Direction.UP));
-        map.getTile(getLocation(12,3,4)).setTerrain(new Current(Direction.UP));
-        map.getTile(getLocation(12,3,3)).setTerrain(new Current(Direction.UP));
-        map.getTile(getLocation(12,3,2)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,12)).setTerrain(new Current(Direction.DOWN));
+        map.getTile(getLocation(12,3,11)).setTerrain(new Current(Direction.DOWN));
+        map.getTile(getLocation(12,3,10)).setTerrain(new Current(Direction.DOWN));
+        map.getTile(getLocation(12,3,9)).setTerrain(new Current(Direction.DOWN));
+        map.getTile(getLocation(12,3,8)).setTerrain(new Current(Direction.DOWN));
+        map.getTile(getLocation(12,3,7)).setTerrain(new Current(Direction.DOWN));
+        map.getTile(getLocation(12,3,6)).setTerrain(new Current(Direction.DOWN));
+        map.getTile(getLocation(12,3,5)).setTerrain(new Current(Direction.DOWN));
+        map.getTile(getLocation(12,3,4)).setTerrain(new Current(Direction.DOWN));
+        map.getTile(getLocation(12,3,3)).setTerrain(new Current(Direction.DOWN));
+        map.getTile(getLocation(12,3,2)).setTerrain(new Current(Direction.SOUTH));
 
         //MAKES TUNNEL
         map.getTile(getLocation(9, 4, 2)).setTerrain(new Air());
@@ -261,14 +261,14 @@ public class DemoLevelFactory extends LevelFactory {
             map.getTile(location).setTerrain(new Water());
         });
 
-        map.getTile(getLocation(12,4,1)).setTerrain(new Current(Direction.NORTH));
-        map.getTile(getLocation(12,5,1)).setTerrain(new Current(Direction.NORTH));
-        map.getTile(getLocation(12,6,1)).setTerrain(new Current(Direction.NORTH));
-        map.getTile(getLocation(12,7,1)).setTerrain(new Current(Direction.NORTH));
-        map.getTile(getLocation(12,8,1)).setTerrain(new Current(Direction.NORTH));
-        map.getTile(getLocation(12,9,1)).setTerrain(new Current(Direction.NORTH));
-        map.getTile(getLocation(12,10,1)).setTerrain(new Current(Direction.NORTH));
-        //smap.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,4,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,5,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,6,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,7,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,8,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,9,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,10,1)).setTerrain(new Current(Direction.SOUTH));
+        //map.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
 
         //sand under Lake
         biomePaint = desertLocations;
@@ -467,8 +467,8 @@ public class DemoLevelFactory extends LevelFactory {
         TakeDamageAreaOfEffect tkdmgAoe = new TakeDamageAreaOfEffect(1);
         map.add(tkdmgAoe, new Location(3,11,8));
 
-        TeleportAoe teleAoe = new TeleportAoe(new Location(7,4,15));
-        //map.add(teleAoe, new Location(2, 16, 2));
+        TeleportAoe teleAoe = new TeleportAoe(new Location(2,34,1));
+        map.add(teleAoe, new Location(22, 7, 2));
 
         HealingAreaOfEffect healAoe = new HealingAreaOfEffect(1);
         map.add(healAoe, new Location(8,1,15));
