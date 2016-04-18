@@ -9,6 +9,9 @@ import com.wecanteven.Visitors.WeaponsVisitor;
 public class OneHandWeapon extends MeleeWeaponEquipableItem {
     public OneHandWeapon(String name, int value, StatsAddable stats) {
         super(name, value, stats);
+        setCreateAbility((caster)->{
+            return getFactory().vendOneHandedWeapon(caster);
+        });
     }
 
     @Override

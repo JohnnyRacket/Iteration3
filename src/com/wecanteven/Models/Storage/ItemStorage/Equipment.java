@@ -27,7 +27,6 @@ public abstract class Equipment extends StorageComponent<ItemStorage> {
     public boolean equip(EquipableItem item) {
         if (getOwner().hasItem(item)) {
             getOwner().removeItem(item);
-
             item.equip(this);
             return true;
         }

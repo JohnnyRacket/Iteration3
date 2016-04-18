@@ -80,7 +80,7 @@ public class UIViewFactory {
 
 
     public void createHUDView(Character character){
-        AbilityBar abilityHUD = new AbilityBar(getAvatar().getCharacter().getStats());
+        AbilityBar abilityHUD = new AbilityBar(getAvatar().getCharacter().getStats(),getAvatar().getCharacter().getAbilityStorage());
         abilityHUD.setWidth(420);
         abilityHUD.setHeight(110);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(abilityHUD);
@@ -88,9 +88,12 @@ public class UIViewFactory {
 
         SwappableView view = new SwappableView();
         view.addDrawable(bot);
-        ViewTime.getInstance().register(()->{
+        try {
             vEngine.getManager().addPermView(view);
-        },0);
+        }catch (Exception e){
+
+        }
+
     }
 
     public void createMainMenuView(){
@@ -122,6 +125,7 @@ public class UIViewFactory {
         controller.setMainMenuState(view.getMenuViewContainer());
 
         ViewTime.getInstance().register(()->{
+            this.getvEngine().getManager().removePerms();
             this.getController().clearViews();
             this.getvEngine().clear();
             vEngine.getManager().addView(view);
@@ -718,7 +722,7 @@ public class UIViewFactory {
             },0);
             controller.setMenuState(container);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
+        ScrollableMenu menu = new ScrollableMenu(100,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
@@ -755,7 +759,7 @@ public class UIViewFactory {
             },0);
             controller.setMenuState(container);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
+        ScrollableMenu menu = new ScrollableMenu(100,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
