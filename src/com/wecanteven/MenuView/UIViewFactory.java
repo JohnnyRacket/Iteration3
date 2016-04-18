@@ -366,7 +366,7 @@ public class UIViewFactory {
         ScrollableMenu skillMenu = new ScrollableMenu(300,650);
 
         TitleBarDecorator skillTitle = new TitleBarDecorator(
-                skillMenu, "Available Points: " + character.getAvailablePoints(), Config.CINNIBAR);
+                skillMenu, "Available Points: " + character.getAvailablePoints(), character.getColor().light);
 
         HorizontalCenterContainer horizSkill = new HorizontalCenterContainer(skillTitle);
         VerticalCenterContainer vertSkill = new VerticalCenterContainer(horizSkill);
@@ -498,7 +498,7 @@ public class UIViewFactory {
         columns.addDrawable(menu);
         columns.addDrawable(equipMenu);
 
-        TitleBarDecorator title = new TitleBarDecorator(columns, "Abilities", Config.TEAL);
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Abilities", character.getColor().dark);
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
         AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
@@ -771,6 +771,7 @@ public class UIViewFactory {
 
     //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
     public void createBuyableItemMenu(BuyableUIObjectCreationVisitor visitor, NPC shopOwner, Character buyer, TakeableItem item){
+        int bargainLevel = buyer.getSkillPoints(Skill.BARGAIN);
         NavigatableList list = new NavigatableList();
         TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
         MenuViewContainer container = controller.getMenuState().getMenus();
@@ -825,14 +826,16 @@ public class UIViewFactory {
     }
     //WHEN THE SHOPPER TRIES TO SELL TO THE SHOPKEEPER
     public void createSellableItemMenu(NPC shopOwner, Character buyer, TakeableItem item){
+        int bargainLevel = buyer.getSkillPoints(Skill.BARGAIN) + 1;
+
         NavigatableList list = new NavigatableList();
         TradeInteractionStrategy interactionStrategy = (TradeInteractionStrategy) shopOwner.getInteraction();
-        list.addItem(new ScrollableMenuItem("Sell: " + item.getValue() + " Gold", () ->{
+        list.addItem(new ScrollableMenuItem("Sell: " + (((float)item.getValue()*(1f/(float)bargainLevel)) + item.getValue()) + " Gold", () ->{
 
             if(!shopOwner.getItemStorage().inventoryIsFull() && interactionStrategy.buy(item)){
                 buyer.getItemStorage().removeItem(item);
                 shopOwner.pickup(item);
-                createToast(3, "You've sold a " + item.getName() + " for " + item.getValue() + " gold!");
+                createToast(3, "You've sold a " + item.getName() + " for " + (((float)item.getValue()*(1f/(float)bargainLevel)) + item.getValue()) + " gold!");
             }else {
                 //SHOPOWNER CANT BUY IF HIS INVENTORY IS FULL
                 if(shopOwner.getItemStorage().inventoryIsFull()){
@@ -840,7 +843,7 @@ public class UIViewFactory {
 
                 }else {
                     //SHOPOWNER CANT BUY IF HE DOESNT HAVE MONEY
-                    createToast(5, "The Shopkeeper can't afford a " + item.getName() + " for " + item.getValue() + " gold!");
+                    createToast(5, "The Shopkeeper can't afford a " + item.getName() + " for " + (((float)item.getValue()*(1f/(float)bargainLevel)) + item.getValue()) + " gold!");
                 }
             }
 
@@ -969,7 +972,6 @@ public class UIViewFactory {
             vEngine.getManager().addView(view);
     }
     public void createTradeView(NPC npc, Character player, boolean active){
-
         /*
         Creates 2 Navigatable grids that have Titles
          */

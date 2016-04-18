@@ -15,7 +15,6 @@ public class BuffEffect implements Effects {
 
     @Override
     public void interact(Entity entity){
-        effect.setOwner(new BuffManager(entity));
-        effect.buff();
+        entity.buff(effect);
     }
 }
