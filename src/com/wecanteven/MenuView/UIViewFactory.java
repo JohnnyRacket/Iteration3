@@ -731,7 +731,42 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
     }
 
-    public void createEquippedAbilityMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, Ability ability) {}
+    public void createEquippedAbilityMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, Ability ability) {
+        AbilityViewObjectCreationVisitor visitor = new AbilityViewObjectCreationVisitor(this,invHolder,eqHolder);
+        NavigatableList list = new NavigatableList();
+        MenuViewContainer container = controller.getMenuState().getMenus();
+        list.addItem(new ScrollableMenuItem("Unequip", () -> {
+            character.unequipAbility(ability);
+            ViewTime.getInstance().register(() -> {
+                controller.popView();
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventory());
+                eqHolder.setList(visitor.getEquipped());
+            }, 0);
+            controller.setMenuState(container);
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+
+            },0);
+            controller.setMenuState(container);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        menu.setBgColor(Config.CINNIBAR);
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(anim);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+    }
 
     //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
     public void createBuyableItemMenu(BuyableUIObjectCreationVisitor visitor, NPC shopOwner, Character buyer, TakeableItem item){
