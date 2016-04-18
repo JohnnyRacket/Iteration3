@@ -36,7 +36,8 @@ public class Character extends Entity implements Actionable {
         super(actionHandler, direction, color);
         occupation = new Smasher();
         this.itemStorage = new ItemStorage(this, 25);
-        this.abilityStorage = new AbilityStorage();
+        this.abilityStorage = new AbilityStorage(this);
+        this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
     }
@@ -46,7 +47,8 @@ public class Character extends Entity implements Actionable {
         this.occupation = occupation;
         setStats(new Stats(this));
         this.itemStorage = new ItemStorage(this, 25);
-        this.abilityStorage = new AbilityStorage();
+        this.abilityStorage = new AbilityStorage(this);
+        this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
     }
@@ -56,17 +58,19 @@ public class Character extends Entity implements Actionable {
         this.occupation = occupation;
         setStats(stats);
         this.itemStorage = new ItemStorage(this, 25);
-        this.abilityStorage = new AbilityStorage();
+        this.abilityStorage = new AbilityStorage(this);
+        this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
     }
 
-    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage, AbilityStorage abilityStorage, GameColor color) {
+    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage, GameColor color) {
         super(actionHandler, direction, color);
         this.occupation = occupation;
         this.itemStorage = itemStorage;
         getItemStorage().setOwner(this);
-        this.abilityStorage = abilityStorage;
+        this.abilityStorage = new AbilityStorage(this);
+        this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
     }
@@ -75,7 +79,7 @@ public class Character extends Entity implements Actionable {
         if(!isActive()){
             this.setDirection(dir);
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendBrawling(this);
+            Ability attack = factory.vendSlowAttack(this);
             attack.cast();
         }
     }

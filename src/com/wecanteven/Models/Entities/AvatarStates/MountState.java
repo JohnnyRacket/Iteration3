@@ -86,6 +86,7 @@ public class MountState extends AvatarState implements Observer {
     @Override
     public void update() {
         //dismount();
+        mount.modelDettach(this);
         EntityState entityState = new EntityState(avatar, controller);
         controller.swapState(entityState);
         avatar.fall();
