@@ -54,7 +54,7 @@ public class ViewEngine extends JFrame implements Runnable{
         //Maximized the window
         //This is cool and all, but I need the console for debugging
         Dimension DimMax = Toolkit.getDefaultToolkit().getScreenSize();
-        DimMax.setSize(DimMax.width/2, DimMax.height/2);
+        DimMax.setSize(DimMax.width, DimMax.height - 50);
         setPreferredSize(DimMax);
 
 
