@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+    <x>37</x>
+    <y>57</y>
+    <rootPath>Entities/Mount/</rootPath>
+    <fileName>Blue.png</fileName>
+</single_frame_animation>

@@ -10,6 +10,7 @@ import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Occupation.Occupation;
+import com.wecanteven.Models.Occupation.Pet;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
@@ -45,9 +46,15 @@ public class NewGameLauncher extends GameLauncher {
 
         createMap();
         createAvatar();
+        createPet();
         populateMap(getMap());
         initializeAreaView();
         initializeUIView();
+    }
+
+    public void createPet() {
+        Character pet = new Character(getMap(), Direction.SOUTH, new Pet(), GameColor.BLUE);
+        getMap().add(pet, new Location(16,6,2));
     }
 
     @Override

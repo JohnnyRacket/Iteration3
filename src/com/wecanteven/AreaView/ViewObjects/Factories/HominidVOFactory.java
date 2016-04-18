@@ -69,6 +69,8 @@ public class HominidVOFactory {
     }
 
 
+
+
     public HUDDecorator createHominidHUDDecorator(HominidViewObject hominidViewObject, Stats stats) {
         return simpleVOFactory.createHUDDecorator(hominidViewObject, stats);
     }
@@ -79,6 +81,10 @@ public class HominidVOFactory {
 
     public HandsViewObject createHandsViewObject(Position p, EquipmentSlot slot, Entity entity, GameColor color) {
         return new HandsViewObject(p, slot, handStateFactory, entity, color);
+    }
+
+    public MicroPositionableViewObject createWing(Position position, EquipmentSlot slot, Entity entity, GameColor color) {
+        return new MicroPositionableViewObject(equipableItemVOFactory.createEquipable(simpleVOFactory.createSimpleViewObject(position, "Hands/Wings/" + color + ".xml"), slot, entity, color));
     }
 
     private <T extends Directional & ViewObservable> DirectionalViewObject createBody(Position p, T d, String entityName) {

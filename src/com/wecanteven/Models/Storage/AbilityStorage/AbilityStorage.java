@@ -69,5 +69,7 @@ public class AbilityStorage
 
     public void accept(AbilityStorageVisitor visitor) {
         visitor.visitAbilityStorage(this);
+        equipment.accept(visitor);
+        inventory.accept(visitor);
     }
 }
