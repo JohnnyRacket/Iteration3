@@ -19,7 +19,12 @@ public class StealthVO extends DecoratorViewObject {
 
     @Override
     public void draw(Graphics2D g) {
-        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, subject.getCreep()));
+
+        float alpha = subject.getCreep()/10;
+        if (alpha < 0 ) alpha = 0;
+        else if (alpha > 1) alpha = 1;
+
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         super.draw(g);
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
