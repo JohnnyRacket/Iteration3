@@ -70,9 +70,11 @@ public class NewGameLauncher extends GameLauncher {
         //player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         player.pickup(ItemMap.getInstance().getItemAsEquipable("Blaster"));
-        player.pickup(ItemMap.getInstance().getItemAsEquipable("Arcane"));
-        player.pickup(ItemMap.getInstance().getItemAsEquipable("Club"));
+        player.pickup(ItemMap.getInstance().getItemAsEquipable("Flash"));
+        player.pickup(ItemMap.getInstance().getItemAsEquipable("Flare"));
         player.pickup(ItemMap.getInstance().getItemAsEquipable("Sword"));
+        player.pickup(ItemMap.getInstance().getItemAsEquipable("Expand"));
+
 
         //player.pickup(new DualWieldMeleeWeapon("Katar", 5, new StatsAddable(1,1,1,1,1,1,1,1,1)));
         //player.getItemStorage().equip(new ChestEquipableItem("Mediocre Top", 3, new StatsAddable(1,1,1,1,1,1,1,1,1)));

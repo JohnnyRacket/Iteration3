@@ -57,7 +57,7 @@ public class SimpleVOFactory {
         this.equipableItemVOFactory = new EquipableItemVOFactory(this);
         this.hominidVOFactory = new HominidVOFactory(this, equipableItemVOFactory, new JumpDetector(gameMap));
         this.mapItemVOFactory = new MapItemVOFactory(this);
-        this.handStateFactory = new HandStateFactory(hominidVOFactory);
+        this.handStateFactory = new HandStateFactory(hominidVOFactory, equipableItemVOFactory, this);
     }
 
     public EquipableViewObject createEquipable(ViewObject child, EquipmentSlot slot, EquipableItemVOFactory equipableItemVOFactory, Entity weaponSubject, GameColor color) {

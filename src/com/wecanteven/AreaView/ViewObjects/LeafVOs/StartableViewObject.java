@@ -24,6 +24,8 @@ public class StartableViewObject extends LeafViewObject {
         startableDynamicImage.start(duration);
     }
 
+    public void reset() { startableDynamicImage.reset(); }
+
     @Override
     public void draw(Graphics2D g) {
         drawingStrategy.draw(g, startableDynamicImage, getPosition());

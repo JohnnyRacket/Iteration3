@@ -41,7 +41,7 @@ public class HominidVOFactory {
         this.simpleVOFactory = simpleVOFactory;
         this.equipableItemVOFactory = equipableItemVOFactory;
         this.jumpDetector = jumpDetector;
-        this.handStateFactory = new HandStateFactory(this);
+        this.handStateFactory = new HandStateFactory(this, equipableItemVOFactory, simpleVOFactory);
     }
 
     public MicroPositionableViewObject createWeaponHand(Position p, EquipmentSlot slot, Entity weaponSubject, GameColor color) {
