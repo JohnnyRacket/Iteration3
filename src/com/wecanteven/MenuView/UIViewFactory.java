@@ -88,9 +88,12 @@ public class UIViewFactory {
 
         SwappableView view = new SwappableView();
         view.addDrawable(bot);
-        ViewTime.getInstance().register(()->{
+        try {
             vEngine.getManager().addPermView(view);
-        },0);
+        }catch (Exception e){
+            
+        }
+
     }
 
     public void createMainMenuView(){
@@ -122,6 +125,7 @@ public class UIViewFactory {
         controller.setMainMenuState(view.getMenuViewContainer());
 
         ViewTime.getInstance().register(()->{
+            this.getvEngine().getManager().removePerms();
             this.getController().clearViews();
             this.getvEngine().clear();
             vEngine.getManager().addView(view);

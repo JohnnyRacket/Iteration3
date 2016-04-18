@@ -66,6 +66,7 @@ public class AbilityBar extends Drawable implements Observer{
         expBar.setPercent((int)stats.getExperience()/100);
 
         Iterator<Tuple<Ability,Integer>> iter = abilityStorage.getAbilityEquipment().getOrderedIterator();
+
         while(iter.hasNext()){
             Tuple<Ability,Integer> ability = iter.next();
             System.out.println("ADDING ABILITY");
