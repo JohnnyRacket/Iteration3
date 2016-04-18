@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+    <x>20</x>
+    <y>18</y>
+    <rootPath>Items/</rootPath>
+    <fileName>Pink Saturn.png</fileName>
+    <fileName>null.png</fileName>
+</single_frame_animation>

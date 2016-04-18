@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+  <x>18</x>
+  <y>50</y>
+  <rootPath>Effects/BindWounds/</rootPath>
+  <fileName>punch1.png</fileName>
+  <fileName>punch2.png</fileName>
+  <fileName>punch3.png</fileName>
+  <fileName>punch4.png</fileName>
+  <fileName>punch5.png</fileName>
+  <fileName>null.png</fileName>
+</single_frame_animation>

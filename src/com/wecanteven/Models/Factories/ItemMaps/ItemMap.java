@@ -165,6 +165,8 @@ public class ItemMap {
         AbilityItemMap.put("One-handed weapon", () -> factory.vendOneHandedWeapon("One-handed weapon", 100));
         AbilityItemMap.put("Two-handed weapon", () -> factory.vendTwoHandedWeapon("Two-handed weapon", 100));
         AbilityItemMap.put("Brawling", () -> factory.vendBrawling("Brawling", 100));
+        AbilityItemMap.put("BindWounds", () -> factory.vendBindWounds("BindWounds", 100));
+
     }
 
     public Obstacle getItemAsObstacle(String name) {
