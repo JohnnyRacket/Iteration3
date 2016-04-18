@@ -27,6 +27,24 @@ public class AbilityItemFactory {
         };
     }
 
+    public AbilityItem vendSpeedUp(String name, int value) {
+        return new AbilityItem(name, value) {
+            @Override
+            public void use(Character character) {
+                character.addAbility(factory.vendSpeedUp(character));
+            }
+        };
+    }
+
+    public AbilityItem vendPickPocket(String name, int value) {
+        return new AbilityItem(name, value) {
+            @Override
+            public void use(Character character) {
+                character.addAbility(factory.vendPickPocket(character));
+            }
+        };
+    }
+
     public AbilityItem vendOneHandedWeapon(String name, int value) {
         return new AbilityItem(name, value) {
             @Override
