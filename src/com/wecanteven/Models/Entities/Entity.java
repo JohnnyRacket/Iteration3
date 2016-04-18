@@ -162,7 +162,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         notifyObservers();
         modelNotifyObservers();
         getActionHandler().death(this);
-        getStats().refreshStats();
+        //getStats().refreshStats();
     }
 
     public boolean isActive(){

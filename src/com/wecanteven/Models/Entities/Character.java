@@ -35,7 +35,7 @@ public class Character extends Entity implements Actionable {
     public Character(ActionHandler actionHandler, Direction direction, GameColor color) {
         super(actionHandler, direction, color);
         occupation = new Smasher();
-        this.itemStorage = new ItemStorage(this, 5);
+        this.itemStorage = new ItemStorage(this, 25);
         this.abilityStorage = new AbilityStorage();
         windUpTicks = 0;
         coolDownTicks = 0;
@@ -45,7 +45,7 @@ public class Character extends Entity implements Actionable {
         super(actionHandler, direction, color);
         this.occupation = occupation;
         setStats(new Stats(this));
-        this.itemStorage = new ItemStorage(this, 5);
+        this.itemStorage = new ItemStorage(this, 25);
         this.abilityStorage = new AbilityStorage();
         windUpTicks = 0;
         coolDownTicks = 0;
@@ -55,7 +55,7 @@ public class Character extends Entity implements Actionable {
         super(actionHandler, direction, color);
         this.occupation = occupation;
         setStats(stats);
-        this.itemStorage = new ItemStorage(this, 5);
+        this.itemStorage = new ItemStorage(this, 25);
         this.abilityStorage = new AbilityStorage();
         windUpTicks = 0;
         coolDownTicks = 0;
@@ -75,11 +75,9 @@ public class Character extends Entity implements Actionable {
         if(!isActive()){
             this.setDirection(dir);
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendRangedWeapon(this);
+            Ability attack = factory.vendBindWounds(this);
             attack.cast();
         }
-        System.out.println("Attack has ended: "+isActive());
-        tickTicks();
     }
 
     /**
@@ -109,7 +107,7 @@ public class Character extends Entity implements Actionable {
     public void pickup(TakeableItem item) {
         itemStorage.addItem(item);
         if(itemStorage.hasItem(item)){
-            System.out.println("Item was added");
+
         }
     }
 
@@ -129,7 +127,7 @@ public class Character extends Entity implements Actionable {
     }
 
     public void mount(Mount mount) {
-        System.out.println("character trying to mount");
+
     }
 
     /**
@@ -246,10 +244,10 @@ public class Character extends Entity implements Actionable {
     protected void tickTicks(){
         if(calculateActiveStatus()){
             ModelTime.getInstance().registerAlertable(() -> {
-                System.out.println("Stuck in an endless loop");
-                System.out.println("Moving ticks "+getMovingTicks());
-                System.out.println("WingUp ticks "+getWindUpTicks());
-                System.out.println("CoolDown ticks "+getCoolDownTicks());
+
+
+
+
                 deIncrementMovingTick();
                 deIncrementWindUpTick();
                 if(getWindUpTicks()==0){
@@ -287,7 +285,7 @@ public class Character extends Entity implements Actionable {
     public boolean calculateActiveStatus(){
         if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0 && getTurningTicks() <= 0){
             setIsActive(false);
-            System.out.println("The entity is no longer active");
+
             return false;
         }
         else{

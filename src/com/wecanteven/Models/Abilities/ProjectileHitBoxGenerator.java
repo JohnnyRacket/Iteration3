@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Abilities;
 
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.UtilityClasses.Direction;
@@ -11,19 +12,37 @@ import com.wecanteven.UtilityClasses.Location;
 public class ProjectileHitBoxGenerator extends HitBoxGenerator {
     private MovableHitBox hitbox;
     private int distance,speed;
+    private Location location;
+    private int traveled;
 
-    public ProjectileHitBoxGenerator(String name, Character caster,Effects effect){
+    public ProjectileHitBoxGenerator(String name, Character caster,Effects effect,int duration){
         setCaster(caster);
-        setMovableHitbox(new MovableHitBox(name,caster.getLocation().adjacent(caster.getDirection()),effect,caster.getActionHandler()));
+        setDuration(duration);
+        location = getCaster().getLocation();
+        setHitBox(new HitBox(name,caster.getLocation(),effect,caster.getActionHandler(),300));
+        traveled = 0;
+       // setMovableHitbox(new MovableHitBox(name,caster.getLocation().adjacent(caster.getDirection()),effect,caster.getActionHandler()));
     }
     @Override
     public void generate(){
-        Direction direction = getCaster().getDirection();
-        Location destination = getMovableHitbox().getLocation();
-        for(int i = 0; i < getDistance(); i++){
-            destination = destination.add(direction.getCoords);
+        move();
+//        Direction direction = getCaster().getDirection();
+//        Location destination = getMovableHitbox().getLocation();
+//        for(int i = 0; i < getDistance(); i++){
+//            destination = destination.add(direction.getCoords);
+//        }
+//        getMovableHitbox().addToMap(getDistance(), getSpeed(), direction);
+    }
+
+    private void move(){
+        if (traveled <= distance) {
+            ViewTime.getInstance().register(()->{
+                location = location.add(getCaster().getDirection().getCoords);
+                getHitBox().addToMap(1, location);
+                traveled++;
+                move();
+            },30);
         }
-        getMovableHitbox().addToMap(getDistance(), getSpeed(), direction);
     }
 
     public void setMovableHitbox(MovableHitBox hitbox){

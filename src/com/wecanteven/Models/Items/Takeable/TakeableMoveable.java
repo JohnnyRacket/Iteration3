@@ -35,6 +35,7 @@ public class TakeableMoveable extends TakeableItem implements Moveable {
         return false;
     }
 
+
     @Override
     public boolean move(Location l) {
         if (handler != null) {

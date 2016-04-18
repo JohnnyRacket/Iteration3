@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+    <x>14</x>
+    <y>14</y>
+    <rootPath>Equipment/Pink/</rootPath>
+    <fileName>Flare0.png</fileName>
+    <fileName>Flare1.png</fileName>
+    <fileName>Flare2.png</fileName>
+    <fileName>Flare3.png</fileName>
+</single_frame_animation>

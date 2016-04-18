@@ -55,7 +55,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void update(){
-        System.out.println("ENDLESS LOOP");
+
         levelUp();
     }
 
@@ -70,7 +70,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void addStats(StatsAddable statsAddable){
-        System.out.println("adding: "+statsAddable);
+
         lives.add(statsAddable.getLives());
         strength.add(statsAddable.getStrength());
         agility.add(statsAddable.getAgility());
@@ -80,6 +80,9 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         movement.add(statsAddable.getMovement());
         currentHealth.add(statsAddable.getHealth());
         currentMana.add(statsAddable.getMana());
+        if (currentHealth.getStat() < 0) {
+            currentHealth.setStat(0);
+        }
         if(currentHealth.getStat()>maxHealth.getStat()){
             currentHealth.setStat(maxHealth.getStat());
         }
@@ -90,7 +93,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void subtractStats(StatsAddable statsAddable){
-        System.out.println("subtracting: " +statsAddable);
+
         lives.subtract(statsAddable.getLives());
         strength.subtract(statsAddable.getStrength());
         agility.subtract(statsAddable.getAgility());
@@ -100,7 +103,9 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         movement.subtract(statsAddable.getMovement());
         currentHealth.subtract(statsAddable.getHealth());
         currentMana.subtract(statsAddable.getMana());
-
+        if (currentHealth.getStat() < 0) {
+            currentHealth.setStat(0);
+        }
         if(currentHealth.getStat()>maxHealth.getStat()){
             currentHealth.setStat(maxHealth.getStat());
         }

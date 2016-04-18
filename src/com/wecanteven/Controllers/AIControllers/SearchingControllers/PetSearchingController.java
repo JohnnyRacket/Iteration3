@@ -19,6 +19,8 @@ import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Models.Occupation.*;
+import com.wecanteven.UtilityClasses.Filled3DHex;
+import com.wecanteven.UtilityClasses.Location;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,6 +32,15 @@ public class PetSearchingController extends AbstractSearchingController {
 
     public PetSearchingController(Character character, Map map, int searchRadius) {
         super(character, map, searchRadius);
+    }
+    @Override
+    public ArrayList<Location> getSearchArea(){
+        Iterator<Location> iter = new Filled3DHex(getCharacter().getLocation(),getSearchRadius(),15).iterator();
+        ArrayList<Location> searchArea = new ArrayList<>();
+        while(iter.hasNext()){
+            searchArea.add(iter.next());
+        }
+        return searchArea;
     }
 
     @Override
@@ -63,7 +74,7 @@ public class PetSearchingController extends AbstractSearchingController {
     public void visitTile(Tile tile) {
         Character character = (Character) tile.getEntity();//this is dangerous
         if(character != null){
-            System.out.println(character);
+
             character.accept(this);
         }
         ArrayList<TakeableItem> items = tile.getTakeableItems();

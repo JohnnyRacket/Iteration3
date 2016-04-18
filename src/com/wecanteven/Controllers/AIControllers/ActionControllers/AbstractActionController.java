@@ -36,7 +36,7 @@ public abstract class AbstractActionController implements TargetVisitor{
         //Map map = Map.getInstance();
         ArrayList<Location> searchableArea = controller.getSearchArea();
 
-        //System.out.println("done building searchable area");
+        //
 
         queue.add(character.getLocation());
         parentMap.put(character.getLocation(), null);
@@ -46,8 +46,8 @@ public abstract class AbstractActionController implements TargetVisitor{
             Location currLocation = queue.remove();
             if(!visited.contains(currLocation)) {
                 visited.add(currLocation);
-               //System.out.println("building path");
-                //System.out.println("Comparing R's: " + currLocation.getR() + "=" + targetLocation.getR() + " and S's: " + currLocation.getS() + "=" + targetLocation.getS());
+               //
+                //
                 if (currLocation.equals(targetLocation)) {
                     //we found the thing
                     Location prev = null;
@@ -57,7 +57,12 @@ public abstract class AbstractActionController implements TargetVisitor{
                         prev = curr;
                         curr = parentMap.get(curr);
                     }
-                    //System.out.println("Direction returned is: " + DirectionFinder.getDirection(character.getLocation(), prev));
+                    //
+//                    if(prev.getZ() < character.getLocation().getZ()-1){
+//                        prev.setZ(character.getLocation().getZ() - 1);
+//                    }else if(prev.getZ() > character.getLocation().getZ()+1){
+//                        prev.setZ(character.getLocation().getZ() + 1);
+//                    }
                     return DirectionFinder.getDirection(character.getLocation(), prev);
                 }
                 for(int i = 0; i < character.getJumpHeight(); ++i) {
@@ -78,16 +83,16 @@ public abstract class AbstractActionController implements TargetVisitor{
                                     }
                                 }
                             } catch (Exception e) {
-                                //System.out.println("out of map bounds");
+                                //
                             }
                         }//end if of searchable area contains
                     }
                 }
             }else{
-                //System.out.println("cockblocked");
+                //
             }
         }
-        System.out.println("this should not happen");
+
         return null;
     }
 
@@ -103,6 +108,20 @@ public abstract class AbstractActionController implements TargetVisitor{
             return false;
         }else{return false;}
     }
+
+    protected boolean checkAttackLocation(Target target, int distance){
+        if(target != null) {
+            Iterator<Location> iter = new FilledHex(this.getCharacter().getLocation(), distance).iterator();
+            while(iter.hasNext()){
+                if(iter.next().equals(target.getLocation())){
+                    return true;
+                }
+            }
+            //will only get here to return true if the target is in desired location
+            return false;
+        }else{return false;}
+    }
+
 
     public Character getCharacter() {
         return character;
