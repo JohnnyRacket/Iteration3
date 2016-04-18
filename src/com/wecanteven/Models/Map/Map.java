@@ -231,7 +231,6 @@ public class Map implements MapVisitable, ActionHandler {
         if(isOutOfBounds(location)){
             return false;
         }
-
         //checks to see if anything is blocking your height when moving
         CanMoveVisitor visitor = new TerranianCanMoveVisitor();
         boolean canMove = true;
@@ -249,6 +248,7 @@ public class Map implements MapVisitable, ActionHandler {
         if(canMove) {//move if you can
             item.setLocation(location);
             remove(item, source);
+            item.updateMovingTicks(movespeed);
             add(item.extractItem(), location);
             return true;
         }
@@ -257,18 +257,40 @@ public class Map implements MapVisitable, ActionHandler {
     }
 
     @Override
-    public boolean fall(TakeableMoveable item, Location location) {
-        CanFallVisitor visitor = new TerranianCanFallVisitor();
-        getTile(location).accept(visitor);
+    public boolean fall(TakeableMoveable item, Location destination) {
+//        CanFallVisitor visitor = item.getCanFallVisitor();
+//        getTile(location).accept(visitor);
+//        int tilesCount = 0;
+//        System.out.println("The item is falling");
+//        while(visitor.isCanMove()){
+//            location.setZ(location.getZ()-1);
+//            getTile(location).accept(visitor);
+//            tilesCount++;
+//        }
+//        if(tilesCount > 0) {
+//            location.setZ(location.getZ() + 1);
+//            return move(item, location, 2*tilesCount);
+//        }
+//        else{
+//            return false;
+//        }
+        CanFallVisitor visitor = item.getCanFallVisitor();
+        getTile(destination).accept(visitor);
         int tilesCount = 0;
         while(visitor.isCanMove()){
-            location.setZ(location.getZ()-1);
-            getTile(location).accept(visitor);
+            destination.setZ(destination.getZ()-1);
+            if(destination.getZ() <0){
+                destination.setZ(destination.getZ()+2);
+                move(item,destination,2*tilesCount);
+                item.setIsDestoryed(true);
+                return false;
+            }
+            getTile(destination).accept(visitor);
             tilesCount++;
         }
         if(tilesCount > 0) {
-            location.setZ(location.getZ() + 1);
-            return move(item, location, 2*tilesCount);
+            destination.setZ(destination.getZ() + 1);
+            return move(item, destination, 2*tilesCount);
         }
         else{
             return false;

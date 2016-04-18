@@ -19,7 +19,7 @@ public class TakeableMoveable extends TakeableItem implements Moveable {
     private TakeableItem item;
     private int movingTicks;
     private boolean isActive;
-    private CanMoveVisitor canMoveVisitor;
+    private ItemCanMoveVisitor canMoveVisitor;
     private CanFallVisitor canFallVisitor;
 
     public TakeableMoveable(String name, int value, TakeableItem item, ActionHandler handler, Location location) {
@@ -43,7 +43,7 @@ public class TakeableMoveable extends TakeableItem implements Moveable {
         if (actionHandler != null) {
             Location destination = getLocation().add(d.getCoords);
 
-            return actionHandler.move(this, destination, getMovingTicks());
+            return actionHandler.move(this, destination, 30);
         }
         return false;
     }
@@ -52,7 +52,7 @@ public class TakeableMoveable extends TakeableItem implements Moveable {
     @Override
     public boolean move(Location l) {
         if (actionHandler != null) {
-            return actionHandler.move(this, l, getMovingTicks());
+            return actionHandler.move(this, l, 30);
         }
         return false;
     }
@@ -100,6 +100,8 @@ public class TakeableMoveable extends TakeableItem implements Moveable {
     protected void tickTicks(){
         if(isActive()){
             ModelTime.getInstance().registerAlertable(() -> {
+                System.out.println("Item is on the move");
+                System.out.println("Moving ticks: "+getMovingTicks());
                 deIncrementMovingTick();
                 calculateActiveStatus();
                 tickTicks();
@@ -112,11 +114,14 @@ public class TakeableMoveable extends TakeableItem implements Moveable {
             movingTicks--;
     }
 
-    public CanMoveVisitor getCanMoveVisitor() {
+    public ItemCanMoveVisitor getItemCanMoveVisitor() {
         return canMoveVisitor;
     }
+    public CanFallVisitor getCanFallVisitor(){
+        return canFallVisitor;
+    }
 
-    public void setCanMoveVisitor(CanMoveVisitor canMoveVisitor) {
+    public void setCanMoveVisitor(ItemCanMoveVisitor canMoveVisitor) {
         this.canMoveVisitor = canMoveVisitor;
     }
     public void setCanFallVisitor(CanFallVisitor canFallVisitor) {

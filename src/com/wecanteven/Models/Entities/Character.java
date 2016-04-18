@@ -244,10 +244,6 @@ public class Character extends Entity implements Actionable {
     protected void tickTicks(){
         if(calculateActiveStatus()){
             ModelTime.getInstance().registerAlertable(() -> {
-
-
-
-
                 deIncrementMovingTick();
                 deIncrementWindUpTick();
                 if(getWindUpTicks()==0){
