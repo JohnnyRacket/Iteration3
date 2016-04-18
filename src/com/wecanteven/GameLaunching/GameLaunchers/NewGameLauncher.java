@@ -69,6 +69,11 @@ public class NewGameLauncher extends GameLauncher {
         player.setColor(playerColor);
         player.addMoney(500);
         player.addAbility(AbilityMap.getInstance().getAbility("BindWounds", player));
+        player.levelUp();
+        player.levelUp();
+        player.levelUp();
+        player.levelUp();
+        player.levelUp();
         setAvatar(new Avatar(player, getMap()));
         getMap().add(player, new Location(4,32,2));
 
