@@ -49,6 +49,19 @@ public class MountState extends AvatarState implements Observer {
         return jumped;
     }
 
+    public boolean fall(Direction d){
+        boolean jumped = true;
+        jumped = mount.jump(d) && jumped;
+
+        //avatar.jump(mount.getLocation());
+        avatar.setMovingTicks(mount.getMovingTicks());
+        avatar.setLocation(mount.getLocation());
+        //updatePlayerLocation();
+
+        return jumped;
+    }
+
+
     private void updatePlayerLocation() {
         Location avatarLocation = avatar.getLocation();
         avatarLocation.setR(mount.getLocation().getR());
@@ -76,7 +89,7 @@ public class MountState extends AvatarState implements Observer {
     public void pickup(){}
     public void interactWith(){}
     public void mount(Character mounter){
-
+        avatar.setCanFallVisitor(mount.getCachedCanFall());
         mount.mount(mounter);
     }
     public void dismount(){
