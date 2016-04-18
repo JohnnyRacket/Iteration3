@@ -7,11 +7,10 @@ import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
-import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
+import com.wecanteven.Models.Items.Takeable.MoneyItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Pet;
-import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
@@ -46,7 +45,7 @@ public class NewGameLauncher extends GameLauncher {
 
         createMap();
         createAvatar();
-        createPet();
+        //createPet();
         populateMap(getMap());
         initializeAreaView();
         initializeUIView();
@@ -66,20 +65,9 @@ public class NewGameLauncher extends GameLauncher {
     protected void createAvatar(){
         Character player = new Character(getMap(), Direction.SOUTH, occupation, GameColor.GREEN);
         player.setColor(playerColor);
-        //DONT INITIALIZE AN EQUIPPABLE THAT INCREASES THE LIVES
-        //player.pickup(new HeadEquipableItem("Top Hat", 2, new StatsAddable(1,1,1,1,1,1,1,1,1)));
-        //player.pickup(new HeadEquipableItem("THE GAME CRASHER", 1, new StatsAddable(1,1,1,1,1,1,1,1,1)));
-        player.pickup(ItemMap.getInstance().getItemAsEquipable("Blaster"));
-        player.pickup(ItemMap.getInstance().getItemAsEquipable("Flash"));
-        player.pickup(ItemMap.getInstance().getItemAsEquipable("Flare"));
-        player.pickup(ItemMap.getInstance().getItemAsEquipable("Sword"));
-        player.pickup(ItemMap.getInstance().getItemAsEquipable("Expand"));
-
-
-        //player.pickup(new DualWieldMeleeWeapon("Katar", 5, new StatsAddable(1,1,1,1,1,1,1,1,1)));
-        //player.getItemStorage().equip(new ChestEquipableItem("Mediocre Top", 3, new StatsAddable(1,1,1,1,1,1,1,1,1)));
+        player.addMoney(500);
         setAvatar(new Avatar(player, getMap()));
-        getMap().add(player, new Location(16,12,2));
+        getMap().add(player, new Location(28,28,5));
 
     }
 

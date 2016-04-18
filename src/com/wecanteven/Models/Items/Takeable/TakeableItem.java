@@ -16,7 +16,6 @@ import java.util.ArrayList;
  */
 public class TakeableItem extends Item implements Destroyable, ViewObservable {
     private ArrayList<Observer> observers = new ArrayList<>();
-    private ActionHandler handler = null;
     private int value;
     private boolean isDestroyed = false;
 
@@ -55,4 +54,5 @@ public class TakeableItem extends Item implements Destroyable, ViewObservable {
     public ArrayList<Observer> getObservers() {
         return observers;
     }
+
 }
