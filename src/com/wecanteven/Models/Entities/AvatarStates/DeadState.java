@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Entities.AvatarStates;
 
+import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.UtilityClasses.Direction;
 
@@ -68,7 +69,7 @@ public class DeadState extends AvatarState {
     }
 
     @Override
-    public void mount(Character mountee) {
+    public void mount(Avatar mountee) {
 
     }
 

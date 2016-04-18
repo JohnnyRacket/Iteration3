@@ -22,7 +22,7 @@ public class MountState extends AvatarState implements Observer {
         this.mount = mount;
         this.controller = controller;
         mount.modelAttach(this);
-        mount(avatar);
+        mount(controller);
     }
     public boolean move(Direction d){
         boolean moved = true;
@@ -88,8 +88,8 @@ public class MountState extends AvatarState implements Observer {
     public void drop(){}
     public void pickup(){}
     public void interactWith(){}
-    public void mount(Character mounter){
-        avatar.setCanFallVisitor(mount.getCachedCanFall());
+    public void mount(Avatar mounter){
+        //avatar.setCanFallVisitor(mount.getCachedCanFall());
         mount.mount(mounter);
     }
     public void dismount(){
