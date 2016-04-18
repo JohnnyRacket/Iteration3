@@ -13,6 +13,7 @@ import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleCo
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.RowedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 import com.wecanteven.MenuView.DrawableLeafs.BackgroundImageDrawable;
+import com.wecanteven.MenuView.DrawableLeafs.HUDview.AbilityBar;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.HUDview;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
@@ -79,14 +80,14 @@ public class UIViewFactory {
 
 
     public void createHUDView(Character character){
-        //StatsHUD statsHUD = new StatsHUD(character.getStats());
-        HUDview statsHUD = new HUDview();
-        //HorizontalCenterContainer horiz = new HorizontalCenterContainer(statsHUD);
-//        statsHUD.setHeight(150);
-//        statsHUD.setWidth(300);
-        //statsHUD.setBgColor(new Color(.5f,.5f,.5f,.5f));
+        AbilityBar abilityHUD = new AbilityBar(getAvatar().getCharacter().getStats());
+        abilityHUD.setWidth(420);
+        abilityHUD.setHeight(110);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(abilityHUD);
+        BottomLockContainer bot = new BottomLockContainer(horiz,0);
+
         SwappableView view = new SwappableView();
-        view.addDrawable(statsHUD);
+        view.addDrawable(bot);
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addPermView(view);
         },0);
