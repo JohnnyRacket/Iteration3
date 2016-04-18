@@ -90,7 +90,7 @@ public class Sound  {
         );
 
         SOUNDS.put("gameTheme",
-                new Sound("resources/Sounds/Game/GameTheme.wav", Volume.MUTE, true)
+                new Sound("resources/Sounds/Game/GameTheme.wav", Volume.LOW, true)
         );
 
         SOUNDS.put("Punch",
