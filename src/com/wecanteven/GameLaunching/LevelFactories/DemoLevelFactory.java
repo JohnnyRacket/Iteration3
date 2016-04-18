@@ -478,21 +478,21 @@ public class DemoLevelFactory extends LevelFactory {
     public void items(Map map) {
 
         //One shot
-        map.add(ItemMap.getInstance().getItemAsOneShot("Major Movement Buff"), new Location(1,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Minor Mana Orb"), new Location(2,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Its Superman"), new Location(3,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Minor Health Orb"), new Location(4,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Major Health Orb"), new Location(5,15,3));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Orange"), new Location(1,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Blue"), new Location(2,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Purple"), new Location(3,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Red"), new Location(4,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Green"), new Location(5,15,3));
 
 
         map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,3));
-        map.add(ItemMap.getInstance().getItemAsTakeable("Growth"), new Location(11, 13,3));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Fertilizer"), new Location(11, 13,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
 
         map.add(ItemMap.getInstance().getItemAsTakeable("Intellect Buff"), new Location(8,13,3));
 
-        map.add(ItemMap.getInstance().getItemAsOneShot("Stun Buff"), new Location(2,13,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Gray"), new Location(2,13,2));
 
         //Interactive Item??????
         /* TODO implement this */
