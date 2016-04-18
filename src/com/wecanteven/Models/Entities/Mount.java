@@ -9,6 +9,7 @@ import com.wecanteven.Observers.Positionable;
 import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
+import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.EntityVisitor;
 
 /**
@@ -52,6 +53,15 @@ public class Mount extends Character {
 
     setMounted(true);
     avatar.mount(this);
+  }
+
+  @Override
+  public void setLocation(Location location) {
+    super.setLocation(location);
+    if(mounter != null) {
+      mounter.setMovingTicks(getMovingTicks());
+      mounter.setLocation(location);
+    }
   }
 
 

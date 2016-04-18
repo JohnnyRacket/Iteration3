@@ -68,6 +68,10 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         buffmanager = new BuffManager(this);
     }
 
+    public CanFallVisitor getCachedCanFall() {
+        return cachedCanFall;
+    }
+
     public GameColor getColor() {
         return color;
     }
