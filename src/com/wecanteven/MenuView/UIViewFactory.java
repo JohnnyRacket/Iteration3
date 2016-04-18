@@ -1039,6 +1039,56 @@ public class UIViewFactory {
 
     public void createPickPocketView(Character attacker, Character attackee, int picketPoketLevel){
         System.out.println("Creating PickPocketView");
+
+        NavigatableGrid inventory = new NavigatableGrid(400, 400, 5, 5);
+        Iterator invIter = attacker.getItemStorage().getInventory().getIterator();
+        NavigatableList inventoryItems = new NavigatableList();
+        while(invIter.hasNext()){
+            TakeableItem i = (TakeableItem) invIter.next();
+            inventoryItems.addItem(new ScrollableMenuItem(i.getName() ,()->{
+                NavigatableList list = new NavigatableList();
+                MenuViewContainer container = controller.getMenuState().getMenus();
+                list.addItem(new ScrollableMenuItem("Attempt to Steal", () ->{
+                    ViewTime.getInstance().register(() ->{
+                        controller.popView();
+                        //ATTEMPT TO STEAL
+
+                    },0);
+                    controller.setMenuState(container);
+                }));
+            }));
+        }
+
+        //make menu
+        inventory.setBgColor(Config.PAPYRUS);
+
+        //NavigatableList equiplist = new NavigatableList();
+        //equiplist.addItem();
+
+        inventory.setList(inventoryItems);
+        //make swappable view
+        SwappableView view = new SwappableView();
+        //add decorators to center the menu
+        CustomScaleColumnsContainer columns  = new CustomScaleColumnsContainer(new int[]{4,1});
+        columns.setHeight(400);
+        columns.setWidth(600);
+
+        columns.addDrawable(inventory);
+
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Pickpocket", attacker.getColor().dark);
+        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
+        VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
+        AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
+//        view.addDrawable(vertCenter);
+
+        view.addDrawable(animation);
+        view.addNavigatable(inventory);
+        //return created swappable view
+        ViewTime.getInstance().register(()->{
+            createGreyBackground();
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
     }
 
     //Triggers initial animation dialog window - afterwards, continue is used.
