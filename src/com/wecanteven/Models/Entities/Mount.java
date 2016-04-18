@@ -36,7 +36,6 @@ public class Mount extends Character {
   }
 
   public void accept(EntityVisitor visitor) {
-
       if(mounter != null) {
           mounter.accept(visitor);
       }
