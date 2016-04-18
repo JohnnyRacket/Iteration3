@@ -29,13 +29,13 @@ public class NPC extends Character {
         this.interaction.setOwner(this);
     }
     public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction, Occupation occupation, GameColor color){
-        super(actionHandler, direction, occupation, new ItemStorage(5), new AbilityStorage(), color);
+        super(actionHandler, direction, occupation, new ItemStorage(5), color);
         this.interaction = interaction;
         this.interaction.setOwner(this);
     }
 
     public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction, Occupation occupation, ItemStorage itemStorage, GameColor color){
-        super(actionHandler, direction, occupation, itemStorage, new AbilityStorage(), color);
+        super(actionHandler, direction, occupation, itemStorage, color);
         this.interaction = interaction;
         this.interaction.setOwner(this);
     }

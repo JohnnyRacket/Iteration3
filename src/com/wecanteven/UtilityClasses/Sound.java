@@ -57,7 +57,7 @@ public class Sound  {
         gain.setValue(volume.gain);
         if (!mute && volume != Volume.MUTE) {
             if (clip.isRunning())
-                clip.stop();   // Stop the player if it is still running
+                return;   // Stop the player if it is still running
             clip.setFramePosition(0); // rewind to the beginning
             clip.start();     // Start playing
             float clipLength = ((float)clip.getFrameLength())/clip.getFormat().getFrameRate();
