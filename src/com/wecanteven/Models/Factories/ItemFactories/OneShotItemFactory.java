@@ -22,7 +22,8 @@ public class OneShotItemFactory {
 
     public OneShot vendMovementSpeedBuffOneShot(String name, int movementSpeedBuff, int duration) {
         return new OneShot(name, (entity) -> entity.buff(new Buff(
-                "Purple",
+                "Speed",
+                "Orangea",
                 duration,
                 (entity1) -> entity1.modifyStatsAdditive(new StatsAddable(0,0,0,0,0,0,movementSpeedBuff,0,0)),
                 (entity1) -> entity1.modifyStatsSubtractive(new StatsAddable(0,0,0,0,0,0,movementSpeedBuff,0,0))
@@ -31,6 +32,7 @@ public class OneShotItemFactory {
 
     public OneShot vendFlyingBuffOneShot(String name, int duration) {
         return new OneShot(name, (entity) -> entity.buff(new Buff(
+                "Fly",
                 "Purple",
                 duration,
                 (entity1) -> {

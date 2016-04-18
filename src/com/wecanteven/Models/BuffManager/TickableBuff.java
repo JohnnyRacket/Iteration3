@@ -8,8 +8,8 @@ import com.wecanteven.Models.ModelTime.ModelTime;
 public class TickableBuff extends Buff {
     private int tickDuration;
 
-    public TickableBuff(String name, int tickDuration, BuffApply apply, BuffUnapply unapply) {
-        super(name, tickDuration, apply, unapply);
+    public TickableBuff(String type, String name, int tickDuration, BuffApply apply, BuffUnapply unapply) {
+        super(type, name, tickDuration, apply, unapply);
 
         this.tickDuration = tickDuration;
     }

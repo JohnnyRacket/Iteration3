@@ -1,5 +1,7 @@
 package com.wecanteven.Models.Map.Aoe;
 
+import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Visitors.AreaOfEffectVisitor;
 
@@ -19,7 +21,6 @@ public class TakeDamageAreaOfEffect extends TickableAreaOfEffect {
 
     @Override
     public void apply(Entity entity) {
-
         entity.takeDamage(damagePerTick);
     }
 

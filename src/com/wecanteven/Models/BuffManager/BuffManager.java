@@ -1,5 +1,7 @@
 package com.wecanteven.Models.BuffManager;
 
+import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.Observers.ViewObservable;
@@ -23,6 +25,11 @@ public class BuffManager implements ViewObservable {
     }
 
     public void addBuff(Buff buff) {
+        ViewTime.getInstance().register(()->{
+            if(owner == UIViewFactory.getInstance().getController().getAvatar().getCharacter()) {
+                UIViewFactory.getInstance().createToast(2, "You got a " + buff.getType() + " buff");
+            }
+        },0);
         buff.setOwner(this);
     }
 

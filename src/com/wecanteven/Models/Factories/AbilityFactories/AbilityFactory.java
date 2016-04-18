@@ -109,7 +109,8 @@ public class AbilityFactory {
         statLevel = caster.getStats().getIntellect();
         skillLevel = caster.getSkillPoints(skill);
         int multiplier = statLevel+skillLevel;
-        effect = new BuffEffect(new Buff("Orange",
+        effect = new BuffEffect(new Buff("Speed",
+                "Orange",
                 duration,
                 (target)-> target.modifyStatsAdditive((new StatsAddable(0,0,0,0,0,0,5*(multiplier),0,0))),
                 (target)-> target.modifyStatsSubtractive((new StatsAddable(0,0,0,0,0,0,5*(multiplier),0,0)))));
