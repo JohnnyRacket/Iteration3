@@ -1,6 +1,7 @@
 package com.wecanteven.SaveLoad.Load;
 
 import com.wecanteven.GameLaunching.GameLaunchers.LoadGameLauncher;
+import com.wecanteven.GameLaunching.LevelFactories.DemoLevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactoryFactory;
 import com.wecanteven.Models.Entities.Avatar;
@@ -27,6 +28,7 @@ public class LoadFromXMLFile implements LoadGame {
     private SaveFile saveFile;
     private Map map;
     private Avatar avatar;
+    private LevelFactory lf;
 
     public LoadFromXMLFile(LoadGameLauncher launcher, File file) {
         this.launcher = launcher;
@@ -38,7 +40,7 @@ public class LoadFromXMLFile implements LoadGame {
     @Override
     public void loadGame() {
         loadSaveFile();
-        launcher.setLevelFactory(loadLevelFactory());
+        launcher.setLevelFactory(lf);
         launcher.loadMap(getMap());
         launcher.loadAvatar(getAvatar());
 
@@ -47,23 +49,20 @@ public class LoadFromXMLFile implements LoadGame {
     }
 
     public void loadSaveFile() {
-
+        lf = new DemoLevelFactory();
         map = loadMap();
         avatar = loadAvatar();
 
     }
 
     public Map loadMap() {
-        return TileXMLProcessor.parseMap(saveFile.getElemenetById("Map", 0));
+        return TileXMLProcessor.parseMap(lf, saveFile.getElemenetById("Map", 0));
     }
 
     public Avatar loadAvatar() {
         return EntityXMLProcessor.parseAvatar(map, saveFile.getElemenetById("Avatar", 0));
     }
 
-    public LevelFactory loadLevelFactory() {
-        return (new LevelFactoryFactory()).vendLevelFactory(saveFile.getElemenetById("Map", 0).getAttribute("name"));
-    }
 
     public Avatar getAvatar() {
         return avatar;

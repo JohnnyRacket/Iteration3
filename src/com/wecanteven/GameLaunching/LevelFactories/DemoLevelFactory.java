@@ -59,13 +59,18 @@ public class DemoLevelFactory extends LevelFactory {
 
     private ArrayList<Location> biomePaint = fallLocations;
 
-    Map map = new Map(mapWidth, mapLength, mapHeight);
+    Map map;
+
+
+    public DemoLevelFactory() {
+        map = new Map(mapWidth, mapLength, mapHeight);
+    }
 
 
     @Override
     public Map createMap() {
         map.setName("DemoLevelFactory");
-
+        System.out.println("Setting Terrain BIOME");
         rOffset = 0;
         sOffset = 0;
         zOffset = 1;
@@ -499,7 +504,7 @@ public class DemoLevelFactory extends LevelFactory {
         npc.pickup(item);
         npc.equipItem(item);
         //npc.pickup(ItemMap.getInstance().getItemAsTakeable("Sword"));
-        npc.pickup(ItemMap.getInstance().getItemAsTakeable("Redbull"));
+        npc.pickup(ItemMap.getInstance().getItemAsTakeable("RedBull"));
         map.add(npc, new Location(6,3,15));
         AITime.getInstance().registerController(controller);
     }

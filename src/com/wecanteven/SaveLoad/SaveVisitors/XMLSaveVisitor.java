@@ -200,6 +200,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitInteractiveItem(InteractiveItem item) {
+
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 
@@ -220,6 +221,10 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
     @Override
     public void visitUseableItem(UseableItem item) {
+        if(item.getClass().getSimpleName().equals("")) {
+            ItemXMLProcessor.formatItem("UseableItem", item);
+            return;
+        }
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
     }
 
