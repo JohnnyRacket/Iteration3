@@ -107,6 +107,25 @@ public class AbilityFactory {
         return ability;
     }
 
+    //SMASHER
+    //brawling ability
+    public Ability vendStaff(Character caster) {
+        skill = Skill.STAFF;
+        statLevel = caster.getStats().getStrength();
+        skillLevel = caster.getSkillPoints(skill);
+        multiplier = skillLevel+statLevel;
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
+        duration = 1;
+        abilityName = "StaffWhackery";
+        abilityImage = "Punch";
+        MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
+        ability = new Ability(abilityName,caster,generator,skill,0);
+        ability.setCooldownTicks(5);
+        ability.setWindUpTicks(5);
+        ability.setCast(true);
+        return ability;
+    }
+
     //SUMMONER
     //extra abilities
     public Ability vendSpeedUp(Character caster){
