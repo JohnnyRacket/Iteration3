@@ -1037,6 +1037,10 @@ public class UIViewFactory {
         }
     }
 
+    public void createPickPocketView(Character attacker, Character attackee, int picketPoketLevel){
+        System.out.println("Creating PickPocketView");
+    }
+
     //Triggers initial animation dialog window - afterwards, continue is used.
     public void createDialogView(NPC npc, Character player, Iterator dialogIter){
         String dialog = (String) dialogIter.next();
