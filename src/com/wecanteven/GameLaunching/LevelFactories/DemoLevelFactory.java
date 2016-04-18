@@ -375,13 +375,13 @@ public class DemoLevelFactory extends LevelFactory {
     @Override
     public void populateMap(Map map) {
         areasOfEffect(map);
-        //items(map);
-        //mount(map);
+        items(map);
+        mount(map);
         weaponNPC(map);
         dialogNPC(map);
         tradeNPC(map);
         questNPC(map);
-        //petNPC(map);
+        petNPC(map);
     }
 
     public void mount(Map map) {
@@ -491,13 +491,15 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsOneShot("Red"), new Location(4,15,2));
         map.add(ItemMap.getInstance().getItemAsOneShot("Green"), new Location(5,15,3));
 
+        map.add(ItemMap.getInstance().getItemAsAbility("BindWounds"), new Location(9,13,3));
+
 
         map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Fertilizer"), new Location(11, 13,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,3));
-        map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
+       // map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
 
-        map.add(ItemMap.getInstance().getItemAsTakeable("Intellect Buff"), new Location(8,13,3));
+        //map.add(ItemMap.getInstance().getItemAsTakeable("Intellect Buff"), new Location(8,13,3));
 
         map.add(ItemMap.getInstance().getItemAsOneShot("Gray"), new Location(2,13,2));
 
@@ -505,8 +507,8 @@ public class DemoLevelFactory extends LevelFactory {
         /* TODO implement this */
 
 
-        //map.add(ItemMap.getInstance().getItemAsAbility("Brawling"), new Location(1,14,2));
-        map.add(ItemMap.getInstance().getItemAsAbility("One-handed weapon"), new Location(2,14,2));
+        //map.add(ItemMap.getInstance().getItemAsAbility("Brawling"), new Location(10,12,3));
+        //map.add(ItemMap.getInstance().getItemAsAbility("One-handed weapon"), new Location(5,10,3));
 
 
 

@@ -45,7 +45,7 @@ public class NewGameLauncher extends GameLauncher {
 
         createMap();
         createAvatar();
-        //createPet();
+        createPet();
         populateMap(getMap());
         initializeAreaView();
         initializeUIView();
