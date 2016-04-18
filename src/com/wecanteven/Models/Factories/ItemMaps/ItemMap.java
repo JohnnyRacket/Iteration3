@@ -85,6 +85,8 @@ public class ItemMap {
                  () -> factory.vendMovementSpeedBuffOneShot("Major Movement Buff", 60, 300));
         OneShotItemMap.put("Its Superman",
                 () -> factory.vendFlyingBuffOneShot("Its Superman", 600));
+        OneShotItemMap.put("Stun Buff",
+                () -> factory.vendMovementStunBuffOneShot("Stun Buff", 200));
 
         usedNames.addAll(OneShotItemMap.keySet());
     }

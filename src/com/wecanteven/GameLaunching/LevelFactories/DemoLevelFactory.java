@@ -489,6 +489,9 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
 
         map.add(ItemMap.getInstance().getItemAsTakeable("Intellect Buff"), new Location(8,13,3));
+
+        map.add(ItemMap.getInstance().getItemAsOneShot("Stun Buff"), new Location(2,13,2));
+
         //Interactive Item??????
         /* TODO implement this */
 
