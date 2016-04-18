@@ -5,6 +5,7 @@ import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Factories.AbilityFactories.AbilityFactory;
 import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.WeaponEquipableItem;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Occupation.Occupation;
 import com.wecanteven.Models.Occupation.Skill;
@@ -29,6 +30,7 @@ public class Character extends Entity implements Actionable {
     private ItemStorage itemStorage;
     private AbilityStorage abilityStorage;
     private int windUpTicks = 0, coolDownTicks = 0;
+    private Ability attack;
 
     private int availableSkillPoints = 0;
 
@@ -38,6 +40,7 @@ public class Character extends Entity implements Actionable {
         this.itemStorage = new ItemStorage(this, 25);
         this.abilityStorage = new AbilityStorage(this);
         this.abilityStorage.initialize();
+        resetAtack(); //makes attack Brawling
         windUpTicks = 0;
         coolDownTicks = 0;
     }
@@ -78,8 +81,6 @@ public class Character extends Entity implements Actionable {
     public void attack(Direction dir) {
         if(!isActive()){
             this.setDirection(dir);
-            AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendSlowAttack(this);
             attack.cast();
         }
     }
@@ -89,6 +90,10 @@ public class Character extends Entity implements Actionable {
      */
     public void equipItem(EquipableItem item) {
         itemStorage.equip(item);
+        if(itemStorage.getEquipped().getWeapon().hasItem()){
+            WeaponEquipableItem weapon =(WeaponEquipableItem) itemStorage.getEquipped().getWeapon().getItem();
+            attack = weapon.getAbility().create(this);
+        }
     }
 
     public void unequipItem(EquipableItem item) {
@@ -342,5 +347,13 @@ public class Character extends Entity implements Actionable {
         super.levelUp();
 
         allocateAvailablePoints(3);
+    }
+
+    public void setAttack(Ability attack){
+        this.attack = attack;
+    }
+    public void resetAtack(){
+        AbilityFactory factory = new AbilityFactory();
+        attack = factory.vendBrawling(this);
     }
 }

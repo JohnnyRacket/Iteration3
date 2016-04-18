@@ -13,6 +13,7 @@ import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.CustomScaleCo
 import com.wecanteven.MenuView.DrawableContainers.LayoutComposites.RowedCompositeContainer;
 import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 import com.wecanteven.MenuView.DrawableLeafs.BackgroundImageDrawable;
+import com.wecanteven.MenuView.DrawableLeafs.HUDview.AbilityBar;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.HUDview;
 import com.wecanteven.MenuView.DrawableLeafs.HUDview.StatsHUD;
 import com.wecanteven.MenuView.DrawableLeafs.KeyBindView;
@@ -79,17 +80,20 @@ public class UIViewFactory {
 
 
     public void createHUDView(Character character){
-        //StatsHUD statsHUD = new StatsHUD(character.getStats());
-        HUDview statsHUD = new HUDview();
-        //HorizontalCenterContainer horiz = new HorizontalCenterContainer(statsHUD);
-//        statsHUD.setHeight(150);
-//        statsHUD.setWidth(300);
-        //statsHUD.setBgColor(new Color(.5f,.5f,.5f,.5f));
+        AbilityBar abilityHUD = new AbilityBar(getAvatar().getCharacter().getStats(),getAvatar().getCharacter().getAbilityStorage());
+        abilityHUD.setWidth(420);
+        abilityHUD.setHeight(110);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(abilityHUD);
+        BottomLockContainer bot = new BottomLockContainer(horiz,0);
+
         SwappableView view = new SwappableView();
-        view.addDrawable(statsHUD);
-        ViewTime.getInstance().register(()->{
+        view.addDrawable(bot);
+        try {
             vEngine.getManager().addPermView(view);
-        },0);
+        }catch (Exception e){
+
+        }
+
     }
 
     public void createMainMenuView(){
@@ -121,6 +125,7 @@ public class UIViewFactory {
         controller.setMainMenuState(view.getMenuViewContainer());
 
         ViewTime.getInstance().register(()->{
+            this.getvEngine().getManager().removePerms();
             this.getController().clearViews();
             this.getvEngine().clear();
             vEngine.getManager().addView(view);
@@ -717,7 +722,7 @@ public class UIViewFactory {
             },0);
             controller.setMenuState(container);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
+        ScrollableMenu menu = new ScrollableMenu(100,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
@@ -754,7 +759,7 @@ public class UIViewFactory {
             },0);
             controller.setMenuState(container);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
+        ScrollableMenu menu = new ScrollableMenu(100,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
@@ -810,7 +815,7 @@ public class UIViewFactory {
             },0);
             controller.setMenuState(container);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
+        ScrollableMenu menu = new ScrollableMenu(130,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
 
@@ -861,7 +866,7 @@ public class UIViewFactory {
                 createTradeView(shopOwner, buyer, false);
             },0);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
+        ScrollableMenu menu = new ScrollableMenu(130,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
 

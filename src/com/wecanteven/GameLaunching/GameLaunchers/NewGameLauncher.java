@@ -46,7 +46,7 @@ public class NewGameLauncher extends GameLauncher {
 
         createMap();
         createAvatar();
-        //createPet();
+        createPet();
         populateMap(getMap());
         initializeAreaView();
         initializeUIView();
@@ -72,7 +72,8 @@ public class NewGameLauncher extends GameLauncher {
         player.pickup(ItemMap.getInstance().getItemAsEquipable("Club"));
 
         setAvatar(new Avatar(player, getMap()));
-        getMap().add(player, new Location(25,34,6));
+
+        getMap().add(player, new Location(6,13,5));
 
     }
 

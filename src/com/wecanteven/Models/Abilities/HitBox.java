@@ -33,7 +33,11 @@ public class HitBox implements Destroyable{
 
     public void addToMap(int removeTime, Location destination){
         HitBox hitBox = this;
-        getActionHandler().add(hitBox, destination);
+        if (!getActionHandler().add(hitBox, destination)) {
+            //out of bounds
+            return;
+        }
+        System.out.println("Adding a hitbox to the map "+removeTime);
         setLocation(destination);
         ViewTime viewTime = ViewTime.getInstance();
         viewTime.register(new ViewTime.vCommand() {
@@ -48,6 +52,7 @@ public class HitBox implements Destroyable{
         modelTime.registerAlertable(new Alertable() {
             @Override
             public void alert() {
+                System.out.println("Removing the hitbox from the map "+destination);
                 getActionHandler().remove(hitBox, destination);
                 setIsDestroyed(true);
             }

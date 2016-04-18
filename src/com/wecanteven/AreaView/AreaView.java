@@ -7,6 +7,7 @@ import com.wecanteven.AreaView.ViewObjects.Tiles.TileViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.Models.Map.Map;
+import com.wecanteven.UtilityClasses.Config;
 import com.wecanteven.UtilityClasses.Location;
 
 import javax.swing.*;
@@ -123,8 +124,12 @@ public class AreaView extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        background.draw(g2d);
+        //background.draw(g2d);
+        GradientPaint gp = new GradientPaint(0,0, Config.BACKGROUNDBLUELIGHT,0,getHeight(),Config.BACKGROUNDBLUE);
+        g2d.setPaint(gp);
+        g2d.fillRect(0,0,Config.SCREEN_WIDTH,Config.SCREEN_HEIGHT);
         backingArray.draw(g2d);
+
     }
 
     class xySorted3DArray {

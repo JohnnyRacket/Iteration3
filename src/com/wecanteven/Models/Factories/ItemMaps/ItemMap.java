@@ -153,8 +153,8 @@ public class ItemMap {
                 () -> factory.vendStatModifyingBuffItem("Brilliance", 25, new StatsAddable(0,0,0,15,0,0,0,0,0)));
         UseableItemMap.put("Spinach",
                 () -> factory.vendStatModifyingBuffItem("Spinach", 25, new StatsAddable(0,15,0,0,0,0,0,0,0)));
-        UseableItemMap.put("Redbull",
-                () -> factory.vendFlyingBuffItem("Redbull", 100));
+        UseableItemMap.put("RedBull",
+                () -> factory.vendFlyingBuffItem("RedBull", 100));
 
         usedNames.addAll(UseableItemMap.keySet());
     }
@@ -165,6 +165,8 @@ public class ItemMap {
         AbilityItemMap.put("One-handed weapon", () -> factory.vendOneHandedWeapon("One-handed weapon", 100));
         AbilityItemMap.put("Two-handed weapon", () -> factory.vendTwoHandedWeapon("Two-handed weapon", 100));
         AbilityItemMap.put("Brawling", () -> factory.vendBrawling("Brawling", 100));
+        AbilityItemMap.put("BindWounds", () -> factory.vendBindWounds("BindWounds", 100));
+
     }
 
     public Obstacle getItemAsObstacle(String name) {

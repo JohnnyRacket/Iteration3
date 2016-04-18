@@ -42,6 +42,9 @@ public class ViewManager {
     public void addPermView(SwappableView view){
         permViewStack.push(view);
     }
+    public void removePerms(){
+        permViewStack.clear();
+    }
 
     public void addView(SwappableView view){
         viewStack.push(view);

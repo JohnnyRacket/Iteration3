@@ -10,6 +10,9 @@ import com.wecanteven.Visitors.WeaponsVisitor;
 public class RangedWeaponEquipableItem extends WeaponEquipableItem {
     public RangedWeaponEquipableItem(String name, int value, StatsAddable stats) {
         super(name, value, stats);
+        setCreateAbility((caster)->{
+            return getFactory().vendRangedWeapon(caster);
+        });
     }
 
     @Override

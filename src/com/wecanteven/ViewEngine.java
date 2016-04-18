@@ -50,6 +50,7 @@ public class ViewEngine extends JFrame implements Runnable{
         add(target);
         setTitle("Can Periwinkle Even?");
         setResizable(true);
+        setBackground(Config.BACKGROUNDBLUE);
         //Maximized the window
         //This is cool and all, but I need the console for debugging
         Dimension DimMax = Toolkit.getDefaultToolkit().getScreenSize();
@@ -64,6 +65,8 @@ public class ViewEngine extends JFrame implements Runnable{
     }
 
 
+
+
     public void start() {
         thread = new Thread(this);
         thread.setName("View Thread");
@@ -75,6 +78,7 @@ public class ViewEngine extends JFrame implements Runnable{
         TimeKeeper timeKeeper = new TimeKeeper(33);
         while(true) {
             timeKeeper.startTick();
+
             viewTime.tick();
             this.repaint();
 
@@ -124,4 +128,6 @@ public class ViewEngine extends JFrame implements Runnable{
         component.paint( image.getGraphics() ); // alternately use .printAll(..)
         return image;
     }
+
+
 }
