@@ -2,6 +2,7 @@ package com.wecanteven.AreaView.ViewObjects.Hominid;
 
 import com.wecanteven.AreaView.JumpDetector;
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.DecoratorViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
@@ -30,6 +31,7 @@ public class MountViewObject implements ViewObject, Observer {
     private Mount subject;
     private Position position;
     private MountMovement mountMovement;
+    private boolean isMounted = false;
 
     public MountViewObject(Position position, SimpleVOFactory simpleVOFactory, Mount mount) {
         this.simpleVOFactory = simpleVOFactory;
@@ -60,8 +62,22 @@ public class MountViewObject implements ViewObject, Observer {
 
     @Override
     public void update() {
-        move(subject.getMovingTicks()*Config.MODEL_TICK);
+        if(subjectMounted())
+            isMounted = true;
+        else if(subjectDismounted())
+            isMounted = false;
+        else
+            move(subject.getMovingTicks()*Config.MODEL_TICK);
     }
+
+    private boolean subjectDismounted() {
+        return subject.getMounted() == false && isMounted == true;
+    }
+
+    private boolean subjectMounted() {
+        return subject.getMounted() == true && isMounted == false;
+    }
+
 
     @Override
     public Position getPosition() {
@@ -76,7 +92,7 @@ public class MountViewObject implements ViewObject, Observer {
 
     @Override
     public void draw(Graphics2D g) {
-        body.draw(g);
+            body.draw(g);
     }
 
     @Override

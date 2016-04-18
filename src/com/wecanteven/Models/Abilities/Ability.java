@@ -1,5 +1,7 @@
 package com.wecanteven.Models.Abilities;
 
+import com.wecanteven.AreaView.ViewTime;
+import com.wecanteven.MenuView.UIViewFactory;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Models.Occupation.Skill;
@@ -33,18 +35,21 @@ public class Ability {
         if (caster.isActive()) {
             return;
         }
-        System.out.println("ACTIVE STATUS: "+caster.isActive());
         calculateFailChance(getSkillLevel());
         Random randomGenerator = new Random();
         if (cast || getFailChance()<=randomGenerator.nextInt(100)) {
-            System.out.println("windup"+getWindUpTicks());
             caster.updateWindUpTicks(getWindUpTicks());
             caster.updateCoolDownTicks(getCooldownTicks());
             System.out.println("Activating the spell");
             activateAbility();
             return;
         }
+        //the ability has failed
         caster.updateCoolDownTicks(cooldownTicks);
+        caster.updateWindUpTicks(0);
+        ViewTime.getInstance().register(()-> {
+                    UIViewFactory.getInstance().createToast(2, getName() + " has failed.");
+                },0);
         System.out.println("The ability has failed");
 
     }

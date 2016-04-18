@@ -15,8 +15,8 @@ import com.wecanteven.Visitors.EntityVisitor;
  * Created by adamfortier on 4/15/16.
  */
 public class Mount extends Character {
-  Character mounter;
-
+  private Character mounter;
+  private boolean mounted = false;
 
 
   public Mount(ActionHandler actionHandler, Direction direction) {
@@ -26,11 +26,12 @@ public class Mount extends Character {
 
   public void mount(Character mounter) {
     this.mounter = mounter;
-    this.mounter.setDestroyed(true);
+    //this.mounter.setDestroyed(true);
   }
 
   public void dismount() {
     mounter = null;
+    setMounted(false);
   }
 
   public void accept(EntityVisitor visitor) {
@@ -49,9 +50,18 @@ public class Mount extends Character {
 
   public void interact(Avatar avatar) {
     System.out.println("Interacting with Avatar");
+    setMounted(true);
     avatar.mount(this);
   }
 
+  private void setMounted(boolean mounted) {
+    this.mounted = mounted;
+    notifyObservers();
+  }
+
+  public boolean getMounted() {
+    return mounted;
+  }
   public String toString() {
     return "Mount instance!";
   }

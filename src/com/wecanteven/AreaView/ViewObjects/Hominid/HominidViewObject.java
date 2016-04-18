@@ -35,7 +35,6 @@ public class HominidViewObject implements ViewObject, Observer{
     private FeetViewObject feet;
     private BuffRingViewObject buffs;
     private JumpDetector jumpDetector;
-
     private long endMoveTime = 0;
     private long endAttackTime = 0;
 
