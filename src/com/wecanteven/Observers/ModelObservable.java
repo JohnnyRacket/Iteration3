@@ -14,6 +14,13 @@ public interface ModelObservable {
         getModelObservers().remove(o);
     }
     default void modelNotifyObservers() {
-        getModelObservers().forEach( Observer::update );
+       try {
+           for (int i = 0; i < getModelObservers().size(); i++) {
+               getModelObservers().get(i).update();
+           }
+       }
+       catch (IndexOutOfBoundsException e) {
+           System.out.println("Current Mod in  ModelObservable");
+       }
     }
 }
