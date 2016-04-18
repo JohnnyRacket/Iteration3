@@ -409,22 +409,22 @@
         <Column z="22">
             <Tile r="27" s="29" terrain="Air" z="4">
                 <Avatar>
-                    <Character AvailableSkillPts="0" Color="0" Height="3" Occupation="Sneak">
+                    <Character AvailableSkillPts="4" Color="0" Height="3" Occupation="Sneak">
                         <Location r="27" s="29" z="4"/>
                         <Direction enum="1"/>
-                        <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="1"/>
+                        <Stats agility="1" hardiness="1" intellect="20" level="6" lives="3" movement="30" strength="1"/>
                         <ItemStorage maxInventoryCapacity="25">
                             <Inventory maxInventoryCapacity="25"/>
                             <Equipment/>
                         </ItemStorage>
                         <Skills>
-                            <Skill amount="0" name="Bargain"/>
+                            <Skill amount="8" name="Bargain"/>
                             <Skill amount="0" name="Detect-N-Remove Traps"/>
-                            <Skill amount="0" name="Creep"/>
-                            <Skill amount="0" name="Stealing Shit"/>
-                            <Skill amount="0" name="Ranged Weapon"/>
-                            <Skill amount="0" name="Bind Wounds"/>
-                            <Skill amount="0" name="Observation"/>
+                            <Skill amount="4" name="Creep"/>
+                            <Skill amount="8" name="Stealing Shit"/>
+                            <Skill amount="8" name="Ranged Weapon"/>
+                            <Skill amount="8" name="Bind Wounds"/>
+                            <Skill amount="8" name="Observation"/>
                         </Skills>
                         <AbilityEquipped>
                             <Ability name="PickPocket"/>

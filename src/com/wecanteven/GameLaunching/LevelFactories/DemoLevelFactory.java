@@ -64,6 +64,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     Map map;
 
+
     public DemoLevelFactory() {
         map = new Map(mapWidth, mapLength, mapHeight);
     }
@@ -699,6 +700,11 @@ public class DemoLevelFactory extends LevelFactory {
         tradeNPC(map);
         questNPC(map);
         petNPC(map);
+
+        createHostileNpc(map, ItemMap.getInstance().getItemAsEquipable("Expand"), new Location(28,33,4));
+        createHostileNpc(map, ItemMap.getInstance().getItemAsEquipable("Flare"), new Location(25,34,4));
+        createHostileNpc(map, ItemMap.getInstance().getItemAsEquipable("Flash"), new Location(23,32,4));
+        createHostileNpc(map, ItemMap.getInstance().getItemAsEquipable("Club"), new Location(23,29,4));
     }
 
     public void mount(Map map) {
@@ -779,6 +785,13 @@ public class DemoLevelFactory extends LevelFactory {
         npc.pickup(ItemMap.getInstance().getItemAsEquipable("Antenna"));
         npc.pickup(ItemMap.getInstance().getItemAsEquipable("Flare"));
         npc.pickup(ItemMap.getInstance().getItemAsUseable("Spinach"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("BindWounds"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("PickPocket"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("Creep"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("Poison"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("Slow"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("SpeedUp"));
+
         map.add(npc, new Location(3, 26, 3));
     }
 
@@ -802,11 +815,11 @@ public class DemoLevelFactory extends LevelFactory {
     public void items(Map map) {
 
         //One shot
-        //map.add(ItemMap.getInstance().getItemAsOneShot("Orange"), new Location(1,15,5));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Orange"), new Location(1,15,5));
         //map.add(ItemMap.getInstance().getItemAsOneShot("Blue"), new Location(2,15,5));
         //map.add(ItemMap.getInstance().getItemAsOneShot("Purple"), new Location(3,15,5));
         //map.add(ItemMap.getInstance().getItemAsOneShot("Red"), new Location(4,15,5));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Orange"), new Location(5,15,5));
+        //map.add(ItemMap.getInstance().getItemAsOneShot("Green"), new Location(5,15,5));
 
         //map.add(ItemMap.getInstance().getItemAsAbility("SpeedUp"), new Location(9,13,5));
 
@@ -816,7 +829,7 @@ public class DemoLevelFactory extends LevelFactory {
         //map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,4));
        // map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
 
-        //map.add(ItemMap.getInstance().getItemAsOneShot("Gray"), new Location(2,13,3));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Gray"), new Location(2,13,3));
 
         //Interactive Item??????
         /* TODO implement this */

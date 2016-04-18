@@ -377,22 +377,22 @@
         <Column z="22">
             <Tile r="27" s="29" terrain="Air" z="4">
                 <Avatar>
-                    <Character AvailableSkillPts="0" Color="0" Height="3" Occupation="Summoner">
+                    <Character AvailableSkillPts="4" Color="0" Height="3" Occupation="Summoner">
                         <Location r="27" s="29" z="4"/>
                         <Direction enum="1"/>
-                        <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="1"/>
+                        <Stats agility="1" hardiness="1" intellect="7" level="1" lives="3" movement="30" strength="1"/>
                         <ItemStorage maxInventoryCapacity="25">
                             <Inventory maxInventoryCapacity="25"/>
                             <Equipment/>
                         </ItemStorage>
                         <Skills>
-                            <Skill amount="0" name="Enchantment"/>
-                            <Skill amount="0" name="Bind Wounds"/>
-                            <Skill amount="0" name="Bane"/>
-                            <Skill amount="0" name="Bargain"/>
-                            <Skill amount="0" name="Observation"/>
-                            <Skill amount="0" name="Staff Whackery"/>
-                            <Skill amount="0" name="Boon"/>
+                            <Skill amount="4" name="Enchantment"/>
+                            <Skill amount="8" name="Bind Wounds"/>
+                            <Skill amount="8" name="Bane"/>
+                            <Skill amount="8" name="Bargain"/>
+                            <Skill amount="8" name="Observation"/>
+                            <Skill amount="8" name="Staff Whackery"/>
+                            <Skill amount="8" name="Boon"/>
                         </Skills>
                         <AbilityEquipped>
                             <Ability name="Poison"/>
@@ -419,7 +419,7 @@
                     <Location r="28" s="33" z="4"/>
                     <Interaction type="NoInteractionStrategy"/>
                     <Direction enum="1"/>
-                    <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="10001"/>
+                    <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="101"/>
                     <ItemStorage maxInventoryCapacity="5">
                         <Inventory maxInventoryCapacity="5"/>
                         <Equipment>

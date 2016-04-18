@@ -1,5 +1,9 @@
 package com.wecanteven.SaveLoad.XMLProcessors;
 
+import com.wecanteven.Controllers.AIControllers.AIController;
+import com.wecanteven.Controllers.AIControllers.AITime;
+import com.wecanteven.Controllers.AIControllers.ActionControllers.EnemyActionController;
+import com.wecanteven.Controllers.AIControllers.SearchingControllers.EnemySearchingController;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
@@ -85,6 +89,7 @@ public class EntityXMLProcessor extends XMLProcessor {
 
     }
 
+    private static boolean isEnemy = false;
     public static NPC parseNPC(Map map, Element el) {
         NPC npc  = new NPC(map,
                 parseDirection(sf.getElemenetById(el, "Direction", 0)),
@@ -95,7 +100,21 @@ public class EntityXMLProcessor extends XMLProcessor {
 
         configureAbilityInventory(sf.getElementsById((Element)sf.getElementsById(el, "AbilityInventory").item(0), "Ability"), npc);
         confgureAbilityEquipped(sf.getElementsById((Element)sf.getElementsById(el, "AbilityEquipped").item(0), "Ability"), npc);
+
+        AIController controller = null;
+        if (isEnemy) {
+            EnemySearchingController esc = new EnemySearchingController(npc,map,2);
+            EnemyActionController eac = new EnemyActionController(npc,map);
+            controller = new AIController(esc,eac);
+            npc.setController(controller);
+        }
+
         map.add(npc, parseLocation(sf.getElemenetById(el, "Location", 0)));
+
+        if (isEnemy) {
+            AITime.getInstance().registerController(controller);
+        }
+
         return npc;
     }
 
@@ -167,6 +186,7 @@ public class EntityXMLProcessor extends XMLProcessor {
                 break;
             case "Enemy":
                 occupation = new Enemy();
+                isEnemy = true;
                 break;
             default:
                 occupation =  new Smasher();

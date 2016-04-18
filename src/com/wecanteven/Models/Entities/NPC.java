@@ -29,7 +29,7 @@ public class NPC extends Character {
         this.interaction.setOwner(this);
     }
     public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction, Occupation occupation, GameColor color){
-        super(actionHandler, direction, occupation, new ItemStorage(5), color);
+        super(actionHandler, direction, occupation, new ItemStorage(25), color);
         this.interaction = interaction;
         this.interaction.setOwner(this);
     }

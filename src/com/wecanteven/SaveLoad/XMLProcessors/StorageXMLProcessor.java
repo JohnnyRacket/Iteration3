@@ -27,6 +27,7 @@ public class StorageXMLProcessor extends XMLProcessor {
         //parse items in inventory
         parseInventory(sf.getElemenetById(el, "Inventory", 0), itemStorage);
         //parse items in equipment
+        parseEquipment(sf.getElemenetById(el, "Equipment", 0), itemStorage);
         return itemStorage;
     }
 
@@ -55,8 +56,16 @@ public class StorageXMLProcessor extends XMLProcessor {
         sf.appendObjectTo("ItemStorage", sf.createSaveElement("Equipment",attr));
     }
 
-    public static Equipment parseEquipment(Element el, ItemStorage i) {
-        return null;
+    public static void parseEquipment(Element el, ItemStorage is) {
+        NodeList itemSlots = sf.getElementsById(el, "ItemSlot");
+        for(int i = 0; i < itemSlots.getLength(); ++i){
+            //Get item slot number
+            int position = sf.getIntAttr((Element)itemSlots.item(i), "position");
+            //process item
+            TakeableItem item = ItemXMLProcessor.parseTakeableItem((Element)itemSlots.item(i).getChildNodes().item(1));
+
+            is.addItem(item, position);
+        }
     }
 
     public static void formatItemSlot(int i) {
