@@ -67,7 +67,7 @@ public class NewGameLauncher extends GameLauncher {
         player.setColor(playerColor);
         player.addMoney(500);
         setAvatar(new Avatar(player, getMap()));
-        getMap().add(player, new Location(4,31,2));
+        getMap().add(player, new Location(28,28,5));
 
     }
 

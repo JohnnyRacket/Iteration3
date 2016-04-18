@@ -45,6 +45,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     private int rOffset;
     private int sOffset;
+    private int zOffset;
 
     private final int mapWidth = 40;
     private final int mapLength = 40;
@@ -67,6 +68,7 @@ public class DemoLevelFactory extends LevelFactory {
 
         rOffset = 0;
         sOffset = 0;
+        zOffset = 1;
         //Create a floor to work on
         (new FilledHex(getLocation(10,10,1), 10)).iterator().forEachRemaining( (location) -> {
             map.getTile(location).setTerrain(new Ground());
@@ -189,22 +191,42 @@ public class DemoLevelFactory extends LevelFactory {
 
 
         //Mountain
-        for (int i = 11; i < 13; i++) {
+        for (int i = 1; i < 13; i++) {
             (new FilledHex(getLocation(10,3,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
         }
 
-        for (int i = 13; i < 15; i++) {
+        for (int i = 1; i < 15; i++) {
             (new FilledHex(getLocation(7,3,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
         }
-        for (int i = 12; i < 14; i++) {
+        for (int i = 1; i < 14; i++) {
             (new FilledHex(getLocation(5,4,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
         }
+
+        //Clear the inside
+        for (int i = 1; i < 13; i++) {
+            (new FilledHex(getLocation(10,3,i), 2)).iterator().forEachRemaining( (location) -> {
+                map.getTile(location).setTerrain(new Ground());
+            });
+        }
+
+        for (int i = 1; i < 15; i++) {
+            (new FilledHex(getLocation(7,3,i), 2)).iterator().forEachRemaining( (location) -> {
+                map.getTile(location).setTerrain(new Ground());
+            });
+        }
+        for (int i = 1; i < 14; i++) {
+            (new FilledHex(getLocation(5,4,i), 2)).iterator().forEachRemaining( (location) -> {
+                map.getTile(location).setTerrain(new Ground());
+            });
+        }
+
+
         (new HexColumn(getLocation(13,2, 2), 13)).iterator().forEachRemaining( (location) -> {
             map.getTile(location).setTerrain(new Ground());
         });
@@ -282,6 +304,7 @@ public class DemoLevelFactory extends LevelFactory {
 //        });
 
         //Wetlands
+        biomePaint = dirtyLocaions;
         (new FilledHex(getLocation(20,10,0), 10)).iterator().forEachRemaining( (location) -> {
             map.getTile(location).setTerrain(new Ground());
         });
@@ -297,6 +320,7 @@ public class DemoLevelFactory extends LevelFactory {
 
 
         //Marsh River
+        biomePaint = dirtyLocaions;
         (new HexLine(getLocation(21,7,0), Direction.SOUTHEAST, 7 )).iterator().forEachRemaining( (location) -> {
             map.getTile(location).setTerrain(new Water());
         });
@@ -322,9 +346,12 @@ public class DemoLevelFactory extends LevelFactory {
         line(18,15,2,Direction.SOUTHEAST, 2, groundMaker);
         line(3,19,0,Direction.SOUTHWEST, 4, groundMaker);
 
-        filled(23,11, 0, 9,groundMaker);
+        zOffset = 0;
+        filled(23,11, 0, 9, groundMaker);
         line(22, 1, 1, Direction.SOUTH, 7, groundMaker);
         line(22, 6, 1, Direction.SOUTHWEST, 3, groundMaker);
+
+        makeFallIsland();
 
         return map;
     }
@@ -367,7 +394,66 @@ public class DemoLevelFactory extends LevelFactory {
     }
 
     private Location getLocation(int r, int s, int z) {
-        return new Location(r+rOffset, s+sOffset, z);
+        return new Location(r+rOffset, s+sOffset, z+zOffset);
+
+
+    }
+
+    private void makeFallIsland() {
+        biomePaint = fallLocations;
+        this.zOffset = 0;
+        this.rOffset = 0;
+        this.sOffset = 0;
+
+        //base
+        filled(28, 28, 3, 7, groundMaker);
+
+        filled(25, 34, 2, 3, groundMaker);
+        filled(31, 28, 3, 3, waterMaker);
+        filled(31, 28, 2, 3, waterMaker);
+        line(32, 25, 3, Direction.NORTH, 3, waterMaker);
+        line(32, 25, 2, Direction.NORTH, 3, groundMaker);
+
+        filled(28,25,4,4, groundMaker);
+
+
+        biomePaint = snowLocations;
+        line(34, 26, 4, Direction.NORTH, 5, groundMaker);
+        for (int i = 5; i < 12; i++) {
+            filled(30, 23, i, 2, groundMaker);
+            filled(25, 24, i, 2, groundMaker);
+
+            point(27,22,i, groundMaker);
+            point(28,22,i, groundMaker);
+            point(29,22,i, groundMaker);
+        }
+
+        point(27,23,11, groundMaker);
+        point(28,23,11, groundMaker);
+
+        line(31,22, 12, Direction.NORTHWEST, 8, groundMaker);
+
+        column(24,26,4,5, groundMaker);
+        line(27,22,13, Direction.NORTHWEST, 4, groundMaker);
+        column(25,23,12,3, groundMaker);
+        column(24,23,12,2, groundMaker);
+
+        column(31,21,13,5, groundMaker);
+        column(30,21,13,4, groundMaker);
+        column(29,21,13,6, groundMaker);
+        column(28,21,13,3, groundMaker);
+
+        column(25,22,14,3, groundMaker);
+        column(26,21,14,5, groundMaker);
+        column(27,22,14,4, groundMaker);
+        column(34,22,5,9, groundMaker);
+        column(35,22,3,9, groundMaker);
+
+        for (int i = 4; i < 16; i++) {
+            filled(33,21,i,2,groundMaker);
+        }
+
+        
     }
 
     @Override
