@@ -1,5 +1,6 @@
 package com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids;
 
+import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.MenuView.Drawable;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.SelectableItem;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.SelectableMenuItemCommand;
@@ -19,6 +20,7 @@ public class GridItem extends SelectableItem{
     public GridItem(String name, SelectableMenuItemCommand command){
         this.setCommand(command);
         this.setName(name);
+        icon = DynamicImageFactory.getInstance().loadDynamicImage("Items/" + name + "/" + name + ".xml").getImage();
         //TODO use name to derive the img location, ill look at the view to see how this is done
     }
 

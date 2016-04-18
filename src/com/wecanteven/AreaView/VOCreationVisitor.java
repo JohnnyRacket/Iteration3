@@ -141,17 +141,17 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitUseableItem(UseableItem useable) {
-
+        visitTakeableItem(useable);
     }
 
     @Override
     public void visitAbilityItem(AbilityItem ability) {
-
+        visitTakeableItem(ability);
     }
 
     @Override
     public void visitStatsModifyItem(StatsModifyUseable consumable) {
-
+        visitTakeableItem(consumable);
     }
 
     public void setBiomeFactory(BiomeFactory currentBiomeFactory) {

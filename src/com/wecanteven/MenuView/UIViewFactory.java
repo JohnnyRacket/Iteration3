@@ -465,6 +465,7 @@ public class UIViewFactory {
         ViewTime.getInstance().register(()->{
             createGreyBackground();
             vEngine.getManager().addView(view);
+            pauseGame();
         },0);
         controller.setMenuState(view.getMenuViewContainer());
     }

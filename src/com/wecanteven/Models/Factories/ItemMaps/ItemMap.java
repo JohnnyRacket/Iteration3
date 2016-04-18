@@ -162,9 +162,6 @@ public class ItemMap {
     private void initializeAbility() {
         AbilityItemFactory factory = new AbilityItemFactory();
 
-        AbilityItemMap.put("Bind Wounds Ability", () -> factory.vendBindWounds("Bind Wounds Ability", 100) );
-        AbilityItemMap.put("Observation", () -> factory.vendObservation("Observation", 100));
-
         AbilityItemMap.put("One-handed weapon", () -> factory.vendOneHandedWeapon("One-handed weapon", 100));
         AbilityItemMap.put("Two-handed weapon", () -> factory.vendTwoHandedWeapon("Two-handed weapon", 100));
         AbilityItemMap.put("Brawling", () -> factory.vendBrawling("Brawling", 100));
