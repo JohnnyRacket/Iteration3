@@ -484,7 +484,7 @@ public class DemoLevelFactory extends LevelFactory {
 
         filled(25, 34, 2, 3, groundMaker);
         filled(31, 28, 3, 3, waterMaker);
-        filled(31, 28, 2, 3, waterMaker);
+        filled(31, 28, 2, 3, groundMaker);
         line(32, 25, 3, Direction.NORTH, 3, waterMaker);
         line(32, 25, 2, Direction.NORTH, 3, groundMaker);
 
@@ -495,6 +495,8 @@ public class DemoLevelFactory extends LevelFactory {
         }
         map.getTile(new Location(32,23,11)).setTerrain(new Current(Direction.NORTHWEST));
         map.getTile(new Location(31,24,4)).setTerrain(new Water());
+        map.getTile(new Location(33,23,3)).setTerrain(new Water());
+        filled(33, 23, 2, 2, groundMaker);
 
 
         biomePaint = snowLocations;
@@ -537,6 +539,14 @@ public class DemoLevelFactory extends LevelFactory {
         map.getTile(getLocation(23,28,4)).add(new Obstacle("StoneRock"));
         map.getTile(getLocation(28,28,5)).add(new Obstacle("StoneRock"));
         map.getTile(getLocation(33,24,4)).add(new Obstacle("StoneRock"));
+
+        map.getTile(getLocation(24,27,4)).add(new Decal("AutumnTreeTall", .3, -.5));
+        map.getTile(getLocation(22,29,4)).add(new Decal("AutumnTreeTall", -.1, -.15));
+        map.getTile(getLocation(22,29,4)).add(new Decal("AutumnTreeTall", .2, -.15));
+        map.getTile(getLocation(26,25,5)).add(new Decal("TundraPineLong", .3, -.5));
+        map.getTile(getLocation(24,27,4)).add(new Decal("AutumnTreeTall", .3, -.5));
+        map.getTile(getLocation(24,27,4)).add(new Decal("AutumnTreeTall", .3, -.5));
+
 
 
 

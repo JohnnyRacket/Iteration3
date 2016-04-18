@@ -49,7 +49,9 @@ public class Avatar implements Observer{
         return false;
     }
     public void drop(){}
-    public void pickup(){}
+    public void pickup(){
+        //avatar.pickup();
+    }
     public void interactWithTile(){
         getCharacter().interact(this);
     }
@@ -59,7 +61,8 @@ public class Avatar implements Observer{
         swapState(new MountState(avatar, mount, this));
     }
     public void dismount(){
-        avatar.setDestroyed(false);
+        //avatar.setDestroyed(false);
+        state.dismount();
         swapState(new EntityState(avatar, this));
     }
 
