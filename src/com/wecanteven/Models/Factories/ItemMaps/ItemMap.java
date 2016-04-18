@@ -117,6 +117,8 @@ public class ItemMap {
         EquipableItemMap.put("Expand", () -> factory.vendFistWeapon("Expand", 100, new StatsAddable(0,10,0,0,0,0,0,0,0)));
         EquipableItemMap.put("Sword", () -> factory.vendOneHandWeapon("Sword", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
         EquipableItemMap.put("Club", () -> factory.vendTwoHandedWeapon("Club", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+        EquipableItemMap.put("Arcane", () -> factory.vendStaveWeapon("Arcane", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+        EquipableItemMap.put("Blaster", () -> factory.vendRangedWeaponEquipableItem("Blaster", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
 
 
         //These are real items that are in the game: oh really....
