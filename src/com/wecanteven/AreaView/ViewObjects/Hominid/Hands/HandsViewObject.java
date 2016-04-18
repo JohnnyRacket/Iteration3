@@ -139,7 +139,7 @@ public class HandsViewObject implements ViewObject, Observer {
 
         @Override
         public void visitFistWeapon(FistWeapon f) {
-            swapHandsState(factory.createFistState(getPosition(), subject,  entity, color));
+            swapHandsState(factory.createAnimatedHandState(getPosition(), subject,  entity, color));
         }
 
         @Override

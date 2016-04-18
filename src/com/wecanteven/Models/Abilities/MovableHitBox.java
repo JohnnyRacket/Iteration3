@@ -53,7 +53,7 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
             public void execute() {
                 accept(voCreationVisitor);
             }
-        },10);
+        },0);
         move(getLocation(), speed);
     }
     private void move(Location destination,int speed){

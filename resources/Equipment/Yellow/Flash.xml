@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+    <x>14</x>
+    <y>14</y>
+    <rootPath>Equipment/Yellow/</rootPath>
+    <fileName>Flash0.png</fileName>
+    <fileName>Flash1.png</fileName>
+    <fileName>Flash2.png</fileName>
+    <fileName>Flash3.png</fileName>
+</single_frame_animation>

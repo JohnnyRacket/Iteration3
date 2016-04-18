@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<single_frame_animation>
+    <x>14</x>
+    <y>14</y>
+    <rootPath>Equipment/Gray/</rootPath>
+    <fileName>Expand0.png</fileName>
+    <fileName>Expand1.png</fileName>
+    <fileName>Expand2.png</fileName>
+    <fileName>Expand3.png</fileName>
+</single_frame_animation>
