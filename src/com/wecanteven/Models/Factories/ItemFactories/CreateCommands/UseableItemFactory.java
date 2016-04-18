@@ -22,7 +22,7 @@ public class UseableItemFactory {
                 character.buff(new Buff(
                         "Fly",
                         "Purple",
-                        1200,
+                        600,
                         (entity1) -> {
                             entity1.cacheCanFall();
                             entity1.setCanFallVisitor(new FlyingCanFallVisitor());
