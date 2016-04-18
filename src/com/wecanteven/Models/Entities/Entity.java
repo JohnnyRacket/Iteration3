@@ -22,7 +22,6 @@ import java.util.ArrayList;
 /**
  * Created by Brandon on 3/31/2016.
  */
-
 public class Entity implements Moveable, Directional,Destroyable, ModelObservable, ViewObservable, Observer{
     private ArrayList<Observer> observers = new ArrayList<>();
     private ArrayList<Observer> modelObservers = new ArrayList<>();
@@ -121,6 +120,16 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
             updateTurningTicks(5);
             return false;
         }
+    }
+
+    public boolean jump(Direction d){
+        int movementStat = getStats().getMovement();
+        if(movementStat == 0 || isActive()){
+            return false;
+        }
+        Location destination = getLocation().add(d.getCoords);
+        int moveTime = calculateMovementTicks(movementStat);
+        return getActionHandler().move(this,destination,moveTime);
     }
 
     @Override
@@ -306,7 +315,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
     }
 
-    protected void setIsActive(boolean isActive){
+    public void setIsActive(boolean isActive){
         if(!isLocked()){
             this.isActive = isActive;
         }

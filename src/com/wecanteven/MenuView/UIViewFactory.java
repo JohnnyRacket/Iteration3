@@ -52,6 +52,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * Created by John on 3/31/2016.
@@ -424,7 +425,6 @@ public class UIViewFactory {
     }
 
     public void createInventoryView(Character character){
-
         NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
         NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
 
@@ -731,7 +731,42 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
     }
 
-    public void createEquippedAbilityMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, Ability ability) {}
+    public void createEquippedAbilityMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, Ability ability) {
+        AbilityViewObjectCreationVisitor visitor = new AbilityViewObjectCreationVisitor(this,invHolder,eqHolder);
+        NavigatableList list = new NavigatableList();
+        MenuViewContainer container = controller.getMenuState().getMenus();
+        list.addItem(new ScrollableMenuItem("Unequip", () -> {
+            character.unequipAbility(ability);
+            ViewTime.getInstance().register(() -> {
+                controller.popView();
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventory());
+                eqHolder.setList(visitor.getEquipped());
+            }, 0);
+            controller.setMenuState(container);
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+
+            },0);
+            controller.setMenuState(container);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        menu.setBgColor(Config.CINNIBAR);
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(anim);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+    }
 
     //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
     public void createBuyableItemMenu(BuyableUIObjectCreationVisitor visitor, NPC shopOwner, Character buyer, TakeableItem item){
@@ -1002,6 +1037,89 @@ public class UIViewFactory {
         }
     }
 
+    public void createPickPocketView(Character attacker, Character attackee, int ppSkillLevel){
+        System.out.println("Creating PickPocketView");
+
+        NavigatableGrid inventory = new NavigatableGrid(400, 400, 5, 3);
+        inventory.setBgColor(Config.TRANSMEDIUMGREY);
+        NavigatableList inventoryItems = new NavigatableList();
+        inventory.setList(inventoryItems);
+
+        Iterator invIter = attackee.getItemStorage().getInventory().getIterator();
+        //LIST OF ITEMS IN HIS INVENTORY
+        while(invIter.hasNext()){
+            TakeableItem i = (TakeableItem) invIter.next();
+            inventoryItems.addItem(new GridItem(i.getName() ,()->{
+                createPickPocketItemView(attacker, attackee, i, ppSkillLevel);
+
+            }));
+        }
+
+
+
+        VerticalCenterContainer viewTitle =
+                new VerticalCenterContainer(
+                        new HorizontalCenterContainer(
+                                new TitleBarDecorator(inventory, "Pickpocket", attacker.getColor().dark)
+                        )
+                );
+
+        SwappableView view = new SwappableView();
+        view.addDrawable(viewTitle);
+        view.addNavigatable(inventory);
+
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+
+        controller.setMenuState(view.getMenuViewContainer());
+
+    }
+
+    public void createPickPocketItemView(Character attacker, Character attackee, TakeableItem item, int ppSkillLevel){
+        NavigatableList list = new NavigatableList();
+        MenuViewContainer container = controller.getMenuState().getMenus();
+        list.addItem(new ScrollableMenuItem("Attempt to Pickpocket", () ->{
+
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                exitMenu();
+                //Skill Level, Item Value, RandomNumber
+                int itemChance = item.getValue()/20;
+                int skillChance = ppSkillLevel*10;
+                int failChance = 90;
+                failChance -= skillChance + itemChance;
+                System.out.println(failChance);
+                Random randomGenerator = new Random();
+                if(!attacker.getItemStorage().inventoryIsFull() && failChance <= randomGenerator.nextInt(100)){
+                    //Success
+                    attackee.getItemStorage().removeItem(item);
+                    attacker.getItemStorage().addItem(item);
+                    createToast(3, "You stole: " + item.getName());
+                }else{
+                    //failed
+                    createToast(3, "You failed at Pickpocketing");
+                }
+
+            },0);
+            controller.setMenuState(container);
+        }));
+
+        ScrollableMenu menu = new ScrollableMenu(200,50);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        menu.setBgColor(Config.PAPYRUS);
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(anim);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+    }
+
     //Triggers initial animation dialog window - afterwards, continue is used.
     public void createDialogView(NPC npc, Character player, Iterator dialogIter){
         String dialog = (String) dialogIter.next();
@@ -1137,22 +1255,21 @@ public class UIViewFactory {
 
     public void createKeyBindMenu(ControllerState state){
 
-        ScrollableMenu menu = new ScrollableMenu(400,500);
+        ScrollableMenu menu = new ScrollableMenu(400,600);
         NavigatableList list = new NavigatableList();
 
         java.util.Map<ActionEnum, Integer> map = state.getMappings();
         Iterator it = map.entrySet().iterator();
         while (it.hasNext()) {
             java.util.Map.Entry pair = (java.util.Map.Entry)it.next();
-            list.addItem(new ScrollableMenuItem(pair.getKey() + " ---> " + pair.getValue(), ()->{
+            list.addItem(new ScrollableMenuItem(pair.getKey() + " ---> " + (char)(int)pair.getValue(), ()->{
                 //do something
                 SwappableView view = new SwappableView();
                 view.addDrawable(new VerticalCenterContainer(new HorizontalCenterContainer(new KeyBindView(40,200))));
                 ViewTime.getInstance().register(()->{
                     vEngine.getManager().addView(view);
                 },0);
-                //controller.setMenuState(view.getMenuViewContainer());
-
+                controller.setKeyBindState(map,(ActionEnum) pair.getKey());
             }));
         }
         menu.setList(list);
@@ -1167,7 +1284,7 @@ public class UIViewFactory {
             vEngine.getManager().addView(view);
         },0);
 
-        //controller.setMenuState(view.getMenuViewContainer());
+        controller.setMenuState(view.getMenuViewContainer());
 
     }
 

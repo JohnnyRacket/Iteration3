@@ -15,7 +15,10 @@ public class EntityState extends AvatarState {
         this.controller = controller;
     }
     public boolean move(Direction d){
-       return avatar.move(d);
+        return avatar.move(d);
+    }
+    public boolean jump(Direction d){
+        return avatar.jump(d);
     }
     public void attack(Direction dir){
         avatar.attack(dir);

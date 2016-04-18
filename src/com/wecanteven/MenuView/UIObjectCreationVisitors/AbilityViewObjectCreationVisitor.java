@@ -72,10 +72,6 @@ public class AbilityViewObjectCreationVisitor implements EntityVisitor, AbilityS
         inInv = true;
         inventoryItems = new NavigatableList();
         equippedItems = new NavigatableList();
-
-        for (int i = 0; i < 4; i++) {
-            equippedItems.addItem(new GridItem("Empty Slot", () -> {}));
-        }
     }
 
     private int currentSlot;
@@ -84,7 +80,9 @@ public class AbilityViewObjectCreationVisitor implements EntityVisitor, AbilityS
         inInv = false;
         Iterator<Tuple<Ability,Integer>> iter = equipment.getOrderedIterator();
         while(iter.hasNext()){
-            iter.next().x.accept(this);
+            Tuple<Ability,Integer> ability = iter.next();
+            currentSlot = ability.y;
+            ability.x.accept(this);
         }
     }
 
@@ -105,9 +103,9 @@ public class AbilityViewObjectCreationVisitor implements EntityVisitor, AbilityS
                     factory.createAbilityMenu(character, invHolder, eqHolder, ability)
             ));
         }else{
-            equippedItems.addItemToIndex(new GridItem(ability.getName(), () ->
-                    factory.createAbilityMenu(character, invHolder, eqHolder, ability)
-            ), currentSlot);
+            equippedItems.addItem(new GridItem("Slot " + currentSlot + " " +ability.getName(), () ->
+                    factory.createEquippedAbilityMenu(character, invHolder, eqHolder, ability)
+            ));
 
         }
     }

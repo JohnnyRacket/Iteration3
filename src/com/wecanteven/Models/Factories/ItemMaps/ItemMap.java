@@ -91,6 +91,8 @@ public class ItemMap {
                  () -> factory.vendMovementSpeedBuffOneShot("Major Movement Buff", 60, 300));
         OneShotItemMap.put("Its Superman",
                 () -> factory.vendFlyingBuffOneShot("Its Superman", 600));
+        OneShotItemMap.put("Stun Buff",
+                () -> factory.vendMovementStunBuffOneShot("Stun Buff", 200));
 
         usedNames.addAll(OneShotItemMap.keySet());
     }
@@ -115,6 +117,8 @@ public class ItemMap {
         EquipableItemMap.put("Expand", () -> factory.vendFistWeapon("Expand", 100, new StatsAddable(0,10,0,0,0,0,0,0,0)));
         EquipableItemMap.put("Sword", () -> factory.vendOneHandWeapon("Sword", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
         EquipableItemMap.put("Club", () -> factory.vendTwoHandedWeapon("Club", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+        EquipableItemMap.put("Arcane", () -> factory.vendStaveWeapon("Arcane", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+        EquipableItemMap.put("Blaster", () -> factory.vendRangedWeaponEquipableItem("Blaster", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
 
 
         //These are real items that are in the game: oh really....

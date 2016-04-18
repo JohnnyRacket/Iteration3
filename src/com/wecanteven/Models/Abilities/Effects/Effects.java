@@ -7,5 +7,4 @@ import com.wecanteven.Models.Entities.Entity;
  */
 public interface Effects {
     void interact(Entity entity);
-    Effects update(int skillLevel);
 }

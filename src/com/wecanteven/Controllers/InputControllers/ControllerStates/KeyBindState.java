@@ -4,25 +4,55 @@ import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBindSetter;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
 import com.wecanteven.Controllers.InputControllers.MainController;
+import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
 
 import javax.swing.*;
+import java.util.Map;
 
 /**
  * Created by John on 4/11/2016.
  */
 public class KeyBindState extends ControllerState {
-    ControllerState state;
+    Map<ActionEnum, Integer> map;
     KeyActionBindSetter keySetter;
     ActionEnum aEnum;
-    public KeyBindState(JFrame jFrame, MainController controller, ControllerState state, ActionEnum aEnum) {
+    MenuViewContainer container;
+    public KeyBindState(JFrame jFrame, MainController controller) {
         super(jFrame, controller);
-        this.state = state;
-        this.aEnum = aEnum;
+
     }
 
     @Override
     public void createKeybindings() {
-        this.keySetter = new KeyActionBindSetter(0,null,getjFrame(),getController(), aEnum, this);
+        System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
 
+        this.getKeyBindings().add( new KeyActionBindSetter(0,()->{
+            getController().popView();
+            getController().setMenuState(container);
+        },getjFrame(),getController(), aEnum, map));
+
+    }
+    public ActionEnum getaEnum() {
+        return aEnum;
+    }
+
+    public void setaEnum(ActionEnum aEnum) {
+        this.aEnum = aEnum;
+    }
+
+    public Map<ActionEnum, Integer> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<ActionEnum, Integer> map) {
+        this.map = map;
+    }
+
+    public MenuViewContainer getContainer() {
+        return container;
+    }
+
+    public void setContainer(MenuViewContainer container) {
+        this.container = container;
     }
 }

@@ -19,12 +19,14 @@ public abstract class AbilityEquipment extends StorageComponent<AbilityStorage> 
     public boolean equipAbility(Ability ability, int slot) {
         unequipSlot(slot);
         insertIntoSlot(slot, ability);
+        getOwner().removeAbility(ability);
         return true;
     }
     public boolean equipAbility(Ability ability) {
         if (isFull())
             return false;
         insertIntoNextEmpty(ability);
+        getOwner().removeAbility(ability);
         return true;
     }
     public boolean unequipSlot(int slot) {

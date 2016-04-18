@@ -11,15 +11,8 @@ public class StatsEffect implements Effects{
     public StatsEffect(StatsAddable effect){
         this.effect = effect;
     }
+    @Override
     public void interact(Entity entity){
         entity.modifyStatsAdditive(effect);
-    }
-    public StatsEffect update(int skillLevel){
-        StatsAddable temp = new StatsAddable();
-        for (int i = 0; i <= skillLevel; i++) {
-            temp.add(effect);
-        }
-        effect = temp;
-        return this;
     }
 }
