@@ -414,6 +414,7 @@ public class DemoLevelFactory extends LevelFactory {
         EquipableItem item = ItemMap.getInstance().getItemAsEquipable("Sword");
         npc.pickup(item);
         npc.equipItem(item);
+        //npc.pickup(ItemMap.getInstance().getItemAsTakeable("Sword"));
         npc.pickup(ItemMap.getInstance().getItemAsTakeable("Redbull"));
         map.add(npc, new Location(6,3,15));
         AITime.getInstance().registerController(controller);
