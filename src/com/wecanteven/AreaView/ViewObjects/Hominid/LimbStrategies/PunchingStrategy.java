@@ -40,7 +40,7 @@ public class PunchingStrategy extends LimbStrategy {
 
     @Override
     protected void complete() {
-        currentHand.setTangent(distance);
+        currentHand.setTangent(multiplier*distance);
 
         if (currentHand == leftHand) {
             multiplier = -1;
