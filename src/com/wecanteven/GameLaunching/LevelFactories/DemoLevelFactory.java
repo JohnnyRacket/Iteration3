@@ -44,6 +44,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     private int rOffset;
     private int sOffset;
+    private int zOffset;
 
     private final int mapWidth = 40;
     private final int mapLength = 40;
@@ -66,6 +67,7 @@ public class DemoLevelFactory extends LevelFactory {
 
         rOffset = 0;
         sOffset = 0;
+        zOffset = 1;
         //Create a floor to work on
         (new FilledHex(getLocation(10,10,1), 10)).iterator().forEachRemaining( (location) -> {
             map.getTile(location).setTerrain(new Ground());
@@ -185,22 +187,42 @@ public class DemoLevelFactory extends LevelFactory {
 
 
         //Mountain
-        for (int i = 11; i < 13; i++) {
+        for (int i = 1; i < 13; i++) {
             (new FilledHex(getLocation(10,3,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
         }
 
-        for (int i = 13; i < 15; i++) {
+        for (int i = 1; i < 15; i++) {
             (new FilledHex(getLocation(7,3,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
         }
-        for (int i = 12; i < 14; i++) {
+        for (int i = 1; i < 14; i++) {
             (new FilledHex(getLocation(5,4,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
         }
+
+        //Clear the inside
+        for (int i = 1; i < 13; i++) {
+            (new FilledHex(getLocation(10,3,i), 2)).iterator().forEachRemaining( (location) -> {
+                map.getTile(location).setTerrain(new Ground());
+            });
+        }
+
+        for (int i = 1; i < 15; i++) {
+            (new FilledHex(getLocation(7,3,i), 2)).iterator().forEachRemaining( (location) -> {
+                map.getTile(location).setTerrain(new Ground());
+            });
+        }
+        for (int i = 1; i < 14; i++) {
+            (new FilledHex(getLocation(5,4,i), 2)).iterator().forEachRemaining( (location) -> {
+                map.getTile(location).setTerrain(new Ground());
+            });
+        }
+
+
         (new HexColumn(getLocation(13,2, 2), 13)).iterator().forEachRemaining( (location) -> {
             map.getTile(location).setTerrain(new Ground());
         });
@@ -278,6 +300,7 @@ public class DemoLevelFactory extends LevelFactory {
 //        });
 
         //Wetlands
+        biomePaint = dirtyLocaions;
         (new FilledHex(getLocation(20,10,0), 10)).iterator().forEachRemaining( (location) -> {
             map.getTile(location).setTerrain(new Ground());
         });
@@ -293,6 +316,7 @@ public class DemoLevelFactory extends LevelFactory {
 
 
         //Marsh River
+        biomePaint = dirtyLocaions;
         (new HexLine(getLocation(21,7,0), Direction.SOUTHEAST, 7 )).iterator().forEachRemaining( (location) -> {
             map.getTile(location).setTerrain(new Water());
         });
@@ -318,11 +342,12 @@ public class DemoLevelFactory extends LevelFactory {
         line(18,15,2,Direction.SOUTHEAST, 2, groundMaker);
         line(3,19,0,Direction.SOUTHWEST, 4, groundMaker);
 
-        filled(23,11, 0, 9,groundMaker);
+        zOffset = 0;
+        filled(23,11, 0, 9, groundMaker);
         line(22, 1, 1, Direction.SOUTH, 7, groundMaker);
         line(22, 6, 1, Direction.SOUTHWEST, 3, groundMaker);
 
-
+        makeFallIsland();
 
         return map;
     }
@@ -367,21 +392,29 @@ public class DemoLevelFactory extends LevelFactory {
     }
 
     private Location getLocation(int r, int s, int z) {
-        return new Location(r+rOffset, s+sOffset, z);
+        return new Location(r+rOffset, s+sOffset, z+zOffset);
 
 
     }
 
+    private void makeFallIsland() {
+        biomePaint = fallLocations;
+        this.zOffset = 0;
+        this.rOffset = 0;
+        this.sOffset = 0;
+        filled(28, 28, 3, 7, groundMaker);
+    }
+
     @Override
     public void populateMap(Map map) {
-        areasOfEffect(map);
-        items(map);
-        weaponNPC(map);
-        mount(map);
-        dialogNPC(map);
-        tradeNPC(map);
-        questNPC(map);
-        petNPC(map);
+//        areasOfEffect(map);
+//        items(map);
+//        weaponNPC(map);
+//        mount(map);
+//        dialogNPC(map);
+//        tradeNPC(map);
+//        questNPC(map);
+//        petNPC(map);
     }
 
     public void mount(Map map) {
