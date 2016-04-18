@@ -23,7 +23,6 @@ public class InteractionVisitor implements EntityVisitor {
 
     @Override
     public void visitCharacter(Character interactee) {
-
         interactee.interact(interactor);
     }
 

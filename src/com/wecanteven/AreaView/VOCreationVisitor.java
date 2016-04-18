@@ -49,6 +49,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     private Biome biome;
     private BiomeFactory currentBiomeFactory;
     private Character currentCharacter;
+    private ViewObject avatar;
 
     private boolean[][] foundTop;
 
@@ -293,7 +294,8 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
         @Override
     public void visitPet(Pet pet) {
                 Position position = new Position(currentCharacter.getLocation().getS(), currentCharacter.getLocation().getR(), currentCharacter.getLocation().getZ());
-                viewObjectFactory.createBird(position, currentCharacter, "Face/Small Bird/");
+                ViewObject petVO = viewObjectFactory.createBird(position, currentCharacter, "Face/Small Bird/");
+                areaView.addViewObject(petVO);
     }
 
     @Override
@@ -322,4 +324,9 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
         areaView.addViewObject(avatar);
         areaView.setBackground(viewObjectFactory.createBackgroundDrawable(avatar));
     }
+
+    public void setAvatar(ViewObject avatar) {
+        this.avatar = avatar;
+    }
+
 }
