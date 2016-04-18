@@ -1,21 +1,27 @@
 package com.wecanteven.Models.Entities.AvatarStates;
 
 import com.wecanteven.AreaView.Position;
+import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Mount;
+import com.wecanteven.Observers.ModelObservable;
+import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 
 /**
  * Created by Brandon on 3/31/2016.
  */
-public class MountState extends AvatarState {
+public class MountState extends AvatarState implements Observer {
     private Character avatar;
     private Mount mount;
+    private Avatar controller;
 
-    public MountState(Character avatar, Mount mount) {
+    public MountState(Character avatar, Mount mount, Avatar controller) {
         this.avatar = avatar;
         this.mount = mount;
+        this.controller = controller;
+        mount.modelAttach(this);
         mount(avatar);
     }
     public boolean move(Direction d){
@@ -75,5 +81,13 @@ public class MountState extends AvatarState {
     }
     public void dismount(){
         mount.dismount();
+    }
+
+    @Override
+    public void update() {
+        //dismount();
+        EntityState entityState = new EntityState(avatar, controller);
+        controller.swapState(entityState);
+        avatar.fall();
     }
 }

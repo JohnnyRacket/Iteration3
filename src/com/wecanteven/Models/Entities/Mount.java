@@ -54,6 +54,8 @@ public class Mount extends Character {
     avatar.mount(this);
   }
 
+
+
   private void setMounted(boolean mounted) {
     this.mounted = mounted;
     notifyObservers();
@@ -65,5 +67,7 @@ public class Mount extends Character {
   public String toString() {
     return "Mount instance!";
   }
+
+
 
 }
