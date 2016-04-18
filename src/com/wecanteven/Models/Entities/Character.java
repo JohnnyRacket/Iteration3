@@ -75,7 +75,7 @@ public class Character extends Entity implements Actionable {
         if(!isActive()){
             this.setDirection(dir);
             AbilityFactory factory = new AbilityFactory();
-            Ability attack = factory.vendBindWounds(this);
+            Ability attack = factory.vendBrawling(this);
             attack.cast();
         }
     }
@@ -244,10 +244,10 @@ public class Character extends Entity implements Actionable {
     protected void tickTicks(){
         if(calculateActiveStatus()){
             ModelTime.getInstance().registerAlertable(() -> {
-
-
-
-
+                //System.out.println("Stuck in an endless loop");
+                //System.out.println("Moving ticks "+getMovingTicks());
+                //System.out.println("WingUp ticks "+getWindUpTicks());
+               // System.out.println("CoolDown ticks "+getCoolDownTicks());
                 deIncrementMovingTick();
                 deIncrementWindUpTick();
                 if(getWindUpTicks()==0){
@@ -285,7 +285,7 @@ public class Character extends Entity implements Actionable {
     public boolean calculateActiveStatus(){
         if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0 && getTurningTicks() <= 0){
             setIsActive(false);
-
+            //System.out.println("The entity is no longer active");
             return false;
         }
         else{

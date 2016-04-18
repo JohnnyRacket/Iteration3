@@ -149,8 +149,12 @@ public class ItemMap {
     private void initializeUseable() {
         UseableItemFactory factory = new UseableItemFactory();
 
-        UseableItemMap.put("Intellect Buff",
-                () -> factory.vendStatModifyingBuffItem("Intellect Buff", 25, new StatsAddable(0,0,0,15,0,0,0,0,0)));
+        UseableItemMap.put("Brilliance",
+                () -> factory.vendStatModifyingBuffItem("Brilliance", 25, new StatsAddable(0,0,0,15,0,0,0,0,0)));
+        UseableItemMap.put("Spinach",
+                () -> factory.vendStatModifyingBuffItem("Spinach", 25, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+        UseableItemMap.put("Redbull",
+                () -> factory.vendFlyingBuffItem("Redbull", 100));
 
         usedNames.addAll(UseableItemMap.keySet());
     }
