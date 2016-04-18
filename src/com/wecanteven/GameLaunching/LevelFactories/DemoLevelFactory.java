@@ -699,7 +699,7 @@ public class DemoLevelFactory extends LevelFactory {
         dialogNPC(map);
         tradeNPC(map);
         questNPC(map);
-        //petNPC(map);
+        petNPC(map);
     }
 
     public void mount(Map map) {
@@ -717,7 +717,7 @@ public class DemoLevelFactory extends LevelFactory {
         PetActionController actionController = new PetActionController(npc, map);
         AIController controller = new AIController(searchingController,actionController);
         npc.setController(controller);
-        map.add(npc, new Location(9,9,2));
+        map.add(npc, new Location(14,9,4));
         AITime.getInstance().registerController(controller);
     }
 

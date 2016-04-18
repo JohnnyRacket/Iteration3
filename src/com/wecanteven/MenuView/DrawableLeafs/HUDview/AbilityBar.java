@@ -51,13 +51,13 @@ public class AbilityBar extends Drawable implements Observer{
         if(items[1]!= null) items[1].draw(g2d,x-15,y-5,90,80);
         g2d.setColor(Config.TRANSMEDIUMGREY);
         g2d.fillOval(x+120,y,60,60);
-        if(items[2]!= null) items[2].draw(g2d,x+125,y+5,60,60);
+        if(items[2]!= null) items[2].draw(g2d,x+105,y+5,90,80);
         g2d.setColor(Config.TRANSMEDIUMGREY);
         g2d.fillOval(x+240,y,60,60);
-        if(items[3]!= null) items[3].draw(g2d,x+245,y+5,windowWidth,windowHeight);
+        if(items[3]!= null) items[3].draw(g2d,x+225,y+5,90,80);
         g2d.setColor(Config.TRANSMEDIUMGREY);
         g2d.fillOval(x+360,y,60,60);
-        if(items[4]!= null) items[4].draw(g2d,x+365,y+5,windowWidth,windowHeight);
+        if(items[4]!= null) items[4].draw(g2d,x+345,y+5,90,80);
     }
 
     public void update() {
