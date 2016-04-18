@@ -124,7 +124,7 @@ public class HandsViewObject implements ViewObject, Observer {
 
         @Override
         public void visitOneHandWeapon(OneHandWeapon o) {
-
+            swapHandsState(factory.createOneHandState(getPosition(), subject, entity, color));
         }
 
         @Override
@@ -139,7 +139,7 @@ public class HandsViewObject implements ViewObject, Observer {
 
         @Override
         public void visitTwoHandWeapon(TwoHandedWeapon t) {
-
+            swapHandsState(factory.createTwoHandState(getPosition(), subject, entity, color));
         }
     }
 

@@ -21,8 +21,8 @@ public class WingState extends HandState {
     private boolean onGround = true;
     public WingState(Direction direction, MicroPositionableViewObject leftHand, MicroPositionableViewObject rightHand) {
         super(leftHand, rightHand);
-        this.flyingStrategy = new HandsYJumpingStrategy(height, 3, leftHand, rightHand);
-        this.idleStrategy = new HandsYJumpingStrategy(height, 3, leftHand, rightHand);
+        this.flyingStrategy = new HandsYJumpingStrategy(height, height, 3, leftHand, rightHand);
+        this.idleStrategy = new HandsYJumpingStrategy(height, height, 3, leftHand, rightHand);
 
 
         changeDirection(direction);

@@ -405,7 +405,7 @@ public class UIViewFactory {
         columns.addDrawable(menu);
         columns.addDrawable(skillTitle);
 
-        TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats", Config.TEAL);
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats", character.getColor().dark);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
@@ -452,7 +452,7 @@ public class UIViewFactory {
         columns.addDrawable(menu);
         columns.addDrawable(equipMenu);
 
-        TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment", Config.TEAL);
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment", character.getColor().dark);
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
         AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
@@ -858,7 +858,6 @@ public class UIViewFactory {
                 menu.setList(list);
             }));
             menu.setList(keyBindList);
-
         }));
 
         NavigatableList windowOptions = new NavigatableList();
@@ -910,7 +909,7 @@ public class UIViewFactory {
 
 
         menu.setList(list);
-        TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu", Config.CINNIBAR);
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu", controller.getAvatar().getCharacter().getColor().dark);
        // RectangleShadowDecorator shadow = new RectangleShadowDecorator(title);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
@@ -969,7 +968,7 @@ public class UIViewFactory {
         VerticalCenterContainer viewTitle =
                 new VerticalCenterContainer(
                         new HorizontalCenterContainer(
-                                new TitleBarDecorator(columns, "Buy / Sell")
+                                new TitleBarDecorator(columns, "Buy / Sell", player.getColor().dark)
                         )
                 );
 
@@ -1037,7 +1036,7 @@ public class UIViewFactory {
         rows.addDrawable(conversationMenu);
         rows.addDrawable(chatMenu);
 
-        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation", Config.TEAL);
+        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation", player.getColor().dark);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
@@ -1167,7 +1166,8 @@ public class UIViewFactory {
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
-        controller.setMenuState(view.getMenuViewContainer());
+
+        //controller.setMenuState(view.getMenuViewContainer());
 
     }
 

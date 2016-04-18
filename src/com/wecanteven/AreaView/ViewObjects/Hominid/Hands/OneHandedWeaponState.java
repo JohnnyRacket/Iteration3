@@ -2,10 +2,8 @@ package com.wecanteven.AreaView.ViewObjects.Hominid.Hands;
 
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Factories.ViewObjectFactory;
-import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandWalkingStrategy;
-import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandsFallingStrategy;
-import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.HandsYJumpingStrategy;
-import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.LimbStrategy;
+import com.wecanteven.AreaView.ViewObjects.Hominid.LimbStrategies.*;
+import com.wecanteven.AreaView.ViewTime;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
@@ -25,11 +23,11 @@ public class OneHandedWeaponState extends HandState {
     private LimbStrategy jumpingStrategy;
     private LimbStrategy fallingStrategy;
 
-    public OneHandedWeaponState(Direction direction, MicroPositionableViewObject rightHand, MicroPositionableViewObject leftHand, ViewObjectFactory factory, Entity entity) {
+    private LimbStrategy slashingStrategy;
+    private RetractingStrategy retractingStrategy;
+
+    public OneHandedWeaponState(Direction direction, MicroPositionableViewObject rightHand, MicroPositionableViewObject leftHand) {
         super(leftHand, rightHand);
-        walkingStrategy = new HandWalkingStrategy(0.3, leftHand, rightHand);
-        jumpingStrategy = new HandsYJumpingStrategy(height, 5, leftHand, rightHand);
-        fallingStrategy = new HandsFallingStrategy(height, radius, leftHand, rightHand);
         changeDirection(direction);
         leftHand.setRadius(radius);
         leftHand.setOffsetAngle(leftAngle);
@@ -39,6 +37,11 @@ public class OneHandedWeaponState extends HandState {
         rightHand.setOffsetAngle(rightAngle);
         rightHand.setTangent(tangent);
         rightHand.setHeight(height);
+        walkingStrategy = new HandWalkingStrategy(0.3, leftHand, rightHand);
+        jumpingStrategy = new HandsYJumpingStrategy(height, height, 5, leftHand, rightHand);
+        fallingStrategy = new HandsFallingStrategy(height, height, radius, leftHand, rightHand);
+        slashingStrategy = new SlashingStrategy(rightHand, Math.PI*5/6);
+        retractingStrategy = new RetractingStrategy(leftHand, rightHand);
     }
 
     @Override
@@ -65,7 +68,8 @@ public class OneHandedWeaponState extends HandState {
     }
 
     public void attack(long windUp, long coolDown) {
-        //TODO
+        slashingStrategy.execute(windUp);
+        ViewTime.getInstance().register(() -> retractingStrategy.execute(coolDown), windUp);
     }
 
     public void equip(/*add weapon param model doesnt exist*/) {

@@ -34,8 +34,8 @@ public class BrawlingState extends HandState {
         rightHand.setTangent(tangent);
         rightHand.setHeight(height);
         walkingStrategy = new HandWalkingStrategy(0.3, leftHand, rightHand);
-        jumpingStrategy = new HandsYJumpingStrategy(height, 5, leftHand, rightHand);
-        fallingStrategy = new HandsFallingStrategy(height, radius, leftHand, rightHand);
+        jumpingStrategy = new HandsYJumpingStrategy(height, height, 5, leftHand, rightHand);
+        fallingStrategy = new HandsFallingStrategy(height, height, radius, leftHand, rightHand);
         punchingStrategy = new PunchingStrategy(leftHand, rightHand, 0.7);
         retractingStrategy = new RetractingStrategy(leftHand, rightHand);
     }
