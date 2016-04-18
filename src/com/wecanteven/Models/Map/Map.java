@@ -247,9 +247,9 @@ public class Map implements MapVisitable, ActionHandler {
         canMove = canMove && visitor.CanMoveBelow();
 
         if(canMove) {//move if you can
+            item.updateMovingTicks(movespeed);
             item.setLocation(location);
             remove(item, source);
-            item.updateMovingTicks(movespeed);
             add(item.extractItem(), location);
             return true;
         }
@@ -301,10 +301,10 @@ public class Map implements MapVisitable, ActionHandler {
     @Override
     public boolean drop(TakeableItem item, Location location) {
         item.setLocation(location);
-        item.accept(voCreationVisitor);
         TakeableMoveable newItem = new TakeableMoveable(item.getName(), item.getValue(), item, this, location);
         newItem.setIsDestoryed(false);
         getTile(location).add(newItem);
+        newItem.accept(voCreationVisitor);
         return true;
     }
 //    @Override

@@ -6,6 +6,7 @@ import com.wecanteven.AreaView.DynamicImages.DynamicImageFactory;
 import com.wecanteven.AreaView.Position;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.*;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving.BipedMovingViewObject;
+import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving.MovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.Moving.SimpleMovingViewObject;
 import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.BuffRingViewObject;
@@ -26,6 +27,7 @@ import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
+import com.wecanteven.Models.Items.Takeable.TakeableMoveable;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.UtilityClasses.Direction;
@@ -286,7 +288,7 @@ public class ViewObjectFactory {
         return moivingHominoidWithHUD;
     }
 
-    public DestroyableViewObject createTakeableItem(Position position, TakeableItem takeableItem) {
+    public ViewObject createTakeableItem(Position position, TakeableMoveable movingSubject, TakeableItem takeableItem) {
         String name = takeableItem.getName();
         DestroyableViewObject destroyableViewObject =  new DestroyableViewObject(
                 new SimpleViewObject(position,
@@ -298,7 +300,7 @@ public class ViewObjectFactory {
                 takeableItem,
                 areaView,
                 1);
-        return destroyableViewObject;
+        return simpleVOFactory.createSimpleMovingViewObject(movingSubject, destroyableViewObject);
     }
 
     public BackgroundDrawable createBackgroundDrawable(ViewObject centerTarget) {

@@ -3,6 +3,7 @@ package com.wecanteven.Models.Items.Takeable;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Observers.Moveable;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
 import com.wecanteven.Visitors.CanFallVisitors.CanFallVisitor;
@@ -14,7 +15,7 @@ import com.wecanteven.Visitors.ItemVisitor;
 /**
  * Created by Cachorrita on 4/16/2016.
  */
-public class TakeableMoveable extends TakeableItem implements Moveable {
+public class TakeableMoveable extends TakeableItem implements Moveable, ViewObservable {
     private ActionHandler actionHandler;
     private TakeableItem item;
     private int movingTicks;
@@ -40,7 +41,10 @@ public class TakeableMoveable extends TakeableItem implements Moveable {
 
     @Override
     public boolean move(Direction d) {
-        if (actionHandler != null) {
+        System.out.println("Trying to move");
+        if (actionHandler != null && !isActive()) {
+            System.out.println("moving");
+
             Location destination = getLocation().add(d.getCoords);
 
             return actionHandler.move(this, destination, 30);
@@ -51,7 +55,10 @@ public class TakeableMoveable extends TakeableItem implements Moveable {
 
     @Override
     public boolean move(Location l) {
-        if (actionHandler != null) {
+        System.out.println("Trying to move");
+
+        if (actionHandler != null && !isActive()) {
+            System.out.println("moving");
             return actionHandler.move(this, l, 30);
         }
         return false;
@@ -59,7 +66,7 @@ public class TakeableMoveable extends TakeableItem implements Moveable {
 
     @Override
     public boolean fall() {
-        if (actionHandler != null) {
+        if (actionHandler != null && !isActive()) {
             Location tileBelow = getLocation().subtract(new Location(0, 0, 1));
             return actionHandler.fall(this, tileBelow);
         }
@@ -77,9 +84,14 @@ public class TakeableMoveable extends TakeableItem implements Moveable {
 
     @Override
     public void accept(ItemVisitor visitor) {
-        visitor.visitTakeableItem(item);
+        visitor.visitTakeaableMoveable(this);
     }
 
+    @Override
+    public void setLocation(Location location) {
+        super.setLocation(location);
+        notifyObservers();
+    }
 
 
     public boolean isActive(){
