@@ -248,6 +248,10 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         return s;
     }
 
+    public void setCreep(int skillLevel){
+        creep.setStat(skillLevel);
+    }
+
     @Override
     public ArrayList<Observer> getModelObservers() {
         return modelObservers;

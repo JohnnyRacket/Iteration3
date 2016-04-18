@@ -190,7 +190,7 @@ public class AbilityFactory {
 
 
     //damage over time
-    //    //dome ability example
+    //dome ability example
     public Ability vendPoisonAttack(Character caster) {
         duration = 300;
         abilityName = "Poison";
@@ -215,6 +215,27 @@ public class AbilityFactory {
         return ability;
     }
 
+    //creep ability
+    public Ability vendCreep(Character caster) {
+        skill = Skill.CREEP;
+        skillLevel = caster.getSkillPoints(skill);
+        duration = 55;
+        effect = new BuffEffect(new Buff(
+                "Creep",
+                "Purple",
+                duration,
+                (target)-> target.getStats().setCreep(skillLevel),
+                (target)-> target.getStats().setCreep(0)));
+        abilityName = "Creep";
+        abilityImage = "Punch";
+        manaCost=caster.getSkillPoints(skill)+1;
+        SelfHitBoxGenerator generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
+        ability = new Ability(abilityName,caster,generator,skill,manaCost);
+        ability.setCooldownTicks(5);
+        ability.setWindUpTicks(5);
+        ability.setCast(true);
+        return ability;
+    }
 
 //    public Ability vendRangedWeapon(Character caster) {
 //        skill = Skill.RANGED_WEAPON;
