@@ -51,6 +51,8 @@ public class AbilityFactory {
     public Ability vendOneHandedWeapon(Character caster) {
         skill = Skill.ONE_HANDED_WEAPON;
         statLevel = caster.getStats().getStrength();
+        skillLevel = caster.getSkillPoints(skill);
+        multiplier = statLevel+skillLevel;
         effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
         duration = 1;
         abilityName = "OneHandedWeapon";
