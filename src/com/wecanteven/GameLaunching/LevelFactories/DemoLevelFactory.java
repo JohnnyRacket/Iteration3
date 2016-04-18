@@ -31,6 +31,7 @@ import com.wecanteven.Models.Occupation.Pet;
 import com.wecanteven.Models.Quests.QuestableItemReward;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.*;
+import com.wecanteven.Visitors.CanFallVisitors.FlyingCanFallVisitor;
 
 import java.util.ArrayList;
 
@@ -391,6 +392,7 @@ public class DemoLevelFactory extends LevelFactory {
     public void petNPC(Map map){
         NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.PINK);
         npc.setOccupation(new Pet());
+        npc.setCanFallVisitor(new FlyingCanFallVisitor());
         PetSearchingController searchingController = new PetSearchingController(npc, map, 4);
         PetActionController actionController = new PetActionController(npc, map);
         AIController controller = new AIController(searchingController,actionController);
@@ -495,19 +497,10 @@ public class DemoLevelFactory extends LevelFactory {
         //Interactive Item??????
         /* TODO implement this */
 
-        //Obstacle
-        //map.add(ItemMap.getInstance().getItemAsObstacle("Crate"), new Location(1,14,2));
-        //map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(2,14,2));
 
-        map.add(ItemMap.getInstance().getItemAsAbility("Brawling"), new Location(1,14,2));
+        //map.add(ItemMap.getInstance().getItemAsAbility("Brawling"), new Location(1,14,2));
         map.add(ItemMap.getInstance().getItemAsAbility("One-handed weapon"), new Location(2,14,2));
 
-        //Equipable
-//        map.add(ItemMap.getInstance().getItemAsEquipable("Top Hat"), new Location(1,17,2));
-//        map.add(ItemMap.getInstance().getItemAsEquipable("Katar"), new Location(2,17,2));
-//        map.add(ItemMap.getInstance().getItemAsEquipable("Buyable Chestplate"), new Location(3,17,2));
-//        map.add(ItemMap.getInstance().getItemAsEquipable("Merp Boots"), new Location(4,17,2));
-//        map.add(ItemMap.getInstance().getItemAsOneShot("Box"), new Location(3, 14, 2));
 
 
         //Consumeable

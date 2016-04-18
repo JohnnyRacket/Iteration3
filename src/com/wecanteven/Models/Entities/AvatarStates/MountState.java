@@ -23,9 +23,10 @@ public class MountState extends AvatarState {
         moved = mount.move(d) && moved;
 
         //avatar.move(mount.getLocation());
+        //avatar.setCanMoveVisitor(null);
         avatar.setMovingTicks(mount.getMovingTicks());
         avatar.setDirection(mount.getDirection());
-        avatar.setLocation(mount.getLocation());
+        avatar.setLocation(new Location(mount.getLocation().getR(), mount.getLocation().getS(), mount.getLocation().getZ() + 2));
         //updatePlayerLocation();
         //System.out.println("Avatar Location:" + avatar.getLocation());
         return moved;
