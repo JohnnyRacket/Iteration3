@@ -288,6 +288,21 @@ public class ViewObjectFactory {
         return moivingHominoidWithHUD;
     }
 
+    public ViewObject createTakeableItem(Position position, TakeableItem takeableItem) {
+        String name = takeableItem.getName();
+        DestroyableViewObject destroyableViewObject =  new DestroyableViewObject(
+                new SimpleViewObject(position,
+                        factory.loadDynamicImage("Items/" + name + "/" + name + ".xml"),
+                        hexDrawingStrategy),
+                new StartableViewObject(position,
+                        factory.loadActiveDynamicImage("Items/" + name + "/" + name + ".xml"),
+                        hexDrawingStrategy),
+                takeableItem,
+                areaView,
+                1);
+        return destroyableViewObject;
+    }
+
     public ViewObject createTakeableItem(Position position, TakeableMoveable movingSubject, TakeableItem takeableItem) {
         String name = takeableItem.getName();
         DestroyableViewObject destroyableViewObject =  new DestroyableViewObject(
