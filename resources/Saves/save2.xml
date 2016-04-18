@@ -1,108 +1,489 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SaveFile FileName="save2.xml">
-    <Map name="DemoLevelFactory" r="40" s="40" z="20">
-        <Column z="20">
-            <Tile r="6" s="2" terrain="Air" z="15">
-                <NPC Height="3" Occupation="Smasher">
-                    <Location r="6" s="2" z="15"/>
+    <Map name="DemoLevelFactory" r="40" s="40" z="22">
+        <Column z="22">
+            <Tile r="27" s="27" terrain="Air" z="5">
+                <NPC Color="2" Height="3" Occupation="Friendly">
+                    <Location r="27" s="27" z="5"/>
                     <Interaction type="TradeInteractionStrategy"/>
                     <Direction enum="5"/>
                     <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="1"/>
                     <ItemStorage maxInventoryCapacity="5">
                         <Inventory maxInventoryCapacity="5">
                             <ItemSlot position="0">
-                                <ChestEquipableItem name="Buyable Chestplate"/>
+                                <OneHandWeapon name="Sword"/>
                             </ItemSlot>
                             <ItemSlot position="1">
-                                <ChestEquipableItem name="Buyable Penis"/>
+                                <HeadEquipableItem name="Antenna"/>
+                            </ItemSlot>
+                            <ItemSlot position="2">
+                                <FistWeapon name="Flare"/>
+                            </ItemSlot>
+                            <ItemSlot position="3">
+                                <StatsModifyUseable name="Spinach"/>
                             </ItemSlot>
                         </Inventory>
                         <Equipment/>
                     </ItemStorage>
+                    <Skills/>
+                    <AbilityEquipped/>
+                    <AbilityInventory>
+                        <Ability name="BindWounds"/>
+                    </AbilityInventory>
                 </NPC>
             </Tile>
         </Column>
-        <Column z="20">
-            <Tile r="7" s="3" terrain="Air" z="15">
-                <NPC Height="3" Occupation="Smasher">
-                    <Location r="7" s="3" z="15"/>
-                    <Interaction type="NoInteractionStrategy"/>
+        <Column z="22">
+            <Tile r="0" s="34" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="1" s="15" terrain="Air" z="5">
+                <OneShot name="Orange"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="2" s="11" terrain="Ground" z="9"/>
+        </Column>
+        <Column z="22">
+            <Tile r="2" s="13" terrain="Air" z="3">
+                <OneShot name="Gray"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="2" s="15" terrain="Air" z="5">
+                <OneShot name="Blue"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="2" s="25" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="3" s="4" terrain="Air" z="15">
+                <AreaOfEffect type="InstaDeathAoe"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="3" s="6" terrain="Ground" z="14"/>
+        </Column>
+        <Column z="22">
+            <Tile r="3" s="10" terrain="Ground" z="9"/>
+        </Column>
+        <Column z="22">
+            <Tile r="3" s="11" terrain="Ground" z="8"/>
+            <Tile r="3" s="11" terrain="Air" z="9">
+                <AreaOfEffect damagepertick="1" type="TakeDamageAreaOfEffect"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="3" s="15" terrain="Air" z="5">
+                <OneShot name="Purple"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="4" s="3" terrain="Ground" z="14"/>
+        </Column>
+        <Column z="22">
+            <Tile r="4" s="4" terrain="Ground" z="14"/>
+        </Column>
+        <Column z="22">
+            <Tile r="4" s="6" terrain="Ground" z="14"/>
+        </Column>
+        <Column z="22">
+            <Tile r="4" s="9" terrain="Ground" z="10"/>
+        </Column>
+        <Column z="22">
+            <Tile r="4" s="11" terrain="Ground" z="7"/>
+        </Column>
+        <Column z="22">
+            <Tile r="4" s="12" terrain="Ground" z="6"/>
+        </Column>
+        <Column z="22">
+            <Tile r="4" s="13" terrain="Ground" z="5"/>
+        </Column>
+        <Column z="22">
+            <Tile r="4" s="15" terrain="Air" z="5">
+                <OneShot name="Red"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="4" s="33" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="4" s="34" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="5" s="4" terrain="Ground" z="15"/>
+        </Column>
+        <Column z="22">
+            <Tile r="5" s="5" terrain="Ground" z="15"/>
+        </Column>
+        <Column z="22">
+            <Tile r="5" s="6" terrain="Air" z="15"/>
+        </Column>
+        <Column z="22">
+            <Tile r="5" s="8" terrain="Ground" z="11"/>
+        </Column>
+        <Column z="22">
+            <Tile r="5" s="12" terrain="Ground" z="5"/>
+        </Column>
+        <Column z="22">
+            <Tile r="5" s="13" terrain="Ground" z="4"/>
+        </Column>
+        <Column z="22">
+            <Tile r="5" s="15" terrain="Air" z="5">
+                <OneShot name="Green"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="5" s="19" terrain="Ground" z="8"/>
+        </Column>
+        <Column z="22">
+            <Tile r="5" s="26" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="5" s="27" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="6" s="2" terrain="Ground" z="15"/>
+        </Column>
+        <Column z="22">
+            <Tile r="6" s="4" terrain="Ground" z="15"/>
+        </Column>
+        <Column z="22">
+            <Tile r="6" s="6" terrain="Ground" z="12"/>
+        </Column>
+        <Column z="22">
+            <Tile r="6" s="7" terrain="Ground" z="12"/>
+        </Column>
+        <Column z="22">
+            <Tile r="6" s="8" terrain="Ground" z="9"/>
+        </Column>
+        <Column z="22">
+            <Tile r="6" s="11" terrain="Air" z="7">
+                <AreaOfEffect cooldownticks="300" type="LevelUpAoe"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="6" s="13" terrain="Ground" z="4"/>
+        </Column>
+        <Column z="22">
+            <Tile r="6" s="14" terrain="Ground" z="4"/>
+        </Column>
+        <Column z="22">
+            <Tile r="6" s="26" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="6" s="32" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="7" s="5" terrain="Ground" z="15"/>
+        </Column>
+        <Column z="22">
+            <Tile r="7" s="6" terrain="Ground" z="13"/>
+        </Column>
+        <Column z="22">
+            <Tile r="7" s="7" terrain="Ground" z="11"/>
+        </Column>
+        <Column z="22">
+            <Tile r="7" s="8" terrain="Ground" z="6"/>
+        </Column>
+        <Column z="22">
+            <Tile r="7" s="18" terrain="Ground" z="4"/>
+        </Column>
+        <Column z="22">
+            <Tile r="8" s="1" terrain="Air" z="16">
+                <AreaOfEffect healpertick="1" type="HealingAreaOfEffect"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="8" s="7" terrain="Ground" z="7"/>
+        </Column>
+        <Column z="22">
+            <Tile r="9" s="4" terrain="Air" z="14"/>
+        </Column>
+        <Column z="22">
+            <Tile r="9" s="5" terrain="Air" z="14"/>
+        </Column>
+        <Column z="22">
+            <Tile r="9" s="13" terrain="Air" z="4">
+                <UseableItem name="SpeedUp"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="9" s="27" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="9" s="31" terrain="Ground" z="7"/>
+        </Column>
+        <Column z="22">
+            <Tile r="10" s="4" terrain="Ground" z="13"/>
+        </Column>
+        <Column z="22">
+            <Tile r="10" s="5" terrain="Air" z="14"/>
+        </Column>
+        <Column z="22">
+            <Tile r="10" s="13" terrain="Air" z="4">
+                <HeadEquipableItem name="Halo"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="11" s="13" terrain="Air" z="4">
+                <HeadEquipableItem name="Fertilizer"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="11" s="14" terrain="Air" z="4">
+                <HeadEquipableItem name="Antenna"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="12" s="18" terrain="Ground" z="3"/>
+        </Column>
+        <Column z="22">
+            <Tile r="12" s="25" terrain="Ground" z="8"/>
+        </Column>
+        <Column z="22">
+            <Tile r="13" s="27" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="13" s="29" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="14" s="14" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="14" s="24" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="14" s="27" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="15" s="12" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="15" s="15" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="16" s="6" terrain="Water" z="2">
+                <Character AvailableSkillPts="0" Color="0" Height="3" Occupation="Pet">
+                    <Location r="16" s="6" z="2"/>
                     <Direction enum="1"/>
                     <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="1"/>
+                    <ItemStorage maxInventoryCapacity="25">
+                        <Inventory maxInventoryCapacity="25"/>
+                        <Equipment/>
+                    </ItemStorage>
+                    <Skills/>
+                    <AbilityEquipped/>
+                    <AbilityInventory/>
+                </Character>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="16" s="10" terrain="Water" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="16" s="13" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="16" s="21" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="17" s="12" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="17" s="13" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="17" s="19" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="18" s="10" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="18" s="15" terrain="Ground" z="3"/>
+        </Column>
+        <Column z="22">
+            <Tile r="21" s="13" terrain="Air" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="22" s="6" terrain="Air" z="3">
+                <AreaOfEffect r="2" s="34" type="TeleportAoe" z="1"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="22" s="16" terrain="Ground" z="1"/>
+        </Column>
+        <Column z="22">
+            <Tile r="22" s="17" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="22" s="29" terrain="Air" z="4"/>
+        </Column>
+        <Column z="22">
+            <Tile r="23" s="9" terrain="Ground" z="3"/>
+        </Column>
+        <Column z="22">
+            <Tile r="23" s="12" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="23" s="28" terrain="Air" z="4">
+                <Obstacle name="StoneRock"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="23" s="29" terrain="Air" z="4">
+                <NPC Color="4" Height="3" Occupation="Enemy">
+                    <Location r="23" s="29" z="4"/>
+                    <Interaction type="NoInteractionStrategy"/>
+                    <Direction enum="1"/>
+                    <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="16"/>
                     <ItemStorage maxInventoryCapacity="5">
                         <Inventory maxInventoryCapacity="5"/>
                         <Equipment>
-                            <OneHandedMeleeWeapon name="Katar"/>
+                            <TwoHandedWeapon name="Club"/>
                         </Equipment>
                     </ItemStorage>
+                    <Skills/>
+                    <AbilityEquipped/>
+                    <AbilityInventory/>
                 </NPC>
             </Tile>
         </Column>
-        <Column z="20">
-            <Tile r="7" s="5" terrain="Air" z="15">
+        <Column z="22">
+            <Tile r="23" s="32" terrain="Air" z="4">
+                <NPC Color="4" Height="3" Occupation="Enemy">
+                    <Location r="23" s="32" z="4"/>
+                    <Interaction type="NoInteractionStrategy"/>
+                    <Direction enum="1"/>
+                    <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="11"/>
+                    <ItemStorage maxInventoryCapacity="5">
+                        <Inventory maxInventoryCapacity="5"/>
+                        <Equipment>
+                            <FistWeapon name="Flash"/>
+                        </Equipment>
+                    </ItemStorage>
+                    <Skills/>
+                    <AbilityEquipped/>
+                    <AbilityInventory/>
+                </NPC>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="24" s="27" terrain="Air" z="4"/>
+        </Column>
+        <Column z="22">
+            <Tile r="25" s="9" terrain="Ground" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="25" s="12" terrain="Air" z="2"/>
+        </Column>
+        <Column z="22">
+            <Tile r="25" s="34" terrain="Air" z="4">
+                <NPC Color="4" Height="3" Occupation="Enemy">
+                    <Location r="25" s="34" z="4"/>
+                    <Interaction type="NoInteractionStrategy"/>
+                    <Direction enum="1"/>
+                    <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="11"/>
+                    <ItemStorage maxInventoryCapacity="5">
+                        <Inventory maxInventoryCapacity="5"/>
+                        <Equipment>
+                            <FistWeapon name="Flare"/>
+                        </Equipment>
+                    </ItemStorage>
+                    <Skills/>
+                    <AbilityEquipped/>
+                    <AbilityInventory/>
+                </NPC>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="26" s="21" terrain="Air" z="18"/>
+        </Column>
+        <Column z="22">
+            <Tile r="26" s="22" terrain="Air" z="14"/>
+        </Column>
+        <Column z="22">
+            <Tile r="26" s="25" terrain="Air" z="5"/>
+        </Column>
+        <Column z="22">
+            <Tile r="27" s="29" terrain="Air" z="4">
                 <Avatar>
-                    <Character Height="3" Occupation="Smasher">
-                        <Location r="7" s="5" z="15"/>
+                    <Character AvailableSkillPts="0" Color="0" Height="3" Occupation="Sneak">
+                        <Location r="27" s="29" z="4"/>
                         <Direction enum="1"/>
                         <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="1"/>
-                        <ItemStorage maxInventoryCapacity="5">
-                            <Inventory maxInventoryCapacity="5">
-                                <ItemSlot position="0">
-                                    <HeadEquipableItem name="Top Hat"/>
-                                </ItemSlot>
-                                <ItemSlot position="1">
-                                    <HeadEquipableItem name="THE GAME CRASHER"/>
-                                </ItemSlot>
-                                <ItemSlot position="2">
-                                    <OneHandedMeleeWeapon name="Katar"/>
-                                </ItemSlot>
-                                <ItemSlot position="3">
-                                    <DualWieldMeleeWeapon name="Katar"/>
-                                </ItemSlot>
-                            </Inventory>
+                        <ItemStorage maxInventoryCapacity="25">
+                            <Inventory maxInventoryCapacity="25"/>
                             <Equipment/>
                         </ItemStorage>
+                        <Skills>
+                            <Skill amount="0" name="Bargain"/>
+                            <Skill amount="0" name="Detect-N-Remove Traps"/>
+                            <Skill amount="0" name="Creep"/>
+                            <Skill amount="0" name="Stealing Shit"/>
+                            <Skill amount="0" name="Ranged Weapon"/>
+                            <Skill amount="0" name="Bind Wounds"/>
+                            <Skill amount="0" name="Observation"/>
+                        </Skills>
+                        <AbilityEquipped>
+                            <Ability name="PickPocket"/>
+                            <Ability name="Creep"/>
+                            <Ability name="BindWounds"/>
+                        </AbilityEquipped>
+                        <AbilityInventory/>
                     </Character>
                 </Avatar>
             </Tile>
         </Column>
-        <Column z="20">
-            <Tile r="8" s="8" terrain="Air" z="2">
-                <AreaOfEffect r="7" s="4" type="TeleportAoe" z="15"/>
+        <Column z="22">
+            <Tile r="28" s="22" terrain="Air" z="13"/>
+        </Column>
+        <Column z="22">
+            <Tile r="28" s="28" terrain="Air" z="5">
+                <Obstacle name="StoneRock"/>
             </Tile>
         </Column>
-        <Column z="20">
-            <Tile r="8" s="15" terrain="Air" z="2">
-                <AreaOfEffect healpertick="1" type="HealingAreaOfEffect"/>
-            </Tile>
-        </Column>
-        <Column z="20">
-            <Tile r="8" s="16" terrain="Air" z="2">
-                <OneShot name="Major Movement Buff"/>
-            </Tile>
-        </Column>
-        <Column z="20">
-            <Tile r="9" s="8" terrain="Air" z="2">
-                <NPC Height="3" Occupation="Smasher">
-                    <Location r="9" s="8" z="2"/>
-                    <Interaction type="DialogInteractionStrategy">
-                        <Dialog>Hello Avatar</Dialog>
-                        <Dialog>You're an idiot and you're playing a dumb game</Dialog>
-                        <Dialog>GTFO</Dialog>
-                    </Interaction>
-                    <Direction enum="4"/>
-                    <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="1"/>
+        <Column z="22">
+            <Tile r="28" s="33" terrain="Air" z="4">
+                <NPC Color="4" Height="3" Occupation="Enemy">
+                    <Location r="28" s="33" z="4"/>
+                    <Interaction type="NoInteractionStrategy"/>
+                    <Direction enum="1"/>
+                    <Stats agility="1" hardiness="1" intellect="1" level="1" lives="3" movement="30" strength="10001"/>
                     <ItemStorage maxInventoryCapacity="5">
                         <Inventory maxInventoryCapacity="5"/>
-                        <Equipment/>
+                        <Equipment>
+                            <FistWeapon name="Expand"/>
+                        </Equipment>
                     </ItemStorage>
+                    <Skills/>
+                    <AbilityEquipped/>
+                    <AbilityInventory/>
                 </NPC>
             </Tile>
         </Column>
-        <Column z="20">
-            <Tile r="10" s="10" terrain="Air" z="2">
-                <AreaOfEffect damagepertick="1" type="TakeDamageAreaOfEffect"/>
+        <Column z="22">
+            <Tile r="31" s="24" terrain="Air" z="5"/>
+        </Column>
+        <Column z="22">
+            <Tile r="31" s="31" terrain="Air" z="4"/>
+        </Column>
+        <Column z="22">
+            <Tile r="33" s="20" terrain="Air" z="16"/>
+        </Column>
+        <Column z="22">
+            <Tile r="33" s="21" terrain="Air" z="16">
+                <Obstacle name="StoneRock"/>
             </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="33" s="24" terrain="Air" z="4">
+                <Obstacle name="StoneRock"/>
+            </Tile>
+        </Column>
+        <Column z="22">
+            <Tile r="34" s="20" terrain="Air" z="16"/>
         </Column>
     </Map>
 </SaveFile>

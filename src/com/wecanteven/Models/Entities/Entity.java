@@ -55,7 +55,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     public Entity(ActionHandler actionHandler, Direction direction, GameColor color){
         setStats(new Stats(this));
         setHeight(3);
-        setJumpHeight(25);
+        setJumpHeight(3);
 
         setActionHandler(actionHandler);
         setDirection(direction);
