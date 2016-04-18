@@ -98,7 +98,6 @@ public class AbilityFactory {
     }
 
     //extra abilities
-
     public Ability vendSpeedUp(Character caster){
         duration = 1;
         abilityName = "SpeedUp";
@@ -157,6 +156,31 @@ public class AbilityFactory {
         ability.setCast(true);
         return ability;
     }
+
+        //radial ability example
+    public Ability vendSlowAttack(Character caster) {
+        duration = 1;
+        abilityName = "Slow";
+        abilityImage = "Magic";
+        skill = Skill.BANE;
+        statLevel = caster.getStats().getIntellect();
+        skillLevel = caster.getSkillPoints(skill);
+        multiplier = skillLevel+statLevel;
+        effect = new BuffEffect(new Buff(
+                "Speed",
+                "Purple",
+                duration,
+                (target)-> target.modifyStatsAdditive((new StatsAddable(0, 0, 0, 0, 0, 0, -1*(multiplier), 0, 0))),
+                (target)-> target.modifyStatsSubtractive((new StatsAddable(0, 0, 0, 0, 0, 0, -1*(multiplier), 0, 0)))));
+        RadialHitBoxGenerator generator = new RadialHitBoxGenerator(abilityImage,caster,effect,duration);
+        generator.setSize(3);
+        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability.setCooldownTicks(15);
+        ability.setWindUpTicks(15);
+        return ability;
+    }
+
+
 //    public Ability vendRangedWeapon(Character caster) {
 //        skill = Skill.RANGED_WEAPON;
 //        duration = 5;
