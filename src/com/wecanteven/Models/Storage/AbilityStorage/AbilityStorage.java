@@ -1,6 +1,8 @@
 package com.wecanteven.Models.Storage.AbilityStorage;
 
 import com.wecanteven.Models.Abilities.Ability;
+import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Factories.AbilityFactories.AbilityFactory;
 import com.wecanteven.Visitors.AbilityStorageVisitor;
 
 /**
@@ -8,17 +10,26 @@ import com.wecanteven.Visitors.AbilityStorageVisitor;
  */
 public class AbilityStorage
 {
+    private Character owner;
     private AbilityEquipment equipment;
     private AbilityInventory inventory;
 
-    public AbilityStorage() {
+    public AbilityStorage(Character owner) {
+        this.owner = owner;
         equipment = new FourSlotAbilityEquipment(this);
         inventory = new InfiniteAbilityInventory(this);
     }
 
-    public AbilityStorage(AbilityEquipment eq, AbilityInventory inv) {
+    public AbilityStorage(Character owner, AbilityEquipment eq, AbilityInventory inv) {
         this.equipment = eq;
         this.inventory = inv;
+        this.owner = owner;
+    }
+
+    public void initialize() {
+        AbilityFactory factory = new AbilityFactory();
+
+        storeAbility(factory.vendBindWounds(owner));
     }
 
     public void equipAbility(Ability ability, int index) {
