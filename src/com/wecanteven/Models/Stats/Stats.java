@@ -64,9 +64,9 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     public void refreshStats(){
-
         currentHealth.setStat(maxHealth.getStat());
         currentMana.setStat(maxMana.getStat());
+        notifyObservers();
     }
 
     public void addStats(StatsAddable statsAddable){

@@ -1,8 +1,8 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.Abilities.Ability;
-import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Models.Factories.AbilityFactories.AbilityFactory;
 import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
@@ -175,6 +175,10 @@ public class Character extends Entity implements Actionable {
 
     public void useAbility(int index) {
         abilityStorage.useAbility(index);
+    }
+
+    public AbilityStorage getAbilityStorage() {
+        return this.abilityStorage;
     }
 
     /**

@@ -2,6 +2,7 @@ package com.wecanteven.Models.Storage.AbilityStorage;
 
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Storage.StorageComponent;
+import com.wecanteven.Visitors.AbilityStorageVisitor;
 
 import java.util.Iterator;
 
@@ -19,4 +20,8 @@ public abstract class AbilityInventory extends StorageComponent<AbilityStorage> 
     public abstract boolean containsAbility(Ability ability);
     public abstract boolean isFull();
     public abstract Iterator<Ability> getIterator();
+
+    public void accept(AbilityStorageVisitor visitor) {
+        visitor.visitAbilityInventory(this);
+    }
 }

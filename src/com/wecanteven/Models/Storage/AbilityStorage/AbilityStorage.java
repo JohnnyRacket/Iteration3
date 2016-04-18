@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Storage.AbilityStorage;
 
 import com.wecanteven.Models.Abilities.Ability;
+import com.wecanteven.Visitors.AbilityStorageVisitor;
 
 /**
  * Created by simonnea on 4/4/16.
@@ -57,4 +58,16 @@ public class AbilityStorage
     }
 
     public void removeAbility(Ability ability) { inventory.removeAbilty(ability); }
+
+    public AbilityEquipment getAbilityEquipment() {
+        return this.equipment;
+    }
+
+    public AbilityInventory getAbilityInventory() {
+        return this.inventory;
+    }
+
+    public void accept(AbilityStorageVisitor visitor) {
+        visitor.visitAbilityStorage(this);
+    }
 }
