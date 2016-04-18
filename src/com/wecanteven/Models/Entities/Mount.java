@@ -17,6 +17,8 @@ import com.wecanteven.Visitors.EntityVisitor;
 public class Mount extends Character {
   Character mounter;
 
+
+
   public Mount(ActionHandler actionHandler, Direction direction) {
     super(actionHandler, direction, GameColor.BLUE);
   }
@@ -28,11 +30,14 @@ public class Mount extends Character {
   }
 
   public void dismount() {
-
+    mounter = null;
   }
 
   public void accept(EntityVisitor visitor) {
-    visitor.visitMount(this);
+      visitor.visitMount(this);
+      if(mounter != null) {
+          visitor.visitCharacter(mounter);
+      }
   }
 
 

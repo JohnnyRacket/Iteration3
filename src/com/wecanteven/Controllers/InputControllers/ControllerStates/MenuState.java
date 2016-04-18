@@ -6,9 +6,13 @@ import com.wecanteven.Controllers.InputControllers.ActionEnum;
 import com.wecanteven.Controllers.InputControllers.KeyActionBinding;
 import com.wecanteven.Controllers.InputControllers.MainController;
 import com.wecanteven.MenuView.DrawableContainers.MenuViewContainer;
+import com.wecanteven.MenuView.UIViewFactory;
+import com.wecanteven.MenuView.ViewManager;
 import com.wecanteven.Models.ModelTime.ModelTime;
+import com.wecanteven.ViewEngine;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
@@ -58,9 +62,7 @@ public class MenuState extends ControllerState {
 
             this.getController().setPlayState();
             ViewTime.getInstance().register(()->{
-                ViewTime.getInstance().resume();
-                ModelTime.getInstance().resume();
-                AITime.getInstance().resume();
+                UIViewFactory.getInstance().resumeGame();
                 this.getController().clearViews();
             },0);
         }, this.getjFrame(), this.getController()));

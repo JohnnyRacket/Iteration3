@@ -2,13 +2,11 @@ package com.wecanteven.SaveLoad.XMLProcessors;
 
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
-import com.wecanteven.Models.Interactions.DialogInteractionStrategy;
-import com.wecanteven.Models.Interactions.InteractionStrategy;
-import com.wecanteven.Models.Interactions.NoInteractionStrategy;
-import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
+import com.wecanteven.Models.Interactions.*;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Occupation.*;
 import com.wecanteven.Models.Stats.Stats;
+import com.wecanteven.Models.Storage.AbilityStorage.AbilityStorage;
 import com.wecanteven.SaveLoad.SaveFile;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
@@ -20,6 +18,7 @@ import org.w3c.dom.NodeList;
 import sun.print.SunMinMaxPage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Joshua Kegley on 4/4/2016.
@@ -53,6 +52,7 @@ public class EntityXMLProcessor extends XMLProcessor {
                 parseDirection(sf.getElemenetById(el, "Direction", 0)),
                 parseOccupation(sf.getStrAttr(el, "Occupation"), sf.getElementsById(el, "Skill")),
                 StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0)),
+                new AbilityStorage(), //TODO parse out the real abilities
                 GameColor.values()[sf.getIntAttr(el, "Color")]
         );
         parseStats(c, sf.getElemenetById(el, "Stats", 0));
@@ -179,14 +179,22 @@ public class EntityXMLProcessor extends XMLProcessor {
         Element interactionSaveElement = sf.createSaveElement("Interaction",attr);
 
         if(i instanceof DialogInteractionStrategy){
-            formatDialog(interactionSaveElement, (DialogInteractionStrategy) i);
+            formatDialog(interactionSaveElement, ((DialogInteractionStrategy) i).getIterator());
+        }else if(i instanceof QuestDialogInteractionStrategy) {
+            Element startDialog = sf.createSaveElement("startDialog", new ArrayList<>());
+            interactionSaveElement.appendChild(startDialog);
+            formatDialog(startDialog, ((QuestDialogInteractionStrategy) i).getStartIterator());
+            ArrayList<Attr> attr2 = new ArrayList<>();
+            Element endDialog = sf.createSaveElement("endDialog", new ArrayList<>());
+            interactionSaveElement.appendChild(endDialog);
+            formatDialog(endDialog, ((QuestDialogInteractionStrategy) i).getEndIterator());
+
         }
         sf.appendObjectToMostRecent(interactionSaveElement);
     }
 
     public static InteractionStrategy parseInteraction(Element el) {
         if(el.getAttribute("type").equals("TradeInteractionStrategy")){
-
             return new TradeInteractionStrategy();
         }else if(el.getAttribute("type").equals("DialogInteractionStrategy")){
             return new DialogInteractionStrategy(parseDialog(el));
@@ -195,11 +203,10 @@ public class EntityXMLProcessor extends XMLProcessor {
         }
     }
 
-    public static void formatDialog(Element el, DialogInteractionStrategy interaction) {
-        ArrayList<String> dialog = interaction.getDialog();
-        for(int i = 0; i < dialog.size(); ++i){
+    public static void formatDialog(Element el, Iterator i) {
+        while(i.hasNext()){
             Element dialogElement = sf.createSaveElement("Dialog",new ArrayList<>());
-            sf.appendTextNode(dialogElement, dialog.get(i));
+            sf.appendTextNode(dialogElement, (String)i.next());
             el.appendChild(dialogElement);
         }
     }

@@ -7,6 +7,7 @@ import com.wecanteven.Models.Interactions.InteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Occupation.Occupation;
+import com.wecanteven.Models.Storage.AbilityStorage.AbilityStorage;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
@@ -28,20 +29,22 @@ public class NPC extends Character {
         this.interaction.setOwner(this);
     }
     public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction, Occupation occupation, GameColor color){
-        super(actionHandler, direction, occupation, new ItemStorage(5), color);
+        super(actionHandler, direction, occupation, new ItemStorage(5), new AbilityStorage(), color);
         this.interaction = interaction;
         this.interaction.setOwner(this);
     }
 
     public NPC(ActionHandler actionHandler, Direction direction, InteractionStrategy interaction, Occupation occupation, ItemStorage itemStorage, GameColor color){
-        super(actionHandler, direction, occupation, itemStorage, color);
+        super(actionHandler, direction, occupation, itemStorage, new AbilityStorage(), color);
         this.interaction = interaction;
         this.interaction.setOwner(this);
     }
     @Override
     public void loseLife(){
         super.loseLife();
-        controller.kill();
+        if(controller != null) {
+            controller.kill();
+        }
         controller = null;
         Iterator<TakeableItem> iter = this.getItemStorage().getInventory().getIterator();
         while(iter.hasNext()){

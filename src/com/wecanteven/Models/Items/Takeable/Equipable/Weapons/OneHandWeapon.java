@@ -13,6 +13,6 @@ public class OneHandWeapon extends MeleeWeaponEquipableItem {
 
     @Override
     public void accept(WeaponsVisitor weaponsVisitor) {
-
+        weaponsVisitor.visitOneHandWeapon(this);
     }
 }

@@ -26,6 +26,7 @@ public class DialogInteractionStrategy implements InteractionStrategy {
         this.owner = npc;
     }
 
+    @Deprecated
     public ArrayList<String> getDialog() { return dialog;}
 
     public Iterator<String> getIterator() {

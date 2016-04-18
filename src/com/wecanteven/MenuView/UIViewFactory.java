@@ -24,6 +24,7 @@ import com.wecanteven.MenuView.UIObjectCreationVisitors.AbilityViewObjectCreatio
 import com.wecanteven.MenuView.UIObjectCreationVisitors.BuyableUIObjectCreationVisitor;
 import com.wecanteven.MenuView.UIObjectCreationVisitors.EquippableUIObjectCreationVisitor;
 import com.wecanteven.ModelEngine;
+import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.NPC;
@@ -88,8 +89,6 @@ public class UIViewFactory {
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addPermView(view);
         },0);
-    }
-    public void createAbilityItemMenu(){
     }
 
     public void createMainMenuView(){
@@ -318,9 +317,9 @@ public class UIViewFactory {
                     if(menuItems[0] == null || menuItems[1] == null || menuItems[2] == null) {view.getMenuViewContainer().swap(); return; }
                     Sound.play("startGame");
                     NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine, (Occupation)menuItems[0], (String)menuItems[1], (GameColor)menuItems[2]);
+                    Sound.stopAll();
                     template.launch();
                     resumeGame();
-                    Sound.stopAll();
                 })
         );
         startList.addItem(
@@ -406,7 +405,7 @@ public class UIViewFactory {
         columns.addDrawable(menu);
         columns.addDrawable(skillTitle);
 
-        TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats", Config.TEAL);
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Skills/Stats", character.getColor().dark);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
@@ -453,7 +452,7 @@ public class UIViewFactory {
         columns.addDrawable(menu);
         columns.addDrawable(equipMenu);
 
-        TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment", Config.TEAL);
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Inventory/Equipment", character.getColor().dark);
         HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
         VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
         AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
@@ -477,6 +476,42 @@ public class UIViewFactory {
         character.accept(visitor);
         NavigatableList list = visitor.getInventory();
         NavigatableList equiplist = visitor.getEquipped();
+
+        //make menu
+        menu.setBgColor(Config.PAPYRUS);
+
+        equipMenu.setBgColor(Config.DARKPAPYRUS);
+
+        //NavigatableList equiplist = new NavigatableList();
+        //equiplist.addItem();
+
+        menu.setList(list);
+        equipMenu.setList(equiplist);
+        //make swappable view
+        SwappableView view = new SwappableView();
+        //add decorators to center the menu
+        CustomScaleColumnsContainer columns  = new CustomScaleColumnsContainer(new int[]{4,1});
+        columns.setHeight(400);
+        columns.setWidth(600);
+
+        columns.addDrawable(menu);
+        columns.addDrawable(equipMenu);
+
+        TitleBarDecorator title = new TitleBarDecorator(columns, "Abilities", Config.TEAL);
+        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
+        VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
+        AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
+//        view.addDrawable(vertCenter);
+
+        view.addDrawable(animation);
+        view.addNavigatable(menu);
+        view.addNavigatable(equipMenu);
+        //return created swappable view
+        ViewTime.getInstance().register(()->{
+            createGreyBackground();
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
     }
 
     public void createEquippableItemMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, EquipableItem item){
@@ -608,8 +643,6 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
 
     }
-
-
     public void createUsableItemMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, UseableItem item){
         EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this,invHolder,eqHolder);
         NavigatableList list = new NavigatableList();
@@ -660,6 +693,45 @@ public class UIViewFactory {
         },0);
         controller.setMenuState(view.getMenuViewContainer());
     }
+
+    public void createAbilityMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, Ability ability) {
+        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this,invHolder,eqHolder);
+        NavigatableList list = new NavigatableList();
+        MenuViewContainer container = controller.getMenuState().getMenus();
+        list.addItem(new ScrollableMenuItem("Equip", () -> {
+            character.equipAbility(ability);
+            ViewTime.getInstance().register(() -> {
+                controller.popView();
+                visitor.visitCharacter(character);
+                invHolder.setList(visitor.getInventoryItems());
+                eqHolder.setList(visitor.getEquippedItems());
+            }, 0);
+            controller.setMenuState(container);
+        }));
+        list.addItem(new ScrollableMenuItem("Cancel", () ->{
+
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+
+            },0);
+            controller.setMenuState(container);
+        }));
+        ScrollableMenu menu = new ScrollableMenu(100,100);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        menu.setBgColor(Config.CINNIBAR);
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(anim);
+        ViewTime.getInstance().register(()->{
+            vEngine.getManager().addView(view);
+        },0);
+        controller.setMenuState(view.getMenuViewContainer());
+    }
+
+    public void createEquippedAbilityMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, Ability ability) {}
 
     //WHEN THE SHOPPERKEEPER TRIES TO SELL TO THE SHOPPER
     public void createBuyableItemMenu(BuyableUIObjectCreationVisitor visitor, NPC shopOwner, Character buyer, TakeableItem item){
@@ -786,10 +858,13 @@ public class UIViewFactory {
                 menu.setList(list);
             }));
             menu.setList(keyBindList);
-
         }));
 
         NavigatableList windowOptions = new NavigatableList();
+        ScrollableMenuItem soundOpt =  new ScrollableMenuItem("Toggle Sound", ()->{
+            Sound.toggleMute();
+        });
+        windowOptions.addItem(soundOpt);
         windowOptions.addItem(new ScrollableMenuItem("Fullscreen", ()->{
 
             ViewTime.getInstance().register(()->{
@@ -800,6 +875,7 @@ public class UIViewFactory {
                 device.setFullScreenWindow(vEngine);
                 vEngine.pack();
                 vEngine.setExtendedState(vEngine.MAXIMIZED_BOTH);
+
 
             },0);
         }));
@@ -833,7 +909,7 @@ public class UIViewFactory {
 
 
         menu.setList(list);
-        TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu", Config.CINNIBAR);
+        TitleBarDecorator title = new TitleBarDecorator(menu,"Pause Menu", controller.getAvatar().getCharacter().getColor().dark);
        // RectangleShadowDecorator shadow = new RectangleShadowDecorator(title);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
@@ -856,7 +932,6 @@ public class UIViewFactory {
             view.addDrawable(background);
             vEngine.getManager().addView(view);
     }
-
     public void createTradeView(NPC npc, Character player, boolean active){
 
         /*
@@ -893,7 +968,7 @@ public class UIViewFactory {
         VerticalCenterContainer viewTitle =
                 new VerticalCenterContainer(
                         new HorizontalCenterContainer(
-                                new TitleBarDecorator(columns, "Buy / Sell")
+                                new TitleBarDecorator(columns, "Buy / Sell", player.getColor().dark)
                         )
                 );
 
@@ -961,7 +1036,7 @@ public class UIViewFactory {
         rows.addDrawable(conversationMenu);
         rows.addDrawable(chatMenu);
 
-        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation", Config.TEAL);
+        TitleBarDecorator title = new TitleBarDecorator(rows, "Conversation", player.getColor().dark);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(title);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
@@ -976,10 +1051,6 @@ public class UIViewFactory {
         controller.setMenuState(view.getMenuViewContainer());
 
     }
-
-
-
-
 
     public ScrollableMenuItem createLoadMenu(ScrollableMenu menu, NavigatableList list){
         return new ScrollableMenuItem("Load", ()->{
@@ -1095,7 +1166,8 @@ public class UIViewFactory {
         ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
-        controller.setMenuState(view.getMenuViewContainer());
+
+        //controller.setMenuState(view.getMenuViewContainer());
 
     }
 
@@ -1152,6 +1224,9 @@ public class UIViewFactory {
     }
 
     public void resumeGame(){
+        if(!Sound.mute){
+            Sound.play("gameTheme");
+        }
         ModelTime.getInstance().resume();
         ViewTime.getInstance().resume();
         AITime.getInstance().resume();
@@ -1161,5 +1236,4 @@ public class UIViewFactory {
         ModelTime.getInstance().reset();
         ViewTime.getInstance().reset();
     }
-
 }

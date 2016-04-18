@@ -17,6 +17,6 @@ public class HealthStat extends Stat implements Observer {
         update();
     }
     public void update(){
-        stat = (int)(Math.pow((.4 * level.getStat()) + 1,2) * hardiness.getStat()*5);
+        stat = (int)(Math.pow((.4 * level.getStat()) + 1,2) * hardiness.getStat()*15);
     }
 }
