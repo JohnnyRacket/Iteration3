@@ -122,6 +122,16 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         }
     }
 
+    public boolean jump(Direction d){
+        int movementStat = getStats().getMovement();
+        if(movementStat == 0 || isActive()){
+            return false;
+        }
+        Location destination = getLocation().add(d.getCoords);
+        int moveTime = calculateMovementTicks(movementStat);
+        return getActionHandler().move(this,destination,moveTime);
+    }
+
     @Override
     public boolean move(Location l) {
         int movementStat = getStats().getMovement();

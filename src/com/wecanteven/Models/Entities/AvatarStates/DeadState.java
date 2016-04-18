@@ -13,6 +13,11 @@ public class DeadState extends AvatarState {
     }
 
     @Override
+    public boolean jump(Direction d) {
+        return false;
+    }
+
+    @Override
     public void attack(Direction dir) {
 
     }

@@ -28,6 +28,9 @@ public class Avatar implements Observer{
     public boolean move(Direction d){
         return state.move(d);
     }
+    public boolean jump(Direction d){
+        return state.jump(d);
+    }
     public void attack(Direction dir){ state.attack(dir);}
     public void useAbility(int index){state.useAbility(index);}
     public boolean equipItem(EquipableItem item){

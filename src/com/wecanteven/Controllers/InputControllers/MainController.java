@@ -8,6 +8,8 @@ import com.wecanteven.Models.ModelTime.Tickable;
 import com.wecanteven.UtilityClasses.Sound;
 import com.wecanteven.ViewEngine;
 
+import java.util.Map;
+
 /**
  * Created by John on 3/31/2016.
  */
@@ -28,6 +30,7 @@ public class MainController implements Tickable{
         menuState = new MenuState(window, this);
         playState = new PlayState(window, this);
         dialogState = new DialogState(window, this);
+        keyBindState = new KeyBindState(window,this);
     }
 //testing avatar movement
     public MainController(ViewEngine window,Avatar avatar){
@@ -43,7 +46,6 @@ public class MainController implements Tickable{
         if (state != null) {
             state.destroyKeyBindings();
             menuState.setMenus(null);
-
         }
     }
 
@@ -73,19 +75,17 @@ public class MainController implements Tickable{
         this.state = playState;
     }
 
-    public void setKeyBindState(ActionEnum actionEnum){
+    public void setKeyBindState(Map<ActionEnum, Integer> map, ActionEnum actionEnum){
+        keyBindState.setMap(map);
+        keyBindState.setContainer(((MenuState) state).getMenus());
         removeState();
-        playState.setAvatar(avatar);
-        playState.createKeybindings();
-        System.out.println("Starting PLay State");
-        this.state = playState;
+        keyBindState.setaEnum(actionEnum);
+        keyBindState.createKeybindings();
+        this.state = keyBindState;
     }
 
-    public void setDialogState(){//needs to take in a Dialog obkect once its made
-        removeState();
-        //maybe add more here
-        dialogState.createKeybindings();
-        this.state = dialogState;
+    public void setDialogState(ActionEnum actionEnum){//needs to take in a Dialog obkect once its made
+
     }
 
     public void changeView(SwappableView view){
