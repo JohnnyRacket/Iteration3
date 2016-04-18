@@ -34,7 +34,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
 
     public void initStats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement){
         this.entity = entity;
-        this.creep = new PrimaryStat("Creep",5);
+        this.creep = new PrimaryStat("Creep",0);
         this.strength = new PrimaryStat("Strength",strength);
         this.agility = new PrimaryStat("Agility",agility);
         this.intellect = new PrimaryStat("Intellect",intellect);

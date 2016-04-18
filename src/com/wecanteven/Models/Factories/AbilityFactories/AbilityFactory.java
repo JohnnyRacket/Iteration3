@@ -219,7 +219,8 @@ public class AbilityFactory {
     public Ability vendCreep(Character caster) {
         skill = Skill.CREEP;
         skillLevel = caster.getSkillPoints(skill);
-        duration = 55;
+        manaCost = skillLevel+1;
+        duration = 555;
         effect = new BuffEffect(new Buff(
                 "Creep",
                 "Purple",

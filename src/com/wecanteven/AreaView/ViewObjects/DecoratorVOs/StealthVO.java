@@ -20,7 +20,7 @@ public class StealthVO extends DecoratorViewObject {
     @Override
     public void draw(Graphics2D g) {
 
-        float alpha = subject.getCreep()/10;
+        float alpha =  1 - (float)(subject.getCreep())/10;
         if (alpha < 0 ) alpha = 0;
         else if (alpha > 1) alpha = 1;
 
