@@ -1,6 +1,7 @@
 package com.wecanteven.SaveLoad.SaveVisitors;
 
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
+import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Items.InteractiveItem;
@@ -15,6 +16,9 @@ import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Models.Occupation.*;
 import com.wecanteven.Models.Stats.Stats;
+import com.wecanteven.Models.Storage.AbilityStorage.AbilityEquipment;
+import com.wecanteven.Models.Storage.AbilityStorage.AbilityInventory;
+import com.wecanteven.Models.Storage.AbilityStorage.AbilityStorage;
 import com.wecanteven.Models.Storage.ItemStorage.Equipment;
 import com.wecanteven.Models.Storage.ItemStorage.Inventory;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
@@ -31,7 +35,7 @@ import java.util.Iterator;
 /**
  * Created by Joshua Kegley on 4/4/2016.
  */
-public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor, EntityVisitor, StatsVisitor, ItemStorageVisitor, ItemVisitor, AreaOfEffectVisitor, OccupationVisitor {
+public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor, EntityVisitor, StatsVisitor, ItemStorageVisitor, ItemVisitor, AreaOfEffectVisitor, OccupationVisitor, AbilityStorageVisitor {
 
     SaveFile save;
     private Avatar avatar;
@@ -131,6 +135,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
         currentParent = "Character";
         e.getOccupation().accept(this);
+        e.getAbilityStorage().accept(this);
     }
 
     @Override
@@ -143,6 +148,7 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
 
         currentParent = "NPC";
         npc.getOccupation().accept(this);
+        npc.getAbilityStorage().accept(this);
     }
 
     @Override
@@ -337,6 +343,35 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     @Override
     public void visitSummoner(Summoner summoner) {
         visitOccupation(summoner);
+    }
+
+    @Override
+    public void visitAbilityStorage(AbilityStorage itemStorage) {
+
+    }
+
+    @Override
+    public void visitAbilityEquiped(AbilityEquipment equipment) {
+        EntityXMLProcessor.formatAbilityEquipmentContainer(currentParent);
+
+        Iterator<Ability> iter = equipment.getIterator();
+
+        while (iter.hasNext()) {
+            Ability ability = iter.next();
+            EntityXMLProcessor.formatAbilities(ability, "AbilityEquipped");
+        }
+    }
+
+    @Override
+    public void visitAbilityInventory(AbilityInventory inventory) {
+        EntityXMLProcessor.formatAbilityInventoryContainer(currentParent);
+
+        Iterator<Ability> iter = inventory.getIterator();
+
+        while (iter.hasNext()) {
+            Ability ability = iter.next();
+            EntityXMLProcessor.formatAbilities(ability, "AbilityInventory");
+        }
     }
 }
 

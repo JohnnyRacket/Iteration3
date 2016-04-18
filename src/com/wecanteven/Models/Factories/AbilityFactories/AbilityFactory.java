@@ -30,7 +30,7 @@ public class AbilityFactory {
     private Ability ability;
     private int manaCost=0;
 
-
+    //ALL
     //bind wounds ability
     public Ability vendBindWounds(Character caster){
         duration = 1;
@@ -49,6 +49,7 @@ public class AbilityFactory {
         return ability;
     }
 
+    //SMASHER
     //One Handed Weapon ability
     public Ability vendOneHandedWeapon(Character caster) {
         skill = Skill.ONE_HANDED_WEAPON;
@@ -68,6 +69,7 @@ public class AbilityFactory {
         return ability;
     }
 
+    //SMASHER
     //Two Handed Weapon ability
     public Ability vendTwoHandedWeapon(Character caster) {
         skill = Skill.TWO_HANDED_WEAPON;
@@ -86,6 +88,7 @@ public class AbilityFactory {
         return ability;
     }
 
+    //SMASHER
     //brawling ability
     public Ability vendBrawling(Character caster) {
         skill = Skill.BRAWLING;
@@ -104,6 +107,7 @@ public class AbilityFactory {
         return ability;
     }
 
+    //SUMMONER
     //extra abilities
     public Ability vendSpeedUp(Character caster){
         duration = 300;
@@ -127,6 +131,7 @@ public class AbilityFactory {
         return ability;
     }
 
+    //SNEAK
     //pickpocket ability
     public Ability vendPickPocket(Character caster) {
         skill = Skill.PICK_POCKET;
@@ -143,7 +148,9 @@ public class AbilityFactory {
         return ability;
     }
 
-//    //range ability
+
+    //SNEAK
+    // range ability
     public Ability vendRangedWeapon(Character caster){
         skill = Skill.RANGED_WEAPON;
         duration = 5;
@@ -164,6 +171,7 @@ public class AbilityFactory {
         return ability;
     }
 
+    //SUMMONER
         //radial ability example
     public Ability vendSlowAttack(Character caster) {
         duration = 300;
@@ -188,7 +196,7 @@ public class AbilityFactory {
         return ability;
     }
 
-
+    //SUMMONER
     //damage over time
     //dome ability example
     public Ability vendPoisonAttack(Character caster) {

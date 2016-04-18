@@ -1,7 +1,9 @@
 package com.wecanteven.SaveLoad.XMLProcessors;
 
+import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Factories.AbilityFactories.AbilityMap;
 import com.wecanteven.Models.Interactions.*;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Occupation.*;
@@ -54,6 +56,8 @@ public class EntityXMLProcessor extends XMLProcessor {
                 StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0)),
                 GameColor.values()[sf.getIntAttr(el, "Color")]
         );
+        configureAbilityInventory(sf.getElementsById((Element)sf.getElementsById(el, "AbilityInventory").item(0), "Ability"), c);
+        confgureAbilityEquipped(sf.getElementsById((Element)sf.getElementsById(el, "AbilityEquipped").item(0), "Ability"), c);
         parseStats(c, sf.getElemenetById(el, "Stats", 0));
         c.setAvailableSkillPoints(Integer.parseInt(sf.getStrAttr(el, "AvailableSkillPts")));
         map.add(c, parseLocation(sf.getElemenetById(el, "Location", 0)));
@@ -88,6 +92,9 @@ public class EntityXMLProcessor extends XMLProcessor {
                 parseOccupation(sf.getStrAttr(el, "Occupation"), sf.getElementsById(el, "Skill")),
                 StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0)),
                 GameColor.values()[sf.getIntAttr(el, "Color")] );
+
+        configureAbilityInventory(sf.getElementsById((Element)sf.getElementsById(el, "AbilityInventory").item(0), "Ability"), npc);
+        confgureAbilityEquipped(sf.getElementsById((Element)sf.getElementsById(el, "AbilityEquipped").item(0), "Ability"), npc);
         map.add(npc, parseLocation(sf.getElemenetById(el, "Location", 0)));
         return npc;
     }
@@ -221,4 +228,40 @@ public class EntityXMLProcessor extends XMLProcessor {
         return dialog;
     }
 
+    public static void formatAbilities(Ability ability, String parent) {
+        ArrayList<Attr> attr = new ArrayList<>();
+
+        attr.add(sf.saveAttr("name", ability.getName()));
+
+        sf.appendObjectTo(parent, sf.createSaveElement("Ability",attr));
+    }
+
+    public static void formatAbilityInventoryContainer(String parent) {
+        sf.appendObjectTo(parent,sf.createSaveElement("AbilityInventory", null));
+    }
+
+    public static void formatAbilityEquipmentContainer(String parent) {
+        sf.appendObjectTo(parent,sf.createSaveElement("AbilityEquipped", null));
+    }
+
+    public static void configureAbilityInventory(NodeList ele, Character character) {
+        for (int i = 0; i < ele.getLength(); i++) {
+            Element e = (Element) ele.item(i);
+
+            Ability ability = AbilityMap.getInstance().getAbility(sf.getStrAttr(e, "name"), character);
+
+            character.addAbility(ability);
+        }
+    }
+
+    public static void confgureAbilityEquipped(NodeList ele, Character character) {
+        for (int i = 0; i < ele.getLength(); i++) {
+            Element e = (Element) ele.item(i);
+
+            Ability ability = AbilityMap.getInstance().getAbility(sf.getStrAttr(e, "name"), character);
+
+            character.addAbility(ability);
+            character.equipAbility(ability);
+        }
+    }
 }

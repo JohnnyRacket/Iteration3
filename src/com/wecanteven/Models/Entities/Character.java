@@ -40,7 +40,6 @@ public class Character extends Entity implements Actionable {
         occupation = new Smasher();
         this.itemStorage = new ItemStorage(this, 25);
         this.abilityStorage = new AbilityStorage(this);
-        this.abilityStorage.initialize();
         resetAttack(); //makes attack Brawling
         windUpTicks = 0;
         coolDownTicks = 0;
@@ -52,7 +51,6 @@ public class Character extends Entity implements Actionable {
         setStats(new Stats(this));
         this.itemStorage = new ItemStorage(this, 25);
         this.abilityStorage = new AbilityStorage(this);
-        this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
         resetAttack(); //makes attack Brawling
@@ -64,7 +62,6 @@ public class Character extends Entity implements Actionable {
         setStats(stats);
         this.itemStorage = new ItemStorage(this, 25);
         this.abilityStorage = new AbilityStorage(this);
-        this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
         resetAttack(); //makes attack Brawling
@@ -76,7 +73,6 @@ public class Character extends Entity implements Actionable {
         this.itemStorage = itemStorage;
         getItemStorage().setOwner(this);
         this.abilityStorage = new AbilityStorage(this);
-        this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
         resetAttack(); //makes attack Brawling

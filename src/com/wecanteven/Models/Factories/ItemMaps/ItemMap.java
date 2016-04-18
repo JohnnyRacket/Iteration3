@@ -69,6 +69,7 @@ public class ItemMap {
 
         ObstacleMap.put("Crate", () -> factory.vendObstacleItem("Crate"));
         ObstacleMap.put("Box", () -> factory.vendObstacleItem("Box"));
+        ObstacleMap.put("StoneRock", () -> factory.vendObstacleItem("StoneRock"));
 
 
         usedNames.addAll(ObstacleMap.keySet());
