@@ -56,7 +56,7 @@ public class AbilityFactory {
         abilityName = "OneHandedWeapon";
         abilityImage = "OneHanded";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
-        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill);
 
         ability.setCooldownTicks(10);
         ability.setWindUpTicks(10);
@@ -75,7 +75,7 @@ public class AbilityFactory {
         abilityName = "TwoHandedWeapon";
         abilityImage = "Club";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
-        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(15);
         ability.setWindUpTicks(15);
         ability.setCast(true);
@@ -93,7 +93,7 @@ public class AbilityFactory {
         abilityName = "Brawling";
         abilityImage = "Punch";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
-        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(5);
         ability.setWindUpTicks(5);
         ability.setCast(true);
@@ -130,7 +130,7 @@ public class AbilityFactory {
         abilityName = "PickPocket";
         abilityImage = "Punch";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
-        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(5);
         ability.setWindUpTicks(5);
         ability.setCast(true);
@@ -153,7 +153,7 @@ public class AbilityFactory {
         ProjectileHitBoxGenerator generator = new ProjectileHitBoxGenerator(abilityImage,caster,effect,duration);
         int distance = 5;
         generator.setDistance(distance);
-        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(10);
         ability.setWindUpTicks(10);
         ability.setCast(true);
@@ -177,7 +177,7 @@ public class AbilityFactory {
                 (target)-> target.modifyStatsSubtractive((new StatsAddable(0,0,0,0,0,0,1*(multiplier),0,0)))));
         RadialHitBoxGenerator generator = new RadialHitBoxGenerator(abilityImage,caster,effect,1);
         generator.setSize(3);
-        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(15);
         ability.setWindUpTicks(15);
         return ability;
@@ -203,7 +203,7 @@ public class AbilityFactory {
         DomeHitBoxGenerator generator = new DomeHitBoxGenerator(abilityImage,caster,effect,5);
         generator.setDistance(1);
         generator.setSize(5);
-        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(15);
         ability.setWindUpTicks(30);
         return ability;

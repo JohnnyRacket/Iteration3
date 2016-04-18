@@ -19,6 +19,7 @@ import com.wecanteven.Models.Interactions.NoInteractionStrategy;
 import com.wecanteven.Models.Interactions.QuestDialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Item;
+import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
@@ -489,6 +490,12 @@ public class DemoLevelFactory extends LevelFactory {
 
         filled(28,25,4,4, groundMaker);
 
+        for(int i = 3; i < 11; ++i){
+            map.getTile(new Location(32,23,i)).setTerrain(new Current(Direction.UP));
+        }
+        map.getTile(new Location(32,23,11)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(new Location(31,24,4)).setTerrain(new Water());
+
 
         biomePaint = snowLocations;
         line(34, 26, 4, Direction.NORTH, 5, groundMaker);
@@ -525,6 +532,12 @@ public class DemoLevelFactory extends LevelFactory {
         for (int i = 4; i < 16; i++) {
             filled(33,21,i,2,groundMaker);
         }
+
+
+        map.getTile(getLocation(23,28,4)).add(new Obstacle("StoneRock"));
+        map.getTile(getLocation(28,28,5)).add(new Obstacle("StoneRock"));
+        map.getTile(getLocation(33,24,4)).add(new Obstacle("StoneRock"));
+
 
 
     }
