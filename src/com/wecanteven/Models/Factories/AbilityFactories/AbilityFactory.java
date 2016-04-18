@@ -23,7 +23,7 @@ public class AbilityFactory {
     private int duration;
     private Effects effect;
     private HitBoxGenerator generator;
-    private int statLevel,skillLevel;
+    private int statLevel;
     private Skill skill;
     private Ability ability;
 
@@ -35,9 +35,8 @@ public class AbilityFactory {
         abilityImage = "Punch";
         skill = Skill.BIND_WOUNDS;
         statLevel = caster.getStats().getIntellect();
-        skillLevel = caster.getSkillPoints(skill);
-        int multiplier = statLevel+skillLevel;
-        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,1*(multiplier),0));
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,1,0));
+        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
         generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
         ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(30);
@@ -49,9 +48,8 @@ public class AbilityFactory {
     public Ability vendOneHandedWeapon(Character caster) {
         skill = Skill.ONE_HANDED_WEAPON;
         statLevel = caster.getStats().getStrength();
-        skillLevel = caster.getSkillPoints(skill);
-        int multiplier = statLevel+skillLevel;
-        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
         duration = 1;
         abilityName = "OneHandedWeapon";
         abilityImage = "Punch";
@@ -67,9 +65,8 @@ public class AbilityFactory {
     public Ability vendTwoHandedWeapon(Character caster) {
         skill = Skill.TWO_HANDED_WEAPON;
         statLevel = caster.getStats().getStrength();
-        skillLevel = caster.getSkillPoints(skill);
-        int multiplier = statLevel+skillLevel;
-        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
         duration = 1;
         abilityName = "TwoHandedWeapon";
         abilityImage = "Punch";
@@ -85,9 +82,8 @@ public class AbilityFactory {
     public Ability vendBrawling(Character caster) {
         skill = Skill.BRAWLING;
         statLevel = caster.getStats().getStrength();
-        skillLevel = caster.getSkillPoints(skill);
-        int multiplier = statLevel+skillLevel;
-        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
+        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        //Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
         duration = 1;
         abilityName = "Brawling";
         abilityImage = "Punch";
@@ -102,23 +98,21 @@ public class AbilityFactory {
     //extra abilities
 
     public Ability vendSpeedUp(Character caster){
-        duration = 500;
+        duration = 1;
         abilityName = "SpeedUp";
         abilityImage = "Punch";
         skill = Skill.BOON;
         statLevel = caster.getStats().getIntellect();
-        skillLevel = caster.getSkillPoints(skill);
-        int multiplier = statLevel+skillLevel;
-        effect = new BuffEffect(new Buff("Speed",
-                "Orange",
+        effect = new BuffEffect(new Buff(
+                "Speed",
+                "Purple",
                 duration,
-                (target)-> target.modifyStatsAdditive((new StatsAddable(0,0,0,0,0,0,5*(multiplier),0,0))),
-                (target)-> target.modifyStatsSubtractive((new StatsAddable(0,0,0,0,0,0,5*(multiplier),0,0)))));
+                (target)-> target.modifyStatsAdditive((new StatsAddable(0, 0, 0, 0, 0, 0, 30, 0, 0))),
+                (target)-> target.modifyStatsSubtractive((new StatsAddable(0, 0, 0, 0, 0, 0, 30, 0, 0)))));
         generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
         ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(30);
         ability.setWindUpTicks(30);
-        ability.setCast(true);
         return ability;
     }
 

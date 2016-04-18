@@ -1,6 +1,7 @@
 package com.wecanteven.Models.Abilities.Effects;
 
 import com.wecanteven.Models.BuffManager.Buff;
+import com.wecanteven.Models.BuffManager.BuffManager;
 import com.wecanteven.Models.Entities.Entity;
 
 /**
@@ -12,6 +13,10 @@ public class BuffEffect implements Effects {
         this.effect = effect;
     }
     public void interact(Entity entity){
-        entity.buff(effect);
+        effect.setOwner(new BuffManager(entity));
+        effect.buff();
+    }
+    public BuffEffect update(int skillLevel){
+        return this;
     }
 }

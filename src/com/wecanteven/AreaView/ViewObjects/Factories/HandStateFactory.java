@@ -7,6 +7,8 @@ import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandState;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.OneHandedWeaponState;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.TwoHandState;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.WingState;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.OneHandedWeaponState;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.TwoHandState;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
 import com.wecanteven.Observers.Directional;
@@ -30,12 +32,6 @@ public class HandStateFactory {
         return new BrawlingState(weaponSubject.getDirection(), leftHand, rightHand);
     }
 
-    public WingState createWingState(Position position, EquipmentSlot slot, Entity weaponSubject, GameColor color) {
-        MicroPositionableViewObject leftWing = hominidVOFactory.createWing(position, slot, weaponSubject, color);
-        MicroPositionableViewObject rightWing = hominidVOFactory.createWing(position, slot, weaponSubject, color);
-        return new WingState(weaponSubject.getDirection(), leftWing, rightWing);
-    }
-
     public OneHandedWeaponState createOneHandState(Position p, EquipmentSlot slot, Entity weaponSubject, GameColor color) {
         MicroPositionableViewObject rightHand = hominidVOFactory.createHand(p, color);
         MicroPositionableViewObject leftHand = hominidVOFactory.createWeaponHand(p, slot, weaponSubject, color);
@@ -46,5 +42,11 @@ public class HandStateFactory {
         MicroPositionableViewObject rightHand = hominidVOFactory.createHand(p, color);
         MicroPositionableViewObject leftHand = hominidVOFactory.createWeaponHand(p, slot, weaponSubject, color);
         return new TwoHandState(weaponSubject.getDirection(), leftHand, rightHand);
+    }
+
+    public WingState createWingState(Position position, EquipmentSlot slot, Entity weaponSubject, GameColor color) {
+        MicroPositionableViewObject leftWing = hominidVOFactory.createWing(position, slot, weaponSubject, color);
+        MicroPositionableViewObject rightWing = hominidVOFactory.createWing(position, slot, weaponSubject, color);
+        return new WingState(weaponSubject.getDirection(), leftWing, rightWing);
     }
 }
