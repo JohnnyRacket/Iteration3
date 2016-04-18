@@ -1,4 +1,4 @@
-package com.wecanteven.Models.Factories.AbilityFactories;
+package com.wecanteven.Models.Factories.ItemFactories.CreateCommands;
 
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
 

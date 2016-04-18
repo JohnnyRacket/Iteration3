@@ -1,10 +1,13 @@
 package com.wecanteven.Models.Factories.ItemMaps;
 
+import com.wecanteven.Models.Factories.ItemFactories.AbilityItemFactory;
+import com.wecanteven.Models.Factories.ItemFactories.CreateCommands.IAbilityItemCreateCommand;
 import com.wecanteven.Models.Factories.ItemFactories.*;
 import com.wecanteven.Models.Factories.ItemFactories.CreateCommands.*;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
+import com.wecanteven.Models.Items.Takeable.AbilityItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.UseableItem;
@@ -25,6 +28,7 @@ public class ItemMap {
     private HashMap<String, IEquipableItemCreateCommand> EquipableItemMap;
     private HashMap<String, ITakeableItemCreateCommand> TakeableItemMap;
     private HashMap<String, IUseableItemCreateCommand> UseableItemMap;
+    private HashMap<String, IAbilityItemCreateCommand> AbilityItemMap;
 
     private HashSet<String> usedNames;
 
@@ -35,6 +39,7 @@ public class ItemMap {
         EquipableItemMap = new HashMap<>();
         TakeableItemMap = new HashMap<>();
         UseableItemMap = new HashMap<>();
+        AbilityItemMap = new HashMap<>();
 
         usedNames = new HashSet<>();
 
@@ -56,6 +61,7 @@ public class ItemMap {
         initializeEquipable();
         initializeTakeable();
         initializeUseable();
+        initializeAbility();
     }
 
     private void initializeObstacle() {
@@ -143,6 +149,17 @@ public class ItemMap {
         usedNames.addAll(UseableItemMap.keySet());
     }
 
+    private void initializeAbility() {
+        AbilityItemFactory factory = new AbilityItemFactory();
+
+        AbilityItemMap.put("Bind Wounds Ability", () -> factory.vendBindWounds("Bind Wounds Ability", 100) );
+        AbilityItemMap.put("Observation", () -> factory.vendObservation("Observation", 100));
+
+        AbilityItemMap.put("One-handed weapon", () -> factory.vendOneHandedWeapon("One-handed weapon", 100));
+        AbilityItemMap.put("Two-handed weapon", () -> factory.vendTwoHandedWeapon("Two-handed weapon", 100));
+        AbilityItemMap.put("Brawling", () -> factory.vendBrawling("Brawling", 100));
+    }
+
     public Obstacle getItemAsObstacle(String name) {
         if (ObstacleMap.containsKey(name)) {
             return ObstacleMap.get(name).create();
@@ -197,6 +214,14 @@ public class ItemMap {
         }
 
         throw new IllegalArgumentException("There is no Useable item with name: " + name);
+    }
+
+    public AbilityItem getItemAsAbility(String name) {
+        if (AbilityItemMap.containsKey(name)) {
+            return AbilityItemMap.get(name).create();
+        }
+
+        throw new IllegalArgumentException("There is no Ability item with name: " + name);
     }
     /**
      * Extensibility

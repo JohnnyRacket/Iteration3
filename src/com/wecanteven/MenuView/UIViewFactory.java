@@ -695,7 +695,7 @@ public class UIViewFactory {
     }
 
     public void createAbilityMenu(Character character, NavigatableListHolder invHolder, NavigatableListHolder eqHolder, Ability ability) {
-        EquippableUIObjectCreationVisitor visitor = new EquippableUIObjectCreationVisitor(this,invHolder,eqHolder);
+        AbilityViewObjectCreationVisitor visitor = new AbilityViewObjectCreationVisitor(this,invHolder,eqHolder);
         NavigatableList list = new NavigatableList();
         MenuViewContainer container = controller.getMenuState().getMenus();
         list.addItem(new ScrollableMenuItem("Equip", () -> {
@@ -703,8 +703,8 @@ public class UIViewFactory {
             ViewTime.getInstance().register(() -> {
                 controller.popView();
                 visitor.visitCharacter(character);
-                invHolder.setList(visitor.getInventoryItems());
-                eqHolder.setList(visitor.getEquippedItems());
+                invHolder.setList(visitor.getInventory());
+                eqHolder.setList(visitor.getEquipped());
             }, 0);
             controller.setMenuState(container);
         }));
