@@ -153,6 +153,7 @@ public class Map implements MapVisitable, ActionHandler {
             entity.setLocation(destination);
             entity.updateMovingTicks(movespeed);
             add(entity, destination);
+            System.out.println("Entity is at " + destination);
             return true;
         }else if(destination.getZ() < source.getZ()+entity.getJumpHeight()){
             //try to jump if you cant move
