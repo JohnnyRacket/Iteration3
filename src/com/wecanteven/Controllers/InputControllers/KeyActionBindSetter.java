@@ -11,13 +11,13 @@ import java.util.Map;
  * Created by John on 4/17/2016.
  */
 public class KeyActionBindSetter extends KeyActionBinding {
-    ControllerState controllerState;
     ActionEnum aEnum;
+    Map<ActionEnum, Integer> map;
 
-    public KeyActionBindSetter(Integer key, KeyInteractionCommand action, JFrame jFrame, MainController controller,ActionEnum aEnum, ControllerState controllerState) {
+    public KeyActionBindSetter(Integer key, KeyInteractionCommand action, JFrame jFrame, MainController controller,ActionEnum aEnum, Map<ActionEnum, Integer> map) {
         super(key, action, jFrame, controller);
-        this.controllerState = controllerState;
-        this.aEnum =aEnum;
+        this.map = map;
+        this.aEnum = aEnum;
     }
 
     @Override
@@ -27,8 +27,11 @@ public class KeyActionBindSetter extends KeyActionBinding {
 
     @Override
     public void keyPressed(KeyEvent e) {
-            Map<ActionEnum, Integer> map = controllerState.getMappings();
-            map.put(this.aEnum,e.getKeyCode());
+        System.out.println("blurble");
+        System.out.println(map);
+        map.put(this.aEnum,e.getKeyCode());
+        System.out.println(map);
+        getAction().execute();
     }
 
     @Override
