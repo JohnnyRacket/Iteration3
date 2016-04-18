@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <single_frame_animation>
-    <x>7</x>
-    <y>10</y>
+    <x>0</x>
+    <y>20</y>
     <rootPath>Decals/</rootPath>
     <fileName>Yellow Flower.png</fileName>
 </single_frame_animation>
