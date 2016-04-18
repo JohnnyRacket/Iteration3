@@ -45,7 +45,7 @@ public class ClubingStategy extends LimbStrategy {
     }
 
     private double getAngle(double percentage) {
-        System.out.println("********************************" + theta0*(1-percentage) + Math.PI/2*percentage);
+
         return theta0*(1-percentage);
     }
 }

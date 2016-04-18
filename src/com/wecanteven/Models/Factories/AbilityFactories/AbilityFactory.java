@@ -31,7 +31,7 @@ public class AbilityFactory {
     public Ability vendBindWounds(Character caster){
         duration = 1;
         abilityName = "BindWounds";
-        abilityImage = "Punch";
+        abilityImage = "BindWounds";
         skill = Skill.BIND_WOUNDS;
         statLevel = caster.getStats().getIntellect();
         skillLevel = caster.getSkillPoints(skill);
@@ -51,9 +51,10 @@ public class AbilityFactory {
         effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
         duration = 1;
         abilityName = "OneHandedWeapon";
-        abilityImage = "Punch";
+        abilityImage = "OneHanded";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
         Ability ability = new Ability(abilityName,caster,generator,skill);
+
         ability.setCooldownTicks(10);
         ability.setWindUpTicks(10);
         ability.setCast(true);
@@ -69,7 +70,7 @@ public class AbilityFactory {
         effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
         duration = 1;
         abilityName = "TwoHandedWeapon";
-        abilityImage = "Punch";
+        abilityImage = "Club";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
         Ability ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(15);
@@ -101,7 +102,7 @@ public class AbilityFactory {
     public Ability vendSpeedUp(Character caster){
         duration = 1;
         abilityName = "SpeedUp";
-        abilityImage = "Punch";
+        abilityImage = "Magic";
         skill = Skill.BOON;
         statLevel = caster.getStats().getIntellect();
         skillLevel = caster.getSkillPoints(skill);
@@ -137,6 +138,9 @@ public class AbilityFactory {
 //    //range ability
     public Ability vendRangedWeapon(Character caster){
         skill = Skill.RANGED_WEAPON;
+        duration = 5;
+        abilityImage = "WaterBolt";
+        abilityName = "Magic";
         statLevel = caster.getStats().getAgility();
         skillLevel = caster.getSkillPoints(skill);
         multiplier = skillLevel+statLevel;

@@ -223,7 +223,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     }
 
 
-
+    @Deprecated
     public void notifyObserversOnNotDestroyed() {
         if(!isDestroyed())
             notifyObservers();

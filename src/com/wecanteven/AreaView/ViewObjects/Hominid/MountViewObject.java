@@ -55,7 +55,7 @@ public class MountViewObject implements ViewObject, Observer {
     }
 
     public void move(long duration) {
-        System.out.println("MOUNT ANIMATION HAPPENING");
+
        // mountMovement.execute(duration);
     }
 

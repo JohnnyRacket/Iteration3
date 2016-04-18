@@ -20,6 +20,7 @@ import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.OneHandWeapon;
 import com.wecanteven.Models.Items.Takeable.QuestedItem;
 import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Map;
@@ -184,17 +185,18 @@ public class DemoLevelFactory extends LevelFactory {
 
 
         //Mountain
-        for (int i = 2; i < 13; i++) {
+        for (int i = 11; i < 13; i++) {
             (new FilledHex(getLocation(10,3,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
         }
-        for (int i = 2; i < 15; i++) {
+
+        for (int i = 13; i < 15; i++) {
             (new FilledHex(getLocation(7,3,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
         }
-        for (int i = 2; i < 14; i++) {
+        for (int i = 12; i < 14; i++) {
             (new FilledHex(getLocation(5,4,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
@@ -207,24 +209,24 @@ public class DemoLevelFactory extends LevelFactory {
         });
 
         //River
-        map.getTile(getLocation(7,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
-        map.getTile(getLocation(8,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
-        map.getTile(getLocation(9,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
-        map.getTile(getLocation(10,2,12)).setTerrain(new Current(Direction.SOUTHEAST));
-        map.getTile(getLocation(11,2,12)).setTerrain(new Current(Direction.SOUTHEAST));
-        map.getTile(getLocation(12,2,12)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(7,2,14)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(8,2,14)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(9,2,14)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(10,2,12)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(11,2,12)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(12,2,12)).setTerrain(new Current(Direction.NORTHWEST));
         //WATERFALL
-        map.getTile(getLocation(12,3,12)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,11)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,10)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,9)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,8)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,7)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,6)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,5)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,4)).setTerrain(new Current(Direction.NORTHWEST));
-        map.getTile(getLocation(12,3,3)).setTerrain(new Current(Direction.NORTHWEST));
-        map.getTile(getLocation(12,3,2)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(12,3,12)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(12,3,11)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,10)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,9)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,8)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,7)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,6)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,5)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,4)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,3)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,2)).setTerrain(new Current(Direction.UP));
 
         //MAKES TUNNEL
         map.getTile(getLocation(9, 4, 2)).setTerrain(new Air());
@@ -255,13 +257,13 @@ public class DemoLevelFactory extends LevelFactory {
             map.getTile(location).setTerrain(new Water());
         });
 
-        map.getTile(getLocation(12,4,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,5,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,6,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,7,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,8,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,9,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,10,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,4,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,5,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,6,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,7,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,8,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,9,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,10,1)).setTerrain(new Current(Direction.NORTH));
         //smap.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
 
         //sand under Lake
@@ -385,7 +387,7 @@ public class DemoLevelFactory extends LevelFactory {
     public void mount(Map map) {
         Mount mount = new Mount(map, Direction.SOUTH);
         mount.setJumpHeight(5);
-        System.out.println("ADDING THE MOUNT TO THE MAPPPPP");
+
         map.add(mount, new Location(16,10,2));
     }
 
@@ -405,7 +407,7 @@ public class DemoLevelFactory extends LevelFactory {
         //"Creating an NPC and Giving him a chest Plate
         NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), new Enemy(), GameColor.GRAY);
         npc.setOccupation(new Enemy());
-        FistWeapon i = new FistWeapon("Sword", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
+        OneHandWeapon i = new OneHandWeapon("Sword", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
         EnemySearchingController esc = new EnemySearchingController(npc,map,3);
         EnemyActionController eac = new EnemyActionController(npc,map);
         AIController controller = new AIController(esc,eac);
@@ -478,21 +480,21 @@ public class DemoLevelFactory extends LevelFactory {
     public void items(Map map) {
 
         //One shot
-        map.add(ItemMap.getInstance().getItemAsOneShot("Major Movement Buff"), new Location(1,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Minor Mana Orb"), new Location(2,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Its Superman"), new Location(3,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Minor Health Orb"), new Location(4,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Major Health Orb"), new Location(5,15,3));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Orange"), new Location(1,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Blue"), new Location(2,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Purple"), new Location(3,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Red"), new Location(4,15,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Green"), new Location(5,15,3));
 
 
         map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,3));
-        map.add(ItemMap.getInstance().getItemAsTakeable("Growth"), new Location(11, 13,3));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Fertilizer"), new Location(11, 13,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
 
         map.add(ItemMap.getInstance().getItemAsTakeable("Intellect Buff"), new Location(8,13,3));
 
-        map.add(ItemMap.getInstance().getItemAsOneShot("Stun Buff"), new Location(2,13,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Gray"), new Location(2,13,2));
 
         //Interactive Item??????
         /* TODO implement this */
