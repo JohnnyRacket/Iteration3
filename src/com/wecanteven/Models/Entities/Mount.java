@@ -16,7 +16,7 @@ import com.wecanteven.Visitors.EntityVisitor;
  * Created by adamfortier on 4/15/16.
  */
 public class Mount extends Character {
-  private Character mounter;
+  private Avatar mounter;
   private boolean mounted = false;
 
 
@@ -25,7 +25,7 @@ public class Mount extends Character {
   }
 
 
-  public void mount(Character mounter) {
+  public void mount(Avatar mounter) {
     this.mounter = mounter;
     //this.mounter.setDestroyed(true);
   }
@@ -37,9 +37,10 @@ public class Mount extends Character {
 
   public void accept(EntityVisitor visitor) {
       if(mounter != null) {
-          mounter.accept(visitor);
+          mounter.getCharacter().accept(visitor);
       }
       visitor.visitMount(this);
+
   }
 
 
@@ -58,9 +59,9 @@ public class Mount extends Character {
   @Override
   public void setLocation(Location location) {
     super.setLocation(location);
-    if(mounter != null) {
-      mounter.setMovingTicks(getMovingTicks());
-      mounter.setLocation(location);
+    if(mounter != null && !isDestroyed()) {
+      mounter.getCharacter().setMovingTicks(getMovingTicks());
+      mounter.getCharacter().setLocation(new Location(getLocation().getR(), getLocation().getS(), getLocation().getZ() + 2));
     }
   }
 

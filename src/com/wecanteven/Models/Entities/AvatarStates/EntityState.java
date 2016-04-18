@@ -44,7 +44,7 @@ public class EntityState extends AvatarState {
     public void drop(){}
     public void pickup(){}
     public void interactWith(){}
-    public void mount(Character mountee){
+    public void mount(Avatar mountee){
     }
     public void dismount(){}
 }
