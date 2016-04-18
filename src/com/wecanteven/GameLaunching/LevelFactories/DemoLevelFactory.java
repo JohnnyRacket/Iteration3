@@ -409,6 +409,66 @@ public class DemoLevelFactory extends LevelFactory {
         map.getTile(7,8,6).add(new Decal("AutumnTreeTall", .1,-.15));
         map.getTile(7,8,6).add(new Decal("PlainsTreeLong", .3,-.15));
 
+        map.getTile(12,25,8).add(new Decal("AutumnTreeTall", -0.1,-0.2));
+        map.getTile(12,25,8).add(new Decal("AutumnTreeTall", .1,-.15));
+        map.getTile(12,25,8).add(new Decal("PlainsTreeLong", .3,-.15));
+
+        map.getTile(9,31,7).add(new Decal("TundraPineLong",-.3,-.3));
+        map.getTile(9,31,7).add(new Decal("TundraPineLong",.025,.025));
+
+        map.getTile(5,19,8).add(new Decal("AutumnTreeTall", -0.1,-0.2));
+        map.getTile(5,19,8).add(new Decal("PlainsTreeLong", .1,-.15));
+        map.getTile(5,19,8).add(new Decal("AutumnTreeTall", .3,-.15));
+
+        map.getTile(10,4,13).add(new Decal("AutumnTreeTall", .1,-.15));
+        map.getTile(10,4,13).add(new Decal("PlainsTreeLong", -.3,.1));
+        map.getTile(10,4,13).add(new Decal("AutumnTreeTall", .3,-.15));
+
+        map.getTile(10,5,14).add(new Decal("TallGrass", 0,0));
+        map.getTile(10,5,14).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(9,5,14).add(new Decal("TallGrass", 0,0));
+        map.getTile(9,5,14).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(9,4,14).add(new Decal("TallGrass", 0,0));
+        map.getTile(9,4,14).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(10,5,14).add(new Decal("TallGrass", 0,0));
+        map.getTile(10,5,14).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(7,5,15).add(new Decal("TallGrass", 0,0));
+        map.getTile(7,5,15).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(6,4,15).add(new Decal("TallGrass", 0,0));
+        map.getTile(6,4,15).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(5,4,15).add(new Decal("TallGrass", 0,0));
+        map.getTile(5,4,15).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(5,5,15).add(new Decal("TallGrass", 0,0));
+        map.getTile(5,5,15).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(5,6,15).add(new Decal("TallGrass", 0,0));
+        map.getTile(5,6,15).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(5,4,15).add(new Decal("TallGrass", 0,0));
+        map.getTile(5,4,15).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(3,6,14).add(new Decal("TallGrass", 0,0));
+        map.getTile(3,6,14).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(4,6,14).add(new Decal("TallGrass", 0,0));
+        map.getTile(4,6,14).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(4,4,14).add(new Decal("TallGrass", 0,0));
+        map.getTile(4,4,14).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(4,3,14).add(new Decal("TallGrass", 0,0));
+        map.getTile(4,3,14).add(new Decal("TallGrass", -.3,-.3));
+
+        map.getTile(6,2,15).add(new Decal("TallGrass", 0,0));
+        map.getTile(6,2,15).add(new Decal("TallGrass", -.3,-.3));
+
         //Flowers
         map.getTile(15,12,2).add(new Decal("Blue Flower", -.1,-.2));
         map.getTile(15,12,2).add(new Decal("White Flower", 0,0));
@@ -425,11 +485,78 @@ public class DemoLevelFactory extends LevelFactory {
         map.getTile(14,14,2).add(new Decal("Yellow Flower", -.1,-.2));
         map.getTile(14,14,2).add(new Decal("Yellow Flower", 0,0));
 
+        map.getTile(22,17,2).add(new Decal("White Flower", -.1,-.2));
+        map.getTile(22,17,2).add(new Decal("Yellow Flower", 0,0));
+
+        map.getTile(25,12,2).add(new Decal("White Flower", -.1,-.2));
+        map.getTile(25,12,2).add(new Decal("Yellow Flower", 0,0));
+
         //More trees
         map.getTile(17,13,2).add(new Decal("TundraPineLong",0,0));
 
         map.getTile(15,15,2).add(new Decal("TundraPineLong",-.3,-.3));
         map.getTile(15,15,2).add(new Decal("TundraPineLong",.025,.025));
+
+        map.getTile(18,15,3).add(new Decal("TundraPineLong",-.3,-.3));
+        map.getTile(18,15,3).add(new Decal("TundraPineLong",.025,.025));
+
+        map.getTile(21,13,2).add(new Decal("TundraPineLong",-.3,-.3));
+        map.getTile(21,13,2).add(new Decal("TundraPineLong",.025,.025));
+
+        map.getTile(23,9,3).add(new Decal("TundraPineLong",-.3,-.3));
+        map.getTile(23,9,3).add(new Decal("TundraPineLong",.025,.025));
+
+        map.getTile(23,12,2).add(new Decal("TundraPineLong",0,0));
+
+        map.getTile(25,9,2).add(new Decal("TundraPineLong",0,0));
+
+        map.getTile(22,16,1).add(new Decal("TundraPineLong",0,0));
+
+        //Cacti + bumps
+        map.getTile(17,19,1).add(new Decal("DesertBump",0,0));
+
+        map.getTile(16,21,1).add(new Decal("DesertBump",0,0));
+        map.getTile(16,21,1).add(new Decal("Cactus1",-.3,-.3));
+
+        map.getTile(14,24,1).add(new Decal("Cactus1",-.3,-.3));
+        map.getTile(14,24,1).add(new Decal("Cactus1",0,0));
+
+        map.getTile(14,27,1).add(new Decal("DesertBump",0,0));
+
+        map.getTile(13,29,1).add(new Decal("DesertBump",0,0));
+        map.getTile(13,29,1).add(new Decal("Cactus1",-.3,-.3));
+
+        map.getTile(13,27,1).add(new Decal("Cactus1",-.3,-.3));
+        map.getTile(13,27,1).add(new Decal("Cactus1",0,0));
+
+        map.getTile(9,27,1).add(new Decal("Cactus1",-.3,-.3));
+        map.getTile(9,27,1).add(new Decal("Cactus1",0,0));
+
+        map.getTile(6,32,1).add(new Decal("Cactus1",-.3,-.3));
+        map.getTile(6,32,1).add(new Decal("Cactus1",0,0));
+
+        map.getTile(4,34,1).add(new Decal("DesertBump",0,0));
+
+        map.getTile(4,33,1).add(new Decal("DesertBump",0,0));
+
+        map.getTile(0,34,1).add(new Decal("Cactus1",0,0));
+
+        map.getTile(6,26,2).add(new Decal("DesertBump",0,0));
+
+        map.getTile(5,26,2).add(new Decal("DesertBump",0,0));
+
+        map.getTile(5,27,2).add(new Decal("Cactus1",0,0));
+
+        map.getTile(2,25,2).add(new Decal("Cactus1",0,0));
+
+        map.getTile(6,32,1).add(new Decal("Cactus1",-.3,-.3));
+        map.getTile(6,32,1).add(new Decal("Cactus1",0,0));
+
+        map.getTile(12,18,3).add(new Decal("Cactus1",-.3,-.3));
+        map.getTile(12,18,3).add(new Decal("Cactus1",0,0));
+
+        map.getTile(7,18,4).add(new Decal("Cactus1",-.3,-.3));
+        map.getTile(7,18,4).add(new Decal("Cactus1",0,0));
     }
 
     public Biome createBiomes(SimpleVOFactory factory) {
@@ -566,13 +693,13 @@ public class DemoLevelFactory extends LevelFactory {
     @Override
     public void populateMap(Map map) {
         areasOfEffect(map);
-        items(map);
+        //items(map);
         mount(map);
         weaponNPC(map);
         dialogNPC(map);
         tradeNPC(map);
         questNPC(map);
-        petNPC(map);
+        //petNPC(map);
     }
 
     public void mount(Map map) {
@@ -606,7 +733,7 @@ public class DemoLevelFactory extends LevelFactory {
         npc.equipItem(item);
 
         npc.pickup(ItemMap.getInstance().getItemAsTakeable("RedBull"));
-        map.add(npc, new Location(6,3,15));
+        map.add(npc, new Location(6,3,16));
 
         AITime.getInstance().registerController(controller);
     }

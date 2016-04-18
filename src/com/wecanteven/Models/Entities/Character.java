@@ -3,6 +3,7 @@ package com.wecanteven.Models.Entities;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.ActionHandler;
 import com.wecanteven.Models.Factories.AbilityFactories.AbilityFactory;
+import com.wecanteven.Models.Factories.AbilityFactories.IAbilityCreateCommand;
 import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.WeaponEquipableItem;
@@ -18,7 +19,6 @@ import com.wecanteven.Observers.Actionable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
-import com.wecanteven.UtilityClasses.Sound;
 import com.wecanteven.Visitors.EntityVisitor;
 
 
@@ -30,6 +30,7 @@ public class Character extends Entity implements Actionable {
     private ItemStorage itemStorage;
     private AbilityStorage abilityStorage;
     private int windUpTicks = 0, coolDownTicks = 0;
+    private IAbilityCreateCommand createAbility;
     private Ability attack;
 
     private int availableSkillPoints = 0;
@@ -40,7 +41,7 @@ public class Character extends Entity implements Actionable {
         this.itemStorage = new ItemStorage(this, 25);
         this.abilityStorage = new AbilityStorage(this);
         this.abilityStorage.initialize();
-        resetAtack(); //makes attack Brawling
+        resetAttack(); //makes attack Brawling
         windUpTicks = 0;
         coolDownTicks = 0;
     }
@@ -54,7 +55,7 @@ public class Character extends Entity implements Actionable {
         this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
-        resetAtack(); //makes attack Brawling
+        resetAttack(); //makes attack Brawling
     }
 
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats, GameColor color) {
@@ -66,7 +67,7 @@ public class Character extends Entity implements Actionable {
         this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
-        resetAtack(); //makes attack Brawling
+        resetAttack(); //makes attack Brawling
     }
 
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage, GameColor color) {
@@ -78,12 +79,13 @@ public class Character extends Entity implements Actionable {
         this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
-        resetAtack(); //makes attack Brawling
+        resetAttack(); //makes attack Brawling
     }
 
     public void attack(Direction dir) {
         if(!isActive()){
             this.setDirection(dir);
+            attack = createAbility.create(this);
             attack.cast();
         }
     }
@@ -95,12 +97,15 @@ public class Character extends Entity implements Actionable {
         itemStorage.equip(item);
         if(itemStorage.getEquipped().getWeapon().hasItem()){
             WeaponEquipableItem weapon =(WeaponEquipableItem) itemStorage.getEquipped().getWeapon().getItem();
-            attack = weapon.getAbility().create(this);
+            createAbility = weapon.getAbility();
         }
     }
 
     public void unequipItem(EquipableItem item) {
         itemStorage.unequip(item);
+        if(!itemStorage.getEquipped().getWeapon().hasItem()){
+            resetAttack();
+        }
     }
 
     /**
@@ -355,8 +360,17 @@ public class Character extends Entity implements Actionable {
     public void setAttack(Ability attack){
         this.attack = attack;
     }
-    public void resetAtack(){
+    public void setCreateAbility(IAbilityCreateCommand command){
+        this.createAbility = command;
+    }
+    public void resetAttack(){
         AbilityFactory factory = new AbilityFactory();
-        setAttack(factory.vendBrawling(this));
+        Character c = this;
+        createAbility = new IAbilityCreateCommand() {
+            @Override
+            public Ability create(Character caster) {
+                return factory.vendBrawling(c);
+            }
+        };
     }
 }

@@ -21,17 +21,26 @@ public class Ability {
     private Skill skill;
     private HitBoxGenerator hitBoxGenerator;
     private Character caster;
+    private int manaCost;
 
 
-    public Ability(String abilityName, Character caster,HitBoxGenerator hitBoxGenerator,Skill skill){
+    public Ability(String abilityName, Character caster,HitBoxGenerator hitBoxGenerator,Skill skill,int manaCost){
         this.name = abilityName;
         this.caster = caster;
         this.hitBoxGenerator = hitBoxGenerator;
         this.skill = skill;
         cast = false;
         failChance = 0;
+        this.manaCost = manaCost;
     }
     public void cast(){
+        if (caster.getStats().getMana()<manaCost) {
+            ModelTime.getInstance().registerAlertable(()->{
+                UIViewFactory.getInstance().createToast(2,"Insufficient Mana");
+            },1);
+            return;
+        }
+        caster.getStats().consumeMana(manaCost);
         if (caster.isActive()) {
             return;
         }

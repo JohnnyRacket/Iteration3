@@ -3,6 +3,7 @@ package com.wecanteven.Models.Entities;
 import com.wecanteven.AreaView.ViewObjects.Factories.SimpleVOFactory;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Observers.Activatable;
 import com.wecanteven.Observers.Directional;
 import com.wecanteven.Observers.Positionable;
@@ -64,8 +65,9 @@ public class Mount extends Character {
       mounter.getCharacter().setLocation(new Location(getLocation().getR(), getLocation().getS(), getLocation().getZ() + 2));
     }
   }
-
-
+  public void pickup(TakeableItem item) {
+    mounter.pickup(item);
+  }
 
   private void setMounted(boolean mounted) {
     this.mounted = mounted;

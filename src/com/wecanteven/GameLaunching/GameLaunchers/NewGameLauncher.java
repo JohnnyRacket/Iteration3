@@ -67,14 +67,8 @@ public class NewGameLauncher extends GameLauncher {
         Character player = new Character(getMap(), Direction.SOUTH, occupation, GameColor.GREEN);
         player.setColor(playerColor);
         player.addMoney(500);
-        player.pickup(ItemMap.getInstance().getItemAsEquipable("Sword"));
-        player.pickup(ItemMap.getInstance().getItemAsEquipable("Club"));
-        player.pickup(ItemMap.getInstance().getItemAsEquipable("Club"));
-
         setAvatar(new Avatar(player, getMap()));
-
-        getMap().add(player, new Location(25,34,6));
-
+        getMap().add(player, new Location(4,32,2));
 
     }
 

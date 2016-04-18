@@ -4,10 +4,14 @@ import com.wecanteven.AreaView.Position;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Mount;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Observers.ModelObservable;
 import com.wecanteven.Observers.Observer;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.Visitors.CanFallVisitors.CanFallVisitor;
+import com.wecanteven.Visitors.CanFallVisitors.FlyingCanFallVisitor;
+import com.wecanteven.Visitors.CanMoveVisitors.CanMoveVisitor;
 
 /**
  * Created by Brandon on 3/31/2016.
@@ -23,6 +27,8 @@ public class MountState extends AvatarState implements Observer {
         this.controller = controller;
         mount.modelAttach(this);
         mount(controller);
+        FlyingCanFallVisitor flyingCanFallVisitor = new FlyingCanFallVisitor();
+        mount.setCanFallVisitor(flyingCanFallVisitor);
     }
     public boolean move(Direction d){
         boolean moved = true;
@@ -43,7 +49,7 @@ public class MountState extends AvatarState implements Observer {
 
         //avatar.jump(mount.getLocation());
         avatar.setMovingTicks(mount.getMovingTicks());
-        avatar.setLocation(mount.getLocation());
+        avatar.setLocation(new Location(mount.getLocation().getR(), mount.getLocation().getS(), mount.getLocation().getZ() + 2));
         //updatePlayerLocation();
 
         return jumped;
@@ -55,7 +61,7 @@ public class MountState extends AvatarState implements Observer {
 
         //avatar.jump(mount.getLocation());
         avatar.setMovingTicks(mount.getMovingTicks());
-        avatar.setLocation(mount.getLocation());
+        avatar.setLocation(new Location(mount.getLocation().getR(), mount.getLocation().getS(), mount.getLocation().getZ() + 2));
         //updatePlayerLocation();
 
         return jumped;
@@ -86,7 +92,9 @@ public class MountState extends AvatarState implements Observer {
         return false;
     }
     public void drop(){}
-    public void pickup(){}
+    public void pickup(TakeableItem item){
+        avatar.pickup(item);
+    }
     public void interactWith(){}
     public void mount(Avatar mounter){
         //avatar.setCanFallVisitor(mount.getCachedCanFall());
