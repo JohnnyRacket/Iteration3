@@ -103,7 +103,9 @@ public class AbilityFactory {
         abilityImage = "Punch";
         skill = Skill.BOON;
         statLevel = caster.getStats().getIntellect();
-        effect = new BuffEffect(new Buff("Purple",
+        effect = new BuffEffect(new Buff(
+                "Speed",
+                "Purple",
                 duration,
                 (target)-> target.modifyStatsAdditive((new StatsAddable(0, 0, 0, 0, 0, 0, 30, 0, 0))),
                 (target)-> target.modifyStatsSubtractive((new StatsAddable(0, 0, 0, 0, 0, 0, 30, 0, 0)))));

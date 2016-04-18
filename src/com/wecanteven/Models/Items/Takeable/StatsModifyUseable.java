@@ -18,6 +18,7 @@ public class StatsModifyUseable extends UseableItem {
     @Override
     public void use(Character character) {
         character.buff(new Buff(
+                "Fly",
                 "Purple",
                 1000000,
                 (entity) -> entity.modifyStatsAdditive(modify),
