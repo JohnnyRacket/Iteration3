@@ -12,11 +12,10 @@ public class BuffEffect implements Effects {
     public BuffEffect(Buff effect){
         this.effect = effect;
     }
+
+    @Override
     public void interact(Entity entity){
         effect.setOwner(new BuffManager(entity));
         effect.buff();
-    }
-    public BuffEffect update(int skillLevel){
-        return this;
     }
 }

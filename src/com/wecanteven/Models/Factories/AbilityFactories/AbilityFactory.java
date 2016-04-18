@@ -7,6 +7,7 @@ package com.wecanteven.Models.Factories.AbilityFactories;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.Effects.BuffEffect;
 import com.wecanteven.Models.Abilities.Effects.Effects;
+import com.wecanteven.Models.Abilities.Effects.InteractionEffect;
 import com.wecanteven.Models.Abilities.Effects.StatsEffect;
 import com.wecanteven.Models.Abilities.HitBoxGenerator;
 import com.wecanteven.Models.Abilities.MeleeRangeHitBoxGenerator;
@@ -116,6 +117,20 @@ public class AbilityFactory {
         return ability;
     }
 
+    //pickpocket ability
+    public Ability vendPickPocket(Character caster) {
+        skill = Skill.PICK_POCKET;
+        duration = 1;
+        effect = new InteractionEffect(caster,caster.getSkillPoints(skill));
+        abilityName = "PickPocket";
+        abilityImage = "Punch";
+        MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
+        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability.setCooldownTicks(5);
+        ability.setWindUpTicks(5);
+        ability.setCast(true);
+        return ability;
+    }
 
 
 //    //melee ability example
