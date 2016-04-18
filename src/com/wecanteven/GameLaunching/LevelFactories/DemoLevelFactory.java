@@ -19,6 +19,7 @@ import com.wecanteven.Models.Interactions.QuestDialogInteractionStrategy;
 import com.wecanteven.Models.Interactions.TradeInteractionStrategy;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
+import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.OneHandWeapon;
 import com.wecanteven.Models.Items.Takeable.QuestedItem;
@@ -182,6 +183,9 @@ public class DemoLevelFactory extends LevelFactory {
         filled(18,15,0, 7, groundMaker);
         line(13,17,1, Direction.SOUTH, 4, groundMaker);
 
+        // Quest
+        column(19,5,1, 8, groundMaker);
+
 
 
         //Mountain
@@ -322,8 +326,6 @@ public class DemoLevelFactory extends LevelFactory {
         line(22, 1, 1, Direction.SOUTH, 7, groundMaker);
         line(22, 6, 1, Direction.SOUTHWEST, 3, groundMaker);
 
-
-
         return map;
     }
 
@@ -334,9 +336,6 @@ public class DemoLevelFactory extends LevelFactory {
         Biome fallBiome = new CustomBiome(new AutumnFactory(factory), fallLocations, tundraBiome);
         Biome dirtyBiome = new CustomBiome(new DirtFactory(factory), dirtyLocaions, fallBiome);
         Biome desertBiome = new CustomBiome(new DesertFactory(factory), desertLocations, dirtyBiome);
-
-
-
 
         return desertBiome;
     }
@@ -354,6 +353,7 @@ public class DemoLevelFactory extends LevelFactory {
             biomePaint.add(location);
         });
     }
+
     private void column(int r, int s, int z, int size, TerrainMaker terrainMaker) {
         (new HexColumn(getLocation(r,s,z), size)).iterator().forEachRemaining( (location) -> {
             map.getTile(location).setTerrain(terrainMaker.makeTerrain());
@@ -375,13 +375,13 @@ public class DemoLevelFactory extends LevelFactory {
     @Override
     public void populateMap(Map map) {
         areasOfEffect(map);
-        items(map);
+        //items(map);
+        //mount(map);
         weaponNPC(map);
-        mount(map);
         dialogNPC(map);
         tradeNPC(map);
         questNPC(map);
-        petNPC(map);
+        //petNPC(map);
     }
 
     public void mount(Map map) {
@@ -407,74 +407,79 @@ public class DemoLevelFactory extends LevelFactory {
         //"Creating an NPC and Giving him a chest Plate
         NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), new Enemy(), GameColor.GRAY);
         npc.setOccupation(new Enemy());
-        OneHandWeapon i = new OneHandWeapon("Sword", 50, new StatsAddable(0,0,0,0,0,0,0,0,0));
-        EnemySearchingController esc = new EnemySearchingController(npc,map,3);
+        EnemySearchingController esc = new EnemySearchingController(npc,map,4);
         EnemyActionController eac = new EnemyActionController(npc,map);
         AIController controller = new AIController(esc,eac);
         npc.setController(controller);
-        npc.pickup(i);
-        npc.equipItem(i);
-        map.add(npc, new Location(7,3,15));
+        EquipableItem item = ItemMap.getInstance().getItemAsEquipable("Sword");
+        npc.pickup(item);
+        npc.equipItem(item);
+        //npc.pickup(ItemMap.getInstance().getItemAsTakeable("Sword"));
+        npc.pickup(ItemMap.getInstance().getItemAsTakeable("Redbull"));
+        map.add(npc, new Location(6,3,15));
         AITime.getInstance().registerController(controller);
     }
 
     public void dialogNPC(Map map) {
         ArrayList<String> dialog = new ArrayList<>();
-        dialog.add("Hello Avatar");
-        dialog.add("You're an idiot and you're playing a dumb game");
-        dialog.add("GTFO");
-        NPC npc = new NPC(map, Direction.SOUTHWEST, new DialogInteractionStrategy(dialog), new Friendly(), GameColor.YELLOW);
-        EnemySearchingController esc = new EnemySearchingController(npc,map,3);
-        EnemyActionController eac = new EnemyActionController(npc,map);
-        AIController controller = new AIController(esc,eac);
-        npc.setController(controller);
+        dialog.add("Hello Bubblegum!");
+        dialog.add("I'm tickled pink to see you again");
+        dialog.add("The grayscalians have taken over...");
+        dialog.add("They're North, in the Lemon Chiffon Mountain!");
+        dialog.add("If you need anything...");
+        dialog.add("*hint hint wink wink*");
+        dialog.add("Just call Cadet Blue...");
+        NPC npc = new NPC(map, Direction.SOUTHEAST, new DialogInteractionStrategy(dialog), new Friendly(), GameColor.BLUE);
 
-        map.add(npc, new Location(9,8,2));
+        map.add(npc, new Location(0,30,2));
     }
 
     public void questNPC(Map map) {
-        QuestedItem questItem = new QuestedItem("Quest Item", 0);
-        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(18, 18, 1));
+        QuestedItem questItem = new QuestedItem("Diamond of Color", 0);
+        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Blaster"), new Location(19, 5, 9));
         ArrayList<String> startQuestDialog = new ArrayList<>();
-        startQuestDialog.add("HELLO QUESTER!");
-        startQuestDialog.add("This is an example of how quests work");
-        startQuestDialog.add("Go and get the questable item!");
+        startQuestDialog.add("Oh! The hue-manity");
+        startQuestDialog.add("The evil grayscalian Monochromia...");
+        startQuestDialog.add("...they have stolen our color");
+        startQuestDialog.add("Go and fetch the diamond and save Pastelia!");
+        startQuestDialog.add("Quick before we fade to grey");
 
         ArrayList<String> endQuestDialog = new ArrayList<>();
         endQuestDialog.add("Oh! My! Lawd!");
-        endQuestDialog.add("You found the item I was looking for!");
-        endQuestDialog.add("Here, take this top hat! Goodbye!");
+        endQuestDialog.add("You have saved us all!!!");
+        endQuestDialog.add("You fill us all with hues and saturation");
+        endQuestDialog.add("Here, have this blaster!");
 
         QuestDialogInteractionStrategy questIter = new QuestDialogInteractionStrategy(startQuestDialog, endQuestDialog, quest);
 
-        NPC npc = new NPC(map, Direction.SOUTHWEST, questIter,new Friendly(),GameColor.PINK);
-        map.add(npc, new Location(14, 14, 2));
+        NPC npc = new NPC(map, Direction.SOUTHEAST, questIter,new Friendly(),GameColor.PINK);
+        map.add(npc, new Location(1, 34, 2));
     }
 
     public void tradeNPC(Map map) {
         NPC npc = new NPC(map, Direction.SOUTHEAST, new TradeInteractionStrategy(),new Friendly(), GameColor.YELLOW);
+        npc.pickup(ItemMap.getInstance().getItemAsEquipable("Sword"));
         npc.pickup(ItemMap.getInstance().getItemAsEquipable("Antenna"));
-        npc.pickup(ItemMap.getInstance().getItemAsUseable("Intellect Buff"));
-        npc.pickup(ItemMap.getInstance().getItemAsUseable("Intellect Buff"));
-        npc.pickup(ItemMap.getInstance().getItemAsUseable("Intellect Buff"));
-        map.add(npc, new Location(13, 14, 2));
+        npc.pickup(ItemMap.getInstance().getItemAsEquipable("Flare"));
+        npc.pickup(ItemMap.getInstance().getItemAsUseable("Spinach"));
+        map.add(npc, new Location(3, 26, 2));
     }
 
     public void areasOfEffect(Map map) {
         TakeDamageAreaOfEffect tkdmgAoe = new TakeDamageAreaOfEffect(1);
-        map.add(tkdmgAoe, new Location(1,16,2));
+        map.add(tkdmgAoe, new Location(3,11,8));
 
         TeleportAoe teleAoe = new TeleportAoe(new Location(7,4,15));
-        map.add(teleAoe, new Location(2, 16, 2));
+        //map.add(teleAoe, new Location(2, 16, 2));
 
         HealingAreaOfEffect healAoe = new HealingAreaOfEffect(1);
-        map.add(healAoe, new Location(3,16,2));
+        map.add(healAoe, new Location(8,1,15));
 
         LevelUpAoe levelUpAoe = new LevelUpAoe(300);
-        map.add(levelUpAoe,new Location(4,16,2));
+        map.add(levelUpAoe,new Location(6,11,6));
 
         InstaDeathAoe deathAoe = new InstaDeathAoe();
-        map.add(deathAoe, new Location(5,16,2));
+        map.add(deathAoe, new Location(3,4,14));
     }
 
     public void items(Map map) {
