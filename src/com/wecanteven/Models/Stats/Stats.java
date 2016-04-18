@@ -17,6 +17,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     private PrimaryStat lives, level;
     private PrimaryStat currentHealth,currentMana;
     private Stat maxHealth,maxMana,offensiveRating,defensiveRating,armorRating;
+    private Stat creep;
     private Entity entity;
     private ArrayList<Observer> modelObservers = new ArrayList<>();
     private ArrayList<Observer> viewObservers = new ArrayList<>();
@@ -33,6 +34,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
 
     public void initStats(Entity entity, int strength,int agility,int intellect,int hardiness,int movement){
         this.entity = entity;
+        this.creep = new PrimaryStat("Creep",5);
         this.strength = new PrimaryStat("Strength",strength);
         this.agility = new PrimaryStat("Agility",agility);
         this.intellect = new PrimaryStat("Intellect",intellect);
@@ -180,6 +182,7 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
     }
 
     //getters
+    public  int getCreep(){ return creep.getStat();}
     public int getLives(){ return lives.getStat();}
     public int getStrength(){
         return strength.getStat();

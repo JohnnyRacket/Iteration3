@@ -17,6 +17,6 @@ public class ManaStat extends Stat implements Observer{
         update();
     }
     public void update(){
-        stat = (int)(Math.pow((.3 * level.getStat()) + 1, 2) * intellect.getStat());
+        stat = (int)(Math.pow((.3 * level.getStat()) + 1, 2) * intellect.getStat()*5);
     }
 }

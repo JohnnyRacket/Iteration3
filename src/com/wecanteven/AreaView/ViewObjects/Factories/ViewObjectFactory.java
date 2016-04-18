@@ -206,6 +206,72 @@ public class ViewObjectFactory {
         //Finally return a moving avatar
         return moivingHominoidWithHUD;
     }
+    //This method is OG
+    public ViewObject createStealthHominoid(Position p, Character character, String face) {
+        GameColor color = character.getColor();
+        EquipmentSlot chestSlot = character.getItemStorage().getEquipped().getChest();
+        EquipmentSlot weaponSlot = character.getItemStorage().getEquipped().getWeapon();
+        EquipmentSlot hatSlot = character.getItemStorage().getEquipped().getHead();
+
+        //Create the body and decorate it with body armor
+        SimpleViewObject body = simpleVOFactory.createSimpleViewObject(p, "Entities/Beans/" + color + ".xml");
+
+        EquipableViewObject bodyArmor = equipableItemVOFactory.createEquipable(body, chestSlot, character, color);
+
+        //Create the face and decorate it with a hat
+        DirectionalViewObject head = simpleVOFactory.createDirectional(p, character, "Face/" + face + "/");
+        EquipableViewObject hatArmor = equipableItemVOFactory.createEquipable(head, hatSlot, character, color);
+
+        //Create a pair of hands
+//        MicroPositionableViewObject leftHand = hominidVOFactory.createHand(p, weaponSlot, character, color);
+//        MicroPositionableViewObject rightHand = hominidVOFactory.createHand(p, weaponSlot, character, color);
+        HandsViewObject hands = hominidVOFactory.createHandsViewObject(p, weaponSlot, character, color);
+
+        //Create some feet
+        MicroPositionableViewObject leftFoot = hominidVOFactory.createFoot(p, color);
+        MicroPositionableViewObject rightFoot = hominidVOFactory.createFoot(p, color);
+        FeetViewObject feet = new FeetViewObject(Direction.SOUTH, leftFoot, rightFoot,
+                new FeetWalkingStrategy(0.1, leftFoot, rightFoot),
+                new FeetJumpingStrategy(0, 2, leftFoot, rightFoot),
+                new FeetJumpingStrategy(0, 2, leftFoot, rightFoot));
+
+        //Create the buff thingy
+        BuffRingViewObject buffs = new BuffRingViewObject(p, simpleVOFactory.getEquipableItemVOFactory(), character.getBuffmanager());
+
+        //Finnally create the Hominoid
+        HominidViewObject hominoid = hominidVOFactory.createHominid(
+                p,
+                character,
+                bodyArmor,
+                hatArmor,
+                hands,
+                feet,
+                buffs);
+
+        //And give him a HUD
+        HUDDecorator homioidWithHUD = hominidVOFactory.createHominidHUDDecorator(hominoid, character.getStats());
+
+        StealthVO stealthVO = new StealthVO(homioidWithHUD, character.getStats());
+
+        //Now give him a death animation
+        StartableViewObject startableViewObject = simpleVOFactory.createStartableViewObject(p, "Death/Gray.xml");
+
+
+
+
+        //And return the new destroyable VO
+        DestroyableViewObject destroyableViewObject = simpleVOFactory.createDestroyableViewObject(stealthVO, startableViewObject,
+                character, 800);
+
+        //Make a moving view object
+        BipedMovingViewObject moivingHominoidWithHUD = hominidVOFactory.createBipedMovingObjectWithCharacterSubject(character, destroyableViewObject);
+
+
+
+
+        //Finally return a moving avatar
+        return moivingHominoidWithHUD;
+    }
 
     public ViewObject createBird(Position p, Character character, String face) {
         GameColor color = character.getColor();

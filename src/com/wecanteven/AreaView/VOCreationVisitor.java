@@ -309,7 +309,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
 
     @Override
     public void visitSneak(Sneak sneak) {
-        ViewObject avatar = viewObjectFactory.createBaseHominoid(currentPosition, currentCharacter, "Connery");
+        ViewObject avatar = viewObjectFactory.createStealthHominoid(currentPosition, currentCharacter, "Connery");
         simpleVOFactory.makeLightSource(currentCharacter, 5);
         simpleVOFactory.setCenter(avatar);
         areaView.addViewObject(avatar);
