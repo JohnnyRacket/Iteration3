@@ -76,4 +76,19 @@ public abstract class AbstractSearchingController implements MapVisitor, EntityV
         this.target = target;
     }
 
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
+
+    public int getSearchRadius() {
+        return searchRadius;
+    }
+
+    public void setSearchRadius(int searchRadius) {
+        this.searchRadius = searchRadius;
+    }
 }

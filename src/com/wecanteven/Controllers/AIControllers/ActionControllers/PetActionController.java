@@ -6,6 +6,7 @@ import com.wecanteven.Controllers.AIControllers.Targets.ItemTarget;
 import com.wecanteven.Controllers.AIControllers.Targets.NullTarget;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Map.Map;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.DirectionFinder;
 
@@ -22,7 +23,20 @@ public class PetActionController extends AbstractActionController {
     public void visitItemTarget(ItemTarget target) {
         try {
             System.out.println("moving");
-            this.getCharacter().move(getPathToTarget(target));
+            if(this.getCharacter().getLocation().getZ() > target.getLocation().getZ()){
+                ModelTime.getInstance().registerAlertable(()->{
+                    this.getCharacter().jump(Direction.DOWN);
+                },0);
+            }
+            if(this.getCharacter().getLocation().getZ() < target.getLocation().getZ()){
+                ModelTime.getInstance().registerAlertable(()->{
+                    this.getCharacter().jump(Direction.UP);
+                },0);
+            }
+            ModelTime.getInstance().registerAlertable(()->{
+                this.getCharacter().move(getPathToTarget(target));
+            },this.getCharacter().getMovingTicks() + 1);
+
 
         }catch (NullPointerException e){
             System.out.println("direction was null, this might mean john is bad a programming");

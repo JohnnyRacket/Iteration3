@@ -31,6 +31,7 @@ import com.wecanteven.Models.Occupation.Pet;
 import com.wecanteven.Models.Quests.QuestableItemReward;
 import com.wecanteven.Models.Stats.StatsAddable;
 import com.wecanteven.UtilityClasses.*;
+import com.wecanteven.Visitors.CanFallVisitors.FlyingCanFallVisitor;
 
 import java.util.ArrayList;
 
@@ -391,6 +392,7 @@ public class DemoLevelFactory extends LevelFactory {
     public void petNPC(Map map){
         NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), GameColor.PINK);
         npc.setOccupation(new Pet());
+        npc.setCanFallVisitor(new FlyingCanFallVisitor());
         PetSearchingController searchingController = new PetSearchingController(npc, map, 4);
         PetActionController actionController = new PetActionController(npc, map);
         AIController controller = new AIController(searchingController,actionController);
