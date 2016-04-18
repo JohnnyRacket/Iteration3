@@ -17,12 +17,15 @@ import com.wecanteven.AreaView.ViewObjects.DrawingStategies.HexDrawingStrategy;
 import com.wecanteven.AreaView.ViewObjects.Hominid.BuffRingViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.FeetViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandState;
 import com.wecanteven.AreaView.ViewObjects.Hominid.Hands.HandsViewObject;
 import com.wecanteven.AreaView.ViewObjects.Hominid.HominidViewObject;
+import com.wecanteven.AreaView.ViewObjects.Hominid.MountViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.*;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Entities.Entity;
+import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
@@ -46,6 +49,7 @@ public class SimpleVOFactory {
     private EquipableItemVOFactory equipableItemVOFactory;
     private HominidVOFactory hominidVOFactory;
     private MapItemVOFactory mapItemVOFactory;
+    private HandStateFactory handStateFactory;
 
     public  SimpleVOFactory(HexDrawingStrategy hexDrawingStrategy, AreaView areaView, Map gameMap) {
         this.hexDrawingStrategy = hexDrawingStrategy;
@@ -53,6 +57,7 @@ public class SimpleVOFactory {
         this.equipableItemVOFactory = new EquipableItemVOFactory(this);
         this.hominidVOFactory = new HominidVOFactory(this, equipableItemVOFactory, new JumpDetector(gameMap));
         this.mapItemVOFactory = new MapItemVOFactory(this);
+        this.handStateFactory = new HandStateFactory(hominidVOFactory);
     }
 
     public EquipableViewObject createEquipable(ViewObject child, EquipmentSlot slot, EquipableItemVOFactory equipableItemVOFactory, Entity weaponSubject, GameColor color) {
@@ -137,6 +142,14 @@ public class SimpleVOFactory {
         return new DestroyableViewObject(simpleVO, startableVO, subject, areaView, duration);
     }
 
+    public MicroPositionableViewObject createBubble(Position position, GameColor color) {
+        return createMicroPositionableViewObject(createSimpleViewObject(position, "Entities/Mount/" + color + ".xml" ));
+    }
+
+    public MountViewObject createMount(Position position, SimpleVOFactory simpleVOFactory, Mount mount) {
+        return new MountViewObject(position, simpleVOFactory, mount);
+    }
+
 
 
     public EquipableItemVOFactory getEquipableItemVOFactory() {
@@ -151,5 +164,8 @@ public class SimpleVOFactory {
         return mapItemVOFactory;
     }
 
+    public HandStateFactory getHandStateFactory() {
+        return handStateFactory;
+    }
 
 }
