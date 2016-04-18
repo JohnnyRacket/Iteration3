@@ -66,9 +66,9 @@ public class Map implements MapVisitable, ActionHandler {
         if( location.getR() < 0 ||
             location.getZ() < 0 ||
             location.getS() < 0 ||
-            location.getR() > getrSize()-1 ||
-            location.getZ() > getzSize()-1 ||
-            location.getS() > getsSize()-1){
+            location.getR() >= getrSize()-1 ||
+            location.getZ() >= getzSize()-1 ||
+            location.getS() >= getsSize()-1){
             return true;
         }
         return false;
@@ -131,12 +131,18 @@ public class Map implements MapVisitable, ActionHandler {
         //checks to see if anything is blocking your height when moving
         boolean canMove = true;
         for(int i = 0; i < entity.getHeight() && canMove; ++i){
+            if(isOutOfBounds(destination.add(new Location(0,0,i)))){
+                return false;
+            }
             Tile tile = this.getTile(destination.add(new Location(0,0,i)));
             tile.accept(visitor);
             canMove = canMove && visitor.canMove();
         }
 
         //checks the tile you will be standing on
+        if(isOutOfBounds(destination.subtract(new Location(0,0,1)))){
+            return false;
+        }
         Tile tileBelow = this.getTile(destination.subtract(new Location(0,0,1)));
         tileBelow.accept(visitor);
         canMove = canMove && visitor.CanMoveBelow();
