@@ -526,7 +526,7 @@ public class DemoLevelFactory extends LevelFactory {
         column(28,21,13,3, groundMaker);
 
         column(25,22,14,3, groundMaker);
-        column(26,21,14,5, groundMaker);
+        column(26,21,14,4, groundMaker);
         column(27,22,14,4, groundMaker);
         column(34,22,5,9, groundMaker);
         column(35,22,3,9, groundMaker);
@@ -539,13 +539,24 @@ public class DemoLevelFactory extends LevelFactory {
         map.getTile(getLocation(23,28,4)).add(new Obstacle("StoneRock"));
         map.getTile(getLocation(28,28,5)).add(new Obstacle("StoneRock"));
         map.getTile(getLocation(33,24,4)).add(new Obstacle("StoneRock"));
+        map.getTile(getLocation(33,21,16)).add(new Obstacle("StoneRock"));
+
 
         map.getTile(getLocation(24,27,4)).add(new Decal("AutumnTreeTall", .3, -.5));
         map.getTile(getLocation(22,29,4)).add(new Decal("AutumnTreeTall", -.1, -.15));
         map.getTile(getLocation(22,29,4)).add(new Decal("AutumnTreeTall", .2, -.15));
         map.getTile(getLocation(26,25,5)).add(new Decal("TundraPineLong", .3, -.5));
-        map.getTile(getLocation(24,27,4)).add(new Decal("AutumnTreeTall", .3, -.5));
-        map.getTile(getLocation(24,27,4)).add(new Decal("AutumnTreeTall", .3, -.5));
+        map.getTile(getLocation(31,24,5)).add(new Decal("AutumnTreeTall", .3, -.5));
+        map.getTile(getLocation(31,31,4)).add(new Decal("AutumnTreeTall", .2, .3));
+
+        map.getTile(getLocation(33,20,16)).add(new Decal("TundraPineLong", .1, -.5));
+        map.getTile(getLocation(34,20,16)).add(new Decal("TundraPineLong", .2, -.3));
+        map.getTile(getLocation(28,22,13)).add(new Decal("TundraPineLong", .3, -.05));
+        map.getTile(getLocation(26,22,14)).add(new Decal("TundraPineLong", -.3, 0));
+        map.getTile(getLocation(26,21,18)).add(new Decal("TundraPineLong", .3, -.1));
+        map.getTile(getLocation(26,21,18)).add(new Decal("TundraPineLong", -.3, -.3));
+
+
 
 
 
