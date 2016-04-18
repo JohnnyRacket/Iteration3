@@ -36,10 +36,11 @@ public class Mount extends Character {
   }
 
   public void accept(EntityVisitor visitor) {
-      visitor.visitMount(this);
+
       if(mounter != null) {
-          visitor.visitCharacter(mounter);
+          mounter.accept(visitor);
       }
+      visitor.visitMount(this);
   }
 
 
