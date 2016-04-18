@@ -73,7 +73,8 @@ public class NewGameLauncher extends GameLauncher {
 
         setAvatar(new Avatar(player, getMap()));
 
-        getMap().add(player, new Location(6,13,5));
+        getMap().add(player, new Location(25,34,6));
+
 
     }
 
