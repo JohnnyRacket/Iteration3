@@ -56,6 +56,12 @@ public class HUDDecorator extends DecoratorViewObject implements Observer{
     private boolean tookDamage() {
         return (((float)healthBar.getPercent()/100f * (float)subject.getMaxHealth()) > subject.getHealth()) ;
     }
+
+    private boolean gotHealed() {
+        return (((float)healthBar.getPercent()/100f * (float)subject.getMaxHealth()) < subject.getHealth()) ;
+
+    }
+
     private int getDamage() {
         return (int)Math.ceil(((float)healthBar.getPercent()/100f * (float)subject.getMaxHealth()) - (float)subject.getHealth());
     }
@@ -70,8 +76,16 @@ public class HUDDecorator extends DecoratorViewObject implements Observer{
                     Color.WHITE,
                     4
             ));
-
+        } else if (gotHealed()) {
+            areaView.addViewObject(factory.createFloatingTextViewObject(
+                    getPosition().add(new Position(0,0,1)),
+                    Integer.toString(getDamage()),
+                    700,
+                    Color.GREEN,
+                    4
+            ));
         }
+
         healthBar.setPercent((int)(((float)subject.getHealth()/(float)subject.getMaxHealth())*100f));
         //manaBar.setPercent((int)(((float)subject.getMana()/(float)subject.getMaxMana())*100f));
         //healthBar.setCurrentProgress(subject.getHealth());
