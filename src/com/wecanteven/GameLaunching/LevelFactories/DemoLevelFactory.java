@@ -368,8 +368,6 @@ public class DemoLevelFactory extends LevelFactory {
 
     private Location getLocation(int r, int s, int z) {
         return new Location(r+rOffset, s+sOffset, z);
-
-
     }
 
     @Override
