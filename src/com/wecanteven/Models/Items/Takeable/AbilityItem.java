@@ -1,22 +1,21 @@
 package com.wecanteven.Models.Items.Takeable;
 
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Factories.AbilityFactories.AbilityFactory;
 import com.wecanteven.Visitors.ItemVisitor;
 
 /**
  * Created by simonnea on 3/31/16.
  */
-public class AbilityItem extends UseableItem {
-
+public abstract class AbilityItem extends UseableItem {
+    private static AbilityFactory factory = new AbilityFactory();
 
     public AbilityItem(String name, int value) {
         super(name, value);
     }
 
     @Override
-    public void use(Character character) {
-        // Merp derp do shit
-    }
+    public abstract void use(Character character);
 
     /**
      * Visitation Rights

@@ -91,8 +91,8 @@ public class ViewObjectFactory {
         EquipableViewObject hatArmor = equipableItemVOFactory.createEquipable(head, hatSlot, character, color);
 
         //Create a pair of hands
-        MicroPositionableViewObject leftHand = hominidVOFactory.createHand(p, weaponSlot, character, color);
-        MicroPositionableViewObject rightHand = hominidVOFactory.createHand(p, weaponSlot, character, color);
+//        MicroPositionableViewObject leftHand = hominidVOFactory.createHand(p, weaponSlot, character, color);
+//        MicroPositionableViewObject rightHand = hominidVOFactory.createHand(p, weaponSlot, character, color);
         HandsViewObject hands = hominidVOFactory.createHandsViewObject(p, weaponSlot, character, color);
 
         //Create some feet

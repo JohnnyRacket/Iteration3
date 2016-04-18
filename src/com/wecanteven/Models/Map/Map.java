@@ -12,6 +12,7 @@ import com.wecanteven.Models.Items.OneShot;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Items.Takeable.TakeableMoveable;
 import com.wecanteven.Models.Map.Aoe.AreaOfEffect;
+import com.wecanteven.Models.Map.Terrain.Water;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.Location;
@@ -96,10 +97,16 @@ public class Map implements MapVisitable, ActionHandler {
             if(tilesCount > 5 && moved){
                 int time = tilesCount;
                 ModelTime.getInstance().registerAlertable(()->{
-                    Entity e = getTile(destination.subtract(new Location(0,0,1))).getEntity();
+                    Tile tile = getTile(destination.subtract(new Location(0,0,1)));
+                    Entity e = tile.getEntity();
+                    FallDetector fallDetector = new FallDetector();
+                    getTile(destination).accept(fallDetector);
                     if(e != null){
                         e.takeDamage(time - 4);
-                    }else {
+                    }else if(!fallDetector.takeDamage()){
+                        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        //dont take dmg
+                    }else{
                         entity.takeDamage(time - 4);
                     }
                 },2*time);

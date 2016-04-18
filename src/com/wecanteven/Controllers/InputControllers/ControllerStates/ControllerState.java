@@ -7,6 +7,7 @@ import com.wecanteven.Controllers.InputControllers.MainController;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ public abstract class ControllerState {
     public abstract void createKeybindings();
     public void destroyKeyBindings(){
 
-        for(KeyActionBinding binding: this.getKeyBindings()){
+        for(KeyListener binding: this.getKeyBindings()){
             this.getjFrame().removeKeyListener(binding);
         }
 
