@@ -1,14 +1,17 @@
-package com.wecanteven.Models.Abilities;
+package com.wecanteven.Models.Factories.AbilityFactories;
 
 /**
  * Created by Brandon on 4/11/2016.
  */
 
+import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.Abilities.Effects.StatsEffect;
+import com.wecanteven.Models.Abilities.HitBoxGenerator;
+import com.wecanteven.Models.Abilities.MeleeRangeHitBoxGenerator;
+import com.wecanteven.Models.Abilities.SelfHitBoxGenerator;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Occupation.Skill;
-import com.wecanteven.Models.Stats.Stat;
 import com.wecanteven.Models.Stats.StatsAddable;
 /**
  * Created by Brandon on 4/11/2016.
@@ -18,20 +21,20 @@ public class AbilityFactory {
     private int duration;
     private Effects baseEffect;
     private HitBoxGenerator generator;
-    private Stat stat;
+    private int statLevel;
     private Skill skill;
     private Ability ability;
 
 
-    //bind wounds skill
+    //bind wounds ability
     public Ability vendBindWounds(Character caster){
-        skill = Skill.BIND_WOUNDS;
-        baseEffect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,1,0));
-        Effects effect = baseEffect.update(caster.getSkillPoints(skill));
         duration = 1;
-        abilityName = "Punch";
-        //abilityImage = "BindWounds";
+        abilityName = "BindWounds";
         abilityImage = "Punch";
+        skill = Skill.BIND_WOUNDS;
+        statLevel = caster.getStats().getIntellect();
+        baseEffect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,1,0));
+        Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
         generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
         ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(30);
@@ -39,14 +42,14 @@ public class AbilityFactory {
         return ability;
     }
 
-    //brawling skill
-    public Ability vendBrawling(Character caster) {
-        skill = Skill.BRAWLING;
+    //One Handed Weapon ability
+    public Ability vendOneHandedWeapon(Character caster) {
+        skill = Skill.ONE_HANDED_WEAPON;
+        statLevel = caster.getStats().getStrength();
         baseEffect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
-        Effects effect = baseEffect.update(caster.getSkillPoints(skill));
-        System.out.println("skill level: "+caster.getSkillPoints(skill));
+        Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
         duration = 1;
-        abilityName = "Punch";
+        abilityName = "OneHandedWeapon";
         abilityImage = "Punch";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
         Ability ability = new Ability(abilityName,caster,generator,skill);
@@ -56,6 +59,39 @@ public class AbilityFactory {
         return ability;
     }
 
+    //Two Handed Weapon ability
+    public Ability vendTwoHandedWeapon(Character caster) {
+        skill = Skill.TWO_HANDED_WEAPON;
+        statLevel = caster.getStats().getStrength();
+        baseEffect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
+        duration = 1;
+        abilityName = "TwoHandedWeapon";
+        abilityImage = "Punch";
+        MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
+        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability.setCooldownTicks(30);
+        ability.setWindUpTicks(30);
+        ability.setCast(true);
+        return ability;
+    }
+
+    //brawling ability
+    public Ability vendBrawling(Character caster) {
+        skill = Skill.BRAWLING;
+        statLevel = caster.getStats().getStrength();
+        baseEffect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1,0));
+        Effects effect = baseEffect.update(caster.getSkillPoints(skill)+statLevel);
+        duration = 1;
+        abilityName = "Brawling";
+        abilityImage = "Punch";
+        MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
+        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability.setCooldownTicks(5);
+        ability.setWindUpTicks(5);
+        ability.setCast(true);
+        return ability;
+    }
 
 
 

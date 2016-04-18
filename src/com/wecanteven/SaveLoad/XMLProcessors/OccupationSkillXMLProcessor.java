@@ -31,7 +31,8 @@ public class OccupationSkillXMLProcessor extends XMLProcessor {
             Skill skill = Skill.fromString(sf.getStrAttr(element, "name"));
             int amount = Integer.parseInt(sf.getStrAttr(element, "amount"));
 
-            occupation.addSkillPoints(skill, amount);
+            if (amount > 0)
+                occupation.addSkillPoints(skill, amount);
         }
 
         return occupation;

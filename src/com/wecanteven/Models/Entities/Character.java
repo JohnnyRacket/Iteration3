@@ -1,8 +1,8 @@
 package com.wecanteven.Models.Entities;
 
 import com.wecanteven.Models.Abilities.Ability;
-import com.wecanteven.Models.Abilities.AbilityFactory;
 import com.wecanteven.Models.ActionHandler;
+import com.wecanteven.Models.Factories.AbilityFactories.AbilityFactory;
 import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.*;
 import com.wecanteven.Models.ModelTime.ModelTime;
@@ -11,11 +11,13 @@ import com.wecanteven.Models.Occupation.Skill;
 import com.wecanteven.Models.Occupation.Smasher;
 import com.wecanteven.Models.Stats.Stats;
 import com.wecanteven.Models.Stats.StatsAddable;
+import com.wecanteven.Models.Storage.AbilityStorage.AbilityStorage;
 import com.wecanteven.Models.Storage.ItemStorage.ItemStorage;
 import com.wecanteven.Observers.Actionable;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.GameColor;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.UtilityClasses.Sound;
 import com.wecanteven.Visitors.EntityVisitor;
 
 
@@ -24,7 +26,8 @@ import com.wecanteven.Visitors.EntityVisitor;
  */
 public class Character extends Entity implements Actionable {
     private Occupation occupation;
-    private ItemStorage itemStorage, abilityItemStorage;
+    private ItemStorage itemStorage;
+    private AbilityStorage abilityStorage;
     private int windUpTicks = 0, coolDownTicks = 0;
 
     private int availableSkillPoints = 0;
@@ -33,6 +36,7 @@ public class Character extends Entity implements Actionable {
         super(actionHandler, direction, color);
         occupation = new Smasher();
         this.itemStorage = new ItemStorage(this, 5);
+        this.abilityStorage = new AbilityStorage();
         windUpTicks = 0;
         coolDownTicks = 0;
     }
@@ -42,23 +46,27 @@ public class Character extends Entity implements Actionable {
         this.occupation = occupation;
         setStats(new Stats(this));
         this.itemStorage = new ItemStorage(this, 5);
+        this.abilityStorage = new AbilityStorage();
         windUpTicks = 0;
         coolDownTicks = 0;
     }
+
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats, GameColor color) {
         super(actionHandler, direction, color);
         this.occupation = occupation;
         setStats(stats);
         this.itemStorage = new ItemStorage(this, 5);
+        this.abilityStorage = new AbilityStorage();
         windUpTicks = 0;
         coolDownTicks = 0;
     }
 
-    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage, GameColor color) {
+    public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage, AbilityStorage abilityStorage, GameColor color) {
         super(actionHandler, direction, color);
         this.occupation = occupation;
         this.itemStorage = itemStorage;
         getItemStorage().setOwner(this);
+        this.abilityStorage = abilityStorage;
         windUpTicks = 0;
         coolDownTicks = 0;
     }
@@ -70,9 +78,6 @@ public class Character extends Entity implements Actionable {
             Ability attack = factory.vendBrawling(this);
             attack.cast();
         }
-    }
-
-    public void useAbility(int index) {
     }
 
     /**
@@ -91,7 +96,6 @@ public class Character extends Entity implements Actionable {
      */
     public void removeFromInventory(TakeableItem item) {
         itemStorage.removeItem(item);
-        drop(item);
     }
 
     public void drop(TakeableItem item) {
@@ -122,16 +126,59 @@ public class Character extends Entity implements Actionable {
         getActionHandler().interact(avatar, destination);
     }
 
-    private boolean equipAbility(String id) {
-        return false;
-    }
-
-    private boolean unequipAbility(String id) {
-        return false;
-    }
-
     public void mount(Mount mount) {
         System.out.println("character trying to mount");
+    }
+
+    /**
+     *
+     * Abilities
+     *
+     * */
+
+    /**
+     * Equip/Unequip an ability
+     * */
+    public void equipAbility(Ability ability) {
+        abilityStorage.equipAbility(ability);
+    }
+
+    public void equipAbility(Ability ability, int slot) {
+        abilityStorage.equipAbility(ability, slot);
+    }
+
+    public void unequipAbility(Ability ability) {
+        abilityStorage.unequipAbility(ability);
+    }
+
+    public void unequipAbility(int slot) { abilityStorage.unequipAbility(slot); }
+
+    /**
+     * Add an ability
+     * */
+
+    public void addAbility(Ability ability) {
+        abilityStorage.storeAbility(ability);
+    }
+
+    public void removeAbility(Ability ability) {
+        abilityStorage.removeAbility(ability);
+    }
+
+    /**
+     * Use an ability
+     * */
+
+    public void useAbility(Ability ability) {
+        abilityStorage.useAbility(ability);
+    }
+
+    public void useAbility(int index) {
+        abilityStorage.useAbility(index);
+    }
+
+    public AbilityStorage getAbilityStorage() {
+        return this.abilityStorage;
     }
 
     /**
@@ -191,7 +238,6 @@ public class Character extends Entity implements Actionable {
     public void updateCoolDownTicks(int ticks){
         setCoolDownTicks(ticks);
         calculateActiveStatus();
-        tickTicks();
         notifyObservers();
     }
     @Override
@@ -204,7 +250,9 @@ public class Character extends Entity implements Actionable {
                 System.out.println("CoolDown ticks "+getCoolDownTicks());
                 deIncrementMovingTick();
                 deIncrementWindUpTick();
-                deIncrementCoolDownTicks();
+                if(getWindUpTicks()==0){
+                    deIncrementCoolDownTicks();
+                }
                 deIncrementTurningTick();
                 tickTicks();
             }, 1);
@@ -234,9 +282,10 @@ public class Character extends Entity implements Actionable {
     }
 
     @Override
-    protected boolean calculateActiveStatus(){
+    public boolean calculateActiveStatus(){
         if(getMovingTicks() <= 0 && getWindUpTicks() <= 0 && getCoolDownTicks() <= 0 && getTurningTicks() <= 0){
             setIsActive(false);
+            System.out.println("The entity is no longer active");
             return false;
         }
         else{

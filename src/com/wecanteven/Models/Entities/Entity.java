@@ -102,7 +102,6 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
 
     @Override
     public void update(){
-
         loseLife();
     }
 
@@ -149,7 +148,6 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     }
 
     public void loseLife(){
-
         //setLocation(new Location(3, 9, 1));
         isDestroyed = true;
         notifyObservers();
@@ -298,7 +296,7 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
         calculateActiveStatus();
     }
 
-    protected boolean calculateActiveStatus(){
+    public boolean calculateActiveStatus(){
         if(getMovingTicks() <= 0 && getMovingTicks() <= 0){
             setIsActive(false);
             return false;
