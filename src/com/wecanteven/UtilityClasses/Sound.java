@@ -57,7 +57,7 @@ public class Sound  {
         gain.setValue(volume.gain);
         if (!mute && volume != Volume.MUTE) {
             if (clip.isRunning())
-                clip.stop();   // Stop the player if it is still running
+                return;   // Stop the player if it is still running
             clip.setFramePosition(0); // rewind to the beginning
             clip.start();     // Start playing
             float clipLength = ((float)clip.getFrameLength())/clip.getFormat().getFrameRate();
@@ -77,7 +77,7 @@ public class Sound  {
     public static void init() {
         SOUNDS = new HashMap<>();
         SOUNDS.put("menuTheme",
-                new Sound("resources/Sounds/MenuSounds/MenuIntro.wav", Volume.LOW, false)
+                new Sound("resources/Sounds/MenuSounds/MenuIntro.wav", Volume.MUTE, false)
         );
         SOUNDS.put("menuMove",
                 new Sound("resources/Sounds/MenuSounds/MenuSelect.wav", Volume.MEDIUM, false)
@@ -90,7 +90,7 @@ public class Sound  {
         );
 
         SOUNDS.put("gameTheme",
-                new Sound("resources/Sounds/Game/GameTheme.wav", Volume.LOW, true)
+                new Sound("resources/Sounds/Game/GameTheme.wav", Volume.MUTE, true)
         );
 
         SOUNDS.put("Punch",

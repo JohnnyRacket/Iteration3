@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<single_frame_animation>
-    <x>20</x>
-    <y>20</y>
-    <rootPath>Items/Major Movement Buff/</rootPath>
-    <fileName>Major Movement Buff.png</fileName>
-    <fileName>null.png</fileName>
-</single_frame_animation>

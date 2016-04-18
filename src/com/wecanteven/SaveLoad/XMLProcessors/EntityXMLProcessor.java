@@ -52,7 +52,6 @@ public class EntityXMLProcessor extends XMLProcessor {
                 parseDirection(sf.getElemenetById(el, "Direction", 0)),
                 parseOccupation(sf.getStrAttr(el, "Occupation"), sf.getElementsById(el, "Skill")),
                 StorageXMLProcessor.parseItemStorage(sf.getElemenetById(el, "ItemStorage", 0)),
-                new AbilityStorage(), //TODO parse out the real abilities
                 GameColor.values()[sf.getIntAttr(el, "Color")]
         );
         parseStats(c, sf.getElemenetById(el, "Stats", 0));

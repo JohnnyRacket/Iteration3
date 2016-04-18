@@ -12,7 +12,8 @@ public class Main {
     public static void main(String[] args) {
         Thread.currentThread().setName("Main Thread (Controller)");
         ViewEngine engine = new ViewEngine();
-        engine.setBackground(Config.BACKGROUNDBLUE);
+
+        //engine.setBackground(Config.BACKGROUNDBLUE);
         UIViewFactory factory = UIViewFactory.getInstance();
         MainController controller = new MainController(engine);
         Sound.init();

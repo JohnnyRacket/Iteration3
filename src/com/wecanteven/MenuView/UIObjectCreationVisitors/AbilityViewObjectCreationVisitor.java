@@ -1,5 +1,6 @@
 package com.wecanteven.MenuView.UIObjectCreationVisitors;
 
+import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridAbilityItem;
 import com.wecanteven.MenuView.DrawableLeafs.NavigatableGrids.GridItem;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableList;
 import com.wecanteven.MenuView.DrawableLeafs.ScrollableMenus.NavigatableListHolder;
@@ -99,11 +100,11 @@ public class AbilityViewObjectCreationVisitor implements EntityVisitor, AbilityS
     @Override
     public void visitAbility(Ability ability) {
         if(inInv) {
-            inventoryItems.addItem(new GridItem(ability.getName(), () ->
+            inventoryItems.addItem(new GridAbilityItem(ability.getName(), ability.getName(),() ->
                     factory.createAbilityMenu(character, invHolder, eqHolder, ability)
             ));
         }else{
-            equippedItems.addItem(new GridItem("Slot " + currentSlot + " " +ability.getName(), () ->
+            equippedItems.addItem(new GridAbilityItem("Slot " + currentSlot + " " +ability.getName(), ability.getName(), () ->
                     factory.createEquippedAbilityMenu(character, invHolder, eqHolder, ability)
             ));
 
