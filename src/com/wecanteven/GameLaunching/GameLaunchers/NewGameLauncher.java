@@ -45,7 +45,7 @@ public class NewGameLauncher extends GameLauncher {
 
         createMap();
         createAvatar();
-        //createPet();
+        createPet();
         populateMap(getMap());
         initializeAreaView();
         initializeUIView();
@@ -67,7 +67,7 @@ public class NewGameLauncher extends GameLauncher {
         player.setColor(playerColor);
         player.addMoney(500);
         setAvatar(new Avatar(player, getMap()));
-        getMap().add(player, new Location(28,28,5));
+        getMap().add(player, new Location(6,13,5));
 
     }
 

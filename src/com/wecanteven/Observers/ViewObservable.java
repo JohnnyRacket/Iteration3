@@ -18,8 +18,23 @@ public interface ViewObservable {
     }
     default void notifyObservers() {
         ArrayList<Observer> observers = new ArrayList<>();
+//        getObservers().forEach( (observer) -> observers.add(observer) );
+    try {
+        for (int i = 0; i < getObservers().size(); i++) {
+            observers.add(getObservers().get(i));
+        }
+//        ViewTime.getInstance().register( () -> observers.forEach( Observer::update ), 1 );
 
-        getObservers().forEach( (observer) -> observers.add(observer) );
-        ViewTime.getInstance().register( () -> observers.forEach( Observer::update ), 1 );
+        ViewTime.getInstance().register(
+                () -> {
+                    for (int i = 0; i < observers.size(); i++)
+                        observers.get(i).update();
+                }, 1);
+    }
+    catch (Exception e) {
+        System.out.println("Concurrent Mod in ViewObservable");
+    }
+
+
     }
 }
