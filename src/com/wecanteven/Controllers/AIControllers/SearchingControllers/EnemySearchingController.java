@@ -83,11 +83,16 @@ public class EnemySearchingController extends AbstractSearchingController {
     @Override
     public void visitSmasher(Smasher smasher) {
         this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
+
     }
 
     @Override
     public void visitSneak(Sneak sneak) {
-        this.addNewTarget(new EnemyTarget(1,this.getTarget().getLocation()));
+        double chance = 100d* Math.random();
+        chance += getCharacter().getStats().getCreep();
+        if(chance<10) {
+            this.addNewTarget(new EnemyTarget(1, this.getTarget().getLocation()));
+        }
     }
 
     @Override
