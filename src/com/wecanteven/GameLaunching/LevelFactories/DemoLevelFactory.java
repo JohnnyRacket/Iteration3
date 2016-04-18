@@ -495,6 +495,8 @@ public class DemoLevelFactory extends LevelFactory {
         }
         map.getTile(new Location(32,23,11)).setTerrain(new Current(Direction.NORTHWEST));
         map.getTile(new Location(31,24,4)).setTerrain(new Water());
+        map.getTile(new Location(33,23,3)).setTerrain(new Water());
+        filled(33, 23, 2, 2, groundMaker);
 
 
         biomePaint = snowLocations;

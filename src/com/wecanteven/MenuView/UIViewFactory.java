@@ -321,9 +321,9 @@ public class UIViewFactory {
         startList.addItem(
                 new ScrollableMenuItem("Start Game", () -> {
                     if(menuItems[0] == null || menuItems[1] == null || menuItems[2] == null) {view.getMenuViewContainer().swap(); return; }
+                    Sound.stopAll();
                     Sound.play("startGame");
                     NewGameLauncher template = new NewGameLauncher(controller, mEngine, vEngine, (Occupation)menuItems[0], (String)menuItems[1], (GameColor)menuItems[2]);
-                    Sound.stopAll();
                     template.launch();
                     resumeGame();
                 })
