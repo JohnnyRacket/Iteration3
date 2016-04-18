@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Factories.ItemMaps;
 
+import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Factories.ItemFactories.AbilityItemFactory;
 import com.wecanteven.Models.Factories.ItemFactories.CreateCommands.IAbilityItemCreateCommand;
 import com.wecanteven.Models.Factories.ItemFactories.*;
@@ -163,12 +164,21 @@ public class ItemMap {
     private void initializeAbility() {
         AbilityItemFactory factory = new AbilityItemFactory();
 
+        //Smasher
         AbilityItemMap.put("One-handed weapon", () -> factory.vendOneHandedWeapon("One-handed weapon", 100));
         AbilityItemMap.put("Two-handed weapon", () -> factory.vendTwoHandedWeapon("Two-handed weapon", 100));
         AbilityItemMap.put("Brawling", () -> factory.vendBrawling("Brawling", 100));
 
+        // All
         AbilityItemMap.put("BindWounds", () -> factory.vendBindWounds("BindWounds", 100));
+
+        //Sneak
         AbilityItemMap.put("PickPocket", () -> factory.vendPickPocket("PickPocket", 100));
+        AbilityItemMap.put("Creep", () -> factory.vendCreep("Creep", 100));
+
+        //Summoner
+        AbilityItemMap.put("Poison", () -> factory.vendPoisonItem("Poison", 100));
+        AbilityItemMap.put("Slow", () -> factory.vendSlowItem("Slow", 100));
         AbilityItemMap.put("SpeedUp", () -> factory.vendSpeedUp("SpeedUp", 100));
 
 

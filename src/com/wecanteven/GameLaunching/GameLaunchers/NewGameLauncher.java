@@ -6,6 +6,7 @@ import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Factories.AbilityFactories.AbilityMap;
 import com.wecanteven.Models.Factories.ItemFactories.EquipableItemFactory;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
 import com.wecanteven.Models.Items.Takeable.MoneyItem;
@@ -67,6 +68,7 @@ public class NewGameLauncher extends GameLauncher {
         Character player = new Character(getMap(), Direction.SOUTH, occupation, GameColor.GREEN);
         player.setColor(playerColor);
         player.addMoney(500);
+        player.addAbility(AbilityMap.getInstance().getAbility("BindWounds", player));
         setAvatar(new Avatar(player, getMap()));
         getMap().add(player, new Location(4,32,2));
 

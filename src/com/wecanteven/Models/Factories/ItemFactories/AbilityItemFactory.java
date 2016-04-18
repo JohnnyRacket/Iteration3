@@ -72,6 +72,30 @@ public class AbilityItemFactory {
         };
     }
 
+    public AbilityItem vendPoisonItem(String name, int value) {
+        return new AbilityItem(name, value) {
+            @Override
+            public void use(Character character) {
+                character.addAbility(factory.vendPoisonAttack(character));
+            }
+        };
+    }
 
+    public AbilityItem vendSlowItem(String name, int value) {
+        return new AbilityItem(name, value) {
+            @Override
+            public void use(Character character) {
+                character.addAbility(factory.vendSlowAttack(character));
+            }
+        };
+    }
 
+    public AbilityItem vendCreep(String name, int value) {
+        return new AbilityItem(name, value) {
+            @Override
+            public void use(Character character) {
+                character.addAbility(factory.vendCreep(character));
+            }
+        };
+    }
 }

@@ -52,6 +52,7 @@ public class FourSlotAbilityEquipment extends AbilityEquipment {
     protected Ability removeFromSlot(int slot) {
         Ability abilityToReturn = getAbility(slot);
         abilities[slot - 1] = null;
+        currentCapacity--;
         return abilityToReturn;
     }
 
