@@ -78,8 +78,6 @@ public class Character extends Entity implements Actionable {
             Ability attack = factory.vendRangedWeapon(this);
             attack.cast();
         }
-        System.out.println("Attack has ended: "+isActive());
-        tickTicks();
     }
 
     /**
