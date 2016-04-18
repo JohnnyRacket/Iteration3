@@ -743,7 +743,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void questNPC(Map map) {
         QuestedItem questItem = new QuestedItem("Diamond of Color", 0);
-        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Blaster"), new Location(19, 5, 10));
+        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Blaster"), new Location(19, 5, 11));
         ArrayList<String> startQuestDialog = new ArrayList<>();
         startQuestDialog.add("Oh! The hue-manity");
         startQuestDialog.add("The evil grayscalian Monochromia...");
