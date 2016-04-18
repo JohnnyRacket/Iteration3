@@ -7,11 +7,8 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
-import com.wecanteven.Models.Items.Takeable.AbilityItem;
-import com.wecanteven.Models.Items.Takeable.StatsModifyUseable;
+import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
-import com.wecanteven.Models.Items.Takeable.TakeableItem;
-import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
@@ -212,6 +209,11 @@ public class XMLSaveVisitor implements MapVisitor, ColumnVisitor, AvatarVisitor,
     @Override
     public void visitTakeableItem(TakeableItem item) {
         ItemXMLProcessor.formatItem(item.getClass().getSimpleName(), item);
+    }
+
+    @Override
+    public void visitTakeaableMoveable(TakeableMoveable takeableMoveable) {
+        visitTakeableItem(takeableMoveable.extractItem());
     }
 
     @Override

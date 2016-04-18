@@ -11,11 +11,8 @@ import com.wecanteven.Models.Items.InteractiveItem;
 import com.wecanteven.Models.Items.Item;
 import com.wecanteven.Models.Items.Obstacle;
 import com.wecanteven.Models.Items.OneShot;
-import com.wecanteven.Models.Items.Takeable.AbilityItem;
-import com.wecanteven.Models.Items.Takeable.StatsModifyUseable;
+import com.wecanteven.Models.Items.Takeable.*;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
-import com.wecanteven.Models.Items.Takeable.TakeableItem;
-import com.wecanteven.Models.Items.Takeable.UseableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.Map.Tile;
 import com.wecanteven.Models.Occupation.*;
@@ -142,6 +139,11 @@ public class PetSearchingController extends AbstractSearchingController {
     @Override
     public void visitTakeableItem(TakeableItem takeable) {
         this.addNewTarget(new ItemTarget(1,takeable.getLocation()));
+    }
+
+    @Override
+    public void visitTakeaableMoveable(TakeableMoveable takeableMoveable) {
+        visitTakeableItem(takeableMoveable.extractItem());
     }
 
     @Override

@@ -16,6 +16,7 @@ public interface ItemVisitor {
     void visitInteractiveItem(InteractiveItem interactable);
     void visitOneShotItem(OneShot oneshot);
     void visitTakeableItem(TakeableItem takeable);
+    void visitTakeaableMoveable(TakeableMoveable takeableMoveable);
 
     // Takeable hierarchy
     void visitEquipableItem(EquipableItem equipable);
