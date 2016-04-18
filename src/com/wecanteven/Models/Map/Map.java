@@ -247,10 +247,10 @@ public class Map implements MapVisitable, ActionHandler {
         canMove = canMove && visitor.CanMoveBelow();
 
         if(canMove) {//move if you can
-            item.updateMovingTicks(movespeed);
+            item.updateMovingTicks(30);
             item.setLocation(location);
             remove(item, source);
-            add(item.extractItem(), location);
+            getTile(location).add(item);
             return true;
         }
 

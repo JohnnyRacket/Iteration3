@@ -92,7 +92,9 @@ public class Tile implements MapVisitable {
     }
     public boolean add(TakeableMoveable takeableItem) {
         if (this.takeableItems.add(takeableItem)) {
-            terrain.interact(takeableItem);
+            ModelTime.getInstance().registerAlertable(
+                    () -> terrain.interact(takeableItem)
+                    , 30 + 1);
             return true;
         } else {
             return false;
