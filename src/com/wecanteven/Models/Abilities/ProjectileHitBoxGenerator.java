@@ -16,6 +16,7 @@ public class ProjectileHitBoxGenerator extends HitBoxGenerator {
         setCaster(caster);
         setMovableHitbox(new MovableHitBox(name,caster.getLocation().adjacent(caster.getDirection()),effect,caster.getActionHandler()));
     }
+    @Override
     public void generate(){
         Direction direction = getCaster().getDirection();
         Location destination = getMovableHitbox().getLocation();
