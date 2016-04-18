@@ -91,7 +91,7 @@ public class UIViewFactory {
         try {
             vEngine.getManager().addPermView(view);
         }catch (Exception e){
-            
+
         }
 
     }
@@ -722,7 +722,7 @@ public class UIViewFactory {
             },0);
             controller.setMenuState(container);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
+        ScrollableMenu menu = new ScrollableMenu(100,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
@@ -759,7 +759,7 @@ public class UIViewFactory {
             },0);
             controller.setMenuState(container);
         }));
-        ScrollableMenu menu = new ScrollableMenu(100,100);
+        ScrollableMenu menu = new ScrollableMenu(100,70);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
         VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
         AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
