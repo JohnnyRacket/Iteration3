@@ -54,6 +54,7 @@ public class Character extends Entity implements Actionable {
         this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
+        resetAtack(); //makes attack Brawling
     }
 
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, Stats stats, GameColor color) {
@@ -65,6 +66,7 @@ public class Character extends Entity implements Actionable {
         this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
+        resetAtack(); //makes attack Brawling
     }
 
     public Character(ActionHandler actionHandler, Direction direction, Occupation occupation, ItemStorage itemStorage, GameColor color) {
@@ -76,6 +78,7 @@ public class Character extends Entity implements Actionable {
         this.abilityStorage.initialize();
         windUpTicks = 0;
         coolDownTicks = 0;
+        resetAtack(); //makes attack Brawling
     }
 
     public void attack(Direction dir) {
@@ -354,6 +357,6 @@ public class Character extends Entity implements Actionable {
     }
     public void resetAtack(){
         AbilityFactory factory = new AbilityFactory();
-        attack = factory.vendBrawling(this);
+        setAttack(factory.vendBrawling(this));
     }
 }

@@ -106,6 +106,10 @@ public class Sound  {
         SOUNDS.put("BindWounds",
                 new Sound("resources/Sounds/Abilities/BindWounds.wav", Volume.HIGH, false)
         );
+
+        SOUNDS.put("Club",
+                new Sound("resources/Sounds/Abilities/Club.wav", Volume.HIGH, false)
+        );
     }
 
     public static void play(String sound) {

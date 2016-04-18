@@ -9,6 +9,7 @@ import com.wecanteven.Models.Items.Takeable.QuestedItem;
 import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Storage.ItemStorage.Inventory;
 import com.wecanteven.UtilityClasses.Location;
+import com.wecanteven.UtilityClasses.Sound;
 import com.wecanteven.ViewEngine;
 
 /**
@@ -33,6 +34,8 @@ public class QuestableItemReward implements Questable {
             if(!questerInventory.isFull()){
                 quester.pickup(rewardItem);
                 quester.getItemStorage().removeItem(questedItem);
+                Sound.play("startGame");
+
                 return true;
             }else{
                 UIViewFactory.getInstance().createToast(4, "Your Inventory is full!");
