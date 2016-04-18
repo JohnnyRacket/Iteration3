@@ -35,7 +35,7 @@ public class DirectionFinder {
             } else if (rDiff <= -1 && sDiff <= -1) {
                 return Direction.SOUTHEAST;//these are strange cases, that shouldn't really happen
             } else {
-                System.out.println("fail");
+
                 return null;
 
                 //error

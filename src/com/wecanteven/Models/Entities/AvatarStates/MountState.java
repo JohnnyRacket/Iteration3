@@ -28,7 +28,7 @@ public class MountState extends AvatarState {
         avatar.setDirection(mount.getDirection());
         avatar.setLocation(new Location(mount.getLocation().getR(), mount.getLocation().getS(), mount.getLocation().getZ() + 2));
         //updatePlayerLocation();
-        //System.out.println("Avatar Location:" + avatar.getLocation());
+        //
         return moved;
     }
     public boolean jump(Direction d){
@@ -39,7 +39,7 @@ public class MountState extends AvatarState {
         avatar.setMovingTicks(mount.getMovingTicks());
         avatar.setLocation(mount.getLocation());
         //updatePlayerLocation();
-        System.out.println("Avatar Location:" + avatar.getLocation());
+
         return jumped;
     }
 
@@ -70,7 +70,7 @@ public class MountState extends AvatarState {
     public void pickup(){}
     public void interactWith(){}
     public void mount(Character mounter){
-        System.out.println("Calling mount on the Mount Object");
+
         mount.mount(mounter);
     }
     public void dismount(){

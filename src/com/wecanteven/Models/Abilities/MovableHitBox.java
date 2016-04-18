@@ -57,7 +57,7 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
         move(getLocation(), speed);
     }
     private void move(Location destination,int speed){
-        System.out.println("Projectile is on the move");
+
         if(count >= distance || !canMove){
             getActionHandler().remove(this,getLocation());
             setIsDestroyed(true);

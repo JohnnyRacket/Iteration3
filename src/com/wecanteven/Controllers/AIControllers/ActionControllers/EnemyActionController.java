@@ -41,7 +41,7 @@ public class EnemyActionController extends AbstractActionController {
                 }
             }
         }catch (NullPointerException e){
-            System.out.println("direction was null, this might mean john is bad a programming");
+
         }
     }
 

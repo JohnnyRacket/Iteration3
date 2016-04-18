@@ -58,7 +58,7 @@ public class StatsAddable {
     }
 
     public void add(StatsAddable statsAddable){
-        System.out.println("adding: "+statsAddable);
+
         lives.add(statsAddable.getLives());
         strength.add(statsAddable.getStrength());
         agility.add(statsAddable.getAgility());

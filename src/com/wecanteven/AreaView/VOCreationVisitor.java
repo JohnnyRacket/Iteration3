@@ -103,7 +103,7 @@ public class VOCreationVisitor implements EntityVisitor, ItemVisitor, MapVisitor
     @Override
     public void visitMount(Mount mount) {
         currentCharacter = mount;
-        System.out.println("adding mount to areaview");
+
         ViewObject mountVO = viewObjectFactory.createMount(currentPosition, mount);
         areaView.addViewObject(mountVO);
 

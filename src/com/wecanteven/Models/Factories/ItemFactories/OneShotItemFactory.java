@@ -43,7 +43,7 @@ public class OneShotItemFactory {
                 @Override
                 public void tick() {
                     entity.setIsActive(true);
-                    System.out.println("STUNNNNNNNED");
+
                 }
             };
             entity.buff(new Buff(

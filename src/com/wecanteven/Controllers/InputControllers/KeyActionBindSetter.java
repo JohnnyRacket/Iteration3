@@ -27,10 +27,10 @@ public class KeyActionBindSetter extends KeyActionBinding {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("blurble");
-        System.out.println(map);
+
+
         map.put(this.aEnum,e.getKeyCode());
-        System.out.println(map);
+
         getAction().execute();
     }
 

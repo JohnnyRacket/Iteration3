@@ -130,7 +130,7 @@ public class TileViewObject implements ViewObject {
                     children.get(i).draw(g);
                 }
             }catch (IndexOutOfBoundsException e){
-                System.out.println("CONCURRENT MODIFICATION CATCH: TilViewObject.java");
+
             }
         }
         @Override

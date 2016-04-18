@@ -24,7 +24,7 @@ public class KeyBindState extends ControllerState {
 
     @Override
     public void createKeybindings() {
-        System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+
 
         this.getKeyBindings().add( new KeyActionBindSetter(0,()->{
             getController().popView();

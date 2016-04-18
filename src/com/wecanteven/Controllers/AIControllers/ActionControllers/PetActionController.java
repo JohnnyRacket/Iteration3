@@ -22,7 +22,7 @@ public class PetActionController extends AbstractActionController {
     @Override
     public void visitItemTarget(ItemTarget target) {
         try {
-            System.out.println("moving");
+
             if(this.getCharacter().getLocation().getZ() > target.getLocation().getZ()){
                 ModelTime.getInstance().registerAlertable(()->{
                     this.getCharacter().jump(Direction.DOWN);
@@ -39,7 +39,7 @@ public class PetActionController extends AbstractActionController {
 
 
         }catch (NullPointerException e){
-            System.out.println("direction was null, this might mean john is bad a programming");
+
         }
     }
 
@@ -69,13 +69,13 @@ public class PetActionController extends AbstractActionController {
                 }
             }
         }catch (NullPointerException e){
-            System.out.println("direction was null, this might mean john is bad a programming");
+
         }
     }
 
     @Override
     public void visitFriendlyTarget(FriendlyTarget target) {
-        System.out.println("this is the loc of entity target: " + target.getLocation());
+
         try {
             if(this.checkLocation(target,2)){
                 //idle
@@ -101,7 +101,7 @@ public class PetActionController extends AbstractActionController {
             }
 
         }catch (NullPointerException e){
-            System.out.println("direction was null, this might mean john is bad a programming");
+
         }
     }
 

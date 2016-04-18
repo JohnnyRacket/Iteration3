@@ -40,7 +40,7 @@ public class Ability {
         if (cast || getFailChance()<=randomGenerator.nextInt(100)) {
             caster.updateWindUpTicks(getWindUpTicks());
             caster.updateCoolDownTicks(getCooldownTicks());
-            System.out.println("Activating the spell");
+
             activateAbility();
             return;
         }
@@ -50,12 +50,12 @@ public class Ability {
         ViewTime.getInstance().register(()-> {
                     UIViewFactory.getInstance().createToast(2, getName() + " has failed.");
                 },0);
-        System.out.println("The ability has failed");
+
 
     }
     private void activateAbility(){
         ModelTime.getInstance().registerAlertable(() -> {
-            System.out.println("The spell was activated");
+
             hitBoxGenerator.generate();
         },caster.getWindUpTicks());
     }
