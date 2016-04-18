@@ -5,6 +5,7 @@ import com.wecanteven.Models.Entities.AvatarStates.DeadState;
 import com.wecanteven.Models.Entities.AvatarStates.EntityState;
 import com.wecanteven.Models.Entities.AvatarStates.MountState;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.Models.Map.Map;
 import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.Observers.Observer;
@@ -49,8 +50,8 @@ public class Avatar implements Observer{
         return false;
     }
     public void drop(){}
-    public void pickup(){
-        //avatar.pickup();
+    public void pickup(TakeableItem item){
+        state.pickup(item);
     }
     public void interactWithTile(){
         getCharacter().interact(this);

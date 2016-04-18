@@ -28,6 +28,7 @@ public class AbilityFactory {
     private int multiplier;
     private Skill skill;
     private Ability ability;
+    private int manaCost=0;
 
 
     //bind wounds ability
@@ -38,10 +39,11 @@ public class AbilityFactory {
         skill = Skill.BIND_WOUNDS;
         statLevel = caster.getStats().getIntellect();
         skillLevel = caster.getSkillPoints(skill);
+        manaCost=skillLevel+1;
         multiplier = statLevel+skillLevel;
         effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,1*(multiplier),0));
         generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
-        ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill,manaCost);
         ability.setCooldownTicks(5);
         ability.setWindUpTicks(5);
         return ability;
@@ -58,7 +60,7 @@ public class AbilityFactory {
         abilityName = "OneHandedWeapon";
         abilityImage = "OneHanded";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
-        ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill,0);
 
         ability.setCooldownTicks(10);
         ability.setWindUpTicks(10);
@@ -77,7 +79,7 @@ public class AbilityFactory {
         abilityName = "TwoHandedWeapon";
         abilityImage = "Club";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
-        ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill,0);
         ability.setCooldownTicks(15);
         ability.setWindUpTicks(15);
         ability.setCast(true);
@@ -95,7 +97,7 @@ public class AbilityFactory {
         abilityName = "Brawling";
         abilityImage = "Punch";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
-        ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill,0);
         ability.setCooldownTicks(5);
         ability.setWindUpTicks(5);
         ability.setCast(true);
@@ -110,6 +112,7 @@ public class AbilityFactory {
         skill = Skill.BOON;
         statLevel = caster.getStats().getIntellect();
         skillLevel = caster.getSkillPoints(skill);
+        manaCost=skillLevel+1;
         multiplier = skillLevel+statLevel;
         effect = new BuffEffect(new Buff(
                 "Speed",
@@ -118,7 +121,7 @@ public class AbilityFactory {
                 (target)-> target.modifyStatsAdditive((new StatsAddable(0, 0, 0, 0, 0, 0, 5*(multiplier), 0, 0))),
                 (target)-> target.modifyStatsSubtractive((new StatsAddable(0, 0, 0, 0, 0, 0, 5*(multiplier), 0, 0)))));
         generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
-        ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill,skillLevel);
         ability.setCooldownTicks(5);
         ability.setWindUpTicks(5);
         return ability;
@@ -131,8 +134,9 @@ public class AbilityFactory {
         effect = new InteractionEffect(caster,caster.getSkillPoints(skill));
         abilityName = "PickPocket";
         abilityImage = "Punch";
+        manaCost=caster.getSkillPoints(skill)+1;
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
-        ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill,manaCost);
         ability.setCooldownTicks(5);
         ability.setWindUpTicks(5);
         ability.setCast(true);
@@ -153,7 +157,7 @@ public class AbilityFactory {
         abilityImage = "Punch";
         ProjectileHitBoxGenerator generator = new ProjectileHitBoxGenerator(abilityImage,caster,effect,duration);
         generator.setDistance(duration);
-        ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill,0);
         ability.setCooldownTicks(10);
         ability.setWindUpTicks(10);
         ability.setCast(true);
@@ -168,6 +172,7 @@ public class AbilityFactory {
         skill = Skill.BANE;
         statLevel = caster.getStats().getIntellect();
         skillLevel = caster.getSkillPoints(skill);
+        manaCost=skillLevel+1;
         multiplier = skillLevel+statLevel;
         effect = new BuffEffect(new Buff(
                 "Speed",
@@ -177,7 +182,7 @@ public class AbilityFactory {
                 (target)-> target.modifyStatsSubtractive((new StatsAddable(0,0,0,0,0,0,1*(multiplier),0,0)))));
         RadialHitBoxGenerator generator = new RadialHitBoxGenerator(abilityImage,caster,effect,1);
         generator.setSize(3);
-        ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill,manaCost);
         ability.setCooldownTicks(15);
         ability.setWindUpTicks(15);
         return ability;
@@ -193,6 +198,7 @@ public class AbilityFactory {
         skill = Skill.BANE;
         statLevel = caster.getStats().getIntellect();
         skillLevel = caster.getSkillPoints(skill);
+        manaCost=skillLevel+1;
         multiplier = skillLevel+statLevel;
         effect = new BuffEffect(new TickableBuff(
                 "Poison",
@@ -203,7 +209,7 @@ public class AbilityFactory {
         DomeHitBoxGenerator generator = new DomeHitBoxGenerator(abilityImage,caster,effect,5);
         generator.setDistance(1);
         generator.setSize(5);
-        ability = new Ability(abilityName,caster,generator,skill);
+        ability = new Ability(abilityName,caster,generator,skill,manaCost);
         ability.setCooldownTicks(15);
         ability.setWindUpTicks(30);
         return ability;

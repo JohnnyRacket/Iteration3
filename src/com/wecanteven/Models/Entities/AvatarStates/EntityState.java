@@ -2,6 +2,7 @@ package com.wecanteven.Models.Entities.AvatarStates;
 
 import com.wecanteven.Models.Entities.*;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.Items.Takeable.TakeableItem;
 import com.wecanteven.UtilityClasses.Direction;
 
 /**
@@ -42,7 +43,9 @@ public class EntityState extends AvatarState {
         return false;
     }
     public void drop(){}
-    public void pickup(){}
+    public void pickup(TakeableItem item){
+        avatar.pickup(item);
+    }
     public void interactWith(){}
     public void mount(Avatar mountee){
     }
