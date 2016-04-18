@@ -24,11 +24,6 @@ public class TradeInteractionStrategy implements InteractionStrategy {
     @Override
     public void interact(Character other) {
         this.other = other;
-        //TODO: GET RID OF THIS LINE:
-        other.addMoney(200);
-        //TODO: When Character interacts with this Interactions OWNER
-        //TODO: Call createTradeView(owner.getItemStorage(), other.getItemStorage(), other.getSkills.getBargainSkill())
-        //UIViewFactory.getInstance().createInventoryView(avatar.getCharacter());
 
         ViewTime.getInstance().register(()->{
             UIViewFactory.getInstance().createTradeView(owner, other, true);

@@ -77,22 +77,18 @@ public class ItemMap {
     private void initializeOneShot() {
         OneShotItemFactory factory = new OneShotItemFactory();
 
-        OneShotItemMap.put("Box",
-                () -> factory.vendOneShot("Box", new StatsAddable(0,0,0,0,0,0,0,0,0)));
-        OneShotItemMap.put("Minor Health Orb",
-                () -> factory.vendOneShot("Minor Health Orb", new StatsAddable(0,0,0,0,0,0,0,5,0)));
-        OneShotItemMap.put("Minor Mana Orb",
-                () -> factory.vendOneShot("Minor Mana Orb", new StatsAddable(0,0,0,0,0,0,0,0,5)));
-        OneShotItemMap.put("Major Health Orb",
-                () -> factory.vendOneShot("Major Health Orb", new StatsAddable(0,0,0,0,0,0,0,20,0)));
-        OneShotItemMap.put("Major Mana Orb",
-                () -> factory.vendOneShot("Major Mana Orb", new StatsAddable(0,0,0,0,0,0,0,0,20)));
-         OneShotItemMap.put("Major Movement Buff",
-                 () -> factory.vendMovementSpeedBuffOneShot("Major Movement Buff", 60, 300));
-        OneShotItemMap.put("Its Superman",
-                () -> factory.vendFlyingBuffOneShot("Its Superman", 600));
-        OneShotItemMap.put("Stun Buff",
-                () -> factory.vendMovementStunBuffOneShot("Stun Buff", 200));
+        OneShotItemMap.put("Gray",
+                () -> factory.vendOneShot("Gray", new StatsAddable(0,0,0,0,0,0,0,0,0)));
+        OneShotItemMap.put("Red",
+                () -> factory.vendOneShot("Red", new StatsAddable(0,0,0,0,0,0,0,10,0)));
+        OneShotItemMap.put("Blue",
+                () -> factory.vendOneShot("Blue", new StatsAddable(0,0,0,0,0,0,0,0,20)));
+         OneShotItemMap.put("Orange",
+                 () -> factory.vendMovementSpeedBuffOneShot("Orange", 60, 300));
+        OneShotItemMap.put("Purple",
+                () -> factory.vendFlyingBuffOneShot("Purple", 600));
+        OneShotItemMap.put("Green",
+                () -> factory.vendMovementStunBuffOneShot("Green", 200));
 
         usedNames.addAll(OneShotItemMap.keySet());
     }
@@ -111,7 +107,7 @@ public class ItemMap {
         //Real Shit right here
 
         EquipableItemMap.put("Antenna", () -> factory.vendHeadEquipableItem("Antenna", 100, new StatsAddable(0,0,0,5,0,0,0,0,0)));
-        EquipableItemMap.put("Growth", () -> factory.vendHeadEquipableItem("Growth", 100, new StatsAddable(0,0,0,0,5,0,0,0,0)));
+        EquipableItemMap.put("Fertilizer", () -> factory.vendHeadEquipableItem("Fertilizer", 100, new StatsAddable(0,0,0,0,5,0,0,0,0)));
         EquipableItemMap.put("Halo", () -> factory.vendHeadEquipableItem("Halo", 100, new StatsAddable(0,5,0,0,0,0,0,0,0)));
 
         EquipableItemMap.put("Expand", () -> factory.vendFistWeapon("Expand", 100, new StatsAddable(0,10000,0,0,0,0,0,0,0)));
@@ -119,8 +115,11 @@ public class ItemMap {
         EquipableItemMap.put("Flash", () -> factory.vendFistWeapon("Flash", 100, new StatsAddable(0,10,0,0,0,0,0,0,0)));
 
         EquipableItemMap.put("Sword", () -> factory.vendOneHandWeapon("Sword", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+
         EquipableItemMap.put("Club", () -> factory.vendTwoHandedWeapon("Club", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+
         EquipableItemMap.put("Arcane", () -> factory.vendStaveWeapon("Arcane", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+
         EquipableItemMap.put("Blaster", () -> factory.vendRangedWeaponEquipableItem("Blaster", 100, new StatsAddable(0,15,0,0,0,0,0,0,0)));
 
 
@@ -150,8 +149,12 @@ public class ItemMap {
     private void initializeUseable() {
         UseableItemFactory factory = new UseableItemFactory();
 
-        UseableItemMap.put("Intellect Buff",
-                () -> factory.vendStatModifyingBuffItem("Intellect Buff", 25, new StatsAddable(0,0,0,15,0,0,0,0,0)));
+        UseableItemMap.put("Brilliance",
+                () -> factory.vendStatModifyingBuffItem("Brilliance", 25, new StatsAddable(0,0,0,15,0,0,0,0,0)));
+        UseableItemMap.put("Spinach",
+                () -> factory.vendStatModifyingBuffItem("Spinach", 25, new StatsAddable(0,15,0,0,0,0,0,0,0)));
+        UseableItemMap.put("Redbull",
+                () -> factory.vendFlyingBuffItem("Redbull", 100));
 
         usedNames.addAll(UseableItemMap.keySet());
     }
