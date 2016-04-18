@@ -129,12 +129,12 @@ public class HandsViewObject implements ViewObject, Observer {
 
         @Override
         public void visitRangedWeapon(RangedWeaponEquipableItem r) {
-
+            swapHandsState(factory.createFistState(getPosition(), subject, entity, color));
         }
 
         @Override
         public void visitStaveWeapon(StaveWeapon s) {
-
+            swapHandsState(factory.createTwoHandState(getPosition(), subject, entity, color));
         }
 
         @Override

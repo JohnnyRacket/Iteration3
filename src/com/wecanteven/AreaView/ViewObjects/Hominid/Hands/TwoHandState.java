@@ -14,7 +14,7 @@ public class TwoHandState extends HandState {
     private final double leftAngle = -Math.PI/2;
     private final double rightAngle = leftAngle;
     private final double leftHeight = 2.5d;
-    private final double rightHeight = 1.5d;
+    private final double rightHeight = 2.0d;
 
     private LimbStrategy walkingStrategy;
     private LimbStrategy jumpingStrategy;
