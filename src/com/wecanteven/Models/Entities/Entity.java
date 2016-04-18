@@ -218,7 +218,6 @@ public class Entity implements Moveable, Directional,Destroyable, ModelObservabl
     }
 
     public void setLocation(Location location) {
-
         this.location = location;
         notifyObservers();
     }

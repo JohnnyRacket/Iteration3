@@ -33,7 +33,6 @@ public class AreaView extends JPanel {
 
 
 
-
         //Entity entity = new Entity();
 //        ViewObject testAvatar = factory.createSneak(new Position(avatar.getLocation().getR(),avatar.getLocation().getS(), avatar.getLocation().getZ()), Direction.NORTH, avatar);
 //
