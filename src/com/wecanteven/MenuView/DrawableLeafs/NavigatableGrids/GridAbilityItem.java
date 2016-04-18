@@ -19,7 +19,7 @@ public class GridAbilityItem extends SelectableItem{
     public GridAbilityItem(String name, String abilityName, SelectableMenuItemCommand command){
         this.setCommand(command);
         this.setName(name);
-        icon = DynamicImageFactory.getInstance().loadDynamicImage("Items/" + abilityName + "/" + abilityName + ".xml").getImage();
+        icon = DynamicImageFactory.getInstance().loadDynamicImage("Items/Abilities/" + abilityName + ".xml").getImage();
         //TODO use name to derive the img location, ill look at the view to see how this is done
     }
 

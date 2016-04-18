@@ -490,6 +490,12 @@ public class DemoLevelFactory extends LevelFactory {
 
         filled(28,25,4,4, groundMaker);
 
+        for(int i = 3; i < 11; ++i){
+            map.getTile(new Location(32,23,i)).setTerrain(new Current(Direction.UP));
+        }
+        map.getTile(new Location(32,23,11)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(new Location(31,24,4)).setTerrain(new Water());
+
 
         biomePaint = snowLocations;
         line(34, 26, 4, Direction.NORTH, 5, groundMaker);
