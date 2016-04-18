@@ -10,6 +10,7 @@ import com.wecanteven.Controllers.AIControllers.ActionControllers.EnemyActionCon
 import com.wecanteven.Controllers.AIControllers.ActionControllers.PetActionController;
 import com.wecanteven.Controllers.AIControllers.SearchingControllers.EnemySearchingController;
 import com.wecanteven.Controllers.AIControllers.SearchingControllers.PetSearchingController;
+import com.wecanteven.Models.Decals.Decal;
 import com.wecanteven.Models.Entities.Mount;
 import com.wecanteven.Models.Entities.NPC;
 import com.wecanteven.Models.Factories.ItemMaps.ItemMap;
@@ -271,6 +272,36 @@ public class DemoLevelFactory extends LevelFactory {
         }
         //END OF MAKE TUNNEL
 
+        column(7,6,3,10,groundMaker);
+        map.getTile(7,6,13).add(new Decal("PlainsTreeLong", -0.1,-0.2));
+        map.getTile(7,6,13).add(new Decal("AutumnTreeTall", .1,-.15));
+        map.getTile(7,6,13).add(new Decal("PlainsTreeLong", -.3,.1));
+        map.getTile(7,6,13).add(new Decal("AutumnTreeTall", .3,-.15));
+
+        column(7,7,3,8,groundMaker);
+        map.getTile(7,7,11).add(new Decal("PlainsTreeLong", -0.1,-0.2));
+        map.getTile(7,7,11).add(new Decal("AutumnTreeTall", .1,-.15));
+        map.getTile(7,7,11).add(new Decal("AutumnTreeTall", -.3,.1));
+        map.getTile(7,7,11).add(new Decal("AutumnTreeTall", .3,-.15));
+
+        column(6,8,3,6,groundMaker);
+        map.getTile(6,8,9).add(new Decal("AutumnTreeTall", -0.1,-0.2));
+        map.getTile(6,8,9).add(new Decal("PlainsTreeLong", .1,-.15));
+        map.getTile(6,8,9).add(new Decal("AutumnTreeTall", -.3,.1));
+        map.getTile(6,8,9).add(new Decal("AutumnTreeTall", .3,-.15));
+
+        column(8,7,3,4,groundMaker);
+        map.getTile(8,7,7).add(new Decal("AutumnTreeTall", -0.1,-0.2));
+        map.getTile(8,7,7).add(new Decal("AutumnTreeTall", .1,-.15));
+        map.getTile(8,7,7).add(new Decal("PlainsTreeLong", -.3,.1));
+        map.getTile(8,7,7).add(new Decal("AutumnTreeTall", .3,-.15));
+
+        column(7,8,3,3,groundMaker);
+        map.getTile(7,8,6).add(new Decal("AutumnTreeTall", -0.1,-0.2));
+        map.getTile(7,8,6).add(new Decal("AutumnTreeTall", .1,-.15));
+        map.getTile(7,8,6).add(new Decal("AutumnTreeTall", -.3,.1));
+        map.getTile(7,8,6).add(new Decal("PlainsTreeLong", .3,-.15));
+
         //Clearing up portions
         (new HexColumn(getLocation(8,6, 2), 11)).iterator().forEachRemaining( (location) -> {
             map.getTile(location).setTerrain(new Air());
@@ -321,9 +352,6 @@ public class DemoLevelFactory extends LevelFactory {
 
         point(24,10,1, groundMaker);
 
-
-
-
         //Marsh River
         biomePaint = dirtyLocaions;
         (new HexLine(getLocation(21,7,0), Direction.SOUTHEAST, 7 )).iterator().forEachRemaining( (location) -> {
@@ -357,6 +385,22 @@ public class DemoLevelFactory extends LevelFactory {
         line(22, 6, 1, Direction.SOUTHWEST, 3, groundMaker);
 
         makeFallIsland();
+
+        //Ramp decals
+        map.getTile(6,14,4).add(new Decal("StonePress",-.1,-.2));
+        map.getTile(6,13,4).add(new Decal("StonePress", -.1,-.1));
+        map.getTile(5,13,4).add(new Decal("StonePress", -.02,.02));
+        map.getTile(5,12,5).add(new Decal("StonePress", -.02, .02));
+        map.getTile(4,13,5).add(new Decal("StonePress", .02,.02));
+        map.getTile(4,12,6).add(new Decal("StonePress", -.02,.02));
+        map.getTile(4,11,7).add(new Decal("StonePress", -.02,.02));
+        map.getTile(3,11,8).add(new Decal("StonePress", -.02,.02));
+        map.getTile(2,11,9).add(new Decal("StonePress", -.02,.02));
+        map.getTile(3,10,9).add(new Decal("StonePress", -.02,.02));
+        map.getTile(4,9,10).add(new Decal("StonePress", -.02,.02));
+        map.getTile(5,8,11).add(new Decal("StonePress", -.02,.02));
+        map.getTile(6,7,12).add(new Decal("StonePress", -.02,.02));
+        map.getTile(6,6,12).add(new Decal("StonePress", -.02,.02));
 
         return map;
     }
@@ -400,8 +444,6 @@ public class DemoLevelFactory extends LevelFactory {
 
     private Location getLocation(int r, int s, int z) {
         return new Location(r+rOffset, s+sOffset, z+zOffset);
-
-
     }
 
     private void makeFallIsland() {
@@ -458,19 +500,19 @@ public class DemoLevelFactory extends LevelFactory {
             filled(33,21,i,2,groundMaker);
         }
 
-        
+
     }
 
     @Override
     public void populateMap(Map map) {
         areasOfEffect(map);
-        //items(map);
-        //mount(map);
+        items(map);
+        mount(map);
         weaponNPC(map);
         dialogNPC(map);
         tradeNPC(map);
         questNPC(map);
-        //petNPC(map);
+        petNPC(map);
     }
 
     public void mount(Map map) {
@@ -493,19 +535,19 @@ public class DemoLevelFactory extends LevelFactory {
     }
 
     public void weaponNPC(Map map) {
-        //"Creating an NPC and Giving him a chest Plate
         NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), new Enemy(), GameColor.GRAY);
         npc.setOccupation(new Enemy());
-        EnemySearchingController esc = new EnemySearchingController(npc,map,4);
+        EnemySearchingController esc = new EnemySearchingController(npc,map,2);
         EnemyActionController eac = new EnemyActionController(npc,map);
         AIController controller = new AIController(esc,eac);
         npc.setController(controller);
         EquipableItem item = ItemMap.getInstance().getItemAsEquipable("Sword");
         npc.pickup(item);
         npc.equipItem(item);
-        //npc.pickup(ItemMap.getInstance().getItemAsTakeable("Sword"));
+
         npc.pickup(ItemMap.getInstance().getItemAsTakeable("RedBull"));
         map.add(npc, new Location(6,3,15));
+
         AITime.getInstance().registerController(controller);
     }
 
@@ -551,24 +593,24 @@ public class DemoLevelFactory extends LevelFactory {
         npc.pickup(ItemMap.getInstance().getItemAsEquipable("Antenna"));
         npc.pickup(ItemMap.getInstance().getItemAsEquipable("Flare"));
         npc.pickup(ItemMap.getInstance().getItemAsUseable("Spinach"));
-        map.add(npc, new Location(3, 26, 2));
+        map.add(npc, new Location(3, 26, 3));
     }
 
     public void areasOfEffect(Map map) {
         TakeDamageAreaOfEffect tkdmgAoe = new TakeDamageAreaOfEffect(1);
-        map.add(tkdmgAoe, new Location(3,11,8));
+        map.add(tkdmgAoe, new Location(3,11,9));
 
         TeleportAoe teleAoe = new TeleportAoe(new Location(2,34,1));
         map.add(teleAoe, new Location(22, 7, 2));
 
         HealingAreaOfEffect healAoe = new HealingAreaOfEffect(1);
-        map.add(healAoe, new Location(8,1,15));
+        map.add(healAoe, new Location(8,1,16));
 
         LevelUpAoe levelUpAoe = new LevelUpAoe(300);
-        map.add(levelUpAoe,new Location(6,11,6));
+        map.add(levelUpAoe,new Location(6,11,7));
 
         InstaDeathAoe deathAoe = new InstaDeathAoe();
-        map.add(deathAoe, new Location(3,4,14));
+        map.add(deathAoe, new Location(3,4,15));
     }
 
     public void items(Map map) {
@@ -580,13 +622,15 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(ItemMap.getInstance().getItemAsOneShot("Red"), new Location(4,15,2));
         map.add(ItemMap.getInstance().getItemAsOneShot("Green"), new Location(5,15,3));
 
+        map.add(ItemMap.getInstance().getItemAsAbility("BindWounds"), new Location(9,13,3));
+
 
         map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Fertilizer"), new Location(11, 13,3));
         map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,3));
-        map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
+       // map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
 
-        map.add(ItemMap.getInstance().getItemAsTakeable("Intellect Buff"), new Location(8,13,3));
+        //map.add(ItemMap.getInstance().getItemAsTakeable("Intellect Buff"), new Location(8,13,3));
 
         map.add(ItemMap.getInstance().getItemAsOneShot("Gray"), new Location(2,13,2));
 
@@ -594,8 +638,8 @@ public class DemoLevelFactory extends LevelFactory {
         /* TODO implement this */
 
 
-        //map.add(ItemMap.getInstance().getItemAsAbility("Brawling"), new Location(1,14,2));
-        map.add(ItemMap.getInstance().getItemAsAbility("One-handed weapon"), new Location(2,14,2));
+        //map.add(ItemMap.getInstance().getItemAsAbility("Brawling"), new Location(10,12,3));
+        //map.add(ItemMap.getInstance().getItemAsAbility("One-handed weapon"), new Location(5,10,3));
 
 
 
