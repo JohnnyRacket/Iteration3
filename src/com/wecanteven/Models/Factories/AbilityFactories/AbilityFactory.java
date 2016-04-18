@@ -238,7 +238,7 @@ public class AbilityFactory {
         abilityName = "Creep";
         abilityImage = "Punch";
         manaCost=caster.getSkillPoints(skill)+1;
-        SelfHitBoxGenerator generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
+        SelfHitBoxGenerator generator = new SelfHitBoxGenerator(abilityImage,caster,effect,1);
         ability = new Ability(abilityName,caster,generator,skill,manaCost);
         ability.setCooldownTicks(5);
         ability.setWindUpTicks(5);

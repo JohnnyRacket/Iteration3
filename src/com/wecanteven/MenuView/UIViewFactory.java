@@ -387,7 +387,7 @@ public class UIViewFactory {
         statsList.addItem(new SplitTextScrollableItem("Level: " , ""+ stats.getLevel(),null));
         statsList.addItem(new SplitTextScrollableItem("Health: ", stats.getHealth() + "/" + stats.getMaxHealth(),null));
         statsList.addItem(new SplitTextScrollableItem("Mana: ", "" + stats.getMana() + "/" + stats.getMaxMana(),null));
-        statsList.addItem(new SplitTextScrollableItem("Experience: ", "" + stats.getExperience() + "/" + "?????",null));
+        statsList.addItem(new SplitTextScrollableItem("Experience: ", "" + stats.getExperience() + "/" + "100",null));
         statsList.addItem(new SplitTextScrollableItem("Lives: ", "" + stats.getLives(),null));
 
         statsList.addItem(new ScrollableMenuItem("",null));

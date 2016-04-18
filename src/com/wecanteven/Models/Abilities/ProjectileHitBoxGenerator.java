@@ -35,7 +35,6 @@ public class ProjectileHitBoxGenerator extends HitBoxGenerator {
     }
 
     private void move(){
-        System.out.println("Projectile is on the move");
         if (traveled <= distance) {
             ViewTime.getInstance().register(()->{
                 location = location.add(getCaster().getDirection().getCoords);
