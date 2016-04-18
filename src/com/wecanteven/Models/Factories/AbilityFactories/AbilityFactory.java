@@ -39,8 +39,8 @@ public class AbilityFactory {
         effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,1*(multiplier),0));
         generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
         ability = new Ability(abilityName,caster,generator,skill);
-        ability.setCooldownTicks(30);
-        ability.setWindUpTicks(30);
+        ability.setCooldownTicks(5);
+        ability.setWindUpTicks(5);
         return ability;
     }
 
@@ -54,8 +54,9 @@ public class AbilityFactory {
         abilityImage = "OneHanded";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
         Ability ability = new Ability(abilityName,caster,generator,skill);
-        ability.setCooldownTicks(5);
-        ability.setWindUpTicks(5);
+
+        ability.setCooldownTicks(10);
+        ability.setWindUpTicks(10);
         ability.setCast(true);
         return ability;
     }
@@ -72,8 +73,8 @@ public class AbilityFactory {
         abilityImage = "Club";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
         Ability ability = new Ability(abilityName,caster,generator,skill);
-        ability.setCooldownTicks(30);
-        ability.setWindUpTicks(30);
+        ability.setCooldownTicks(15);
+        ability.setWindUpTicks(15);
         ability.setCast(true);
         return ability;
     }
@@ -90,8 +91,8 @@ public class AbilityFactory {
         abilityImage = "Punch";
         MeleeRangeHitBoxGenerator generator = new MeleeRangeHitBoxGenerator(abilityImage,caster,effect,duration);
         Ability ability = new Ability(abilityName,caster,generator,skill);
-        ability.setCooldownTicks(55);
-        ability.setWindUpTicks(55);
+        ability.setCooldownTicks(5);
+        ability.setWindUpTicks(5);
         ability.setCast(true);
         return ability;
     }
@@ -114,8 +115,8 @@ public class AbilityFactory {
                 (target)-> target.modifyStatsSubtractive((new StatsAddable(0, 0, 0, 0, 0, 0, 5*(multiplier), 0, 0)))));
         generator = new SelfHitBoxGenerator(abilityImage,caster,effect,duration);
         ability = new Ability(abilityName,caster,generator,skill);
-        ability.setCooldownTicks(30);
-        ability.setWindUpTicks(30);
+        ability.setCooldownTicks(5);
+        ability.setWindUpTicks(5);
         return ability;
     }
 
@@ -134,8 +135,8 @@ public class AbilityFactory {
         return ability;
     }
 
-    //range ability
-    public Ability vendRangedWeapon(Character caster) {
+//    //range ability
+    public Ability vendRangedWeapon(Character caster){
         skill = Skill.RANGED_WEAPON;
         duration = 5;
         abilityImage = "WaterBolt";
@@ -144,15 +145,36 @@ public class AbilityFactory {
         skillLevel = caster.getSkillPoints(skill);
         multiplier = skillLevel+statLevel;
         effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
-        ProjectileHitBoxGenerator generator = new ProjectileHitBoxGenerator(abilityImage,caster,effect);
-        generator.setDistance(duration);
-        generator.setSpeed(30);
+        duration = 1;
+        abilityName = "Ranged_Weapon";
+        abilityImage = "Punch";
+        ProjectileHitBoxGenerator generator = new ProjectileHitBoxGenerator(abilityImage,caster,effect,duration);
+        int distance = 5;
+        generator.setDistance(distance);
         Ability ability = new Ability(abilityName,caster,generator,skill);
-        ability.setCooldownTicks(15*(duration));
-        ability.setWindUpTicks(15);
+        ability.setCooldownTicks(10);
+        ability.setWindUpTicks(10);
         ability.setCast(true);
         return ability;
     }
+//    public Ability vendRangedWeapon(Character caster) {
+//        skill = Skill.RANGED_WEAPON;
+//        duration = 5;
+//        abilityImage = "WaterBolt";
+//        abilityName = "Range";
+//        statLevel = caster.getStats().getAgility();
+//        skillLevel = caster.getSkillPoints(skill);
+//        multiplier = skillLevel+statLevel;
+//        effect = new StatsEffect(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0));
+//        ProjectileHitBoxGenerator generator = new ProjectileHitBoxGenerator(abilityImage,caster,effect);
+//        generator.setDistance(duration);
+//        generator.setSpeed(30);
+//        Ability ability = new Ability(abilityName,caster,generator,skill);
+//        ability.setCooldownTicks(30);
+//        ability.setWindUpTicks(30);
+//        ability.setCast(true);
+//        return ability;
+//    }
 
 
 //    //melee ability example

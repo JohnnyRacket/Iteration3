@@ -185,17 +185,18 @@ public class DemoLevelFactory extends LevelFactory {
 
 
         //Mountain
-        for (int i = 2; i < 13; i++) {
+        for (int i = 11; i < 13; i++) {
             (new FilledHex(getLocation(10,3,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
         }
-        for (int i = 2; i < 15; i++) {
+
+        for (int i = 13; i < 15; i++) {
             (new FilledHex(getLocation(7,3,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
         }
-        for (int i = 2; i < 14; i++) {
+        for (int i = 12; i < 14; i++) {
             (new FilledHex(getLocation(5,4,i), 3)).iterator().forEachRemaining( (location) -> {
                 map.getTile(location).setTerrain(new Ground());
             });
@@ -208,24 +209,24 @@ public class DemoLevelFactory extends LevelFactory {
         });
 
         //River
-        map.getTile(getLocation(7,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
-        map.getTile(getLocation(8,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
-        map.getTile(getLocation(9,2,14)).setTerrain(new Current(Direction.SOUTHEAST));
-        map.getTile(getLocation(10,2,12)).setTerrain(new Current(Direction.SOUTHEAST));
-        map.getTile(getLocation(11,2,12)).setTerrain(new Current(Direction.SOUTHEAST));
-        map.getTile(getLocation(12,2,12)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(7,2,14)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(8,2,14)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(9,2,14)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(10,2,12)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(11,2,12)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(12,2,12)).setTerrain(new Current(Direction.NORTHWEST));
         //WATERFALL
-        map.getTile(getLocation(12,3,12)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,11)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,10)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,9)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,8)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,7)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,6)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,5)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,3,4)).setTerrain(new Current(Direction.NORTHWEST));
-        map.getTile(getLocation(12,3,3)).setTerrain(new Current(Direction.NORTHWEST));
-        map.getTile(getLocation(12,3,2)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(12,3,12)).setTerrain(new Current(Direction.NORTHWEST));
+        map.getTile(getLocation(12,3,11)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,10)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,9)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,8)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,7)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,6)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,5)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,4)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,3)).setTerrain(new Current(Direction.UP));
+        map.getTile(getLocation(12,3,2)).setTerrain(new Current(Direction.UP));
 
         //MAKES TUNNEL
         map.getTile(getLocation(9, 4, 2)).setTerrain(new Air());
@@ -256,13 +257,13 @@ public class DemoLevelFactory extends LevelFactory {
             map.getTile(location).setTerrain(new Water());
         });
 
-        map.getTile(getLocation(12,4,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,5,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,6,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,7,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,8,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,9,1)).setTerrain(new Current(Direction.SOUTH));
-        map.getTile(getLocation(12,10,1)).setTerrain(new Current(Direction.SOUTH));
+        map.getTile(getLocation(12,4,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,5,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,6,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,7,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,8,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,9,1)).setTerrain(new Current(Direction.NORTH));
+        map.getTile(getLocation(12,10,1)).setTerrain(new Current(Direction.NORTH));
         //smap.getTile(getLocation(12,11,1)).setTerrain(new Current(Direction.SOUTH));
 
         //sand under Lake

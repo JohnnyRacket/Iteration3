@@ -11,6 +11,7 @@ public interface Moveable extends Positionable{
 
     boolean move(Direction d);
 
+
     boolean move(Location l);
 
     boolean fall();

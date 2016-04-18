@@ -72,7 +72,7 @@ public class ViewEngine extends JFrame implements Runnable{
 
     @Override
     public void run() {
-        TimeKeeper timeKeeper = new TimeKeeper(30);
+        TimeKeeper timeKeeper = new TimeKeeper(33);
         while(true) {
             timeKeeper.startTick();
             viewTime.tick();
@@ -99,7 +99,7 @@ public class ViewEngine extends JFrame implements Runnable{
                     Thread.sleep((tickTimeMilli - delta));
                 } catch (Exception e) {}
             } else {
-
+                System.out.println("VIEW TOOK TOO LONG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
         }
     }

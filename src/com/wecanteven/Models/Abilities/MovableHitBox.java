@@ -67,6 +67,7 @@ public class MovableHitBox extends HitBox implements Moveable, ViewObservable, D
         canMove = getActionHandler().move(this,destination,speed);
         count++;
     }
+
     public void updateMovingTicks(int ticks) {
         setMovingTicks(calculateMovementTicks(ticks));
         notifyObservers();
