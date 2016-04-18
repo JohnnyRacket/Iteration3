@@ -1046,16 +1046,7 @@ public class UIViewFactory {
         while(invIter.hasNext()){
             TakeableItem i = (TakeableItem) invIter.next();
             inventoryItems.addItem(new ScrollableMenuItem(i.getName() ,()->{
-                NavigatableList list = new NavigatableList();
-                MenuViewContainer container = controller.getMenuState().getMenus();
-                list.addItem(new ScrollableMenuItem("Attempt to Steal", () ->{
-                    ViewTime.getInstance().register(() ->{
-                        controller.popView();
-                        //ATTEMPT TO STEAL
 
-                    },0);
-                    controller.setMenuState(container);
-                }));
             }));
         }
 
