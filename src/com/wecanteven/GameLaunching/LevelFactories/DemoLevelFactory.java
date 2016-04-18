@@ -24,6 +24,7 @@ import com.wecanteven.Models.Items.Takeable.Equipable.ChestEquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.EquipableItem;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.FistWeapon;
 import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.OneHandWeapon;
+import com.wecanteven.Models.Items.Takeable.Equipable.Weapons.WeaponEquipableItem;
 import com.wecanteven.Models.Items.Takeable.QuestedItem;
 import com.wecanteven.Models.Map.Aoe.*;
 import com.wecanteven.Models.Map.Map;
@@ -67,7 +68,6 @@ public class DemoLevelFactory extends LevelFactory {
     public DemoLevelFactory() {
         map = new Map(mapWidth, mapLength, mapHeight);
     }
-
 
     @Override
     public Map createMap() {
@@ -700,6 +700,11 @@ public class DemoLevelFactory extends LevelFactory {
         tradeNPC(map);
         questNPC(map);
         petNPC(map);
+
+        createHostileNpc(map, ItemMap.getInstance().getItemAsEquipable("Expand"), new Location(28,33,4));
+        createHostileNpc(map, ItemMap.getInstance().getItemAsEquipable("Flare"), new Location(25,34,4));
+        createHostileNpc(map, ItemMap.getInstance().getItemAsEquipable("Flash"), new Location(23,32,4));
+        createHostileNpc(map, ItemMap.getInstance().getItemAsEquipable("Club"), new Location(23,29,4));
     }
 
     public void mount(Map map) {
@@ -715,9 +720,9 @@ public class DemoLevelFactory extends LevelFactory {
         npc.setCanFallVisitor(new FlyingCanFallVisitor());
         PetSearchingController searchingController = new PetSearchingController(npc, map, 4);
         PetActionController actionController = new PetActionController(npc, map);
-        AIController controller = new AIController(searchingController,actionController);
+        AIController controller = new AIController(searchingController, actionController);
         npc.setController(controller);
-        map.add(npc, new Location(14,9,4));
+        map.add(npc, new Location(9,9,3));
         AITime.getInstance().registerController(controller);
     }
 
@@ -754,7 +759,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void questNPC(Map map) {
         QuestedItem questItem = new QuestedItem("Diamond of Color", 0);
-        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Blaster"), new Location(19, 5, 10));
+        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Blaster"), new Location(19, 5, 11));
         ArrayList<String> startQuestDialog = new ArrayList<>();
         startQuestDialog.add("Oh! The hue-manity");
         startQuestDialog.add("The evil grayscalian Monochromia...");
@@ -780,6 +785,13 @@ public class DemoLevelFactory extends LevelFactory {
         npc.pickup(ItemMap.getInstance().getItemAsEquipable("Antenna"));
         npc.pickup(ItemMap.getInstance().getItemAsEquipable("Flare"));
         npc.pickup(ItemMap.getInstance().getItemAsUseable("Spinach"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("BindWounds"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("PickPocket"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("Creep"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("Poison"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("Slow"));
+        npc.pickup(ItemMap.getInstance().getItemAsAbility("SpeedUp"));
+
         map.add(npc, new Location(3, 26, 3));
     }
 
@@ -804,18 +816,18 @@ public class DemoLevelFactory extends LevelFactory {
 
         //One shot
         map.add(ItemMap.getInstance().getItemAsOneShot("Orange"), new Location(1,15,5));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Blue"), new Location(2,15,5));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Purple"), new Location(3,15,5));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Red"), new Location(4,15,5));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Green"), new Location(5,15,5));
+        //map.add(ItemMap.getInstance().getItemAsOneShot("Blue"), new Location(2,15,5));
+        //map.add(ItemMap.getInstance().getItemAsOneShot("Purple"), new Location(3,15,5));
+        //map.add(ItemMap.getInstance().getItemAsOneShot("Red"), new Location(4,15,5));
+        //map.add(ItemMap.getInstance().getItemAsOneShot("Green"), new Location(5,15,5));
 
-        map.add(ItemMap.getInstance().getItemAsAbility("SpeedUp"), new Location(9,13,5));
+        //map.add(ItemMap.getInstance().getItemAsAbility("SpeedUp"), new Location(9,13,5));
 
 
-        map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,4));
-        map.add(ItemMap.getInstance().getItemAsTakeable("Fertilizer"), new Location(11, 13,4));
-        map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,4));
-       // map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
+        //map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,4));
+        //map.add(ItemMap.getInstance().getItemAsTakeable("Fertilizer"), new Location(11, 13,4));
+        //map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,4));
+        // map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
 
         map.add(ItemMap.getInstance().getItemAsOneShot("Gray"), new Location(2,13,3));
 
@@ -833,6 +845,21 @@ public class DemoLevelFactory extends LevelFactory {
 
     private interface TerrainMaker {
         Terrain makeTerrain();
+    }
+
+    public void createHostileNpc(Map map, EquipableItem weapon, Location location) {
+        NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), new Enemy(), GameColor.GRAY);
+        npc.setOccupation(new Enemy());
+        EnemySearchingController esc = new EnemySearchingController(npc,map,3);
+        EnemyActionController eac = new EnemyActionController(npc,map);
+        AIController controller = new AIController(esc,eac);
+        npc.setController(controller);
+        npc.pickup(weapon);
+        npc.equipItem(weapon);
+
+        map.add(npc, location);
+
+        AITime.getInstance().registerController(controller);
     }
 
     private TerrainMaker groundMaker = Ground::new;
