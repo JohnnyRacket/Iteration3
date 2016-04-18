@@ -724,7 +724,7 @@ public class DemoLevelFactory extends LevelFactory {
     public void weaponNPC(Map map) {
         NPC npc = new NPC(map, Direction.SOUTH, new NoInteractionStrategy(), new Enemy(), GameColor.GRAY);
         npc.setOccupation(new Enemy());
-        EnemySearchingController esc = new EnemySearchingController(npc,map,2);
+        EnemySearchingController esc = new EnemySearchingController(npc,map,3);
         EnemyActionController eac = new EnemyActionController(npc,map);
         AIController controller = new AIController(esc,eac);
         npc.setController(controller);
