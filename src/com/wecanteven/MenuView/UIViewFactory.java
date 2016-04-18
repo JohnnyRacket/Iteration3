@@ -1137,22 +1137,21 @@ public class UIViewFactory {
 
     public void createKeyBindMenu(ControllerState state){
 
-        ScrollableMenu menu = new ScrollableMenu(400,500);
+        ScrollableMenu menu = new ScrollableMenu(400,600);
         NavigatableList list = new NavigatableList();
 
         java.util.Map<ActionEnum, Integer> map = state.getMappings();
         Iterator it = map.entrySet().iterator();
         while (it.hasNext()) {
             java.util.Map.Entry pair = (java.util.Map.Entry)it.next();
-            list.addItem(new ScrollableMenuItem(pair.getKey() + " ---> " + pair.getValue(), ()->{
+            list.addItem(new ScrollableMenuItem(pair.getKey() + " ---> " + (char)(int)pair.getValue(), ()->{
                 //do something
                 SwappableView view = new SwappableView();
                 view.addDrawable(new VerticalCenterContainer(new HorizontalCenterContainer(new KeyBindView(40,200))));
                 ViewTime.getInstance().register(()->{
                     vEngine.getManager().addView(view);
                 },0);
-                //controller.setMenuState(view.getMenuViewContainer());
-
+                controller.setKeyBindState(map,(ActionEnum) pair.getKey());
             }));
         }
         menu.setList(list);
@@ -1167,7 +1166,7 @@ public class UIViewFactory {
             vEngine.getManager().addView(view);
         },0);
 
-        //controller.setMenuState(view.getMenuViewContainer());
+        controller.setMenuState(view.getMenuViewContainer());
 
     }
 
