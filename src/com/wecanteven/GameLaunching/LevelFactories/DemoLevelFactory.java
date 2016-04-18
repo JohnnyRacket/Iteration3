@@ -189,8 +189,6 @@ public class DemoLevelFactory extends LevelFactory {
         // Quest
         column(19,5,1, 8, groundMaker);
 
-
-
         //Mountain
         for (int i = 1; i < 13; i++) {
             (new FilledHex(getLocation(10,3,i), 3)).iterator().forEachRemaining( (location) -> {
@@ -267,35 +265,12 @@ public class DemoLevelFactory extends LevelFactory {
         }
         //END OF MAKE TUNNEL
 
-        column(7,6,3,10,groundMaker);
-        map.getTile(7,6,13).add(new Decal("PlainsTreeLong", -0.1,-0.2));
-        map.getTile(7,6,13).add(new Decal("AutumnTreeTall", .1,-.15));
-        map.getTile(7,6,13).add(new Decal("PlainsTreeLong", -.3,.1));
-        map.getTile(7,6,13).add(new Decal("AutumnTreeTall", .3,-.15));
+        column(7,6,2,11,groundMaker);
+        column(7,7,2,9,groundMaker);
+        column(6,8,2,7,groundMaker);
+        column(8,7,2,5,groundMaker);
+        column(7,8,2,4,groundMaker);
 
-        column(7,7,3,8,groundMaker);
-        map.getTile(7,7,11).add(new Decal("PlainsTreeLong", -0.1,-0.2));
-        map.getTile(7,7,11).add(new Decal("AutumnTreeTall", .1,-.15));
-        map.getTile(7,7,11).add(new Decal("AutumnTreeTall", -.3,.1));
-        map.getTile(7,7,11).add(new Decal("AutumnTreeTall", .3,-.15));
-
-        column(6,8,3,6,groundMaker);
-        map.getTile(6,8,9).add(new Decal("AutumnTreeTall", -0.1,-0.2));
-        map.getTile(6,8,9).add(new Decal("PlainsTreeLong", .1,-.15));
-        map.getTile(6,8,9).add(new Decal("AutumnTreeTall", -.3,.1));
-        map.getTile(6,8,9).add(new Decal("AutumnTreeTall", .3,-.15));
-
-        column(8,7,3,4,groundMaker);
-        map.getTile(8,7,7).add(new Decal("AutumnTreeTall", -0.1,-0.2));
-        map.getTile(8,7,7).add(new Decal("AutumnTreeTall", .1,-.15));
-        map.getTile(8,7,7).add(new Decal("PlainsTreeLong", -.3,.1));
-        map.getTile(8,7,7).add(new Decal("AutumnTreeTall", .3,-.15));
-
-        column(7,8,3,3,groundMaker);
-        map.getTile(7,8,6).add(new Decal("AutumnTreeTall", -0.1,-0.2));
-        map.getTile(7,8,6).add(new Decal("AutumnTreeTall", .1,-.15));
-        map.getTile(7,8,6).add(new Decal("AutumnTreeTall", -.3,.1));
-        map.getTile(7,8,6).add(new Decal("PlainsTreeLong", .3,-.15));
 
         //Clearing up portions
         (new HexColumn(getLocation(8,6, 2), 11)).iterator().forEachRemaining( (location) -> {
@@ -345,6 +320,8 @@ public class DemoLevelFactory extends LevelFactory {
         line(19,15,1,Direction.SOUTHWEST, 2, groundMaker);
         line(23,12,1,Direction.SOUTH, 4, groundMaker);
 
+        line(14,16,1,Direction.NORTHEAST,7,groundMaker);
+
         point(24,10,1, groundMaker);
 
         //Marsh River
@@ -374,6 +351,9 @@ public class DemoLevelFactory extends LevelFactory {
         line(18,15,2,Direction.SOUTHEAST, 2, groundMaker);
         line(3,19,0,Direction.SOUTHWEST, 4, groundMaker);
 
+        line(20,8,1,Direction.NORTHEAST,3,groundMaker);
+        line(22,5,1,Direction.NORTH,5,groundMaker);
+
         zOffset = 0;
         filled(23,11, 0, 9, groundMaker);
         line(22, 1, 1, Direction.SOUTH, 7, groundMaker);
@@ -381,6 +361,12 @@ public class DemoLevelFactory extends LevelFactory {
 
         makeFallIsland();
 
+        createDecals(map);
+
+        return map;
+    }
+
+    private void createDecals(Map map) {
         //Ramp decals
         map.getTile(6,14,4).add(new Decal("StonePress",-.1,-.2));
         map.getTile(6,13,4).add(new Decal("StonePress", -.1,-.1));
@@ -397,7 +383,47 @@ public class DemoLevelFactory extends LevelFactory {
         map.getTile(6,7,12).add(new Decal("StonePress", -.02,.02));
         map.getTile(6,6,12).add(new Decal("StonePress", -.02,.02));
 
-        return map;
+        map.getTile(7,6,13).add(new Decal("PlainsTreeLong", -0.1,-0.2));
+        map.getTile(7,6,13).add(new Decal("AutumnTreeTall", .1,-.15));
+        map.getTile(7,6,13).add(new Decal("PlainsTreeLong", -.3,.1));
+
+        map.getTile(7,7,11).add(new Decal("PlainsTreeLong", -0.1,-0.2));
+        map.getTile(7,7,11).add(new Decal("AutumnTreeTall", -.3,.1));
+        map.getTile(7,7,11).add(new Decal("AutumnTreeTall", .3,-.15));
+
+        map.getTile(6,8,9).add(new Decal("AutumnTreeTall", -0.1,-0.2));
+        map.getTile(6,8,9).add(new Decal("PlainsTreeLong", .1,-.15));
+        map.getTile(6,8,9).add(new Decal("AutumnTreeTall", .3,-.15));
+
+        map.getTile(8,7,7).add(new Decal("AutumnTreeTall", .1,-.15));
+        map.getTile(8,7,7).add(new Decal("PlainsTreeLong", -.3,.1));
+        map.getTile(8,7,7).add(new Decal("AutumnTreeTall", .3,-.15));
+
+        map.getTile(7,8,6).add(new Decal("AutumnTreeTall", -0.1,-0.2));
+        map.getTile(7,8,6).add(new Decal("AutumnTreeTall", .1,-.15));
+        map.getTile(7,8,6).add(new Decal("PlainsTreeLong", .3,-.15));
+
+        //Flowers
+        map.getTile(15,12,2).add(new Decal("Blue Flower", -.1,-.2));
+        map.getTile(15,12,2).add(new Decal("White Flower", 0,0));
+
+        map.getTile(16,13,2).add(new Decal("Yellow Flower", -.1,-.2));
+        map.getTile(16,13,2).add(new Decal("Blue Flower", 0,0));
+
+        map.getTile(17,12,2).add(new Decal("White Flower", -.1,-.2));
+        map.getTile(17,12,2).add(new Decal("Yellow Flower", 0,0));
+
+        map.getTile(18,10,2).add(new Decal("Blue Flower", -.1,-.2));
+        map.getTile(18,10,2).add(new Decal("Blue Flower", 0,0));
+
+        map.getTile(14,14,2).add(new Decal("Yellow Flower", -.1,-.2));
+        map.getTile(14,14,2).add(new Decal("Yellow Flower", 0,0));
+
+        //More trees
+        map.getTile(17,13,2).add(new Decal("TundraPineLong",0,0));
+
+        map.getTile(15,15,2).add(new Decal("TundraPineLong",-.3,-.3));
+        map.getTile(15,15,2).add(new Decal("TundraPineLong",.025,.025));
     }
 
     public Biome createBiomes(SimpleVOFactory factory) {
@@ -560,7 +586,7 @@ public class DemoLevelFactory extends LevelFactory {
 
     public void questNPC(Map map) {
         QuestedItem questItem = new QuestedItem("Diamond of Color", 0);
-        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Blaster"), new Location(19, 5, 9));
+        QuestableItemReward quest = new QuestableItemReward(questItem, ItemMap.getInstance().getItemAsTakeable("Blaster"), new Location(19, 5, 10));
         ArrayList<String> startQuestDialog = new ArrayList<>();
         startQuestDialog.add("Oh! The hue-manity");
         startQuestDialog.add("The evil grayscalian Monochromia...");
@@ -594,7 +620,7 @@ public class DemoLevelFactory extends LevelFactory {
         map.add(tkdmgAoe, new Location(3,11,9));
 
         TeleportAoe teleAoe = new TeleportAoe(new Location(2,34,1));
-        map.add(teleAoe, new Location(22, 7, 2));
+        map.add(teleAoe, new Location(22, 6, 3));
 
         HealingAreaOfEffect healAoe = new HealingAreaOfEffect(1);
         map.add(healAoe, new Location(8,1,16));
@@ -609,23 +635,21 @@ public class DemoLevelFactory extends LevelFactory {
     public void items(Map map) {
 
         //One shot
-        map.add(ItemMap.getInstance().getItemAsOneShot("Orange"), new Location(1,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Blue"), new Location(2,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Purple"), new Location(3,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Red"), new Location(4,15,2));
-        map.add(ItemMap.getInstance().getItemAsOneShot("Green"), new Location(5,15,3));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Orange"), new Location(1,15,3));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Blue"), new Location(2,15,3));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Purple"), new Location(3,15,3));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Red"), new Location(4,15,3));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Green"), new Location(5,15,4));
 
-        map.add(ItemMap.getInstance().getItemAsAbility("BindWounds"), new Location(9,13,3));
+        map.add(ItemMap.getInstance().getItemAsAbility("BindWounds"), new Location(9,13,4));
 
 
-        map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,3));
-        map.add(ItemMap.getInstance().getItemAsTakeable("Fertilizer"), new Location(11, 13,3));
-        map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,3));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Antenna"), new Location(11, 14,4));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Fertilizer"), new Location(11, 13,4));
+        map.add(ItemMap.getInstance().getItemAsTakeable("Halo"), new Location(10, 13,4));
        // map.add(ItemMap.getInstance().getItemAsTakeable("Sword"), new Location(9,13,3));
 
-        //map.add(ItemMap.getInstance().getItemAsTakeable("Intellect Buff"), new Location(8,13,3));
-
-        map.add(ItemMap.getInstance().getItemAsOneShot("Gray"), new Location(2,13,2));
+        map.add(ItemMap.getInstance().getItemAsOneShot("Gray"), new Location(2,13,3));
 
         //Interactive Item??????
         /* TODO implement this */
