@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class Toaster {
 
-    ArrayList<Toast> toasts = new ArrayList<Toast>();
+    Toast toast = null;
     private int lastProcessed;
 
     public Toaster() {
@@ -20,12 +20,12 @@ public class Toaster {
 
     public void draw(Graphics2D g2d, int windowWidth, int windowHeight) {
         int currentTime = (int) (System.currentTimeMillis() / 1000L);
-        if (!toasts.isEmpty()) {
+        if (toast != null) {
             int timeSince = currentTime - lastProcessed;
-            if(timeSince <= toasts.get(0).getDuration()){
-                toasts.get(0).draw(g2d, 0, 0, windowWidth, windowHeight);
+            if(timeSince <= toast.getDuration()){
+                toast.draw(g2d, 0, 0, windowWidth, windowHeight);
             }else {
-                toasts.remove(0);
+                toast = null;
                 lastProcessed = currentTime;
             }
         }else {
@@ -35,6 +35,6 @@ public class Toaster {
     }
 
     public void addToast(Toast toast) {
-        toasts.add(toast);
+        this.toast = toast;
     }
 }
