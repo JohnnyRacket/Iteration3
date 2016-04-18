@@ -1,5 +1,7 @@
 package com.wecanteven.SaveLoad.XMLProcessors;
 
+import com.wecanteven.GameLaunching.LevelFactories.DemoLevelFactory;
+import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
 import com.wecanteven.GameLaunching.LevelFactories.LevelFactoryFactory;
 import com.wecanteven.Models.Map.Column;
 import com.wecanteven.Models.Map.Map;
@@ -32,8 +34,8 @@ public class TileXMLProcessor extends XMLProcessor {
 
     }
 
-    public static Map parseMap(Element el) {
-        Map map = (new LevelFactoryFactory().vendLevelFactory(sf.getStrAttr(el, "name"))).createMap();
+    public static Map parseMap(LevelFactory lf, Element el) {
+        Map map = lf.createMap();
         map.setName(sf.getStrAttr(el, "name"));
         NodeList tiles = sf.getElementsById("Tile");
         for(int i = 0; i < tiles.getLength(); ++i) {

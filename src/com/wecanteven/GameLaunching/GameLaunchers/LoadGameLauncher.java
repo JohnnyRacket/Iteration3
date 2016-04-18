@@ -2,9 +2,7 @@ package com.wecanteven.GameLaunching.GameLaunchers;
 
 
 import com.wecanteven.Controllers.InputControllers.MainController;
-import com.wecanteven.GameLaunching.LevelFactories.DopeAssLevelFactory;
-import com.wecanteven.GameLaunching.LevelFactories.LevelFactory;
-import com.wecanteven.GameLaunching.LevelFactories.TSMBlowsLevelFactory;
+import com.wecanteven.GameLaunching.LevelFactories.*;
 import com.wecanteven.ModelEngine;
 import com.wecanteven.Models.Entities.Avatar;
 import com.wecanteven.Models.Map.Map;
@@ -28,7 +26,6 @@ public class LoadGameLauncher extends GameLauncher {
     void createAvatar() {
 
     }
-
     @Override
     void createMap() {
 
