@@ -52,6 +52,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * Created by John on 3/31/2016.
@@ -424,7 +425,6 @@ public class UIViewFactory {
     }
 
     public void createInventoryView(Character character){
-
         NavigatableGrid menu = new NavigatableGrid(400, 400, 5, 5);
         NavigatableGrid equipMenu = new NavigatableGrid(100, 400, 1, 4);
 
@@ -1037,46 +1037,84 @@ public class UIViewFactory {
         }
     }
 
-    public void createPickPocketView(Character attacker, Character attackee, int picketPoketLevel){
+    public void createPickPocketView(Character attacker, Character attackee, int ppSkillLevel){
         System.out.println("Creating PickPocketView");
 
-        NavigatableGrid inventory = new NavigatableGrid(400, 400, 5, 5);
-        Iterator invIter = attacker.getItemStorage().getInventory().getIterator();
+        NavigatableGrid inventory = new NavigatableGrid(400, 400, 5, 3);
+        inventory.setBgColor(Config.TRANSMEDIUMGREY);
         NavigatableList inventoryItems = new NavigatableList();
+        inventory.setList(inventoryItems);
+
+        Iterator invIter = attackee.getItemStorage().getInventory().getIterator();
+        //LIST OF ITEMS IN HIS INVENTORY
         while(invIter.hasNext()){
             TakeableItem i = (TakeableItem) invIter.next();
-            inventoryItems.addItem(new ScrollableMenuItem(i.getName() ,()->{
+            inventoryItems.addItem(new GridItem(i.getName() ,()->{
+                createPickPocketItemView(attacker, attackee, i, ppSkillLevel);
 
             }));
         }
 
-        //make menu
-        inventory.setBgColor(Config.PAPYRUS);
 
-        //NavigatableList equiplist = new NavigatableList();
-        //equiplist.addItem();
 
-        inventory.setList(inventoryItems);
-        //make swappable view
+        VerticalCenterContainer viewTitle =
+                new VerticalCenterContainer(
+                        new HorizontalCenterContainer(
+                                new TitleBarDecorator(inventory, "Pickpocket", attacker.getColor().dark)
+                        )
+                );
+
         SwappableView view = new SwappableView();
-        //add decorators to center the menu
-        CustomScaleColumnsContainer columns  = new CustomScaleColumnsContainer(new int[]{4,1});
-        columns.setHeight(400);
-        columns.setWidth(600);
-
-        columns.addDrawable(inventory);
-
-        TitleBarDecorator title = new TitleBarDecorator(columns, "Pickpocket", attacker.getColor().dark);
-        HorizontalCenterContainer horizCenter = new HorizontalCenterContainer(title);
-        VerticalCenterContainer vertCenter = new VerticalCenterContainer(horizCenter);
-        AnimatedCollapseDecorator animation = new AnimatedCollapseDecorator(vertCenter);
-//        view.addDrawable(vertCenter);
-
-        view.addDrawable(animation);
+        view.addDrawable(viewTitle);
         view.addNavigatable(inventory);
-        //return created swappable view
+
         ViewTime.getInstance().register(()->{
-            createGreyBackground();
+            vEngine.getManager().addView(view);
+        },0);
+
+        controller.setMenuState(view.getMenuViewContainer());
+
+    }
+
+    public void createPickPocketItemView(Character attacker, Character attackee, TakeableItem item, int ppSkillLevel){
+        NavigatableList list = new NavigatableList();
+        MenuViewContainer container = controller.getMenuState().getMenus();
+        list.addItem(new ScrollableMenuItem("Attempt to Pickpocket", () ->{
+
+            ViewTime.getInstance().register(() ->{
+                controller.popView();
+                exitMenu();
+                //Skill Level, Item Value, RandomNumber
+                int itemChance = item.getValue()/20;
+                int skillChance = ppSkillLevel*10;
+                int failChance = 90;
+                failChance -= skillChance + itemChance;
+                System.out.println(failChance);
+                Random randomGenerator = new Random();
+                if(!attacker.getItemStorage().inventoryIsFull() && failChance <= randomGenerator.nextInt(100)){
+                    //Success
+                    attackee.getItemStorage().removeItem(item);
+                    attacker.getItemStorage().addItem(item);
+                    createToast(3, "You stole: " + item.getName());
+                }else{
+                    //failed
+                    createToast(3, "You failed at Pickpocketing");
+                }
+
+            },0);
+            controller.setMenuState(container);
+        }));
+
+        ScrollableMenu menu = new ScrollableMenu(200,50);
+        HorizontalCenterContainer horiz = new HorizontalCenterContainer(menu);
+        VerticalCenterContainer vert = new VerticalCenterContainer(horiz);
+        AnimatedCollapseDecorator anim = new AnimatedCollapseDecorator(vert);
+        menu.setBgColor(Config.PAPYRUS);
+        menu.setList(list);
+        SwappableView view = new SwappableView();
+        view.addNavigatable(menu);
+        view.addDrawable(anim);
+        ViewTime.getInstance().register(()->{
             vEngine.getManager().addView(view);
         },0);
         controller.setMenuState(view.getMenuViewContainer());
