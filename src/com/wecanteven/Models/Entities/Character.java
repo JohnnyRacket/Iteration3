@@ -35,7 +35,7 @@ public class Character extends Entity implements Actionable {
     public Character(ActionHandler actionHandler, Direction direction, GameColor color) {
         super(actionHandler, direction, color);
         occupation = new Smasher();
-        this.itemStorage = new ItemStorage(this, 5);
+        this.itemStorage = new ItemStorage(this, 25);
         this.abilityStorage = new AbilityStorage();
         windUpTicks = 0;
         coolDownTicks = 0;
@@ -45,7 +45,7 @@ public class Character extends Entity implements Actionable {
         super(actionHandler, direction, color);
         this.occupation = occupation;
         setStats(new Stats(this));
-        this.itemStorage = new ItemStorage(this, 5);
+        this.itemStorage = new ItemStorage(this, 25);
         this.abilityStorage = new AbilityStorage();
         windUpTicks = 0;
         coolDownTicks = 0;
@@ -55,7 +55,7 @@ public class Character extends Entity implements Actionable {
         super(actionHandler, direction, color);
         this.occupation = occupation;
         setStats(stats);
-        this.itemStorage = new ItemStorage(this, 5);
+        this.itemStorage = new ItemStorage(this, 25);
         this.abilityStorage = new AbilityStorage();
         windUpTicks = 0;
         coolDownTicks = 0;
