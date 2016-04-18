@@ -12,7 +12,6 @@ import java.awt.*;
  */
 public class StealthVO extends DecoratorViewObject {
     private Stats subject;
-    private boolean isStealthed = false;
     public StealthVO(ViewObject child, Stats subject) {
         super(child);
         this.subject = subject;
@@ -20,7 +19,7 @@ public class StealthVO extends DecoratorViewObject {
 
     @Override
     public void draw(Graphics2D g) {
-        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, subject.getCreep()));
         super.draw(g);
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
