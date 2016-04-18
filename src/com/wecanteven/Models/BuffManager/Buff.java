@@ -11,11 +11,13 @@ public class Buff implements Alertable {
     protected int tickDuration;
     protected BuffManager owner;
     protected boolean active;
+    private String type;
 
     private BuffApply apply;
     private BuffUnapply unapply;
 
-    public Buff(String name, int tickDuration, BuffApply apply, BuffUnapply unapply) {
+    public Buff(String type, String name, int tickDuration, BuffApply apply, BuffUnapply unapply) {
+        this.type = type;
         this.name = name;
         this.tickDuration = tickDuration;
         this.apply = apply;
@@ -57,4 +59,5 @@ public class Buff implements Alertable {
     public String getName() {
         return name;
     }
+    public String getType() {return  type;}
 }
