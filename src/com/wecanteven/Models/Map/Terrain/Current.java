@@ -27,6 +27,7 @@ public class Current extends Terrain {
 
         moveable.setDirection(direction);
         moveable.move(direction);
+
     }
 
     public Direction getDirection(){
