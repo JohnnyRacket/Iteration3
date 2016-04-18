@@ -60,8 +60,7 @@ public class DestroyableViewObject extends DecoratorViewObject implements Observ
 
     @Override
     public void draw(Graphics2D g) {
-        if(!subject.isDestroyed())
-            super.draw(g);
+        activeChild.draw(g);
     }
 
     private void reallyRemove(long startTime) {

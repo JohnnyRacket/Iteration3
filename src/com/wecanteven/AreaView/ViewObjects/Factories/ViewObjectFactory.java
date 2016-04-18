@@ -113,7 +113,7 @@ public class ViewObjectFactory {
         //Finnally create the Hominoid
         MountViewObject mountVO = simpleVOFactory.createMount(p, simpleVOFactory, mount);
 
-        StartableViewObject startableViewObject = simpleVOFactory.createStartableViewObject(p, "Death/Light Blue.xml");
+        StartableViewObject startableViewObject = simpleVOFactory.createStartableViewObject(p, "Death/Gray.xml");
 
 
         DestroyableViewObject destroyableViewObject = simpleVOFactory.createDestroyableViewObject(mountVO, startableViewObject,
@@ -188,7 +188,7 @@ public class ViewObjectFactory {
         HUDDecorator homioidWithHUD = hominidVOFactory.createHominidHUDDecorator(hominoid, character.getStats());
 
         //Now give him a death animation
-        StartableViewObject startableViewObject = simpleVOFactory.createStartableViewObject(p, "Death/Light Blue.xml");
+        StartableViewObject startableViewObject = simpleVOFactory.createStartableViewObject(p, "Death/Gray.xml");
 
         //And return the new destroyable VO
         DestroyableViewObject destroyableViewObject = simpleVOFactory.createDestroyableViewObject(homioidWithHUD, startableViewObject,
@@ -270,7 +270,7 @@ public class ViewObjectFactory {
         //Make a moving view object
 
         //Now give him a death animation
-        StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Light Blue.xml"), hexDrawingStrategy);
+        StartableViewObject startableViewObject = new StartableViewObject(p, factory.loadActiveDynamicImage("Death/Gray.xml"), hexDrawingStrategy);
 
         //And return the new destroyable VO
         DestroyableViewObject destroyableViewObject = new DestroyableViewObject(

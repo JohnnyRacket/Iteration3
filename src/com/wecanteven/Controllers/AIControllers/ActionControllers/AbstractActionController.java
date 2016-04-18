@@ -58,6 +58,11 @@ public abstract class AbstractActionController implements TargetVisitor{
                         curr = parentMap.get(curr);
                     }
                     //System.out.println("Direction returned is: " + DirectionFinder.getDirection(character.getLocation(), prev));
+//                    if(prev.getZ() < character.getLocation().getZ()-1){
+//                        prev.setZ(character.getLocation().getZ() - 1);
+//                    }else if(prev.getZ() > character.getLocation().getZ()+1){
+//                        prev.setZ(character.getLocation().getZ() + 1);
+//                    }
                     return DirectionFinder.getDirection(character.getLocation(), prev);
                 }
                 for(int i = 0; i < character.getJumpHeight(); ++i) {
@@ -94,6 +99,19 @@ public abstract class AbstractActionController implements TargetVisitor{
     protected boolean checkLocation(Target target, int distance){
         if(target != null) {
             Iterator<Location> iter = new Filled3DHex(this.getCharacter().getLocation(), distance).iterator();
+            while(iter.hasNext()){
+                if(iter.next().equals(target.getLocation())){
+                    return true;
+                }
+            }
+            //will only get here to return true if the target is in desired location
+            return false;
+        }else{return false;}
+    }
+
+    protected boolean checkAttackLocation(Target target, int distance){
+        if(target != null) {
+            Iterator<Location> iter = new FilledHex(this.getCharacter().getLocation(), distance).iterator();
             while(iter.hasNext()){
                 if(iter.next().equals(target.getLocation())){
                     return true;

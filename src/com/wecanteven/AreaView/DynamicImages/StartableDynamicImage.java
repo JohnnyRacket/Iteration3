@@ -30,6 +30,7 @@ public class StartableDynamicImage extends SimpleDynamicImage {
 
     @Override
     public Image getImage() {
+
         return images.get((int)((images.size() - 1)*getPercentage()));
     }
 
@@ -42,5 +43,9 @@ public class StartableDynamicImage extends SimpleDynamicImage {
         if (startTime == 0) return 0;
         double percentage = (double)(ViewTime.getInstance().getCurrentTime() - startTime)/duration;
         return percentage < 1 ? percentage : 1;
+    }
+
+    public void reset() {
+        this.startTime = 0;
     }
 }

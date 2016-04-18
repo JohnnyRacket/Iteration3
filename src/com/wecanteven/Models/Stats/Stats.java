@@ -80,6 +80,9 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         movement.add(statsAddable.getMovement());
         currentHealth.add(statsAddable.getHealth());
         currentMana.add(statsAddable.getMana());
+        if (currentHealth.getStat() < 0) {
+            currentHealth.setStat(0);
+        }
         if(currentHealth.getStat()>maxHealth.getStat()){
             currentHealth.setStat(maxHealth.getStat());
         }
@@ -100,7 +103,9 @@ public class Stats implements Observer, ModelObservable, ViewObservable {
         movement.subtract(statsAddable.getMovement());
         currentHealth.subtract(statsAddable.getHealth());
         currentMana.subtract(statsAddable.getMana());
-
+        if (currentHealth.getStat() < 0) {
+            currentHealth.setStat(0);
+        }
         if(currentHealth.getStat()>maxHealth.getStat()){
             currentHealth.setStat(maxHealth.getStat());
         }

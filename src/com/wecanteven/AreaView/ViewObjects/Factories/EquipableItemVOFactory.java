@@ -5,6 +5,7 @@ import com.wecanteven.AreaView.ViewObjects.DecoratorVOs.MicroPositionableViewObj
 import com.wecanteven.AreaView.ViewObjects.Hominid.Equipment.EquipableViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.DirectionalViewObject;
 import com.wecanteven.AreaView.ViewObjects.LeafVOs.SimpleViewObject;
+import com.wecanteven.AreaView.ViewObjects.LeafVOs.StartableViewObject;
 import com.wecanteven.AreaView.ViewObjects.ViewObject;
 import com.wecanteven.Models.Entities.Entity;
 import com.wecanteven.Models.Storage.EquipmentSlots.EquipmentSlot;
@@ -39,6 +40,11 @@ public class EquipableItemVOFactory {
         return  simpleVOFactory.createDirectional(p, subject, "Equipment/" +color.name + "/" + name + "/");
 
     }
+
+    public StartableViewObject createStartableEquipment(Position p, String name, GameColor color) {
+        return simpleVOFactory.createStartableViewObject(p, "Equipment/" + color.name + "/" + name + ".xml");
+    }
+
 
     private boolean fileExists(String path) {
         return (new File(path)).exists();

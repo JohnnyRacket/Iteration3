@@ -3,6 +3,7 @@ package com.wecanteven.Controllers.AIControllers.ActionControllers;
 import com.wecanteven.Controllers.AIControllers.Targets.*;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Map.Map;
+import com.wecanteven.Models.ModelTime.ModelTime;
 import com.wecanteven.UtilityClasses.Direction;
 import com.wecanteven.UtilityClasses.DirectionFinder;
 import com.wecanteven.UtilityClasses.HexRing;
@@ -32,7 +33,9 @@ public class EnemyActionController extends AbstractActionController {
             }else {
                 Direction d;
                 if((d = getPathToTarget(target)) != null){
-                    this.getCharacter().move(d);
+                    ModelTime.getInstance().registerAlertable(()->{
+                        this.getCharacter().move(d);
+                    }, 0);
                 }else{
                     //character is unreachable
                 }
