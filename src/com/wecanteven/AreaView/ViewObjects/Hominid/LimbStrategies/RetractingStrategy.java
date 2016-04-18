@@ -38,7 +38,7 @@ public class RetractingStrategy extends LimbStrategy {
         }
         MicroData leftMid = midPoint(left0, leftStart, percentage);
         MicroData rightMid = midPoint(right0, rightStart, percentage);
-
+        System.out.println("T: " + leftMid.t);
         leftMid.set(leftHand);
         rightMid.set(rightHand);
     }
