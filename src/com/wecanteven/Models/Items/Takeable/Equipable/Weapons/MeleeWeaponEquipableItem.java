@@ -9,6 +9,9 @@ import com.wecanteven.Models.Stats.StatsAddable;
 public abstract class MeleeWeaponEquipableItem extends WeaponEquipableItem {
     public MeleeWeaponEquipableItem(String name, int value, StatsAddable stats) {
         super(name, value, stats);
+        setCreateAbility((caster)->{
+            return getFactory().vendBrawling(caster);
+        });
     }
 
     // Behaviors for Melee + subclasses for one handed/two handed

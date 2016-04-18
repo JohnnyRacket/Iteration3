@@ -10,7 +10,10 @@ import com.wecanteven.Models.Abilities.Effects.Effects;
 import com.wecanteven.Models.Abilities.Effects.InteractionEffect;
 import com.wecanteven.Models.Abilities.Effects.StatsEffect;
 import com.wecanteven.Models.BuffManager.Buff;
+import com.wecanteven.Models.BuffManager.TickableBuff;
 import com.wecanteven.Models.Entities.Character;
+import com.wecanteven.Models.ModelTime.ModelTime;
+import com.wecanteven.Models.ModelTime.Tickable;
 import com.wecanteven.Models.Occupation.Skill;
 import com.wecanteven.Models.Stats.StatsAddable;
 /**
@@ -99,7 +102,7 @@ public class AbilityFactory {
 
     //extra abilities
     public Ability vendSpeedUp(Character caster){
-        duration = 1;
+        duration = 300;
         abilityName = "SpeedUp";
         abilityImage = "Magic";
         skill = Skill.BOON;
@@ -159,9 +162,9 @@ public class AbilityFactory {
 
         //radial ability example
     public Ability vendSlowAttack(Character caster) {
-        duration = 3000;
+        duration = 300;
         abilityName = "Slow";
-        abilityImage = "Magic";
+        abilityImage = "Punch";
         skill = Skill.BANE;
         statLevel = caster.getStats().getIntellect();
         skillLevel = caster.getSkillPoints(skill);
@@ -170,13 +173,39 @@ public class AbilityFactory {
                 "Speed",
                 "Purple",
                 duration,
-                (target)-> target.modifyStatsAdditive((new StatsAddable(0, 0, 0, 0, 0, 0, -1*(multiplier), 0, 0))),
-                (target)-> target.modifyStatsSubtractive((new StatsAddable(0, 0, 0, 0, 0, 0, -1*(multiplier), 0, 0)))));
-        RadialHitBoxGenerator generator = new RadialHitBoxGenerator(abilityImage,caster,effect,duration);
+                (target)-> target.modifyStatsAdditive((new StatsAddable(0,0,0,0,0,0,-1*(multiplier),0,0))),
+                (target)-> target.modifyStatsSubtractive((new StatsAddable(0,0,0,0,0,0,1*(multiplier),0,0)))));
+        RadialHitBoxGenerator generator = new RadialHitBoxGenerator(abilityImage,caster,effect,1);
         generator.setSize(3);
         Ability ability = new Ability(abilityName,caster,generator,skill);
         ability.setCooldownTicks(15);
         ability.setWindUpTicks(15);
+        return ability;
+    }
+
+
+    //damage over time
+    //    //dome ability example
+    public Ability vendPoisonAttack(Character caster) {
+        duration = 300;
+        abilityName = "Poison";
+        abilityImage = "Punch";
+        skill = Skill.BANE;
+        statLevel = caster.getStats().getIntellect();
+        skillLevel = caster.getSkillPoints(skill);
+        multiplier = skillLevel+statLevel;
+        effect = new BuffEffect(new TickableBuff(
+                "Poison",
+                "Gray",
+                duration,
+                (target)-> target.modifyStatsAdditive(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0)),
+                (target)-> target.modifyStatsAdditive(new StatsAddable(0,0,0,0,0,0,0,-1*(multiplier),0))));
+        DomeHitBoxGenerator generator = new DomeHitBoxGenerator(abilityImage,caster,effect,5);
+        generator.setDistance(1);
+        generator.setSize(5);
+        Ability ability = new Ability(abilityName,caster,generator,skill);
+        ability.setCooldownTicks(15);
+        ability.setWindUpTicks(30);
         return ability;
     }
 

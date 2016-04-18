@@ -1,5 +1,6 @@
 package com.wecanteven.Models.Factories.ItemFactories.CreateCommands;
 
+import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Items.Takeable.AbilityItem;
 
 /**

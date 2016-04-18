@@ -11,6 +11,9 @@ public class TwoHandedWeapon extends WeaponEquipableItem {
 
     public TwoHandedWeapon(String name, int value, StatsAddable stats) {
         super(name, value, stats);
+        setCreateAbility((caster)->{
+            return getFactory().vendTwoHandedWeapon(caster);
+        });
     }
 
     @Override

@@ -223,11 +223,14 @@ public class Tile implements MapVisitable {
 
     public boolean add(HitBox hitBox){
 
-        if(hitBoxes.add(hitBox) && hasEntity()){
-           hitBox.interact(getEntity());
-            return true;
+        boolean wasAdded = false;
+        if(hitBoxes.add(hitBox)){
+            if (hasEntity()) {
+                hitBox.interact(getEntity());
+            }
+            wasAdded = true;
         }
-        return false;
+        return wasAdded;
     }
     public boolean add(Decal decal) {
         decals.add(decal);

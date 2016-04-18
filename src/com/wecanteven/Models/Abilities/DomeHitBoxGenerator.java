@@ -41,7 +41,7 @@ public class DomeHitBoxGenerator extends HitBoxGenerator {
             Location tileLocation = iterator.next();
             if(!tileLocation.equals(getCaster().getLocation())){
                 HitBox temp = new HitBox(name,location,effect,getCaster().getActionHandler(),1200);
-                temp.addToMap(1, tileLocation);
+                temp.addToMap(getDuration(), tileLocation);
             }
         }
         --size;
