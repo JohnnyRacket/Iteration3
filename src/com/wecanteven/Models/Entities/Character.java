@@ -365,7 +365,7 @@ public class Character extends Entity implements Actionable {
         createAbility = new IAbilityCreateCommand() {
             @Override
             public Ability create(Character caster) {
-                return factory.vendRangedWeapon(c);
+                return factory.vendBrawling(c);
             }
         };
     }
