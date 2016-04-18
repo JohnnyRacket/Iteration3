@@ -80,7 +80,7 @@ public class UIViewFactory {
 
 
     public void createHUDView(Character character){
-        AbilityBar abilityHUD = new AbilityBar(getAvatar().getCharacter().getStats());
+        AbilityBar abilityHUD = new AbilityBar(getAvatar().getCharacter().getStats(),getAvatar().getCharacter().getAbilityStorage());
         abilityHUD.setWidth(420);
         abilityHUD.setHeight(110);
         HorizontalCenterContainer horiz = new HorizontalCenterContainer(abilityHUD);

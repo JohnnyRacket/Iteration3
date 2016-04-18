@@ -3,16 +3,20 @@ package com.wecanteven.Models.Storage.AbilityStorage;
 import com.wecanteven.Models.Abilities.Ability;
 import com.wecanteven.Models.Entities.Character;
 import com.wecanteven.Models.Factories.AbilityFactories.AbilityFactory;
+import com.wecanteven.Observers.Observer;
+import com.wecanteven.Observers.ViewObservable;
 import com.wecanteven.Visitors.AbilityStorageVisitor;
+
+import java.util.ArrayList;
 
 /**
  * Created by simonnea on 4/4/16.
  */
-public class AbilityStorage
-{
+public class AbilityStorage implements ViewObservable{
     private Character owner;
     private AbilityEquipment equipment;
     private AbilityInventory inventory;
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     public AbilityStorage(Character owner) {
         this.owner = owner;
@@ -35,21 +39,26 @@ public class AbilityStorage
     public void equipAbility(Ability ability, int index) {
         if (inventory.containsAbility(ability)) {
             equipment.equipAbility(ability, index);
+            notifyObservers();
         }
     }
 
     public void equipAbility(Ability ability) {
         if (inventory.containsAbility(ability)) {
             equipment.equipAbility(ability);
+            notifyObservers();
         }
     }
 
     public void unequipAbility(Ability ability) {
         equipment.unequipAbility(ability);
+        notifyObservers();
     }
 
     public void unequipAbility(int slot) {
+
         equipment.unequipSlot(slot);
+        notifyObservers();
     }
 
     public void useAbility(Ability ability) {
@@ -83,4 +92,10 @@ public class AbilityStorage
         equipment.accept(visitor);
         inventory.accept(visitor);
     }
+
+    @Override
+    public ArrayList<Observer> getObservers() {
+        return observers;
+    }
+
 }
