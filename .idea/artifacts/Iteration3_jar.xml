@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Iteration3:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Iteration3_jar</output-path>
+    <root id="archive" name="Iteration3.jar">
+      <element id="module-output" name="Iteration3" />
+    </root>
+  </artifact>
+</component>

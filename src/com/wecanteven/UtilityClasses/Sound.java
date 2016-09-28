@@ -43,11 +43,11 @@ public class Sound  {
         try {
             //URL url = this.getClass().getClassLoader().getResource(soundFileName);
             File file = new File(soundFileName);
-
+            System.out.println(soundFileName);
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(file));
         } catch (Exception e) {
-//            e.printStackTrace();
+
         }
     }
 
